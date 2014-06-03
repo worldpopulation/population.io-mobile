@@ -1,0 +1,25 @@
+doctype html
+html(ng-app="populationioApp")
+  head
+    title Population.io
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1.0")
+    meta(name="description", content="The World Population Project")
+    //Place favicon.ico and apple-touch-icon.png in the root directory
+    link(rel="stylesheet", href="css/main.css")
+body(ng-controller="MainCtrl")
+  block content
+
+  script(src='vendor/d3.min.js')
+  script(src='vendor/lodash.min.js')
+
+  script(src='vendor/angular.min.js')
+  script(src='vendor/angular-resource.min.js')
+  script(src='vendor/angular-route.min.js')
+
+
+  script(src='scripts/app.js')
+  script(src='scripts/controllers/main.js')
+  script(src='scripts/directives/testChart.js')
+  script(src='scripts/services/Data.js')

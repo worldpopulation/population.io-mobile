@@ -1,0 +1,103 @@
+[
+    {
+        "channel":        "Email",
+        "lto_velocity":   11,
+        "lto_conv_rate":  0.01,
+        "pipeline_value": 150623.24,
+        "ltd_velocity":   42,
+        "ltd_conv_rate":  0.05,
+        "deal_value":     15763.76,
+        "color":          "#D0D102"
+    },
+    {
+        "channel":        "Events",
+        "lto_velocity":   34,
+        "lto_conv_rate":  0.02,
+        "pipeline_value": 204356.12,
+        "ltd_velocity":   86,
+        "ltd_conv_rate":  0.10,
+        "deal_value":     19612.50,
+        "color":          "#32742C"
+    },
+    {
+        "channel":        "Social",
+        "lto_velocity":   53,
+        "lto_conv_rate":  0.02,
+        "pipeline_value": 187945.40,
+        "ltd_velocity":   86,
+        "ltd_conv_rate":  0.04,
+        "deal_value":     26498.50,
+        "color":          "#616161"
+
+    },
+    {
+        "channel":        "Content Syndication",
+        "lto_velocity":   87,
+        "lto_conv_rate":  0.001,
+        "pipeline_value": 56392.93,
+        "ltd_velocity":   143,
+        "ltd_conv_rate":  0.02,
+        "deal_value":     19607.56,
+        "color":          "#F18D05"
+    },
+    {
+        "channel":        "Nurture",
+        "lto_velocity":   13,
+        "lto_conv_rate":  0.01,
+        "pipeline_value": 104527.38,
+        "ltd_velocity":   31,
+        "ltd_conv_rate":  0.08,
+        "deal_value":     11300.00,
+        "color":          "#113F8C"
+    },
+    {
+        "channel":        "Sponsorship",
+        "lto_velocity":   16,
+        "lto_conv_rate":  0.01,
+        "pipeline_value": 45623.31,
+        "ltd_velocity":   72,
+        "ltd_conv_rate":  0.06,
+        "deal_value":     0,
+        "color":          "#01A4A4"
+    },
+    {
+        "channel":        "Display",
+        "lto_velocity":   14,
+        "lto_conv_rate":  0.15,
+        "pipeline_value": 64926.39,
+        "ltd_velocity":   33,
+        "ltd_conv_rate":  0.06,
+        "deal_value":     8397.50,
+        "color":          "#00A1CB"
+    },
+    {
+        "channel":        "Retargeting",
+        "lto_velocity":   17,
+        "lto_conv_rate":  0.06,
+        "pipeline_value": 8934.19,
+        "ltd_velocity":   52,
+        "ltd_conv_rate":  0.21,
+        "deal_value":     0,
+        "color":          "#61AE24"
+    },
+    {
+        "channel":        "Search",
+        "lto_velocity":   50,
+        "lto_conv_rate":  0.1,
+        "pipeline_value": 1509007.43,
+        "ltd_velocity":   89,
+        "ltd_conv_rate":  0.23,
+        "deal_value":     149553.72,
+        "color":          "#611750"
+    },
+    {
+        "channel":        "Newsletter Sponsorship",
+        "lto_velocity":   26,
+        "lto_conv_rate":  0.10,
+        "pipeline_value": 27491.34,
+        "ltd_velocity":   74,
+        "ltd_conv_rate":  0.21,
+        "deal_value":     0,
+        "color":          "#E54028"
+    }
+]
