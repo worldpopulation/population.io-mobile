@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('populationioApp')
-    .controller('MainCtrl', function ($scope, Data, $rootScope, $location) {
+  .controller('MainCtrl', function ($scope, Data, $rootScope, $location) {
 
-        Data.query(function (testChartData) {
-            $rootScope.testChartData = testChartData;
-          console.log($rootScope.testChartData)
-        });
-
+    Data.query(function (testChartData) {
+      $rootScope.testChartData = testChartData;
+      console.log($rootScope.testChartData)
     });
+
+  });
