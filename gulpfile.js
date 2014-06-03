@@ -1,6 +1,6 @@
 var gulp = require('gulp'),
   jade = require('gulp-jade'),
-  inject = require('gulp-inject'),
+  jshint = require('gulp-jshint'),
   clean = require('gulp-clean'),
   connect = require('gulp-connect'),
   plumber = require('gulp-plumber'),
@@ -134,11 +134,22 @@ gulp.task('jade:watch', function (event) {
 });
 
 
+/*JSHINT TASK*/
+
+gulp.task('lint', function() {
+  return gulp.src('app/scripts/**/*.js')
+    .pipe(jshint())
+    .pipe(jshint.reporter('default'));
+});
+
+
 /*CLEAN TASK*/
 gulp.task('clean', function () {
   return gulp.src('dist', {read: false})
     .pipe(clean());
 });
+
+
 
 
 /*DEFAULT TASK*/
