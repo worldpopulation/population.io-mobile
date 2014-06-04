@@ -26,11 +26,9 @@
         });
 
         $scope.rank = 12330323;
-        $scope.rows = 5;
-        $scope.cols = 50;
 
         $scope.data = [];
-        for (var i=0; i<= $scope.rows * $scope.cols; i+=1) {
+        for (var i=0; i<= 200; i+=1) {
           $scope.data.push({
             sex: 'male'
           });
