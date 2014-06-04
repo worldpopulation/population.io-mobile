@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "homepage": "http://population.io",
   "authors": [
-    "Sergey Basharov <sergey@basharov.net>"
+    "Andi Weiss <info@47nord.de>"
   ],
   "dependencies": {
     "d3": "latest",
