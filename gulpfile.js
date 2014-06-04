@@ -35,7 +35,8 @@ var gulp = require('gulp'),
     partials: 'dist/partials',
     css: 'dist/css/'
   };
-/*SERVER TASK*/
+
+// server task
 gulp.task('serve', function (event) {
   connect.server({
     root: destinations.docs,
@@ -46,7 +47,8 @@ gulp.task('serve', function (event) {
   watch({glob: sources.overwatch})
     .pipe(connect.reload());
 });
-/*STYLUS TASK*/
+
+// stylus task
 gulp.task('stylus', function (event) {
   return gulp.src(sources.style)
     .pipe(plumber())
@@ -54,8 +56,7 @@ gulp.task('stylus', function (event) {
     .pipe(gulp.dest(destinations.css));
 });
 
-/*STYLUS WATCH TASK FOR DEVELOPMENT*/
-
+// stylus watch task for development
 gulp.task('stylus:watch', function (event) {
   watch({glob: sources.stylus}, function (files) {
     gulp.src(sources.style)
@@ -65,7 +66,7 @@ gulp.task('stylus:watch', function (event) {
   });
 });
 
-/*SCRIPTS TASK*/
+// scripts tasks
 gulp.task('scripts', function (event) {
    gulp.src(sources.vendor)
     .pipe(plumber())
@@ -75,7 +76,7 @@ gulp.task('scripts', function (event) {
     .pipe(gulp.dest(destinations.scripts));
 });
 
-/*SCRIPTS WATCH TASK FOR DEVELOPMENT*/
+// scripts watch task for development
 gulp.task('scripts:watch', function (event) {
   gulp.src(sources.vendor)
     .pipe(plumber())
@@ -88,7 +89,7 @@ gulp.task('scripts:watch', function (event) {
   });
 });
 
-/*JADE TASK*/
+// jade tasks
 gulp.task('jade', function (event) {
   gulp.src(sources.partials)
     .pipe(plumber())
@@ -107,7 +108,7 @@ gulp.task('jade', function (event) {
     .pipe(gulp.dest(destinations.docs));
 });
 
-/*JADE WATCH TASK FOR DEVELOPMENT*/
+// jade watch task for development
 gulp.task('jade:watch', function (event) {
   watch({glob: sources.templates}, function (files) {
     gulp.src(sources.partials)
@@ -133,24 +134,29 @@ gulp.task('jade:watch', function (event) {
     .pipe(gulp.dest(destinations.docs));
 });
 
-
-/*JSHINT TASK*/
-
+// jshint task
 gulp.task('lint', function() {
   return gulp.src('app/scripts/**/*.js')
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
 });
 
+// jshint watch task for development
+gulp.task('lint:watch', function() {
+  gulp.watch('app/scripts/**/*.js', ['lint']);
+});
 
-/*CLEAN TASK*/
+// clean tasks
 gulp.task('clean', function () {
   return gulp.src('dist', {read: false})
     .pipe(clean());
 });
 
-
-
-
-/*DEFAULT TASK*/
-gulp.task('default', ['serve', 'jade:watch', 'scripts:watch', 'stylus:watch']);
+// default tasks
+gulp.task('default', [
+  'serve',
+  'jade:watch',
+  'scripts:watch',
+  'lint:watch',
+  'stylus:watch'
+]);
