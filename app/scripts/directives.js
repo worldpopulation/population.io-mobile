@@ -136,21 +136,31 @@
         return {
           restrict: 'E',
           link: function (scope, element, attrs, ngModel) {
-            var currentValue = 7213000000;
+            var currentValue = 0;
             var digits = ('' + currentValue).split('');
             var clockElement = d3.select(element[0]).append('svg')
-                .attr({width: digits.length * 40, height: 80})
+                .attr({width: digits.length * 40, height: 40, style: "margin:60px 0 0 60px"})
                 .append('g')
                 .attr({transform: 'translate(0,0)'});
 
-            var digit = clockElement.selectAll('.digit')
+            var countElement = clockElement.selectAll('.count-element')
                 .data(digits)
                 .enter()
                 .append('g')
-                .attr({class: 'digit', transform: function (d, i) {return 'translate(' + [i * 40, 0] + ')'}})
+                .attr({class: 'count-element', transform: function (d, i) {return 'translate(' + [i * 40, 0] + ')'}})
 
-            digit.append('rect')
-                .attr({fill: 'rgba(0,0,0,0.2)', width: 39, height: 100})
+            var digit = countElement.append('g').attr('class', 'digit')
+            digit
+                .append('rect')
+                .attr({fill: 'transparent', width: 39, height: 40})
+
+            var placeholder = countElement.append('g').attr('class', 'placeholder').
+                attr({transform: 'translate(0,40)'})
+            placeholder
+                .append('rect')
+                .attr({fill: 'transparent', width: 39, height: 40})
+
+
             digit.append('text')
                 .text(function (d, i) {
                   return d
@@ -159,32 +169,48 @@
                   transform: 'translate(20,30)'
                 })
 
-            var digitPlaceholder = clockElement.selectAll('.digit-placeholder')
-                .data(digits)
-                .enter()
-                .append('g')
-                .attr({class: 'digit-placeholder', transform: function (d, i) {return 'translate(' + [i * 40, 40] + ')'}})
-
-            digitPlaceholder.append('rect')
-                .attr({fill: 'red', width: 39, height: 100})
-            digitPlaceholder.append('text')
+            placeholder.append('text')
                 .text(function (d, i) {
                   return d
                 })
                 .attr({
                   transform: 'translate(20,30)'
-                })
+                });
 
-            var digitToChange = d3.select(digit[0][0]).select('text');
-            digitToChange
-                .transition()
-                .delay(2000)
-                .attr({transform: 'translate(20,-10)'})
-            var digitPlaceholderToChange = d3.select(digitPlaceholder[0][0]).select('text');
-            digitPlaceholderToChange
-                .transition()
-                .delay(2000)
-                .attr({transform: 'translate(20,-10)'})
+            var updaterInterval = setInterval(function () {
+              if (currentValue > 8) {currentValue = -1}
+              _updateSingleDigit(currentValue += 1);
+            }, 2500)
+
+            function _updateSingleDigit(newDigit) {
+//              countElement.select('.digit')
+//              console.log(countElement[0][0])
+//
+              countElement.select('.digit')
+                  .transition()
+                  .delay(2000)
+                  .attr({transform: 'translate(0,-40)'})
+              countElement.select('.placeholder text').text(newDigit)
+              countElement.select('.placeholder')
+                  .transition()
+                  .ease("bounce")
+                  .delay(2000)
+                  .attr({transform: 'translate(0,0)'})
+
+              countElement.select('.digit')
+                  .transition()
+                  .ease("bounce")
+                  .duration(0)
+                  .delay(2200)
+
+                  .attr({transform: 'translate(0,40)'})
+
+              var a = countElement.select('.digit')
+              var b = countElement.select('.placeholder')
+              a.attr('class', 'placeholder')
+              b.attr('class', 'digit')
+
+            }
           }
         };
       })
