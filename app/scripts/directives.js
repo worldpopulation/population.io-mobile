@@ -115,5 +115,21 @@
           }
         };
       })
+      .directive('scrollTracker', function () {
+        return {
+          restrict: 'A',
+          link: function (scope, element, attrs, ngModel) {
+            scope.$watch('currentPage', function (newValue, oldValue) {
+              if (newValue != oldValue) {
+                setTimeout(function () {
+                  var el = $('section[data-order=' + newValue + ']');
+                  $("body").animate({scrollTop: el.offset().top}, "slow");
+                }, 100);
 
+              }
+
+            });
+          }
+        };
+      });
 }());

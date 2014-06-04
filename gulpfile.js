@@ -11,6 +11,7 @@ var gulp = require('gulp'),
 
     sources = {
       vendor: [
+        'bower_components/jquery/dist/jquery.min.js',
         'bower_components/d3/d3.min.js',
         'bower_components/angular/angular.min.js',
         'bower_components/angular-cookies/angular-cookies.min.js',
@@ -24,7 +25,7 @@ var gulp = require('gulp'),
       ],
       templates: 'app/views/layouts/*.jade',
       docs: 'app/views/pages/*.jade',
-      partials: 'app/views/partials/*.jade',
+      partials: 'app/views/partials/**/*.jade',
       stylus: ['app/stylus/**/*.styl'],
       style: ['bower_components/fontawesome/css/font-awesome.css', 'app/stylus/main.styl'],
       overwatch: 'dist/**/*.*'
