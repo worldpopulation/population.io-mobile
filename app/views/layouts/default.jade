@@ -9,7 +9,9 @@ html(ng-app="populationioApp")
     //Place favicon.ico and apple-touch-icon.png in the root directory
     link(rel="stylesheet", href="css/main.css")
 body(ng-controller="MainCtrl")
+  include header
   block content
+  include footer
 
   script(src='vendor/d3.min.js')
   script(src='vendor/lodash.min.js')

@@ -12,7 +12,8 @@
     "angular-cookies": "~1.2.16",
     "angular-sanitize": "~1.2.16",
     "angular-route": "~1.2.16",
-    "lodash": "latest"
+    "lodash": "latest",
+    "fontawesome":"latest"
   },
   "description": "The World Population Project",
   "license": "",
