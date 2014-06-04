@@ -237,8 +237,10 @@
                 .append('g')
                 .attr({transform: 'translate(0,0)'});
 
-            gridElement.selectAll('.people')
-                .data(data)
+            var peoples = gridElement.selectAll('.people')
+                .append("g");
+
+            peoples.data(data)
                 .enter()
                 .append("rect")
                 .attr("width", peopleWidth)
@@ -247,7 +249,7 @@
                   return parseInt(i/peopleWidth) * (peopleWidth+ 2);
                 })
                 .attr("y", function(d, i) {
-                  return 0; //parseInt(i/peopleHeight) * peopleHeight;
+                  return parseInt(i/parseInt(width/peopleWidth));
                 });
           }
         }
