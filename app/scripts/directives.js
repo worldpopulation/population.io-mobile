@@ -20,6 +20,7 @@
           }
         };
       })
+
       .directive('peopleArea', function () {
         return {
           restrict: 'A',
@@ -39,6 +40,7 @@
           }
         };
       })
+
       .directive('storyArea', function () {
         return {
           restrict: 'A',
@@ -58,6 +60,7 @@
           }
         };
       })
+
       .directive('positionArea', function () {
         return {
           restrict: 'A',
@@ -77,6 +80,7 @@
           }
         };
       })
+
       .directive('expectancyArea', function () {
         return {
           restrict: 'A',
@@ -96,6 +100,7 @@
           }
         };
       })
+
       .directive('shareArea', function () {
         return {
           restrict: 'A',
@@ -115,6 +120,7 @@
           }
         };
       })
+
       .directive('scrollTracker', function () {
         return {
           restrict: 'A',
@@ -132,6 +138,7 @@
           }
         };
       })
+
       .directive('worldClock', function () {
         return {
           restrict: 'E',
@@ -187,5 +194,36 @@
                 .attr({transform: 'translate(20,-10)'})
           }
         };
+      })
+
+      .directive('peopleGrid', function () {
+        return {
+          restrict: 'E',
+          link: function (scope, element, attrs, ngModel) {
+            var peopleWidth = 30,
+                peopleHeight = 50,
+                data = attrs.data,
+                width = element.parent().width(),
+                height = element.parent().height();
+
+            var gridElement = d3.select(element[0]).append('svg')
+                .attr({width: width, height: height})
+                .append('g')
+                .attr({transform: 'translate(0,0)'});
+
+            gridElement.selectAll('.people')
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("width", peopleWidth)
+                .attr("height", peopleHeight)
+                .attr("x", function(d, i) {
+                  return parseInt(i/peopleWidth) * (peopleWidth+ 2);
+                })
+                .attr("y", function(d, i) {
+                  return 0; //parseInt(i/peopleHeight) * peopleHeight;
+                });
+          }
+        }
       })
 }());
