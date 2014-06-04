@@ -131,5 +131,61 @@
             });
           }
         };
-      });
+      })
+      .directive('worldClock', function () {
+        return {
+          restrict: 'E',
+          link: function (scope, element, attrs, ngModel) {
+            var currentValue = 7213000000;
+            var digits = ('' + currentValue).split('');
+            var clockElement = d3.select(element[0]).append('svg')
+                .attr({width: digits.length * 40, height: 80})
+                .append('g')
+                .attr({transform: 'translate(0,0)'});
+
+            var digit = clockElement.selectAll('.digit')
+                .data(digits)
+                .enter()
+                .append('g')
+                .attr({class: 'digit', transform: function (d, i) {return 'translate(' + [i * 40, 0] + ')'}})
+
+            digit.append('rect')
+                .attr({fill: 'rgba(0,0,0,0.2)', width: 39, height: 100})
+            digit.append('text')
+                .text(function (d, i) {
+                  return d
+                })
+                .attr({
+                  transform: 'translate(20,30)'
+                })
+
+            var digitPlaceholder = clockElement.selectAll('.digit-placeholder')
+                .data(digits)
+                .enter()
+                .append('g')
+                .attr({class: 'digit-placeholder', transform: function (d, i) {return 'translate(' + [i * 40, 40] + ')'}})
+
+            digitPlaceholder.append('rect')
+                .attr({fill: 'red', width: 39, height: 100})
+            digitPlaceholder.append('text')
+                .text(function (d, i) {
+                  return d
+                })
+                .attr({
+                  transform: 'translate(20,30)'
+                })
+
+            var digitToChange = d3.select(digit[0][0]).select('text');
+            digitToChange
+                .transition()
+                .delay(2000)
+                .attr({transform: 'translate(20,-10)'})
+            var digitPlaceholderToChange = d3.select(digitPlaceholder[0][0]).select('text');
+            digitPlaceholderToChange
+                .transition()
+                .delay(2000)
+                .attr({transform: 'translate(20,-10)'})
+          }
+        };
+      })
 }());
