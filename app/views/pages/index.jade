@@ -1,3 +1,9 @@
 extends ../layouts/default
 block content
+  section(ng-controller="StatsCtrl", stats-area)
+  section(ng-controller="PeopleCtrl", people-area)
+  section(ng-controller="StoryCtrl", story-area)
+  section(ng-controller="PositionCtrl", position-area)
+  section(ng-controller="ExpectancyCtrl", expectancy-area)
+
   //chart(test-chart)
