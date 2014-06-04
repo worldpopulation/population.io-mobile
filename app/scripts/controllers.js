@@ -2,69 +2,40 @@
   'use strict';
 
   angular.module('populationioApp')
-      .controller('MainCtrl', function ($scope, Data, $rootScope, $location) {
-        $scope.showNextPage = function () {
-          if ($rootScope.currentPage < 5) {
-            $rootScope.currentPage += 1
-          }
-        };
 
-      })
-      .controller('StatsCtrl', function ($scope, Data, $rootScope, $location) {
+  .controller('MainCtrl', function ($scope, $rootScope) {
+    $scope.showNextPage = function () {
+      if ($rootScope.currentPage < 5) {
+        $rootScope.currentPage += 1;
+      }
+    };
 
-//        Data.query(function (testChartData) {
-//          $rootScope.testChartData = testChartData;
-//          console.log($rootScope.testChartData);
-//        });
+  })
 
-      })
-      .controller('PeopleCtrl', function ($scope, Data, $rootScope, $location) {
+  .controller('StatsCtrl', function ($scope, $rootScope) {
+    // TODO: StatsCtrl
+  })
 
-        Data.query(function (testChartData) {
-          $rootScope.testChartData = testChartData;
-          console.log($rootScope.testChartData);
-        });
+  .controller('PeopleCtrl', function ($scope, $rootScope, PopulationIOService, $interval) {
 
-        $scope.rank = 12330323;
+    $scope.rank = PopulationIOService.getRank();
 
-        $scope.data = [];
-        for (var i=0; i<= 200; i+=1) {
-          $scope.data.push({
-            sex: 'male'
-          });
-        }
-      })
-      .controller('StoryCtrl', function ($scope, Data, $rootScope, $location) {
+  })
 
-        Data.query(function (testChartData) {
-          $rootScope.testChartData = testChartData;
-          console.log($rootScope.testChartData);
-        });
+  .controller('StoryCtrl', function ($scope, $rootScope) {
+    // TODO: PositionCtrl
+  })
 
-      })
-      .controller('PositionCtrl', function ($scope, Data, $rootScope, $location) {
+  .controller('PositionCtrl', function ($scope, $rootScope) {
+    // TODO: PositionCtrl
+  })
 
-        Data.query(function (testChartData) {
-          $rootScope.testChartData = testChartData;
-          console.log($rootScope.testChartData);
-        });
+  .controller('ExpectancyCtrl', function ($scope, $rootScope) {
+    // TODO: ExpectancyCtrl
+  })
 
-      })
-      .controller('ExpectancyCtrl', function ($scope, Data, $rootScope, $location) {
-
-        Data.query(function (testChartData) {
-          $rootScope.testChartData = testChartData;
-          console.log($rootScope.testChartData);
-        });
-
-      })
-      .controller('ShareCtrl', function ($scope, Data, $rootScope, $location) {
-
-        Data.query(function (testChartData) {
-          $rootScope.testChartData = testChartData;
-          console.log($rootScope.testChartData);
-        });
-
-      })
+  .controller('ShareCtrl', function ($scope, $rootScope) {
+    // TODO: ShareCtrl
+  })
   ;
 }());
