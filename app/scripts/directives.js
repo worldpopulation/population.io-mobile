@@ -237,19 +237,28 @@
                 .append('g')
                 .attr({transform: 'translate(0,0)'});
 
-            var peoples = gridElement.selectAll('.people')
-                .append("g");
-
-            peoples.data(data)
+            var people = gridElement
+                .selectAll('.person')
+                .data(attrs.data)
                 .enter()
+                .append("g")
+                .attr({
+                  class: 'person',
+                  transform: function (d, i) {
+                    return 'translate(' + [parseInt(i / peopleWidth) * (peopleWidth + 2), parseInt(i / parseInt(width / peopleWidth))] + ')';
+
+                  }
+                });
+
+            var personBackRectangle = people
                 .append("rect")
                 .attr("width", peopleWidth)
-                .attr("height", peopleHeight)
-                .attr("x", function(d, i) {
-                  return parseInt(i/peopleWidth) * (peopleWidth+ 2);
-                })
-                .attr("y", function(d, i) {
-                  return parseInt(i/parseInt(width/peopleWidth));
+                .attr("height", peopleHeight);
+            var personLabel = people
+                .append("text")
+                .text(function (d, i) {return i})
+                .attr({fill: '#fff',
+                  transform: 'translate(5,20)'
                 });
           }
         }
