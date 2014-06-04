@@ -238,10 +238,8 @@
                 .attr({transform: 'translate(0,0)'});
 
             var peoples = gridElement.selectAll('.people')
-                .append("g");
-
-            peoples.data(data)
-                .enter()
+                .data(data)
+                .append("g")
                 .append("rect")
                 .attr("width", peopleWidth)
                 .attr("height", peopleHeight)
