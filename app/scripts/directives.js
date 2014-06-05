@@ -89,81 +89,80 @@
       return {
         restrict: 'E',
         link: function (scope, element, attrs, ngModel) {
-          var currentValue = 0;
+          var currentValue = 12345;
           var digits = ('' + currentValue).split('');
-          var clockElement = d3.select(element[0])
-            .append('svg')
-            .attr({
-              width: digits.length * 40,
-              height: 40,
-              style: 'margin: 60px 0 0 60px'
-            })
-            .append('g')
-            .attr({
-              transform: 'translate(0,0)'
-            });
+          var countElement;
+          _initWorldClock()
+          setInterval(_updateWorldClock, 2500);
 
-          var countElement = clockElement
-            .selectAll('.count-element')
-            .data(digits)
-            .enter()
-            .append('g')
-            .attr({
-              'class': 'count-element',
-              transform: function (d, i) {
-                return 'translate(' + [i * 40, 0] + ')';
-              }
-            });
+          function _initWorldClock() {
+            var clockElement = d3.select(element[0])
+              .append('svg')
+              .attr({
+                width: digits.length * 40,
+                height: 80,
+                style: 'margin: 60px 0 0 60px'
+              })
+              .append('g');
 
-          var digit = countElement
-            .append('g')
-            .attr('class', 'digit');
+            countElement = clockElement
+              .selectAll('.count-element')
+              .data(digits)
+              .enter()
+              .append('g')
+              .attr({
+                'class': 'count-element',
+                transform: function (d, i) {
+                  return 'translate(' + [i * 40, 0] + ')';
+                }
+              });
 
-          digit.append('rect')
-            .attr({
-              fill: 'transparent',
-              width: 39,
-              height: 40
-            });
+            var digit = countElement
+              .append('g')
+              .attr('class', 'digit');
 
-          var placeholder = countElement
-            .append('g')
-            .attr('class', 'placeholder')
-            .attr({
-              transform: 'translate(0,40)'
-            });
+            digit.append('rect')
+              .attr({
+                fill: 'transparent',
+                width: 39,
+                height: 40
+              });
 
-          placeholder.append('rect')
-            .attr({
-              fill: 'transparent',
-              width: 39,
-              height: 40
-            });
+            var placeholder = countElement
+              .append('g')
+              .attr('class', 'placeholder')
+              .attr({
+                transform: 'translate(0,40)'
+              });
 
-          digit.append('text')
-            .text(function (d) {
-              return d;
-            })
-            .attr({
-              transform: 'translate(20,30)'
-            });
+            placeholder.append('rect')
+              .attr({
+                fill: 'transparent',
+                width: 39,
+                height: 40
+              });
 
-          placeholder.append('text')
-            .text(function (d) {
-              return d;
-            })
-            .attr({
-              transform: 'translate(20,30)'
-            });
+            digit.append('text')
+              .text(function (d) {
+                return d;
+              })
+              .attr({
+                transform: 'translate(20,30)'
+              });
 
-          var updaterInterval = setInterval(function () {
-            if (currentValue > 8) {
-              currentValue = -1;
-            }
-            _updateSingleDigit(currentValue += 1);
-          }, 2500);
+            placeholder.append('text')
+              .text(function (d) {
+                return d;
+              })
+              .attr({
+                transform: 'translate(20,30)'
+              });
 
-          function _updateSingleDigit(newDigit) {
+          }
+
+          function _updateWorldClock() {
+            var digits = ('' + currentValue).split('');
+            console.log(currentValue)
             // countElement.select('.digit')
             // console.log(countElement[0][0])
             countElement.select('.digit')
@@ -173,7 +172,7 @@
                 transform: 'translate(0,-40)'
               });
             countElement.select('.placeholder text')
-              .text(newDigit);
+              .text(+currentValue++);
             countElement.select('.placeholder')
               .transition()
               .ease('bounce')
@@ -199,33 +198,33 @@
         }
       };
     })
-    .directive('babiesFlood', function () {
-      return {
-        restrict: 'E',
-        link: function (scope, element, attrs, ngModel) {
-          var currentValue = 0;
-          var digits = ('' + currentValue).split('');
-          var babiesArea = d3.select(element[0])
-            .append('svg')
-            .attr({
-              width: 100,
-              height: 100,
-              style: 'margin: 60px 0 0 60px'
-            })
-            .append('g')
-            .attr({
-              transform: 'translate(0,0)'
-            });
-          babiesArea.append("use")
-            .attr({"xlink:href": "#baby-boy"})
-          babiesArea.append("use")
-            .attr({"xlink:href": "#baby-girl",
-              transform: 'translate(60,0)'})
-
-
-        }
-      };
-    })
+//    .directive('babiesFlood', function () {
+//      return {
+//        restrict: 'E',
+//        link: function (scope, element, attrs, ngModel) {
+//          var currentValue = 0;
+//          var digits = ('' + currentValue).split('');
+//          var babiesArea = d3.select(element[0])
+//            .append('svg')
+//            .attr({
+//              width: 100,
+//              height: 100,
+//              style: 'margin: 60px 0 0 60px'
+//            })
+//            .append('g')
+//            .attr({
+//              transform: 'translate(0,0)'
+//            });
+//          babiesArea.append("use")
+//            .attr({"xlink:href": "#baby-boy"})
+//          babiesArea.append("use")
+//            .attr({"xlink:href": "#baby-girl",
+//              transform: 'translate(60,0)'})
+//
+//
+//        }
+//      };
+//    })
 
     .directive('peopleGrid', function (PeopleGridService, PopulationIOService) {
       return {
@@ -270,201 +269,201 @@
               d3.select(this).classed('highlight', false);
             });
 
-        person.append('rect')
+          person.append('rect')
+            .attr({
+              width: personWidth,
+              height: personHeight
+            });
+
+          person.append('text')
+            .text(function (d, i) { return i; })
+            .attr({
+              fill: '#fff',
+              'text-anchor': 'middle',
+              transform: 'translate(' + [
+                  personWidth / 2,
+                  personHeight / 2 + 4
+              ] + ')'
+            });
+        }
+      };
+    })
+
+    .directive('storyLine', function (StoryService) {
+
+      var highlightStoryLine = function (node) {
+        var translate = d3.select(node).attr('data-transform');
+        node.parentNode.appendChild(node);
+        d3.select(node)
+          .classed('highlight', true)
+          .transition()
           .attr({
-            width: personWidth,
-            height: personHeight
+            'transform': translate + ' scale(2.0)'
           });
+      };
 
-        person.append('text')
-          .text(function (d, i) { return i; })
+      var removeHighlightStoryLine = function (node) {
+        var translate = d3.select(node).attr('data-transform');
+        d3.select(node)
+          .classed('highlight', false)
+          .transition()
           .attr({
-            fill: '#fff',
-            'text-anchor': 'middle',
-            transform: 'translate(' + [
-              personWidth/2,
-              personHeight/2 + 4
-            ] + ')'
+            'transform': translate + ' scale(1.0)'
           });
-      }
-    };
-  })
+      };
 
-  .directive('storyLine', function (StoryService) {
+      return {
+        restrict: 'E',
+        controller: function ($scope) {
+          $scope.highlightStoryLine = function (year, highlight) {
+            var node = d3.select('.dot[data-id="' + year + '"]')[0][0];
 
-    var highlightStoryLine = function(node) {
-      var translate = d3.select(node).attr('data-transform');
-      node.parentNode.appendChild(node);
-      d3.select(node)
-        .classed('highlight', true)
-        .transition()
-        .attr({
-          'transform': translate + ' scale(2.0)'
-        });
-    };
-
-    var removeHighlightStoryLine = function(node) {
-      var translate = d3.select(node).attr('data-transform');
-      d3.select(node)
-        .classed('highlight', false)
-        .transition()
-        .attr({
-          'transform': translate + ' scale(1.0)'
-        });
-    };
-
-    return {
-      restrict: 'E',
-      controller: function($scope) {
-        $scope.highlightStoryLine = function(year, highlight) {
-          var node = d3.select('.dot[data-id="' + year + '"]')[0][0];
-
-          if (highlight) {
-            highlightStoryLine(node);
-          } else {
-            removeHighlightStoryLine(node);
-          }
-
-          $scope.$emit('highlightStoryLine', year, highlight);
-        };
-      },
-      link: function ($scope, element) {
-        var width = element.parent().width(),
-          height = element.parent().height(),
-          yearMax = 100,
-          yearMin = 0;
-
-        var data = StoryService.getData();
-
-        var _getTodayLength = function(data) {
-          for (var i=0; i<data.length; i+=1) {
-            if (data[i].now) {
-              return scale(_getYear(data[i]));
+            if (highlight) {
+              highlightStoryLine(node);
+            } else {
+              removeHighlightStoryLine(node);
             }
-          }
-          return null;
-        };
 
-        var _getYear = function(d) {
-          var zero = 0;
-          for (var i=0; i<data.length; i+=1) {
-            if (data[i].born) {
-              zero = data[i].year;
+            $scope.$emit('highlightStoryLine', year, highlight);
+          };
+        },
+        link: function ($scope, element) {
+          var width = element.parent().width(),
+            height = element.parent().height(),
+            yearMax = 100,
+            yearMin = 0;
+
+          var data = StoryService.getData();
+
+          var _getTodayLength = function (data) {
+            for (var i = 0; i < data.length; i += 1) {
+              if (data[i].now) {
+                return scale(_getYear(data[i]));
+              }
             }
-          }
-          return d.year - zero;
-        };
+            return null;
+          };
 
-        var _getEventCount = function(year) {
-          var count = 0;
-          for (var i=0; i<data.length; i+=1) {
-            if (data[i].year === year) {
-              count += 1;
+          var _getYear = function (d) {
+            var zero = 0;
+            for (var i = 0; i < data.length; i += 1) {
+              if (data[i].born) {
+                zero = data[i].year;
+              }
             }
-          }
-          return count;
-        };
+            return d.year - zero;
+          };
 
-        var root = d3.select(element[0])
-          .append('svg')
-          .attr({width: width, height: height})
-          .append('g')
-          .attr({transform: 'translate(0,0)'});
+          var _getEventCount = function (year) {
+            var count = 0;
+            for (var i = 0; i < data.length; i += 1) {
+              if (data[i].year === year) {
+                count += 1;
+              }
+            }
+            return count;
+          };
 
-        var bezierCurve = [
-          'M123,408c0,0,171.107,0,244,0s80.128-80,0-80s-252.637,0-309,0s-61.758-81',
-          ',0-81s239.45,0,310,0s71.732-80,0-80s-241.543,0-311,0s-70.812-81,0-81s2',
-          '39.121,0,310,0s74.088-80,0-80S122,6,122,6'
-        ].join('');
+          var root = d3.select(element[0])
+            .append('svg')
+            .attr({width: width, height: height})
+            .append('g')
+            .attr({transform: 'translate(0,0)'});
 
-        var path = root.append('path')
-          .attr('d', bezierCurve)
-          .style('stroke-width', 2)
-          .style('stroke', 'grey')
-          .style('fill', 'none');
+          var bezierCurve = [
+            'M123,408c0,0,171.107,0,244,0s80.128-80,0-80s-252.637,0-309,0s-61.758-81',
+            ',0-81s239.45,0,310,0s71.732-80,0-80s-241.543,0-311,0s-70.812-81,0-81s2',
+            '39.121,0,310,0s74.088-80,0-80S122,6,122,6'
+          ].join('');
 
-        var pathNode = path.node();
+          var path = root.append('path')
+            .attr('d', bezierCurve)
+            .style('stroke-width', 2)
+            .style('stroke', 'grey')
+            .style('fill', 'none');
+
+          var pathNode = path.node();
 
           var scale = d3.scale.linear()
             .domain([yearMin, yearMax])
             .range([0, pathNode.getTotalLength()]);
 
-        var pathOverlayLine = d3.svg.line()
-          .x(function(d) { return d.x; })
-          .y(function(d) { return d.y; })
-          .interpolate('linear');
+          var pathOverlayLine = d3.svg.line()
+            .x(function (d) { return d.x; })
+            .y(function (d) { return d.y; })
+            .interpolate('linear');
 
-        var pathOverlayData = [];
+          var pathOverlayData = [];
 
-        for (var i=0; i<_getTodayLength(data); i+=10) {
-          pathOverlayData.push(pathNode.getPointAtLength(i));
-        }
+          for (var i = 0; i < _getTodayLength(data); i += 10) {
+            pathOverlayData.push(pathNode.getPointAtLength(i));
+          }
 
-        root.append('path')
-          .attr('d', pathOverlayLine(pathOverlayData))
-          .attr('stroke', 'yellow')
-          .attr('stroke-width', 5)
-          .attr('fill', 'none');
+          root.append('path')
+            .attr('d', pathOverlayLine(pathOverlayData))
+            .attr('stroke', 'yellow')
+            .attr('stroke-width', 5)
+            .attr('fill', 'none');
 
-        var dot = root
-          .selectAll('.dot')
-          .data(function() {
-            var years = [],
-              filteredData = [];
+          var dot = root
+            .selectAll('.dot')
+            .data(function () {
+              var years = [],
+                filteredData = [];
 
-            for (var i=0; i<data.length; i+=1) {
-              if (years.indexOf(data[i].year) === -1) {
-                filteredData.push(data[i]);
-                years.push(data[i].year);
+              for (var i = 0; i < data.length; i += 1) {
+                if (years.indexOf(data[i].year) === -1) {
+                  filteredData.push(data[i]);
+                  years.push(data[i].year);
+                }
               }
-            }
 
-            return filteredData;
-          })
-          .enter()
-          .append('g')
-          .attr({
-            'data-id': function(d) {
-              return d.year;
-            },
-            'class': 'dot',
-            transform: function(d) {
-              var pos = pathNode.getPointAtLength(scale(_getYear(d)));
-              return 'translate(' + [ pos.x, pos.y ] + ')';
-            },
-            'data-transform': function() {
-              return d3.select(this).attr('transform');
-            }
-          })
-          .on('mouseover', function(d) {
-            highlightStoryLine(this);
-            $scope.$emit('highlightStoryLine', d.year, true);
-          })
-          .on('mouseout', function(d) {
-            removeHighlightStoryLine(this);
-            $scope.$emit('highlightStoryLine', d.year, false);
-          });
+              return filteredData;
+            })
+            .enter()
+            .append('g')
+            .attr({
+              'data-id': function (d) {
+                return d.year;
+              },
+              'class': 'dot',
+              transform: function (d) {
+                var pos = pathNode.getPointAtLength(scale(_getYear(d)));
+                return 'translate(' + [ pos.x, pos.y ] + ')';
+              },
+              'data-transform': function () {
+                return d3.select(this).attr('transform');
+              }
+            })
+            .on('mouseover', function (d) {
+              highlightStoryLine(this);
+              $scope.$emit('highlightStoryLine', d.year, true);
+            })
+            .on('mouseout', function (d) {
+              removeHighlightStoryLine(this);
+              $scope.$emit('highlightStoryLine', d.year, false);
+            });
 
-        dot.append('circle')
-          .attr({
-            r: function(d) {
-              return _getEventCount(d.year) > 1 ? 12 : 7;
-            }
-          });
+          dot.append('circle')
+            .attr({
+              r: function (d) {
+                return _getEventCount(d.year) > 1 ? 12 : 7;
+              }
+            });
 
-        dot.append('text')
-          .text(function(d) {
-            var count = _getEventCount(d.year);
-            if (count > 1) {
-              return count;
-            }
-          })
-          .attr({
-            'text-anchor': 'middle',
-            y: 3
-          });
-      }
-    };
-  })
+          dot.append('text')
+            .text(function (d) {
+              var count = _getEventCount(d.year);
+              if (count > 1) {
+                return count;
+              }
+            })
+            .attr({
+              'text-anchor': 'middle',
+              y: 3
+            });
+        }
+      };
+    })
   ;
 }());
