@@ -1,3 +1,16 @@
 .story-area(ng-show="currentPage > -1")
   h1 The story of your life in numbers and dates
-  story-line
+  div.col.ranks
+    h2 Ranks
+  div.col.timeline
+    h2 Timeline
+    ul
+      li(ng-repeat="item in timeline",
+        data-id="{{item.year}}",
+        ng-class="{'now': item.now, 'past': item.year < year, 'selected': selectedYear === item.year}",
+        ng-mouseover="highlightStoryLine(item.year, true)"
+        ng-mouseout="highlightStoryLine(item.year, false)")
+        span.year {{item.year}}
+        span.title {{item.title}}
+  div.col.storyline
+    story-line
