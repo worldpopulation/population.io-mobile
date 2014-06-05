@@ -22,8 +22,17 @@
 
   })
 
-  .controller('StoryCtrl', function ($scope, $rootScope) {
-    // TODO: PositionCtrl
+  .controller('StoryCtrl', function ($scope, $rootScope, $filter, StoryService) {
+
+    $scope.timeline = StoryService.getData();
+    $scope.year = parseInt($filter('date')(new Date(), 'yyyy'), 0);
+
+    $scope.$on('highlightStoryLine', function(e, year, highlight) {
+      $scope.selectedYear = highlight ? year : null;
+      if(!$scope.$$phase) {
+        $scope.$apply();
+      }
+    });
   })
 
   .controller('PositionCtrl', function ($scope, $rootScope) {
