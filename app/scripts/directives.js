@@ -274,7 +274,6 @@
           lineLength = width,
           yearMax = 100,
           yearMin = 0,
-          axisDelta = 5,
           margin = {
             top: 20,
             right: 20,
@@ -284,16 +283,12 @@
 
         var data = [
           { year: 5 },
-          { year: 50 },
+          { year: 50, me: true },
           { year: 82 },
           { year: 69 },
           { year: 74 },
           { year: 90 }
         ];
-
-        var scale = d3.scale.linear()
-          .domain([yearMin, yearMax])
-          .range([margin.left, width - margin.right]);
 
         var root = d3.select(element[0])
           .append('svg')
@@ -301,16 +296,50 @@
           .append('g')
           .attr({transform: 'translate(0,0)'});
 
-        var line = root
-          .append('line')
-          .attr({
-            x1: margin.left,
-            y1: 10,
-            x2: lineLength - margin.right,
-            y2: 10,
-            'stroke': 'red',
-            'stroke-width': 2
-          });
+        var bezierCurve = [
+          'M166,352.5h200c0,0,15.221-13.795,9.181-32.587',
+          's2.014-20.806-38.255-22.148s-168.457,0-168.457,0s-67.785',
+          '-23.49-22.147-29.53s183.892,0,187.248,0.671'
+        ].join('');
+
+        var path = root.append('path')
+          .attr('d', bezierCurve)
+          .style('stroke-width', 2)
+          .style('stroke', 'grey')
+          .style('fill', 'none');
+        var pathNode = path.node();
+
+        var scale = d3.scale.linear()
+          .domain([yearMin, yearMax])
+          .range([0, pathNode.getTotalLength()]);
+
+        var _getScaleTransformString = function(point, scale) {
+          return 'translate(' + [ point.x, point.y ] + ') scale(' + scale + ')';
+        };
+
+        var _getMeLength = function(data) {
+          for (var i=0; i<data.length; i+=1) {
+            if (data[i].me) {
+              return scale(data[i].year);
+            }
+          }
+          return null;
+        };
+
+        var pathOverlayLine = d3.svg.line()
+          .x(function(d) { return d.x; })
+          .y(function(d) { return d.y; })
+          .interpolate("linear");
+        var pathOverlayData = [];
+        for (var i=0; i<_getMeLength(data); i+=1) {
+          pathOverlayData.push(pathNode.getPointAtLength(i));
+        }
+        console.log(pathOverlayData)
+        root.append('path')
+          .attr('d', pathOverlayLine(pathOverlayData))
+          .attr('stroke', 'yellow')
+          .attr('stroke-width', 5)
+          .attr('fill', 'none');
 
         var dot = root
           .selectAll('.dot')
@@ -318,35 +347,52 @@
           .enter()
           .append('g')
           .attr({
-            'class': 'dot'
+            'class': 'dot',
+            transform: function(d) {
+              var pos = pathNode.getPointAtLength(scale(d.year));
+              return 'translate(' + [ pos.x, pos.y ] + ')';
+            }
+          })
+          .on('mouseover', function(d) {
+            d3.select(this)
+              .classed('highlight', true)
+              .transition()
+              .attr({
+                'transform': _getScaleTransformString(
+                  pathNode.getPointAtLength(scale(d.year)), '1.5'
+                )
+              });
+          })
+          .on('mouseout', function(d) {
+            d3.select(this)
+              .classed('highlight', false)
+              .transition()
+              .attr({
+                'transform': _getScaleTransformString(
+                  pathNode.getPointAtLength(scale(d.year)), '1.0'
+                )
+              });
           });
 
-        var dotCircle = dot
-          .append('circle')
+        dot.append('circle')
           .attr({
-            r: 10,
-            fill: 'blue',
-            transform: function(d) {
-              return 'translate(' + [
-                scale(d.year),
-                10
-              ] + ')';
+            r: function(d) {
+              return d.year > 50 ? 5 : 10;
             }
           });
 
-        for(var i=axisDelta; i<yearMax; i+=axisDelta) {
-          root.append('text')
-            .text(i)
-            .attr({
-              'text-anchor': 'middle',
-              transform: function() {
-                return 'translate(' + [
-                    scale(i),
-                    50
-                  ] + ')';
-                }
-            });
-        }
+        dot.append('text')
+          .text(function(d) {
+            if (d.year < 50) {
+              return 3;
+            }
+          })
+          .attr({
+            'text-anchor': 'middle',
+            y: function() {
+              return 3;
+            }
+          });
       }
     };
   })
