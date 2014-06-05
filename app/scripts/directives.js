@@ -273,19 +273,27 @@
           height = element.parent().height(),
           lineLength = width,
           yearMax = 100,
-          yearMin = 0;
+          yearMin = 0,
+          axisDelta = 5,
+          margin = {
+            top: 20,
+            right: 20,
+            bottom: 20,
+            left: 20
+          };
 
         var data = [
-          { year: 10 },
+          { year: 5 },
           { year: 50 },
           { year: 82 },
           { year: 69 },
-          { year: 74 }
+          { year: 74 },
+          { year: 90 }
         ];
 
         var scale = d3.scale.linear()
           .domain([yearMin, yearMax])
-          .range([0, width]);
+          .range([margin.left, width - margin.right]);
 
         var root = d3.select(element[0])
           .append('svg')
@@ -296,9 +304,9 @@
         var line = root
           .append('line')
           .attr({
-            x1: 0,
+            x1: margin.left,
             y1: 10,
-            x2: lineLength,
+            x2: lineLength - margin.right,
             y2: 10,
             'stroke': 'red',
             'stroke-width': 2
@@ -318,11 +326,27 @@
           .attr({
             r: 10,
             fill: 'blue',
-            cx: function(d) {
-              return scale(d.year);
-            },
-            cy: 10
+            transform: function(d) {
+              return 'translate(' + [
+                scale(d.year),
+                10
+              ] + ')';
+            }
           });
+
+        for(var i=axisDelta; i<yearMax; i+=axisDelta) {
+          root.append('text')
+            .text(i)
+            .attr({
+              'text-anchor': 'middle',
+              transform: function() {
+                return 'translate(' + [
+                    scale(i),
+                    50
+                  ] + ')';
+                }
+            });
+        }
       }
     };
   })
