@@ -210,13 +210,13 @@
           width = element.parent().width(),
           height = element.parent().height();
 
-        var gridElement = d3.select(element[0])
+        var root = d3.select(element[0])
           .append('svg')
           .attr({width: width, height: height})
           .append('g')
           .attr({transform: 'translate(0,0)'});
 
-        var person = gridElement
+        var person = root
           .selectAll('.person')
           .data(data)
           .enter()
@@ -260,6 +260,68 @@
               personWidth/2,
               personHeight/2 + 4
             ] + ')'
+          });
+      }
+    };
+  })
+
+  .directive('storyLine', function () {
+    return {
+      restrict: 'E',
+      link: function (scope, element) {
+        var width = element.parent().width(),
+          height = element.parent().height(),
+          lineLength = width,
+          yearMax = 100,
+          yearMin = 0;
+
+        var data = [
+          { year: 10 },
+          { year: 50 },
+          { year: 82 },
+          { year: 69 },
+          { year: 74 }
+        ];
+
+        var scale = d3.scale.linear()
+          .domain([yearMin, yearMax])
+          .range([0, width]);
+
+        var root = d3.select(element[0])
+          .append('svg')
+          .attr({width: width, height: height})
+          .append('g')
+          .attr({transform: 'translate(0,0)'});
+
+        var line = root
+          .append('line')
+          .attr({
+            x1: 0,
+            y1: 10,
+            x2: lineLength,
+            y2: 10,
+            'stroke': 'red',
+            'stroke-width': 2
+          });
+
+        var dot = root
+          .selectAll('.dot')
+          .data(data)
+          .enter()
+          .append('g')
+          .attr({
+            'class': 'dot'
+          });
+
+        var dotCircle = dot
+          .append('circle')
+          .attr({
+            r: 10,
+            fill: 'blue',
+            cx: function(d) {
+              return scale(d.year);
+            },
+            cy: 10
           });
       }
     };
