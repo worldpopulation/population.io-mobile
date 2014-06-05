@@ -33,6 +33,7 @@
         $scope.$apply();
       }
     });
+
   })
 
   .controller('PositionCtrl', function ($scope, $rootScope) {

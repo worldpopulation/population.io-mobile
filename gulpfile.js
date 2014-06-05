@@ -13,6 +13,7 @@ var gulp = require('gulp'),
       vendor: [
         'bower_components/jquery/dist/jquery.min.js',
         'bower_components/d3/d3.min.js',
+        'bower_components/topojson/topojson.js',
         'bower_components/angular/angular.min.js',
         'bower_components/angular-cookies/angular-cookies.min.js',
         'bower_components/angular-resource/angular-resource.min.js',

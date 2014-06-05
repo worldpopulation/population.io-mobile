@@ -466,5 +466,50 @@
       }
     };
   })
+
+  .directive('expectancyMap', function () {
+    return {
+      restrict: 'E',
+      controller: function($scope) {
+
+      },
+      link: function ($scope, element) {
+        var width = element.parent().width(),
+          height = element.parent().height();
+
+        var data = [];
+
+        var root = d3.select(element[0])
+          .append('svg')
+          .attr({width: width, height: height})
+          .append('g')
+          .attr({transform: 'translate(0,0)'});
+
+        var graticule = d3.geo.graticule();
+
+
+        var projection = d3.geo.mercator()
+          .translate([(width/2), (height/2)])
+          .scale( width / 2 / Math.PI);
+
+        var path = d3.geo.path().projection(projection);
+
+        d3.json('scripts/world-topo-min.json', function(error, world) {
+
+          var countries = topojson.feature(world, world.objects.countries).features;
+          var country = root.selectAll('.country').data(countries);
+
+          country.enter().insert('path')
+            .attr({
+              'class': 'country',
+              d: path,
+              id: function(d,i) { return d.id; },
+              title: function(d,i) { return d.properties.name; }
+            })
+            .style('fill', function(d, i) { return 'lime'; });
+        });
+      }
+    };
+  })
   ;
 }());
