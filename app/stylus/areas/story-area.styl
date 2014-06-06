@@ -1,33 +1,66 @@
 .story-area
   height 900px
-  .col
-    float left
-    &.ranks
-      width 20%
-    &.timeline
-      width 30%
-    &.storyline
-      width 50%
   .timeline
+    width 70%
+    position relative
+    float left
+    ul
+      width 320px
+      font-family 'sans-serif'
     li
-      padding 10px
+      padding 20px 20px 20px 94px
+      font-size 18px
       position relative
       &.selected
-        background #ccc
+        background #f3f3f3
         cursor pointer
       &:before
         position absolute
         content ''
-        background #ccc
+        background border-color
         left 0
         top 0
         height 100%
-        width 2px
-
+        width 4px
       &.past:before
-        background yellow
+        background highlight-yellow
       &.now:before
-        background #000
-    .year
-      padding-right 20px
+        background #333
+    .time
+      position absolute
+      top 50%
+      left 24px
+      margin-top -18px
+      height 36px
+      color: #666666
+      font-size 18px
+    .date
+      display block
       font-size 12px
+      width 60
+  .timeline:after
+    content ''
+    position absolute
+    right 40px
+    top 120px
+    bottom 0
+    border-right 1px solid border-color
+  story-line
+    position absolute
+    top 130px
+    left 340px
+
+  .rank
+    width 30%
+    float left
+    .title
+      margin 10px 0 0 0
+      font-size 18px
+      color #666666
+    .value
+      color #333333
+      font-size 36px
+      margin 0 0 40px 0
+    rank-graph
+      position relative
+      left -8px

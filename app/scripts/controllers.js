@@ -25,7 +25,11 @@
   .controller('StoryCtrl', function ($scope, $rootScope, $filter, StoryService) {
 
     $scope.timeline = StoryService.getData();
-    $scope.year = parseInt($filter('date')(new Date(), 'yyyy'), 0);
+    for (var i=0; i<$scope.timeline.length; i+=1) {
+      $scope.timeline[i].year = parseInt($filter('date')($scope.timeline[i].tstamp, 'yyyy'));
+    }
+
+    $scope.year = $filter('date')(new Date(), 'yyyy');
 
     $scope.$on('highlightStoryLine', function(e, year, highlight) {
       $scope.selectedYear = highlight ? year : null;
@@ -51,21 +55,10 @@
           name: country.properties.name
         });
       }
-
-      // buggy debug code
-      setTimeout(function() {
-        var indexRef = parseInt($scope.countries.length * Math.random(), 0);
-        $scope.selectedCountryRef = $scope.countries[indexRef];
-
-        var indexRel = parseInt($scope.countries.length * Math.random(), 0);
-        $scope.selectedCountryRel = $scope.countries[indexRel];
-
-        $scope.$apply();
-      }, 500);
     });
 
     var _getTestValue = function() {
-      return Math.round((50 * Math.random() + Math.random()) * 100) / 100;
+      return Math.round((50 * Math.random() + Math.random()) * 100) / 10;
     };
 
     $scope.$watch('selectedCountryRef', function(country) {

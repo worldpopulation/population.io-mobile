@@ -147,7 +147,7 @@
       };
     })
 
-    .directive('storyLine', function (StoryService) {
+    .directive('storyLine', function ($filter, StoryService) {
 
       var highlightStoryLine = function (node) {
         var translate = d3.select(node).attr('data-transform');
@@ -174,6 +174,7 @@
         restrict: 'E',
         controller: function ($scope) {
           $scope.highlightStoryLine = function (year, highlight) {
+            console.log(year)
             var node = d3.select('.dot[data-id="' + year + '"]')[0][0];
 
             if (highlight) {
@@ -192,6 +193,10 @@
             yearMin = 0;
 
           var data = StoryService.getData();
+
+          for (var i=0; i<data.length; i+=1) {
+            data[i].year = parseInt($filter('date')(data[i].tstamp, 'yyyy'), 0);
+          }
 
           var _getTodayLength = function (data) {
             for (var i = 0; i < data.length; i += 1) {
@@ -254,8 +259,8 @@
           var pathOverlayData = [];
           var todayLength = _getTodayLength(data);
 
-          for (var i = 0; i<todayLength; i += 20) {
-            pathOverlayData.push(pathNode.getPointAtLength(i));
+          for (var j=0; j<todayLength; j+=20) {
+            pathOverlayData.push(pathNode.getPointAtLength(j));
           }
           pathOverlayData.push(pathNode.getPointAtLength(todayLength));
 
@@ -330,7 +335,7 @@
       };
     })
 
-    .directive('expectancyMap', function (ExpectancyMapService) {
+    .directive('expectancyMap', function () {
       var root = null,
         height = 650;
 
@@ -501,6 +506,132 @@
                 title: function(d) { return d.properties.name; }
               });
           });
+        }
+      };
+    })
+
+    .directive('rankGraph', function () {
+      return {
+        restrict: 'E',
+        link: function ($scope, element) {
+          var width = 300,
+            height = 150;
+
+          var data = [
+            { age: 10, people: 100 },
+            { age: 20, people: 80 },
+            { age: 30, people: 90 },
+            { age: 33, people: 70 },
+            { age: 45, people: 65 },
+            { age: 50, people: 50 },
+            { age: 60, people: 20 },
+            { age: 80, people: 5 }
+          ];
+
+          var root = d3.select(element[0])
+            .append('svg')
+            .attr({
+              width: width,
+              height: height
+            })
+            .append('g')
+            .attr({transform: 'translate(0,0)'});
+
+          var x = d3.scale.linear()
+            .domain([
+              d3.min(data, function(d) { return d.age; }),
+              d3.max(data, function(d) { return d.age; })
+            ])
+            .range([0, width - 90]);
+
+          var y = d3.scale.linear()
+            .domain([
+              0,
+              d3.max(data, function(d) { return d.people; })
+            ])
+            .range([height, 90]);
+
+          var area = d3.svg.area()
+            .x(function(d) { return x(d.age); })
+            .y0(function() { return height; })
+            .y1(function(d) { return y(d.people); })
+            .interpolate('basis');
+
+          var frame = root.append('g')
+            .attr({
+              'class': 'frame',
+              transform: 'translate(' + [ 10, -10 ] + ')'
+            });
+
+          frame.append('line')
+            .attr({
+              'class': 'coord',
+              x1: 0,
+              x2: width - 50,
+              y1: height,
+              y2: height
+            });
+          frame.append('line')
+            .attr({
+              'class': 'coord',
+              x1: 0,
+              x2: 0,
+              y1: 70,
+              y2: height
+            });
+          frame.append('path')
+            .attr({
+              d: area(data)
+            });
+
+          frame.append('text')
+            .text('People')
+            .attr({
+              'class': 'people',
+              transform: function() {
+                return 'translate(' + [ 3, 50 ] + ') rotate(-90)';
+              }
+            });
+          frame.append('text')
+            .text('Age')
+            .attr({
+              'class': 'age',
+              transform: function() {
+                return 'translate(' + [ width - 10, height + 3 ] + ')';
+              }
+            });
+
+          var pointerPos = {
+            x: 40,
+            y: height - 30
+          };
+
+          var pointer = frame.append('g')
+            .attr({
+              'class': 'pointer',
+              transform: function() {
+                return 'translate(' + [pointerPos.x, pointerPos.y] + ')';
+              }
+            });
+
+          pointer.append('line')
+            .attr({
+              x1: 0,
+              y1: 0,
+              x2: width - pointerPos.x,
+              y2: 0
+            });
+          pointer.append('circle')
+            .attr({
+              r: 3
+            });
+          pointer.append('text')
+            .text('54%')
+            .attr({
+              transform: function() {
+                return 'translate(' + [width - pointerPos.x - 10, -10] + ')';
+              }
+            });
         }
       };
     })

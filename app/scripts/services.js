@@ -31,29 +31,29 @@
     return {
       getData: function() {
         return [{
-          year: 2051,
+          tstamp: new Date('2051/05/12').getTime(),
           title: 'Life expactancy in Germany'
         },{
-          year: 2044,
+          tstamp: new Date('2044/01/23').getTime(),
           title: 'Global life expactency'
         },{
-          year: 2014,
+          tstamp: new Date().getTime(),
           title: 'Now',
           now: true
         },{
-          year: 2001,
+          tstamp: new Date('2001/09/01').getTime(),
           title: 'You turned 18!'
         },{
-          year: 1991,
+          tstamp: new Date('1991/07/30').getTime(),
           title: '5th billion person'
         },{
-          year: 1986,
+          tstamp: new Date('1986/05/12').getTime(),
           title: '4th billion person'
         },{
-          year: 1986,
+          tstamp: new Date('1986/12/11').getTime(),
           title: 'First man on the moon'
         },{
-          year: 1972,
+          tstamp: new Date('1972/10/09').getTime(),
           title: 'Born',
           born: true
         }];
