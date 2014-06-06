@@ -353,24 +353,115 @@
     })
 
     .directive('expectancyMap', function (ExpectancyMapService) {
+      var root;
 
-      var highlightCountry = function(node) {
-        d3.select(node).style('fill', 'red');
+      var _addDescriptionLine = function(node, type, country, value) {
+        //d3.selectAll('.country').style('fill', 'lime');
+        var d3Node = d3.select(node),
+          bbox = d3Node[0][0].getBBox(),
+          width = root.node().parentNode.getBBox().width,
+          center = {
+            x: bbox.x + bbox.width/2,
+            y: bbox.y + bbox.height/2
+          };
+
+        d3.selectAll('.desc-' + type).remove();
+
+        d3.select('.country-active.country-' + type).classed('country-active', false);
+        d3Node.classed('country-active', true);
+        d3Node.classed('country-' + type, true);
+
+        var _getTextAnchor = function() {
+          return (type === 'ref') ? 'start' : 'end';
+        };
+
+        var desc = root.append('g')
+          .attr({
+            'class': 'desc desc-' + type,
+            transform: 'translate(' + [ center.x, center.y ] + ')'
+          });
+
+        desc.append('line')
+          .attr({
+            stroke: '#000',
+            'stroke-width': 1,
+            x1: 0,
+            y1: 0,
+            x2: 0,
+            y2: 0
+          })
+          .transition()
+          .duration(1000)
+          .attr({
+            x1: 0,
+            y1: 0,
+            x2: function() {
+              if (type === 'ref') {
+                return - center.x;
+              } else {
+                return root.node().parentNode.getBBox().width - center.x;
+              }
+            },
+            y2: 0
+          });
+
+        var textCnt = desc.append('g')
+          .attr({
+            transform: function() {
+              var pos = [];
+              if (type === 'ref') {
+                pos = [-center.x, 0];
+              } else {
+                pos = [root.node().parentNode.getBBox().width - center.x, 0];
+              }
+              return 'translate(' + pos + ')';
+            }
+          });
+
+        textCnt.append('text')
+          .text(value)
+          .attr({
+            'class': 'value',
+            'text-anchor': _getTextAnchor()
+          })
+          .transition()
+          .duration(1000)
+          .tween("text", function(d) {
+            console.log(value)
+            var i = d3.interpolate(0, value),
+              prec = (value + '').split('.'),
+              round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+
+            return function(t) {
+              this.textContent = Math.round(i(t) * round) / round;
+            };
+          });
+
+        textCnt.append('text')
+          .text('years in ' + country)
+          .attr({
+            'class': 'label',
+            'text-anchor': _getTextAnchor()
+          });
       };
 
       return {
         restrict: 'E',
         controller: function($scope) {
-          $scope.highlightCountry = function (id) {
+          $scope.highlightCountryRef = function (id, country, value) {
             var node = d3.select('.country[data-id="' + id + '"]')[0][0];
-            highlightCountry(node);
+            _addDescriptionLine(node, 'ref', country, value);
+          };
+          $scope.highlightCountryRel = function (id, country, value) {
+            var node = d3.select('.country[data-id="' + id + '"]')[0][0];
+            _addDescriptionLine(node, 'rel', country, value);
           };
         },
         link: function ($scope, element) {
           var width = element.parent().width(),
-            height = element.parent().height();
+            height = element.parent().height() - 200;
 
-          var root = d3.select(element[0])
+          root = d3.select(element[0])
             .append('svg')
             .attr({
               width: width,
@@ -380,7 +471,7 @@
             .attr({transform: 'translate(0,0)'});
 
           var projection = d3.geo.mercator()
-            .translate([(width/2), (height/2)])
+            .translate([(width/2), (height/2 + 50)])
             .scale( width / 2 / Math.PI);
 
           var path = d3.geo.path().projection(projection);
@@ -397,13 +488,7 @@
                 'data-id': function(d) { return d.id; },
                 title: function(d) { return d.properties.name; },
                 'stroke-width': 1,
-                'stroke': 'red'
-              })
-              .style({
-                'fill': function() { return 'lime'; }
-              })
-              .on('mouseover', function() {
-                // highlightCountry(this);
+                'stroke': '#fff'
               });
           });
         }

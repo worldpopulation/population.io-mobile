@@ -53,12 +53,20 @@
       }
     });
 
-    $scope.$watch('selectedCountry', function(country) {
+    var _getTestValue = function() {
+      return Math.round((50 * Math.random() + Math.random()) * 100) / 100;
+    };
+
+    $scope.$watch('selectedCountryRef', function(country) {
       if (country) {
-        $scope.highlightCountry(country.originalObject.id);
+        $scope.highlightCountryRef(country.originalObject.id, country.originalObject.name, _getTestValue());
       }
     });
-
+    $scope.$watch('selectedCountryRel', function(country) {
+      if (country) {
+        $scope.highlightCountryRel(country.originalObject.id, country.originalObject.name, _getTestValue());
+      }
+    });
   })
 
   .controller('ShareCtrl', function ($scope, $rootScope) {
