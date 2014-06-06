@@ -356,7 +356,6 @@
       var root;
 
       var _addDescriptionLine = function(node, type, country, value) {
-        //d3.selectAll('.country').style('fill', 'lime');
         var d3Node = d3.select(node),
           bbox = d3Node[0][0].getBBox(),
           width = root.node().parentNode.getBBox().width,
@@ -365,8 +364,8 @@
             y: bbox.y + bbox.height/2
           };
 
+        // reset previous lines and highlights
         d3.selectAll('.desc-' + type).remove();
-
         d3.select('.country-active.country-' + type).classed('country-active', false);
         d3Node.classed('country-active', true);
         d3Node.classed('country-' + type, true);
@@ -426,8 +425,7 @@
           })
           .transition()
           .duration(1000)
-          .tween("text", function(d) {
-            console.log(value)
+          .tween('text', function(d) {
             var i = d3.interpolate(0, value),
               prec = (value + '').split('.'),
               round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
