@@ -41,7 +41,24 @@
   })
 
   .controller('ExpectancyCtrl', function ($scope, $rootScope) {
-    // TODO: ExpectancyCtrl
+
+    d3.json('scripts/world-topo-min.json', function(error, world) {
+      $scope.countries = [];
+      for (var i=0; i<world.objects.countries.geometries.length; i+=1) {
+        var country = world.objects.countries.geometries[i];
+        $scope.countries.push({
+          id: country.id,
+          name: country.properties.name
+        });
+      }
+    });
+
+    $scope.$watch('selectedCountry', function(country) {
+      if (country) {
+        $scope.highlightCountry(country.originalObject.id);
+      }
+    });
+
   })
 
   .controller('ShareCtrl', function ($scope, $rootScope) {

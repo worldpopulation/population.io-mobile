@@ -466,26 +466,32 @@
       };
     })
 
-    .directive('expectancyMap', function () {
+    .directive('expectancyMap', function (ExpectancyMapService) {
+
+      var highlightCountry = function(node) {
+        d3.select(node).style('fill', 'red');
+      };
+
       return {
         restrict: 'E',
         controller: function($scope) {
-
+          $scope.highlightCountry = function (id) {
+            var node = d3.select('.country[data-id="' + id + '"]')[0][0];
+            highlightCountry(node);
+          };
         },
         link: function ($scope, element) {
           var width = element.parent().width(),
             height = element.parent().height();
 
-          var data = [];
-
           var root = d3.select(element[0])
             .append('svg')
-            .attr({width: width, height: height})
+            .attr({
+              width: width,
+              height: height
+            })
             .append('g')
             .attr({transform: 'translate(0,0)'});
-
-          var graticule = d3.geo.graticule();
-
 
           var projection = d3.geo.mercator()
             .translate([(width/2), (height/2)])
@@ -502,10 +508,17 @@
               .attr({
                 'class': 'country',
                 d: path,
-                id: function(d,i) { return d.id; },
-                title: function(d,i) { return d.properties.name; }
+                'data-id': function(d) { return d.id; },
+                title: function(d) { return d.properties.name; },
+                'stroke-width': 1,
+                'stroke': 'red'
               })
-              .style('fill', function(d, i) { return 'lime'; });
+              .style({
+                'fill': function() { return 'lime'; }
+              })
+              .on('mouseover', function() {
+                // highlightCountry(this);
+              });
           });
         }
       };

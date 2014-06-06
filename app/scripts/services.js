@@ -60,5 +60,9 @@
       }
     };
   })
+
+  .service('ExpectancyMapService', function() {
+    // TODO: ExpectancyMapService
+  })
   ;
 }());

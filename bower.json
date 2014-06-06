@@ -9,6 +9,7 @@
     "jquery": "latest",
     "d3": "latest",
     "topojson": "latest",
+    "angucomplete": "latest",
     "angular": "~1.2.16",
     "angular-resource": "~1.2.16",
     "angular-cookies": "~1.2.16",
