@@ -20,8 +20,30 @@ h1, h2, h3, h4, h5, h6, p
 h1
   font-size 2em
   color h1-color
+  font-size 36px
+  line-height 1.2em
+  font-family 'sans-serif'
+  font-weight normal
   span
     color h1-span-color
+
+h2
+  font-size 18px
+  font-weight normal
+  color #666666
+  padding-left 30px
+  position relative
+  margin 50px 0
+h2:before
+  content ''
+  position absolute
+  left 0
+  top 50%
+  margin-top -4px
+  width 8px
+  height 8px
+  border-radius 5px
+  background #333
 
 a
   text-decoration none

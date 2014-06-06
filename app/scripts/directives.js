@@ -263,10 +263,10 @@
           ].join('');
 
           var path = root.append('path')
-            .attr('d', bezierCurve)
-            .style('stroke-width', 2)
-            .style('stroke', 'grey')
-            .style('fill', 'none');
+            .attr({
+              'class': 'line',
+              d: bezierCurve
+            });
 
           var pathNode = path.node();
 
@@ -277,19 +277,26 @@
           var pathOverlayLine = d3.svg.line()
             .x(function (d) { return d.x; })
             .y(function (d) { return d.y; })
-            .interpolate('linear');
+            .interpolate('basis');
 
           var pathOverlayData = [];
+          var todayLength = _getTodayLength(data);
 
-          for (var i = 0; i < _getTodayLength(data); i += 10) {
+          for (var i = 0; i<todayLength; i += 20) {
             pathOverlayData.push(pathNode.getPointAtLength(i));
           }
+          pathOverlayData.push(pathNode.getPointAtLength(todayLength));
 
           root.append('path')
-            .attr('d', pathOverlayLine(pathOverlayData))
-            .attr('stroke', 'yellow')
-            .attr('stroke-width', 5)
-            .attr('fill', 'none');
+            .attr({
+              'class': 'line highlight',
+              d: pathOverlayLine(pathOverlayData)
+            });
+          root.append('path')
+            .attr({
+              'class': 'line small',
+              d: pathOverlayLine(pathOverlayData)
+            });
 
           var dot = root
             .selectAll('.dot')
@@ -333,7 +340,7 @@
           dot.append('circle')
             .attr({
               r: function (d) {
-                return _getEventCount(d.year) > 1 ? 12 : 7;
+                return _getEventCount(d.year) > 1 ? 15 : 6;
               }
             });
 
@@ -345,8 +352,7 @@
               }
             })
             .attr({
-              'text-anchor': 'middle',
-              y: 3
+              'text-anchor': 'middle'
             });
         }
       };
@@ -366,12 +372,6 @@
             y: bbox.y + bbox.height/2
           };
 
-        // reset previous lines and highlights
-        d3.selectAll('.desc-' + type).remove();
-        d3.select('.country-active.country-' + type).classed('country-active', false);
-        d3Node.classed('country-active', true);
-        d3Node.classed('country-' + type, true);
-
         var _textTween = function(node, label) {
           var value = node.innerHTML,
             i = d3.interpolate(0, value),
@@ -383,6 +383,19 @@
             node.textContent = text;
           };
         };
+
+        // handle overflow issue
+        if (center.y < 20) {
+          center.y = 20;
+        }
+        if (center.y > height - 20) {
+          center.y = height - 20;
+        }
+
+        // reset previous lines and highlights
+        d3.selectAll('.desc-' + type).remove();
+        d3.select('.country-active.country-' + type).classed('country-active', false);
+        d3Node.attr('class', 'country country-active country-' + type);
 
         var desc = root.append('g')
           .attr({
@@ -446,7 +459,10 @@
           });
 
         textBlock1.append('text').text('years of life left');
-        textBlock1.append('text').text('in ' + data.country);
+        textBlock1.append('text')
+          .text('in ')
+          .append('tspan')
+          .text(data.country);
 
         var textBlock2 = textCnt.append('g')
           .attr({
