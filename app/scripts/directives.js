@@ -84,34 +84,6 @@
         }
       };
     })
-//    .directive('babiesFlood', function () {
-//      return {
-//        restrict: 'E',
-//        link: function (scope, element, attrs, ngModel) {
-//          var currentValue = 0;
-//          var digits = ('' + currentValue).split('');
-//          var babiesArea = d3.select(element[0])
-//            .append('svg')
-//            .attr({
-//              width: 100,
-//              height: 100,
-//              style: 'margin: 60px 0 0 60px'
-//            })
-//            .append('g')
-//            .attr({
-//              transform: 'translate(0,0)'
-//            });
-//          babiesArea.append("use")
-//            .attr({"xlink:href": "#baby-boy"})
-//          babiesArea.append("use")
-//            .attr({"xlink:href": "#baby-girl",
-//              transform: 'translate(60,0)'})
-//
-//
-//        }
-//      };
-//    })
-
     .directive('peopleGrid', function (PeopleGridService, PopulationIOService) {
       return {
         restrict: 'E',
