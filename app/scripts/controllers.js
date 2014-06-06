@@ -51,6 +51,17 @@
           name: country.properties.name
         });
       }
+
+      // buggy debug code
+      setTimeout(function() {
+        var indexRef = parseInt($scope.countries.length * Math.random(), 0);
+        $scope.selectedCountryRef = $scope.countries[indexRef];
+
+        var indexRel = parseInt($scope.countries.length * Math.random(), 0);
+        $scope.selectedCountryRel = $scope.countries[indexRel];
+
+        $scope.$apply();
+      }, 500);
     });
 
     var _getTestValue = function() {
@@ -59,12 +70,20 @@
 
     $scope.$watch('selectedCountryRef', function(country) {
       if (country) {
-        $scope.highlightCountryRef(country.originalObject.id, country.originalObject.name, _getTestValue());
+        $scope.highlightCountryRef(country.id || country.originalObject.id, {
+          country: country.name || country.originalObject.name,
+          yearsLeft: _getTestValue(),
+          lifeExpectancy: _getTestValue()
+        });
       }
     });
     $scope.$watch('selectedCountryRel', function(country) {
       if (country) {
-        $scope.highlightCountryRel(country.originalObject.id, country.originalObject.name, _getTestValue());
+        $scope.highlightCountryRel(country.id || country.originalObject.id, {
+          country: country.name || country.originalObject.name,
+          yearsLeft: _getTestValue(),
+          lifeExpectancy: _getTestValue()
+        });
       }
     });
   })

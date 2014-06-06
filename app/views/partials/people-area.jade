@@ -1,4 +1,5 @@
 .people-area(ng-show="currentPage > 1")
-  h1 Your are the <span class="dark">{{ rank | number:0 }}</span> person born that's alive today!
+  header
+    h1 Your are the <span class="dark">{{ rank | number:0 }}</span> person born that's alive today!
   people-grid
   a(ng-click='showNextPage()') Next

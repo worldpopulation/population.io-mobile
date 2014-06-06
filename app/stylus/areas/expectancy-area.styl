@@ -1,70 +1,59 @@
 .expectancy-area
-  height 800px
-  .form-control
-    outline 0
-    border-color #ECECEC
-    border-style solid
-    border-width 1px
-    width 95%
-    background-color #ffffff
-    padding 6px
-    border-radius 2px
-    margin-bottom 5px
-    font-size 14px
-
-  .angucomplete-holder
-    position relative
-
-  .angucomplete-dropdown
-    border-color #ececec
-    border-width 1px
-    border-style solid
-    border-radius 2px
-    width 250px
-    padding 6px
-    cursor pointer
-    z-index 9999
-    position absolute
-    margin-top -6px
-    top 39px
-    left 0px
-    background-color #ffffff
-
-  .angucomplete-searching
-    color #acacac
-    font-size 14px
-
-  .angucomplete-description
+  height 900px
+  angucomplete
+    .form-control
+      outline 0
+      border 1px solid border-color
+      background-color #ffffff
+      padding 10px 12px
+      border-radius 4px
       font-size 14px
-
-  .angucomplete-row
-    padding 5px
-    color #000000
-    margin-bottom 4px
-
-  .angucomplete-selected-row,
-  .angucomplete-row:hover
-    background-color lightblue
-    color #ffffff
-
-
-  .angucomplete-image-holder
-    padding-top 2px
-    float left
-    margin-right 10px
-    margin-left 5px
-
-
-  .angucomplete-image
-    height 34px
-    width 34px
-    border-radius 50%
-    border-color #ececec
-    border-style solid
-    border-width 1px
-
-  .angucomplete-image-default
-    background-position center
-    background-size contain
-    height 34px
-    width 34px
+      width 200px
+    .angucomplete-holder
+      position relative
+      box-siting border-box
+    .angucomplete-dropdown
+      border 1px solid border-color
+      cursor pointer
+      z-index 9999
+      position absolute
+      border-radius 4px
+      top 43px
+      left 0px
+      right 0px
+      box-shadow 0 1px 1px rgba(0,0,0,0.2)
+      background-color #ffffff
+    .angucomplete-searching
+      color border-color
+      font-size 14px
+      padding 10px 12px
+    .angucomplete-row
+      padding 10px 12px
+      color p-color
+      font-size 14px
+    .angucomplete-selected-row,
+    .angucomplete-row:hover
+      background-color highlight-yellow
+    &.rel .angucomplete-selected-row,
+    &.rel .angucomplete-row:hover
+      background-color highlight-blue
+  .country-selection
+    margin 10px 0
+    padding 10px 0
+    width 70%
+    border-right 1px solid border-color
+    .icon,
+    angucomplete,
+    label
+      display inline-block
+      margin-right 20px
+    label
+      color p-color
+      font-size 14px
+    .icon
+      border-radius 20px
+      height 40px
+      width 40px
+      line-height 40px
+      vertical-align middle
+      background #333
