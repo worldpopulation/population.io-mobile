@@ -215,7 +215,7 @@
         },
         link: function ($scope, element) {
           var width = element.parent().width(),
-            height = element.parent().height(),
+            height = 450,
             yearMax = 100,
             yearMin = 0;
 
@@ -353,12 +353,14 @@
     })
 
     .directive('expectancyMap', function (ExpectancyMapService) {
-      var root;
+      var root = null,
+        height = 650;
 
-      var _addDescriptionLine = function(node, type, country, value) {
+      var _addDescriptionLine = function(node, type, data) {
         var d3Node = d3.select(node),
           bbox = d3Node[0][0].getBBox(),
           width = root.node().parentNode.getBBox().width,
+          textCntHeight = 170,
           center = {
             x: bbox.x + bbox.width/2,
             y: bbox.y + bbox.height/2
@@ -370,8 +372,16 @@
         d3Node.classed('country-active', true);
         d3Node.classed('country-' + type, true);
 
-        var _getTextAnchor = function() {
-          return (type === 'ref') ? 'start' : 'end';
+        var _textTween = function(node, label) {
+          var value = node.innerHTML,
+            i = d3.interpolate(0, value),
+            prec = (value + '').split('.'),
+            round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+
+          return function(t) {
+            var text = Math.round(i(t) * round)/round + (label ? ' ' + label : '');
+            node.textContent = text;
+          };
         };
 
         var desc = root.append('g')
@@ -382,8 +392,6 @@
 
         desc.append('line')
           .attr({
-            stroke: '#000',
-            'stroke-width': 1,
             x1: 0,
             y1: 0,
             x2: 0,
@@ -398,7 +406,7 @@
               if (type === 'ref') {
                 return - center.x;
               } else {
-                return root.node().parentNode.getBBox().width - center.x;
+                return width - center.x;
               }
             },
             y2: 0
@@ -406,58 +414,76 @@
 
         var textCnt = desc.append('g')
           .attr({
+            'class': 'text-' + type,
             transform: function() {
-              var pos = [];
+              var pos = [],
+                y = center.y + textCntHeight > height ? -textCntHeight : 0;
+
               if (type === 'ref') {
-                pos = [-center.x, 0];
+                pos = [-center.x, y];
               } else {
-                pos = [root.node().parentNode.getBBox().width - center.x, 0];
+                pos = [width - center.x, y];
               }
+
               return 'translate(' + pos + ')';
             }
           });
 
         textCnt.append('text')
-          .text(value)
+          .text(data.yearsLeft)
           .attr({
-            'class': 'value',
-            'text-anchor': _getTextAnchor()
+            'class': 'years-left'
           })
           .transition()
           .duration(1000)
-          .tween('text', function(d) {
-            var i = d3.interpolate(0, value),
-              prec = (value + '').split('.'),
-              round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
-
-            return function(t) {
-              this.textContent = Math.round(i(t) * round) / round;
-            };
+          .tween('text', function() {
+            return _textTween(this);
           });
 
-        textCnt.append('text')
-          .text('years in ' + country)
+        var textBlock1 = textCnt.append('g')
           .attr({
-            'class': 'label',
-            'text-anchor': _getTextAnchor()
+            'class': 'text-block'
           });
+
+        textBlock1.append('text').text('years of life left');
+        textBlock1.append('text').text('in ' + data.country);
+
+        var textBlock2 = textCnt.append('g')
+          .attr({
+            'class': 'text-block'
+          });
+
+        textBlock2.append('line')
+          .attr({
+            x1: 0,
+            y1: 0,
+            x2: 100 * (type === 'ref' ? 1 : -1),
+            y2: 0
+          });
+        textBlock2.append('text')
+          .text(data.lifeExpectancy)
+          .transition()
+          .duration(1000)
+          .tween('text', function() {
+            return _textTween(this, 'years');
+          });
+        textBlock2.append('text').text('life expectancy');
       };
 
       return {
         restrict: 'E',
         controller: function($scope) {
-          $scope.highlightCountryRef = function (id, country, value) {
+          $scope.highlightCountryRef = function (id, data) {
             var node = d3.select('.country[data-id="' + id + '"]')[0][0];
-            _addDescriptionLine(node, 'ref', country, value);
+            _addDescriptionLine(node, 'ref', data);
           };
-          $scope.highlightCountryRel = function (id, country, value) {
+          $scope.highlightCountryRel = function (id, data) {
             var node = d3.select('.country[data-id="' + id + '"]')[0][0];
-            _addDescriptionLine(node, 'rel', country, value);
+            _addDescriptionLine(node, 'rel', data);
           };
         },
         link: function ($scope, element) {
-          var width = element.parent().width(),
-            height = element.parent().height() - 200;
+          var width = element.parent().width();
 
           root = d3.select(element[0])
             .append('svg')
@@ -469,7 +495,7 @@
             .attr({transform: 'translate(0,0)'});
 
           var projection = d3.geo.mercator()
-            .translate([(width/2), (height/2 + 50)])
+            .translate([(width/2), (height/2)])
             .scale( width / 2 / Math.PI);
 
           var path = d3.geo.path().projection(projection);
@@ -484,9 +510,7 @@
                 'class': 'country',
                 d: path,
                 'data-id': function(d) { return d.id; },
-                title: function(d) { return d.properties.name; },
-                'stroke-width': 1,
-                'stroke': '#fff'
+                title: function(d) { return d.properties.name; }
               });
           });
         }

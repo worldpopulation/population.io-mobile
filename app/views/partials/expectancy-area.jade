@@ -1,23 +1,28 @@
 .expectancy-area(ng-show="currentPage > -1")
-  h1 Imagine you lived in a different country... <span>what would be your life expectancy?</span>
-  angucomplete(
-    placeholder="Country Ref",
-    pause="100",
-    selectedobject="selectedCountryRef",
-    localdata="countries",
-    searchfields="name",
-    titlefield="name",
-    minlength="1",
-    inputclass="form-control form-control-small"
-  )
-  angucomplete(
-    placeholder="Country Rel",
-    pause="100",
-    selectedobject="selectedCountryRel",
-    localdata="countries",
-    searchfields="name",
-    titlefield="name",
-    minlength="1",
-    inputclass="form-control form-control-small"
-  )
+  header
+    h1 Imagine you lived in a different country... what would be your <span>life expectancy?</span>
   expectancy-map
+  .country-selection
+    label Life expectancy in
+    angucomplete.ref(
+      placeholder="Country",
+      pause="100",
+      selectedobject="selectedCountryRef",
+      localdata="countries",
+      searchfields="name",
+      titlefield="name",
+      minlength="1",
+      inputclass="form-control"
+    )
+    .icon.icon-vs
+    label Life expectancy in
+    angucomplete.rel(
+      placeholder="Country",
+      pause="100",
+      selectedobject="selectedCountryRel",
+      localdata="countries",
+      searchfields="name",
+      titlefield="name",
+      minlength="1",
+      inputclass="form-control"
+    )
