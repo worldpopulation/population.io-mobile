@@ -19,10 +19,10 @@
   div.rank
     h2 Rank
     .global-rank
-      rank-graph
+      rank-graph(country="ALL")
       .title Your global rank
-      .value 4,035,182,598
+      .value {{rankGlobal | number:0 }}
     .local-rank
-      rank-graph
+      rank-graph(country="{{countryLocal}}")
       .title Your rank in Germany
-      .value 5,022,232,119
+      .value {{rankLocal | number:0 }}

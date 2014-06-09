@@ -815,23 +815,15 @@
       };
     })
 
-    .directive('rankGraph', function () {
+    .directive('rankGraph', function (RankGraphService) {
       return {
         restrict: 'E',
-        link: function ($scope, element) {
+        link: function ($scope, element, attr) {
           var width = 300,
             height = 150;
 
-          var data = [
-            { age: 10, people: 100 },
-            { age: 20, people: 80 },
-            { age: 30, people: 90 },
-            { age: 33, people: 70 },
-            { age: 45, people: 65 },
-            { age: 50, people: 50 },
-            { age: 60, people: 20 },
-            { age: 80, people: 5 }
-          ];
+          var data = RankGraphService.getData(attr.country);
+          var myAge = RankGraphService.getMyAge();
 
           var root = d3.select(element[0])
             .append('svg')
@@ -842,24 +834,30 @@
             .append('g')
             .attr({transform: 'translate(0,0)'});
 
-          var x = d3.scale.linear()
+          var percentPeopleScale = d3.scale.linear()
+             .domain([
+              0,
+              d3.sum(data, function (d) { return d.people; })
+            ])
+            .range([0,1])
+
+          var xScale = d3.scale.linear()
             .domain([
               d3.min(data, function (d) { return d.age; }),
               d3.max(data, function (d) { return d.age; })
             ])
             .range([0, width - 90]);
 
-          var y = d3.scale.linear()
+          var yScale = d3.scale.linear()
             .domain([
-              0,
-              d3.max(data, function (d) { return d.people; })
+              0, d3.max(data, function (d) { return d.people; })
             ])
             .range([height, 90]);
 
           var area = d3.svg.area()
-            .x(function (d) { return x(d.age); })
+            .x(function (d) { return xScale(d.age); })
             .y0(function () { return height; })
-            .y1(function (d) { return y(d.people); })
+            .y1(function (d) { return yScale(d.people); })
             .interpolate('basis');
 
           var frame = root.append('g')
@@ -906,16 +904,14 @@
               }
             });
 
-          var pointerPos = {
-            x: 40,
-            y: height - 30
-          };
+          var bisect = d3.bisector(function(d) { return d.age; }).right;
+          var item = data[bisect(data, myAge)];
 
           var pointer = frame.append('g')
             .attr({
               class: 'pointer',
               transform: function () {
-                return 'translate(' + [pointerPos.x, pointerPos.y] + ')';
+                return 'translate(' + [xScale(myAge), height - (height - yScale(item.people))/1.5] + ')';
               }
             });
 
@@ -923,7 +919,7 @@
             .attr({
               x1: 0,
               y1: 0,
-              x2: width - pointerPos.x,
+              x2: width - xScale(myAge),
               y2: 0
             });
           pointer.append('circle')
@@ -931,10 +927,12 @@
               r: 3
             });
           pointer.append('text')
-            .text('54%')
+            .text(function() {
+              return (Math.round(percentPeopleScale(item.people) * 1000) / 10) + '%';
+            })
             .attr({
               transform: function () {
-                return 'translate(' + [width - pointerPos.x - 10, -10] + ')';
+                return 'translate(' + [width - xScale(myAge) - 10, -10] + ')';
               }
             });
         }
@@ -971,19 +969,15 @@
             stepArr.push(stepWidth*j);
           }
 
-          // http://jsfromhell.com/array/nearest-number
-          function _getNearestNumberIdx(a, n){
-            if ((l = a.length) < 2)
-              return l - 1;
-            for (var l, p = Math.abs(a[--l] - n); l--;)
-              if (p < (p = Math.abs(a[l] - n)))
-                break;
-            return l + 1;
-          }
-
           var drag = d3.behavior.drag()
             .on('drag', function() {
-              var idx = _getNearestNumberIdx(stepArr, d3.event.x);
+              if (d3.event.x < 0 || d3.event.x > (width - (margin*2))) {
+                return;
+              }
+
+              var bisect = d3.bisector(function(d) { return d; }).left,
+                idx = bisect(stepArr, d3.event.x - handleRadius);
+
               d3.select(this)
                 .transition()
                 .duration(100)

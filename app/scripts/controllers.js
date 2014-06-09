@@ -38,6 +38,9 @@
       }
     });
 
+    $scope.countryLocal = 'Germany';
+    $scope.rankGlobal = 5022232119;
+    $scope.rankLocal = 8372629001;
   })
 
   .controller('BirthdaysCtrl', function ($scope, $rootScope) {
