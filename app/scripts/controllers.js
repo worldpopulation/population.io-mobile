@@ -40,8 +40,8 @@
 
   })
 
-  .controller('PositionCtrl', function ($scope, $rootScope) {
-    // TODO: PositionCtrl
+  .controller('BirthdaysCtrl', function ($scope, $rootScope) {
+    // TODO: BirthdaysCtrl
   })
 
   .controller('ExpectancyCtrl', function ($scope, $rootScope) {
