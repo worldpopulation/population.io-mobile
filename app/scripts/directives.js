@@ -635,5 +635,56 @@
         }
       };
     })
+
+    .directive('timeSlider', function () {
+      return {
+        restrict: 'E',
+        link: function ($scope, element) {
+          var width = 350,
+            height = 80;
+
+          var data = [];
+
+          var x = d3.scale.linear()
+            .domain([0, width])
+            .range([1999, 2022]);
+            console.log(x(340));
+          var  _dragMove = function(d) {
+            d3.select(this)
+              .attr('cx', d.x = d3.event.x)
+              .attr('cy', d.y = 20);
+          };
+
+          var drag = d3.behavior.drag()
+            .origin(Object)
+            .on('drag', _dragMove);
+
+          var root = d3.select(element[0])
+            .append('svg')
+            .attr({
+              width: width,
+              height: height
+            })
+            .append('g')
+            .attr({transform: 'translate(0,0)'});
+
+          var slider = root.append('g')
+            .data([{x: 20, y : 20}]);
+
+          slider.append('rect')
+            .attr('y', 20)
+            .attr('height', 2)
+            .attr('width', width)
+            .attr('fill', '#C0C0C0');
+
+          slider.append('circle')
+            .attr('r', 20)
+            .attr('cx', function(d) { return d.x; })
+            .attr('cy', function(d) { return d.y; })
+            .attr('fill', 'red')
+            .call(drag);
+        }
+      };
+    })
   ;
 }());

@@ -4,25 +4,25 @@
   expectancy-map
   .country-selection
     label Life expectancy in
-    angucomplete.ref(
-      placeholder="Country",
-      pause="100",
-      selectedobject="selectedCountryRef",
-      localdata="countries",
-      searchfields="name",
-      titlefield="name",
-      minlength="1",
-      inputclass="form-control"
-    )
+    .typeahead.ref
+      input(
+        type="text",
+        placeholder="Country",
+        ng-model="selectedCountryRef",
+        typeahead="country as country.name for country in countries | filter: {name:$viewValue}",
+        typeahead-wait-ms="100",
+        typeahead-editable="false"
+      )
     .icon.icon-vs
     label Life expectancy in
-    angucomplete.rel(
-      placeholder="Country",
-      pause="100",
-      selectedobject="selectedCountryRel",
-      localdata="countries",
-      searchfields="name",
-      titlefield="name",
-      minlength="1",
-      inputclass="form-control"
-    )
+    .typeahead.rel
+      input(
+        type="text",
+        placeholder="Country",
+        ng-model="selectedCountryRel",
+        typeahead="country as country.name for country in countries | filter: {name:$viewValue}",
+        typeahead-wait-ms="100",
+        typeahead-editable="false"
+      )
+  .time-slider
+    time-slider

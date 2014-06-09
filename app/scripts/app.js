@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('populationioApp', [ 'ngResource', 'ngRoute', 'angucomplete' ])
+  angular.module('populationioApp', [ 'ngResource', 'ngRoute', 'ui.bootstrap' ])
 
   .config(function ($routeProvider, $locationProvider) {
     // $routeProvider

@@ -15,7 +15,7 @@ var gulp = require('gulp'),
         'bower_components/d3/d3.min.js',
         'bower_components/topojson/topojson.js',
         'bower_components/angular/angular.min.js',
-        'bower_components/angucomplete/angucomplete.js',
+        'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
         'bower_components/angular-cookies/angular-cookies.min.js',
         'bower_components/angular-resource/angular-resource.min.js',
         'bower_components/angular-route/angular-route.min.js',
@@ -29,7 +29,10 @@ var gulp = require('gulp'),
       docs: 'app/views/pages/*.jade',
       partials: 'app/views/partials/**/*.jade',
       stylus: ['app/stylus/**/*.styl'],
-      style: ['bower_components/fontawesome/css/font-awesome.css', 'app/stylus/main.styl'],
+      style: [
+        'bower_components/fontawesome/css/font-awesome.css',
+        'app/stylus/main.styl'
+      ],
       overwatch: 'dist/**/*.*'
     },
     destinations = {
