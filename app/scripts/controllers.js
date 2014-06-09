@@ -62,7 +62,7 @@
     };
 
     $scope.$watch('selectedCountryRef', function(country) {
-      if (country) {
+      if (country instanceof Object) {
         $scope.highlightCountryRef(country.id || country.originalObject.id, {
           country: country.name || country.originalObject.name,
           yearsLeft: _getTestValue(),
@@ -70,8 +70,9 @@
         });
       }
     });
+
     $scope.$watch('selectedCountryRel', function(country) {
-      if (country) {
+      if (country instanceof Object) {
         $scope.highlightCountryRel(country.id || country.originalObject.id, {
           country: country.name || country.originalObject.name,
           yearsLeft: _getTestValue(),
@@ -79,6 +80,7 @@
         });
       }
     });
+
   })
 
   .controller('ShareCtrl', function ($scope, $rootScope) {

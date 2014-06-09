@@ -1,7 +1,8 @@
 .expectancy-area
   height 900px
-  angucomplete
-    .form-control
+  .typeahead
+    position relative
+    input
       outline 0
       border 1px solid border-color
       background-color #ffffff
@@ -9,44 +10,41 @@
       border-radius 4px
       font-size 14px
       width 200px
-    .angucomplete-holder
-      position relative
-      box-siting border-box
-    .angucomplete-dropdown
+    .dropdown-menu
       border 1px solid border-color
       cursor pointer
       z-index 9999
       position absolute
       border-radius 4px
-      top 43px
+      top 45px
       left 0px
       right 0px
       box-shadow 0 1px 1px rgba(0,0,0,0.2)
       background-color #ffffff
-    .angucomplete-searching
-      color border-color
-      font-size 14px
-      padding 10px 12px
-    .angucomplete-row
+    li
       padding 10px 12px
       color p-color
       font-size 14px
-    .angucomplete-selected-row,
-    .angucomplete-row:hover
+    li.active,
+    li:hover
       background-color highlight-yellow
-    &.rel .angucomplete-selected-row,
-    &.rel .angucomplete-row:hover
+    &.rel li.active,
+    &.rel li:hover
       background-color highlight-blue
   .country-selection
     margin 10px 0
     padding 10px 0
+    box-sizing border-box
     width 70%
+    float left
     border-right 1px solid border-color
     .icon,
-    angucomplete,
+    .typeahead,
     label
       display inline-block
       margin-right 20px
+    .typeahead:last-child
+      margin 0
     label
       color p-color
       font-size 14px
@@ -57,3 +55,7 @@
       line-height 40px
       vertical-align middle
       background #333
+  .time-slider
+    box-sizing border-box
+    width 30%
+    float left

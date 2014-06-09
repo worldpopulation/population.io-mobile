@@ -31,6 +31,7 @@
     "d3": true,
     "jQuery": true,
     "$": true,
-    "topojson": true
+    "topojson": true,
+    "Bloodhound": true
   }
 }
