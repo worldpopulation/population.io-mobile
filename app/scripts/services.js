@@ -5,16 +5,20 @@
 
   .service('PeopleGridService', function (PopulationIOService) {
     return {
-      getData: function() {
+      getData: function(pos) {
         var data = [];
-        for (var i=0; i<= 200; i+=1) {
-          var offset = 50 - i;
-          data.push({
-            rank: PopulationIOService.getRank() + offset,
-            sex: 'male'
-          });
+        for (var i=pos; i<= pos+250; i+=1) {
+          if (i < this.getWorldPopulation()) {
+            data.push({
+              rank: i,
+              sex: 'male'
+            });
+          }
         }
         return data;
+      },
+      getWorldPopulation: function() {
+        return 7168 * 1000000000;
       }
     };
   })
@@ -22,7 +26,7 @@
   .service('PopulationIOService', function () {
     return {
       getRank: function() {
-        return 1234567890;
+        return 5040123456789;
       }
     };
   })
