@@ -13,24 +13,54 @@
             parentWidth = element[0].offsetWidth,
             parentHeight = window.innerHeight - 300
             ;
+          chart = d3.select(element[0])
+            .append('svg')
+            .attr({
+              width: parentWidth,
+              height: parentHeight
+            });
+
+
           _initWorldClock();
+          _initMap();
           _initBabiesFlood();
           _initHelloBubble();
-          _sayHello();
           setInterval(_updateBabiesFlood, 3000);
           setInterval(_updateWorldClock, 3000);
           setInterval(_sayHello, 6000);
+          function _initMap() {
+            var width = 900;
+
+            var map = chart
+              .append('g')
+              .attr('class','world-clock-map')
+              .attr({transform: 'translate(300,20)'});
+
+            var projection = d3.geo.mercator()
+              .translate([(width / 2), 400])
+              .scale(900 / 2 / Math.PI);
+
+            var path = d3.geo.path().projection(projection);
+
+            d3.json('scripts/world-topo-min.json', function (error, world) {
+
+              var countries = topojson.feature(world, world.objects.countries).features;
+              var country = map.selectAll('.country').data(countries);
+
+              country.enter().insert('path')
+                .attr({
+                  class: 'country',
+                  d: path,
+                  'data-id': function (d) { return d.id; },
+                  title: function (d) { return d.properties.name; }
+                });
+            });
+          }
 
           function _initWorldClock() {
             currentValue = 7213007260;
             digits = ('' + currentValue).split('');
 
-            chart = d3.select(element[0])
-              .append('svg')
-              .attr({
-                width: parentWidth,
-                height: parentHeight
-              });
             var clip = chart.append("defs").append("svg:clipPath")
               .attr("id", "clip")
               .append("svg:rect")
@@ -176,6 +206,8 @@
               {},
               {},
               {},
+              {},
+              {},
               {}
             ];
             lastReborn = babiesList.length;
@@ -242,7 +274,7 @@
                 transform: function (d, i) {
                   if (i == babies[0].length - 1) {
                     d3.select(this).moveToBack()
-                    return 'translate(0,0)';
+                    return 'translate(-40,50)';
 
                   }
                   else {
@@ -315,7 +347,7 @@
                 var randomItem = _.random(0, helloWords.length - 1)
                 return helloWords[randomItem].greeting
               }
-              else{
+              else {
                 return 'Hello'
               }
 
