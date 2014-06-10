@@ -3,19 +3,50 @@ body > header
   width container-width
   max-width container-max-width
   margin 20px auto 0
-  border-bottom 1px solid #999
+  border-bottom 1px solid border-color
+  .world-population
+    float right
+    line-height 40px
+    border 1px solid border-color
+    padding 0 20px 0 45px
+    border-radius 5px
+    font-size 18px
+    margin 0 10px
+    color #666666
+    position relative
+  .world-population:before
+    content ''
+    position absolute
+    left 20px
+    top 10px
+    height 20px
+    width 20px
+    background-icon()
+    background-position -140px -240px
+  .profile
+    float right
+    line-height 40px
+    border-radius 5px
+    font-size 14px
+    padding 0 20px
+    margin 0 10px
+    background highlight-yellow
+    border 1px solid highlight-yellow
+    color #333333
+    cursor pointer
   .logo
     a
       display block
       float left
       line-height 50px
       font-weight 200
-      font-size 20px
-  ul.links-list
+      font-size 30px
+  ul.link-list
     float right
     li
       a
+        font-size 14px
         display block
         float left
-        line-height 50px
-        padding 0 0 0 20px
+        line-height 40px
+        padding 0 20px 0 20px

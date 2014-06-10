@@ -27,6 +27,9 @@
     return {
       getRank: function() {
         return 5040123456789;
+      },
+      getWorldPopulation: function() {
+        return 7168 * 1000000000;
       }
     };
   })

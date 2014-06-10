@@ -1,7 +1,9 @@
 header
   .logo
     a(href='#') Population.io
-  ul.links-list
+  ul.link-list
     li
       a(href='#') About
       a(href='#') Developers
+  .profile {{dateOfBirth | date:'dd MMM yyyy' }}, {{country}}
+  .world-population {{worldPopulation | number:0}}

@@ -1,3 +1,37 @@
 footer
   .container
-    p some content goes here
+    .block
+      h2.icon.icon-mail Keep me posted
+      p Send me every year on my<br/>birthday an update!
+      form.form-inline(name="form", novalidate)
+        input.form-control.input-dark(
+          type="email",
+          ng-model="email",
+          placeholder="your@email.com",
+          required
+        )
+        button.btn(
+          type="button",
+          ng-click="registerMail()",
+          ng-disabled="form.$invalid"
+        )
+    .block
+      h2.icon.icon-calendar Add your milestones to calendar
+      blockquote Watch out on June 4th becoming the 5th Billion<br/>person on earth
+      ul
+        li
+          a(href="#") Email
+        li
+          a(href="#") Yahoo Calendar
+        li
+          a(href="#") iCal
+    .block.small
+      h2 Share
+      a(href="#").icon.icon-fb Facebook
+      a(href="#").icon.icon-twitter Twitter
+      a(href="#") More
+    .block.small
+      h2 Want to know more?
+      a(href="#") Contact
+      a(href="#") Data
+      a(href="#") API

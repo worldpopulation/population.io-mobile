@@ -34,14 +34,18 @@ var gulp = require('gulp'),
         'bower_components/fontawesome/css/font-awesome.css',
         'app/stylus/main.styl'
       ],
-      overwatch: 'dist/**/*.*'
+      overwatch: 'dist/**/*.*',
+      images: [
+        'assets/sprite-icons.svg'
+      ]
     },
     destinations = {
       vendor: 'dist/vendor/',
       scripts: 'dist/scripts/',
       docs: 'dist/',
       partials: 'dist/partials',
-      css: 'dist/css/'
+      css: 'dist/css/',
+      images: 'dist/images/'
     };
 
 // server task
@@ -144,6 +148,11 @@ gulp.task('jade:watch', function (event) {
       .pipe(gulp.dest(destinations.docs));
 });
 
+gulp.task('images', function () {
+  return gulp.src(sources.images)
+    .pipe(gulp.dest(destinations.images));
+});
+
 gulp.task('fonts', function () {
   return gulp.src(['bower_components/fontawesome/fonts/fontawesome-webfont.*'])
       .pipe(gulp.dest('dist/fonts/'));
@@ -171,6 +180,7 @@ gulp.task('clean', function () {
 gulp.task('default', [
   'serve',
   'fonts',
+  'images',
   'jade:watch',
   'scripts:watch',
   'lint:watch',

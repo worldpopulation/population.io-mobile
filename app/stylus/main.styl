@@ -11,6 +11,7 @@
 @import 'areas/*'
 @import 'widgets/*'
 
+// section
 section
   header
     padding 40px 0
@@ -23,3 +24,45 @@ section
       float left
     h1:last-child
       text-align right
+  h2:before
+    content ''
+    position absolute
+    left 0
+    top 50%
+    margin-top -4px
+    width 8px
+    height 8px
+    border-radius 5px
+    background #333
+
+// form input fields
+::-webkit-input-placeholder
+  color #fff
+.form-inline
+  *
+    float left
+    margin-right 10px
+  *:last-child
+    margin-right 0px
+form
+  input.form-control
+    box-sizing border-box
+    font-size 14px
+    padding 12px
+    background #fff
+    border-radius 4px
+    border 1px solid border-color
+    outline none
+  input.form-control.input-dark
+    color #fff
+    background #666666
+button.btn
+  height 46px
+  width 46px
+  border none
+  background-icon()
+  background-position -228px -730px
+  cursor pointer
+*[disabled=disabled]
+  opacity 0.5
+  cursor default

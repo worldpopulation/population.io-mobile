@@ -3,13 +3,16 @@
 
   angular.module('populationioApp')
 
-  .controller('MainCtrl', function ($scope, $rootScope) {
+  .controller('MainCtrl', function ($scope, $rootScope, PopulationIOService) {
     $scope.showNextPage = function () {
       if ($rootScope.currentPage < 5) {
         $rootScope.currentPage += 1;
       }
     };
 
+    $scope.dateOfBirth = new Date();
+    $scope.worldPopulation = PopulationIOService.getWorldPopulation();
+    $scope.country = 'Germany';
   })
 
   .controller('StatsCtrl', function ($scope, $rootScope) {

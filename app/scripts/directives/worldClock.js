@@ -22,7 +22,7 @@
 
 
           _initWorldClock();
-          _initMap();
+          //_initMap();
           _initBabiesFlood();
           _initHelloBubble();
           setInterval(_updateBabiesFlood, 3000);

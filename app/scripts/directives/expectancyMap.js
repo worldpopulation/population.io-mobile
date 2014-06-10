@@ -167,7 +167,7 @@
 
             country.enter().insert('path')
               .attr({
-                class: 'country',
+                'class': 'country',
                 d: path,
                 'data-id': function (d) { return d.id; },
                 title: function (d) { return d.properties.name; }
