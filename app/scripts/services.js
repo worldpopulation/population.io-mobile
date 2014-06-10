@@ -35,11 +35,16 @@
             {rank: 500000207, name: 'Jane Doe', 'birthday': '1992-03-22', gender: 'female', country: 'Russia'}
           ];
         },
-        getRank: function (date) {
+        getRank: function () {
           return 5040123456789;
         },
         getWorldPopulation: function () {
           return 7168 * 1000000000;
+        },
+        getCountries: function() {
+          return [
+            'Germany', 'USA', 'Spain', 'France', 'Russia', 'Great Britian'
+          ];
         }
       };
     })

@@ -14,8 +14,9 @@
 
     $scope.dateOfBirth = new Date();
     $scope.worldPopulation = PopulationIOService.getWorldPopulation();
-    $scope.country = 'Germany';
 
+    $scope.selectedCountry = 'Germany';
+    $scope.countries = PopulationIOService.getCountries();
   })
 
   .controller('StatsCtrl', function ($scope, $rootScope) {

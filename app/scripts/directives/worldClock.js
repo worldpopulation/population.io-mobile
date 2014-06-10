@@ -8,10 +8,10 @@
         link: function (scope, element, attrs, ngModel) {
           var currentValue, digits, countElement, clockElement, digit, placeholder, digitText, placeholderText, chart,
             babiesArea, baby, babiesList, lastReborn, helloBubble, babyWidth, helloWords,
-            digitCellWidth = 20,
+            digitCellWidth = 26,
             animationDuration = 500,
             parentWidth = element[0].offsetWidth,
-            parentHeight =180
+            parentHeight = 180
             ;
           chart = d3.select(element[0])
             .append('svg')
@@ -72,15 +72,8 @@
 
             clockElement = chart.append('g').attr('class', 'counter')
               .attr({
-                'clip-path': 'url(#clip)',
-                transform: function () {
-                  var xOffset = 0;
-                  var yOffset = parentHeight - this.getBBox().height - 70;
-                  return 'translate(' + [xOffset, yOffset] + ')'
-
-                }
+                'clip-path': 'url(#clip)'
               });
-
 
             countElement = clockElement
               .selectAll('.count-element')
@@ -104,7 +97,6 @@
 
             placeholder.append('rect')
               .attr({
-//                fill: 'pink',
                 fill: 'transparent',
                 width: digitCellWidth,
                 height: 40
@@ -115,7 +107,7 @@
                 return d;
               })
               .attr({
-                transform: 'translate(' + digitCellWidth / 2 + ',30)'
+                transform: 'translate(' + digitCellWidth / 2 + ',35)'
               });
 
 
@@ -141,7 +133,7 @@
                 return d;
               })
               .attr({
-                transform: 'translate(' + digitCellWidth / 2 + ',30)'
+                transform: 'translate(' + digitCellWidth / 2 + ',35)'
               });
 
           }

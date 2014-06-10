@@ -96,14 +96,49 @@ section
     border-radius 5px
     background #333
 
+// typeahead
+.typeahead
+  position relative
+  input
+    outline 0
+    border 1px solid border-color
+    background-color #ffffff
+    padding 10px 12px
+    border-radius 4px
+    font-size 14px
+    width 200px
+  .dropdown-menu
+    border 1px solid border-color
+    cursor pointer
+    z-index 9999
+    position absolute
+    border-radius 4px
+    top 45px
+    left 0px
+    right 0px
+    box-shadow 0 1px 1px rgba(0,0,0,0.2)
+    background-color #ffffff
+  li
+    width 100%
+    box-sizing border-box
+    padding 10px 12px
+    color p-color
+    font-size 14px
+  li.active,
+  li:hover
+    background-color highlight-yellow
+  &.rel li.active,
+  &.rel li:hover
+    background-color highlight-blue
+
 // form input fields
 ::-webkit-input-placeholder
   color #fff
 .form-inline
-  *
+  > *
     float left
     margin-right 10px
-  *:last-child
+  > *:last-child
     margin-right 0px
 form
   input.form-control

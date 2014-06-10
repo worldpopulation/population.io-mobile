@@ -16,6 +16,7 @@
 
 4. start gulp
 
+		cd your/project/folder
 		gulp
 		open http://localhost:1983
 
