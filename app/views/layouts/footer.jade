@@ -3,7 +3,7 @@ footer
     .block
       h2.icon.icon-mail Keep me posted
       p Send me every year on my<br/>birthday an update!
-      form.form-inline(name="form", novalidate)
+      form.form-inline(name="emailForm", novalidate)
         input.form-control.input-dark(
           type="email",
           ng-model="email",
@@ -13,7 +13,7 @@ footer
         button.btn(
           type="button",
           ng-click="registerMail()",
-          ng-disabled="form.$invalid"
+          ng-disabled="emailForm.$invalid"
         )
     .block
       h2.icon.icon-calendar Add your milestones to calendar

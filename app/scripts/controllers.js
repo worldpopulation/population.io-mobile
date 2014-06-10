@@ -15,7 +15,7 @@
     $scope.dateOfBirth = new Date();
     $scope.worldPopulation = PopulationIOService.getWorldPopulation();
 
-    $scope.selectedCountry = 'Germany';
+    $scope.gender = 'female';
     $scope.countries = PopulationIOService.getCountries();
   })
 

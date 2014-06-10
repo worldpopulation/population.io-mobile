@@ -104,16 +104,17 @@ section
     border 1px solid border-color
     background-color #ffffff
     padding 10px 12px
-    border-radius 4px
+    border-radius 12px
     font-size 14px
     width 200px
   .dropdown-menu
+    overflow hidden
     border 1px solid border-color
     cursor pointer
     z-index 9999
     position absolute
-    border-radius 4px
-    top 45px
+    border-radius 12px
+    margin-top 5px
     left 0px
     right 0px
     box-shadow 0 1px 1px rgba(0,0,0,0.2)
@@ -132,8 +133,6 @@ section
     background-color highlight-blue
 
 // form input fields
-::-webkit-input-placeholder
-  color #fff
 .form-inline
   > *
     float left
@@ -146,19 +145,49 @@ form
     font-size 14px
     padding 12px
     background #fff
-    border-radius 4px
+    border-radius 12px
+    margin-top 0px
+    margin-bottom 0px
     border 1px solid border-color
     outline none
   input.form-control.input-dark
     color #fff
     background #666666
-button.btn
+    ::-webkit-input-placeholder
+      font-size 14px
+      color #fff
+.btn
   height 46px
   width 46px
   border none
   background-icon()
   background-position -228px -730px
   cursor pointer
+.btn.btn-big
+  height 120px
+  width 120px
+  background-position -300px -200px
 *[disabled=disabled]
   opacity 0.5
   cursor default
+.toggle
+  overflow hidden
+  label
+    border 1px solid border-color
+    float left
+    margin 0
+    font-size 14px
+    padding 0 20px
+    line-height 48px
+    height 48px
+    background #fff
+    cursor pointer
+  label:first-child
+    border-top-left-radius 12px
+    border-bottom-left-radius 12px
+  label:last-child
+    border-top-right-radius 12px
+    border-bottom-right-radius 12px
+  label.active
+    border 1px solid highlight-yellow
+    background highlight-yellow

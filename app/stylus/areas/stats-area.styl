@@ -11,5 +11,74 @@
       font-family Helvetica, 'sans-serif'
     p
       font-size 24px
-      margin 20px 0
+      margin 20px 0 40px 0
       color #666666
+  form
+    button
+      position relative
+      top -35px
+      left 10px
+    input
+      background highlight-yellow
+      border 1px solid highlight-yellow
+      width 240px
+      height 50px
+      padding 0 20px
+      margin 0
+    input.ng-valid-pattern + .popover
+      visibility hidden
+    .popover-inner
+      background #fff
+      border-radius 6px
+      left 20px
+      right 20px
+      position absolute
+      top -50px
+      padding 10px
+      font-size 12px
+      text-align center
+      box-sizing border-box
+      box-shadow 0 2px 15px rgba(0,0,0,0.25)
+    .popover.top > .arrow
+      left 50%
+      margin-left -11px
+      border-bottom-width 0
+      border-top-color #fff
+      top 0
+      z-index 10
+      margin-top -18px
+    .popover>.arrow
+      border-width 11px
+    .popover>.arrow,
+    .popover>.arrow:after
+      position absolute
+      display block
+      width 0
+      height 0
+      border-color transparent
+      border-style solid
+    .typeahead
+      margin 0 20px
+    .toggle
+      label
+        padding-right 60px
+    .icon
+      position relative
+      margin 0
+      input
+        padding-right 40px
+    .icon:after
+      content ''
+      height 40px
+      width 40px
+      position absolute
+      z-index 9
+      right 5px
+      top 4px
+      background-icon()
+    .icon.icon-birthday:after
+      background-position -35px -230px
+    .icon.icon-male:after
+      background-position -130px -330px
+    .icon.icon-female:after
+      background-position -30px -330px
