@@ -39,10 +39,12 @@
             navigation: true,
             css3: true,
             scrollOverflow: true,
-            verticalCentered: false
+            verticalCentered: false,
+            scrollingSpeed: 500
           });
 
-          $.fn.fullpage.moveTo(2);
+          $.fn.fullpage.moveTo(1);
+          $.fn.fullpage.setKeyboardScrolling(false);
 
           $scope.$on('pageChanged', function(e, page) {
             console.info('pageChanged', page)

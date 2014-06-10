@@ -1,0 +1,22 @@
+.container
+  .stats-area
+    world-clock
+      h3 Current world<br/>population clock
+    .question
+      h1 What's your place in the world?
+      p Demography is the study of human population. Let’s see how you fit in.<br/>What is your place and date of birth and gender?
+    form.form-inline
+      input.form-control(type="text", placeholder="Birthday (1987-11-30)")
+      .typeahead
+        input.form-control(
+          type="text",
+          placeholder="Country",
+          ng-model="selectedCountry",
+          typeahead="country for country in countries | filter: $viewValue",
+          typeahead-wait-ms="100",
+          typeahead-editable="false"
+        )
+      .btn-group
+        label(class="btn" ng-model="gender" btn-radio="'Left'", uncheckable) left1
+        label(class="btn" ng-model="gender" btn-radio="'Right'", uncheckable) right
+      button.btn.btn-big

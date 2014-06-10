@@ -128,13 +128,12 @@ gulp.task('jade', function (event) {
 
 // jade watch task for development
 gulp.task('jade:watch', function (event) {
-  watch({glob: sources.templates}, function (files) {
+  var _compileAll = function() {
     gulp.src(sources.partials)
         .pipe(plumber())
         .pipe(jade({
           pretty: true
         }))
-
         .pipe(gulp.dest(destinations.partials));
 
     gulp.src(sources.docs)
@@ -143,13 +142,19 @@ gulp.task('jade:watch', function (event) {
           pretty: true
         }))
         .pipe(gulp.dest(destinations.docs));
+  };
+
+  watch({glob: sources.templates}, function () {
+    _compileAll();
   });
-  watch({glob: sources.docs})
-      .pipe(plumber())
-      .pipe(jade({
-        pretty: true
-      }))
-      .pipe(gulp.dest(destinations.docs));
+
+  watch({glob: sources.partials}, function () {
+    _compileAll();
+  });
+
+  watch({glob: sources.docs}, function () {
+    _compileAll();
+  });
 });
 
 gulp.task('images', function () {

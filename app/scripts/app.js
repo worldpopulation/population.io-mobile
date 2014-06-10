@@ -5,10 +5,10 @@
 
   .config(function ($locationProvider, $routeProvider) {
     $routeProvider
-      .when('/:section/:year/:month/:day/:country', {
-        controller: 'MainCtrl',
-        template: ' '
-      });
+      // .when('/:year/:month/:day/:country/:section', {
+      //   controller: 'MainCtrl',
+      //   template: ' '
+      // });
     // $locationProvider.html5Mode(false);
   })
 

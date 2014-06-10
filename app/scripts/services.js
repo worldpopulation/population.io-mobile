@@ -30,11 +30,16 @@
             {name: 'Britney Spears', 'birthday': '1983-04-17'}
           ];
         },
-        getRank: function (date) {
+        getRank: function () {
           return 5040123456789;
         },
         getWorldPopulation: function () {
           return 7168 * 1000000000;
+        },
+        getCountries: function() {
+          return [
+            'Germany', 'USA', 'Spain', 'France', 'Russia', 'Great Britian'
+          ];
         }
       };
     })
