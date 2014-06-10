@@ -2,15 +2,23 @@ people-grid
   position relative
   top -15px
   .person
+    .icon
+      path
+        fill rgba(0, 0, 0, 0.2)
     text
       font-size 8px
       fill black
     rect
-      fill grey
-    &.highlight rect
-      fill lime
-    &.me rect
-      fill purple
+      fill rgba(0, 0, 0, 0)
+    &.highlight
+      rect
+        fill transparent
+      .icon
+        path
+          fill rgba(0, 0, 0, 1)
+    &.me
+      rect
+        fill purple
   .bar-chart
     transform translate(0, 15px)
     .bar
@@ -18,31 +26,30 @@ people-grid
         font-size 11px
         fill #333333
         text-anchor end
-    .bar.local
-      transform translate(0,10px)
-      text
-        transform translate(0,24px)
-      rect
-        fill #eee
-      rect.highlight
-        fill highlight-blue
-    .bar.world
-      rect
-        fill border-color
-      rect.highlight
-        fill highlight-yellow
-      text
-        transform translate(0,-7px)
+      &.local
+        transform translate(0, 10px)
+        text
+          transform translate(0, 24px)
+        rect
+          fill #eee
+        rect.highlight
+          fill highlight-blue
+      &.world
+        rect
+          fill border-color
+        rect.highlight
+          fill highlight-yellow
+        text
+          transform translate(0, -7px)
   .navigator
     transform translate(1000px, 100px)
     .title
-      transform translate(10px,20px)
+      transform translate(10px, 20px)
       font-size 12px
       fill #999999
     .blocks
-      transform translate(1px,30px)
-    .block.me
-      fill black
+      &.me
+        fill black
     .frame
       fill #ebebeb
     .lens
