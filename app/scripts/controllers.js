@@ -88,9 +88,5 @@
     });
 
   })
-
-  .controller('ShareCtrl', function ($scope, $rootScope) {
-    // TODO: ShareCtrl
-  })
   ;
 }());

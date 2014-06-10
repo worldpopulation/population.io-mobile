@@ -1,5 +1,6 @@
-.people-area(ng-show="currentPage > -1")
-  header.divided
-    h1 Your are the <span>{{ rank | number:0 }}</span> person<br/>born that's alive today <span>in the world</span>
-    h1 Your are the <span>{{ rank | number:0 }}</span> person<br/>born that's alive <span>in Germany</span>
-  people-grid
+.container
+  .people-area(ng-show="currentPage > -1")
+    header.divided
+      h1 Your are the <span>{{ rank | number:0 }}</span> person<br/>born that's alive today <span>in the world</span>
+      h1 Your are the <span>{{ rank | number:0 }}</span> person<br/>born that's alive <span>in Germany</span>
+    people-grid

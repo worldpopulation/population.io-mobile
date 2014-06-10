@@ -8,9 +8,11 @@ block content
       include ../../../assets/shapes-04.svg
       include ../../../assets/shapes-05.svg
       include ../../../assets/shapes-05-large.svg
-  section(ng-controller='StatsCtrl', stats-area, data-order='0')
-  section(ng-controller='PeopleCtrl', people-area, data-order='1')
-  section(ng-controller='StoryCtrl', story-area, data-order='2')
-  section(ng-controller='BirthdaysCtrl', birthdays-area, data-order='3')
-  section(ng-controller='ExpectancyCtrl', expectancy-area, data-order='4')
-  section(ng-controller='ShareCtrl', share-area, data-order='5')
+  one-page-scroll
+    section(ng-controller='StatsCtrl', stats-area)
+    section(ng-controller='PeopleCtrl', people-area)
+    section(ng-controller='StoryCtrl', story-area)
+    section(ng-controller='BirthdaysCtrl', birthdays-area)
+    section(ng-controller='ExpectancyCtrl', expectancy-area)
+    section
+      include ../layouts/footer

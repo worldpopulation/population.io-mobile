@@ -8,20 +8,19 @@ html(ng-app="populationioApp")
     meta(name="description", content="The World Population Project")
     //Place favicon.ico and apple-touch-icon.png in the root directory
     link(rel="stylesheet", href="css/main.css")
-body(ng-controller='MainCtrl', scroll-tracker)
+body(ng-controller='MainCtrl')
   include header
   block content
-  include footer
 
   script(src='vendor/jquery.min.js')
   script(src='vendor/d3.min.js')
   script(src='vendor/lodash.min.js')
   script(src='vendor/topojson.js')
+  script(src='vendor/jquery.onepage-scroll.min.js')
 
   script(src='vendor/angular.min.js')
   script(src='vendor/angular-resource.min.js')
   script(src='vendor/angular-route.min.js')
-
   script(src='vendor/ui-bootstrap-tpls.min.js')
 
   script(src='scripts/directives/d3Utils.js')

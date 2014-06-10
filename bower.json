@@ -9,6 +9,7 @@
     "jquery": "latest",
     "d3": "latest",
     "topojson": "latest",
+    "onepage-scroll": "latest",
     "angular-bootstrap": "latest",
     "angular": "~1.2.16",
     "angular-resource": "~1.2.16",

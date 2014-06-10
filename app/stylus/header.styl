@@ -1,9 +1,14 @@
 body > header
-  clearfix()
-  width container-width
-  max-width container-max-width
-  margin 20px auto 0
-  border-bottom 1px solid border-color
+  background rgba(255,255,255,0.8)
+  position fixed
+  z-index 10
+  width 100%
+  .container
+    clearfix()
+    border-bottom 1px solid border-color
+    height 80px
+    box-sizing border-box
+    padding 30px 0 0 0
   .world-population
     float right
     line-height 40px
@@ -38,7 +43,7 @@ body > header
     a
       display block
       float left
-      line-height 50px
+      line-height 40px
       font-weight 200
       font-size 30px
   ul.link-list

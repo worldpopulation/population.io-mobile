@@ -1,28 +1,29 @@
-.expectancy-area(ng-show="currentPage > -1")
-  header
-    h1 Imagine you lived in a different country... what would be your <span>life expectancy?</span>
-  expectancy-map
-  .country-selection
-    label Life expectancy in
-    .typeahead.ref
-      input(
-        type="text",
-        placeholder="Country",
-        ng-model="selectedCountryRef",
-        typeahead="country as country.name for country in countries | filter: {name:$viewValue}",
-        typeahead-wait-ms="100",
-        typeahead-editable="false"
-      )
-    .icon.icon-vs
-    label Life expectancy in
-    .typeahead.rel
-      input(
-        type="text",
-        placeholder="Country",
-        ng-model="selectedCountryRel",
-        typeahead="country as country.name for country in countries | filter: {name:$viewValue}",
-        typeahead-wait-ms="100",
-        typeahead-editable="false"
-      )
-  .time-slider
-    time-slider
+.container
+  .expectancy-area(ng-show="currentPage > -1")
+    header
+      h1 Imagine you lived in a different country... what would be your <span>life expectancy?</span>
+    expectancy-map
+    .country-selection
+      label Life expectancy in
+      .typeahead.ref
+        input(
+          type="text",
+          placeholder="Country",
+          ng-model="selectedCountryRef",
+          typeahead="country as country.name for country in countries | filter: {name:$viewValue}",
+          typeahead-wait-ms="100",
+          typeahead-editable="false"
+        )
+      .icon.icon-vs
+      label Life expectancy in
+      .typeahead.rel
+        input(
+          type="text",
+          placeholder="Country",
+          ng-model="selectedCountryRel",
+          typeahead="country as country.name for country in countries | filter: {name:$viewValue}",
+          typeahead-wait-ms="100",
+          typeahead-editable="false"
+        )
+    .time-slider
+      time-slider
