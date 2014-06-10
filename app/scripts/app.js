@@ -3,13 +3,13 @@
 
   angular.module('populationioApp', [ 'ngResource', 'ngRoute', 'ui.bootstrap' ])
 
-  .config(function ($routeProvider, $locationProvider) {
-    // $routeProvider
-    //   .when('/', {
-    //     templateUrl: 'partials/main.html',
-    //     controller: 'MainCtrl'
-    //    });
-    $locationProvider.html5Mode(true);
+  .config(function ($locationProvider, $routeProvider) {
+    $routeProvider
+      .when('/:section/:year/:month/:day/:country', {
+        controller: 'MainCtrl',
+        template: ' '
+      });
+    // $locationProvider.html5Mode(false);
   })
 
   .run(function ($rootScope, $location) {

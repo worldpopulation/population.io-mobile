@@ -11,7 +11,7 @@
             digitCellWidth = 20,
             animationDuration = 500,
             parentWidth = element[0].offsetWidth,
-            parentHeight = window.innerHeight - 300
+            parentHeight =140
             ;
           chart = d3.select(element[0])
             .append('svg')

@@ -1,29 +1,29 @@
 .container
-  .story-area(ng-show="currentPage > -1")
+  .story-area
     header
       h1 The story of your life in numbers and dates...  Watch out on <span>June 4th</span> becoming the <span>5th Billion</span> person on earth!
 
-    div.timeline
-      h2 Timeline
-      ul
-        li(ng-repeat="item in timeline",
-          data-id="item.year",
-          ng-class="{'now': item.now, 'past': item.year < year, 'selected': selectedYear === item.year}",
-          ng-mouseover="highlightStoryLine(item.year, true)"
-          ng-mouseout="highlightStoryLine(item.year, false)")
-          span.time
-            span.date {{item.tstamp | date: 'dd MMM' }}
-            span.year {{item.tstamp | date: 'yyyy' }}
-          span.title {{item.title}}
-      story-line
+      div.timeline
+        h2 Timeline
+        ul
+          li(ng-repeat="item in timeline",
+            data-id="item.year",
+            ng-class="{'now': item.now, 'past': item.year < year, 'selected': selectedYear === item.year}",
+            ng-mouseover="highlightStoryLine(item.year, true)"
+            ng-mouseout="highlightStoryLine(item.year, false)")
+            span.time
+              span.date {{item.tstamp | date: 'dd MMM' }}
+              span.year {{item.tstamp | date: 'yyyy' }}
+            span.title {{item.title}}
+        story-line
 
-    div.rank
-      h2 Rank
-      .global-rank
-        rank-graph(country="ALL")
-        .title Your global rank
-        .value {{rankGlobal | number:0 }}
-      .local-rank
-        rank-graph(country="{{countryLocal}}")
-        .title Your rank in Germany
-        .value {{rankLocal | number:0 }}
+      div.rank
+        h2 Rank
+        .global-rank
+          rank-graph(country="ALL")
+          .title Your global rank
+          .value {{rankGlobal | number:0 }}
+        .local-rank
+          rank-graph(country="{{countryLocal}}")
+          .title Your rank in Germany
+          .value {{rankLocal | number:0 }}

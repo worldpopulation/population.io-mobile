@@ -31,15 +31,21 @@
       };
     })
 
-    .directive('onePageScroll', function () {
+    .directive('onePageScroll', function ($location, $routeParams) {
       return {
         restrict: 'E',
-        link: function (scope, element) {
-          $(element[0]).onepage_scroll({
-            sectionContainer: 'section',
-            easing: 'ease',
-            animationTime: 1000,
-            pagination: true
+        link: function ($scope, element) {
+          $(element[0]).fullpage({
+            navigation: true,
+            css3: true,
+            scrollOverflow: true,
+            verticalCentered: false
+          });
+
+          $.fn.fullpage.moveTo(2);
+
+          $scope.$on('pageChanged', function(e, page) {
+            console.info('pageChanged', page)
           });
         }
       };
