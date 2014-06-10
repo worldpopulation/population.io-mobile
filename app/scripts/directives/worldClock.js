@@ -2,10 +2,10 @@
   'use strict';
 
   angular.module('populationioApp')
-    .directive('worldClock', function () {
+    .directive('worldClock', function (PopulationIOService) {
       return {
         restrict: 'E',
-        link: function (scope, element, attrs, ngModel) {
+        link: function ($scope, element, attrs, ngModel) {
           var currentValue, digits, countElement, clockElement, digit, placeholder, digitText, placeholderText, chart,
             babiesArea, baby, babiesList, lastReborn, helloBubble, babyWidth, helloWords,
             digitCellWidth = 26,
@@ -58,7 +58,7 @@
           }
 
           function _initWorldClock() {
-            currentValue = 7213007260;
+            currentValue = PopulationIOService.getWorldPopulation();
             digits = ('' + currentValue).split('');
 
             var clip = chart.append("defs").append("svg:clipPath")
@@ -141,6 +141,8 @@
           function _updateWorldClock() {
             currentValue++;
             var digits = ('' + currentValue).split('');
+
+            PopulationIOService.setWorldPopulation(currentValue);
 
             placeholderText.text(function (d, i) { return digits[i] });
             digit.each(function (d, i) {

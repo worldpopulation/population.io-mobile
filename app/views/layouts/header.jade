@@ -1,10 +1,13 @@
 header
   .container
     .logo
-      a(href='#') Population.io
+      a(href='#', ng-click="showHomepage()") Population.io
     ul.link-list
       li
         a(href='#') About
         a(href='#') Developers
-    .profile {{dateOfBirth | date:'dd MMM yyyy' }}, {{selectedCountry}}
-    .world-population {{worldPopulation | number:0}}
+    .profile.animate(
+      ng-show="activeIndex > 1",
+      ng-click="showHomepage()"
+    ) {{profile.birthday | date:'dd MMM yyyy' }}, {{profile.country}}
+    .world-population.animate(ng-show="activeIndex > 1") {{worldPopulation | number:0}}

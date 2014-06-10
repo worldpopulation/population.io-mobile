@@ -40,10 +40,16 @@
             css3: true,
             scrollOverflow: true,
             verticalCentered: false,
-            scrollingSpeed: 500
+            scrollingSpeed: 500,
+            afterLoad: function(anchorLink, index) {
+              $scope.activeIndex = index;
+              $scope.$apply();
+            },
           });
 
           $.fn.fullpage.moveTo(1);
+
+          $.fn.fullpage.setAllowScrolling(false);
           $.fn.fullpage.setKeyboardScrolling(false);
 
           $scope.$on('pageChanged', function(e, page) {

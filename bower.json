@@ -12,6 +12,7 @@
     "fullpage.js": "latest",
     "angular-bootstrap": "latest",
     "angular": "~1.2.16",
+    "angular-animate": "~1.2.16",
     "angular-resource": "~1.2.16",
     "angular-cookies": "~1.2.16",
     "angular-sanitize": "~1.2.16",

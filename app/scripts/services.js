@@ -5,6 +5,7 @@
 
     .service('PeopleGridService', function (PopulationIOService) {
       return {
+        worldPopulation: (7168 * 1000000000),
         getData: function (pos) {
           var data = [];
           for (var i = pos; i <= pos + 250; i += 1) {
@@ -17,14 +18,24 @@
           }
           return data;
         },
-        getWorldPopulation: function () {
-          return 7168 * 1000000000;
+        getWorldPopulation: function() {
+          return this.worldPopulation;
         }
       };
     })
 
-    .service('PopulationIOService', function () {
+    .service('ProfileService', function() {
       return {
+        gender: 'female',
+        birthday: '1987-05-28',
+        country: 'Germany',
+        active: false
+      };
+    })
+
+    .service('PopulationIOService', function ($rootScope) {
+      return {
+        worldPopulation: (7168 * 1000000000),
         getCelebrities: function (startRank) {
           console.log('startRank: ' + startRank);
           return [
@@ -38,8 +49,12 @@
         getRank: function () {
           return 5040123456789;
         },
+        setWorldPopulation: function(worldPopulation) {
+          this.worldPopulation = worldPopulation;
+          $rootScope.$emit('populationChanged');
+        },
         getWorldPopulation: function () {
-          return 7168 * 1000000000;
+          return this.worldPopulation;
         },
         getCountries: function() {
           return [

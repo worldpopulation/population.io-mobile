@@ -12,7 +12,7 @@
           popover="Birthday (YYYY-MM-DD)",
           type="text",
           name="birthday",
-          ng-model="birthday"
+          ng-model="profile.birthday"
           placeholder="Birthday (1987-11-30)",
           ng-pattern="/^((19|20)\\d\\d)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/",
           required
@@ -21,16 +21,17 @@
         input.form-control(
           type="text",
           placeholder="Country",
-          ng-model="selectedCountry",
+          ng-model="profile.country",
           typeahead="country for country in countries | filter: $viewValue",
           typeahead-wait-ms="100",
           typeahead-editable="false",
           required
         )
       .toggle
-        label(class="icon icon-female", ng-model="gender" btn-radio="'female'", required) Female
-        label(class="icon icon-male", ng-model="gender" btn-radio="'male'", required) Male
+        label(class="icon icon-female", ng-model="profile.gender" btn-radio="'female'", required) Female
+        label(class="icon icon-male", ng-model="profile.gender" btn-radio="'male'", required) Male
       button.btn.btn-big(
         ng-click="goGoGadget()",
-        ng-disabled="goForm.$invalid"
+        ng-class="{'loading': loading}"
+        ng-disabled="goForm.$invalid || loading"
       )

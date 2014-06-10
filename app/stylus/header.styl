@@ -3,6 +3,17 @@ body > header
   position fixed
   z-index 10
   width 100%
+  overflow hidden
+  .animate.ng-hide-add,
+  .animate.ng-hide-remove
+    transition all ease 250ms
+    display block !important
+  .animate.ng-hide-add.ng-hide-add-active,
+  .animate.ng-hide-remove
+    transform translate3d(0,80px,0)
+  .animate.ng-hide-add,
+  .animate.ng-hide-remove.ng-hide-remove-active
+    transform translate3d(0,0,0)
   .container
     clearfix()
     border-bottom 1px solid border-color

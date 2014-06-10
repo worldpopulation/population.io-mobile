@@ -7,7 +7,7 @@
         restrict: 'A',
         templateUrl: 'partials/birthdays-area.html',
         link: function (scope, element, attrs, ngModel) {
-          var parentWidth = element[0].clientWidth,
+          var parentWidth = 1200,
             parentHeight = 700;
           var continentsData = [
             {countryAbbr: 'PO', countryTitle: 'Poland', value: 500},

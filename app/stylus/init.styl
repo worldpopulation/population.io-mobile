@@ -50,6 +50,7 @@ one-page-scroll
     cursor pointer
     background rgba(0,0,0,0.2) !important
 #fullPage-nav
+  display none
   span
     width 6px
     height 6px
@@ -63,7 +64,9 @@ one-page-scroll
     height 10px
     background #fff
     border 1px solid #999
-
+.active
+  #fullPage-nav
+    display block
 
 .container
   width container-width
@@ -89,8 +92,7 @@ section
     content ''
     position absolute
     left 0
-    top 50%
-    margin-top -4px
+    top 7px
     width 8px
     height 8px
     border-radius 5px
@@ -163,10 +165,26 @@ form
   background-icon()
   background-position -228px -730px
   cursor pointer
+  outline none
 .btn.btn-big
   height 120px
   width 120px
   background-position -300px -200px
+.btn.loading
+  animation breath-animation 2s infinite ease
+
+@keyframes breath-animation
+  0%
+    transform scale(1.0)
+  50%
+    transform scale(0.8)
+  0%
+    transform scale(1.0)
+  50%
+    transform scale(0.8)
+  0%
+    transform scale(1.0)
+
 *[disabled=disabled]
   opacity 0.5
   cursor default

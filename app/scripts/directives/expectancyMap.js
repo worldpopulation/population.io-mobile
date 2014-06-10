@@ -4,12 +4,12 @@
   angular.module('populationioApp')
     .directive('expectancyMap', function () {
       var root = null,
-        height = 650;
+        height = 500;
 
       var _addDescriptionLine = function (node, type, data) {
         var d3Node = d3.select(node),
           bbox = d3Node[0][0].getBBox(),
-          width = root.node().parentNode.getBBox().width,
+          width = 1200,//root.node().parentNode.getBBox().width,
           textCntHeight = 170,
           center = {
             x: bbox.x + bbox.width / 2,
@@ -143,7 +143,7 @@
           };
         },
         link: function ($scope, element) {
-          var width = element.parent().width();
+          var width = 1200;
 
           root = d3.select(element[0])
             .append('svg')
@@ -156,7 +156,7 @@
 
           var projection = d3.geo.mercator()
             .translate([(width / 2), (height / 2)])
-            .scale(width / 2 / Math.PI);
+            .scale(width / 2 / Math.PI * 0.75);
 
           var path = d3.geo.path().projection(projection);
 

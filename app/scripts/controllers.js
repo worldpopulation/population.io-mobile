@@ -3,7 +3,7 @@
 
   angular.module('populationioApp')
 
-  .controller('MainCtrl', function ($scope, $routeParams, PopulationIOService) {
+  .controller('MainCtrl', function ($scope, $rootScope, $routeParams, ProfileService, PopulationIOService) {
     $scope.showNextPage = function () {
       if ($rootScope.currentPage < 5) {
         $rootScope.currentPage += 1;
@@ -12,15 +12,44 @@
 
     $scope.$emit('pageChanged', $routeParams.section);
 
-    $scope.dateOfBirth = new Date();
+    $scope.profile = ProfileService;
     $scope.worldPopulation = PopulationIOService.getWorldPopulation();
 
-    $scope.gender = 'female';
-    $scope.countries = PopulationIOService.getCountries();
+    $rootScope.$on('populationChanged', function() {
+      $scope.worldPopulation = PopulationIOService.getWorldPopulation();
+      $scope.$apply();
+    });
+
+    $scope.showHomepage = function() {
+      $.fn.fullpage.moveTo(1);
+    };
   })
 
-  .controller('StatsCtrl', function ($scope, $rootScope) {
-    // TODO: StatsCtrl
+  .controller('StatsCtrl', function ($scope, $rootScope, PopulationIOService) {
+
+    $scope.$watch('goForm.$invalid', function(invalid) {
+      if (invalid) {
+        $scope.profile.active = false;
+        $.fn.fullpage.setAllowScrolling(false);
+        $.fn.fullpage.setKeyboardScrolling(false);
+      }
+    });
+
+    $scope.goGoGadget = function() {
+      $scope.profile.active = false;
+      $scope.loading = true;
+
+      setTimeout(function() {
+        $scope.loading = false;
+        $scope.profile.active = true;
+        $.fn.fullpage.setAllowScrolling(true);
+        $.fn.fullpage.setKeyboardScrolling(true);
+        $.fn.fullpage.moveTo(2);
+      }, 3000);
+    };
+
+    $scope.countries = PopulationIOService.getCountries();
+
   })
 
   .controller('PeopleCtrl', function ($scope, $rootScope, PopulationIOService, $interval) {
