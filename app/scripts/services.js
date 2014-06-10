@@ -25,9 +25,14 @@
 
     .service('PopulationIOService', function () {
       return {
-        getCelebrities: function () {
+        getCelebrities: function (startRank) {
+          console.log('startRank: ' + startRank);
           return [
-            {name: 'Britney Spears', 'birthday': '1983-04-17'}
+            {rank: 500000110, name: 'Britney Spears', 'birthday': '1983-04-17', gender: 'female', country: 'USA'},
+            {rank: 500000136, name: 'John Doe', 'birthday': '1984-05-17', gender: 'male', country: 'Austria'},
+            {rank: 500000004, name: 'Max Payne', 'birthday': '1985-03-22', gender: 'male', country: 'USA'},
+            {rank: 500000152, name: 'Patrick Bateman', 'birthday': '1974-03-22', gender: 'male', country: 'Germany'},
+            {rank: 500000207, name: 'Jane Doe', 'birthday': '1992-03-22', gender: 'female', country: 'Russia'}
           ];
         },
         getRank: function () {
