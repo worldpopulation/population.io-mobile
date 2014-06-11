@@ -9,7 +9,7 @@
           var width = 380,
             height = 80,
             handleRadius = 11,
-            range = 20,
+            range = 50,
             margin = 30,
             currentYear = parseInt((new Date()).getFullYear(), 0);
 

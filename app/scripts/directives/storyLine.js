@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('populationioApp')
-    .directive('storyLine', function ($filter, StoryService) {
+    .directive('storyLine', function ($filter) {
 
       var highlightStoryLine = function (node) {
         var translate = d3.select(node).attr('data-transform');
@@ -47,7 +47,7 @@
             yearMax = 100,
             yearMin = 0;
 
-          var data = StoryService.getData();
+          var data = [];// StoryService.getData();
 
           for (var i = 0; i < data.length; i += 1) {
             data[i].year = parseInt($filter('date')(data[i].tstamp, 'yyyy'), 0);

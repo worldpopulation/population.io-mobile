@@ -19,10 +19,10 @@
     div.rank
       h2 Rank
       .global-rank
-        rank-graph(country="ALL")
+        rank-graph(country="ALL", data="globalRankData")
         .title Your global rank
         .value {{rankGlobal | number:0 }}
       .local-rank
-        rank-graph(country="{{countryLocal}}")
-        .title Your rank in Germany
+        rank-graph(country="{{countryLocal}}", data="localRankData")
+        .title Your rank in {{country}}
         .value {{rankLocal | number:0 }}

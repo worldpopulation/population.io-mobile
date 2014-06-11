@@ -40,7 +40,7 @@
           month: $filter('date')(birthday, 'MM'),
           day: $filter('date')(birthday, 'dd'),
           country: ProfileService.country,
-          state: 'expectancy'
+          state: 'story'
         });
       });
     });
@@ -112,12 +112,12 @@
 
   })
 
-  .controller('StoryCtrl', function ($scope, $rootScope, $filter, StoryService) {
+  .controller('StoryCtrl', function ($scope, $rootScope, $filter, ProfileService, PopulationIOService) {
 
-    $scope.timeline = StoryService.getData();
-    for (var i=0; i<$scope.timeline.length; i+=1) {
-      $scope.timeline[i].year = parseInt($filter('date')($scope.timeline[i].tstamp, 'yyyy'));
-    }
+    // //$scope.timeline = StoryService.getData();
+    // for (var i=0; i<$scope.timeline.length; i+=1) {
+    //   $scope.timeline[i].year = parseInt($filter('date')($scope.timeline[i].tstamp, 'yyyy'));
+    // }
 
     $scope.year = $filter('date')(new Date(), 'yyyy');
 
@@ -128,9 +128,38 @@
       }
     });
 
-    $scope.countryLocal = 'Germany';
-    $scope.rankGlobal = 5022232119;
-    $scope.rankLocal = 8372629001;
+    PopulationIOService.loadPopulation({
+      year: $filter('date')(new Date(), 'yyyy'),
+      country: ProfileService.country
+    }, function(data) {
+      $scope.localRankData = data;
+    });
+
+    PopulationIOService.loadPopulation({
+      year: $filter('date')(new Date(), 'yyyy'),
+      country: 'World'
+    }, function(data) {
+      $scope.globalRankData = data;
+    });
+
+    // TODO: refactor me, duplicate code, people controller
+    PopulationIOService.loadWpRankToday({
+      dob: ProfileService.birthday,
+      sex: ProfileService.gender,
+      country: ProfileService.country
+    }, function(rank) {
+      $scope.rankLocal = rank;
+    });
+
+    PopulationIOService.loadWpRankToday({
+      dob: ProfileService.birthday,
+      sex: ProfileService.gender,
+      country: 'World'
+    }, function(rank) {
+      $scope.rankGlobal = rank;
+    });
+
+    $scope.country = ProfileService.country;
   })
 
   .controller('BirthdaysCtrl', function ($scope, $rootScope) {
