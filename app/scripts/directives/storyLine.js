@@ -117,12 +117,13 @@
             }
             pathOverlayData.push(pathNode.getPointAtLength(todayLength));
 
+            root.selectAll('.line.highlight').remove();
             root.append('path')
               .attr({
                 'class': 'line highlight',
                 d: pathOverlayLine(pathOverlayData)
               });
-            root.selectAll('.line.small').append('path')
+            root.append('path')
               .attr({
                 'class': 'line small',
                 d: pathOverlayLine(pathOverlayData)
