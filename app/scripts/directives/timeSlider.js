@@ -9,7 +9,7 @@
           var width = 380,
             height = 80,
             handleRadius = 11,
-            range = 50,
+            range = 40,
             margin = 30,
             currentYear = parseInt((new Date()).getFullYear(), 0);
 
@@ -120,7 +120,7 @@
           axis.append('text')
             .text(function(d, i) {
               if (i%4 === 0 || i === data.length-1) {
-                return d.year;
+                return '\'' + (d.year + '').substring(2,4);
               }
             })
             .attr({

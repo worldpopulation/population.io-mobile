@@ -2,14 +2,14 @@
   'use strict';
 
   angular.module('populationioApp')
-    .directive('worldClock', function (PopulationIOService) {
+    .directive('worldClock', function ($filter, PopulationIOService) {
       return {
         restrict: 'E',
         link: function ($scope, element, attrs, ngModel) {
           var currentValue, digits, countElement, clockElement, digit, placeholder, digitText, placeholderText, chart,
             babiesArea, baby, babiesList, lastReborn, helloBubble, babyWidth, helloWords,
             digitCellWidth = 26,
-            animationDuration = 500,
+            animationDuration = 300,
             parentWidth = element[0].offsetWidth,
             parentHeight = 180
             ;
@@ -25,9 +25,10 @@
           //_initMap();
           _initBabiesFlood();
           _initHelloBubble();
-          setInterval(_updateBabiesFlood, 3000);
-          setInterval(_updateWorldClock, 3000);
+
+          setInterval(_updateWorldClock, 1000);
           setInterval(_sayHello, 6000);
+
           function _initMap() {
             var width = 900;
 
@@ -58,7 +59,9 @@
           }
 
           function _initWorldClock() {
-            currentValue = PopulationIOService.getWorldPopulation();
+            currentValue = $filter('number')(
+              PopulationIOService.getWorldPopulation(), 0
+            );
             digits = ('' + currentValue).split('');
 
             var clip = chart.append("defs").append("svg:clipPath")
@@ -90,7 +93,7 @@
             placeholder = countElement
               .append('g')
               .attr({
-                class: 'placeholder',
+                'class': 'placeholder',
                 'data-id': function (d, i) {return i},
                 transform: 'translate(0,40)'
               });
@@ -139,7 +142,9 @@
           }
 
           function _updateWorldClock() {
-            currentValue++;
+            currentValue = $filter('number')(
+              PopulationIOService.getWorldPopulation(), 0
+            );
             var digits = ('' + currentValue).split('');
 
             PopulationIOService.setWorldPopulation(currentValue);
@@ -151,7 +156,6 @@
 
                 _digit = d3.select(this);
                 _placeholder = d3.select('.placeholder[data-id="' + i + '"]');
-
 
                 _digit
                   .transition()
@@ -172,6 +176,7 @@
                   });
 
                 setTimeout(function () {
+                  _updateBabiesFlood();
                   _digit.attr('transform', 'translate(0,0)')
                   _placeholder.attr('transform', 'translate(0,40)')
                   digitText.text(function (d, i) { return digits[i] });
@@ -240,7 +245,8 @@
               var xOffset = parentWidth - this.getBBox().width - 50;
               var yOffset = parentHeight - this.getBBox().height - 40;
               return 'translate(' + [xOffset, yOffset] + ')'
-            })
+            });
+            _updateBabiesFlood();
           }
 
 

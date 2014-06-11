@@ -61,7 +61,15 @@
           $rootScope.$emit('populationChanged');
         },
         getWorldPopulation: function () {
-          return this.worldPopulation;
+          var p2013 = 7203304915; // from api?
+          var p2014 = 7211239210; // from api?
+          var growthRate = Math.log(p2014/p2013)/(365*24*60*60);
+          var start = new Date(2013,7,1,12,0,0,0);
+          var now = new Date();
+          var dif = now.getTime() - start.getTime();
+          var diffSec = dif/1000;
+
+          return parseInt(p2013 * Math.pow((1+growthRate), diffSec), 0);
         },
 
         // GET /api/1.0/countries/

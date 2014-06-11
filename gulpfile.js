@@ -38,6 +38,7 @@ var gulp = require('gulp'),
         'bower_components/fullpage.js/jquery.fullPage.css',
         'app/stylus/main.styl'
       ],
+      fonts: 'fonts/**',
       overwatch: 'dist/**/*.*',
       images: [
         'assets/sprite-icons.svg'
@@ -163,8 +164,10 @@ gulp.task('images', function () {
 });
 
 gulp.task('fonts', function () {
-  return gulp.src(['bower_components/fontawesome/fonts/fontawesome-webfont.*'])
+  gulp.src(['bower_components/fontawesome/fonts/fontawesome-webfont.*'])
       .pipe(gulp.dest('dist/fonts/'));
+  gulp.src(sources.fonts)
+    .pipe(gulp.dest('dist/fonts/'));
 });
 
 // jshint task
