@@ -5,16 +5,16 @@
     div.timeline
       h2 Timeline
       ul
-        li(ng-repeat="item in timeline",
+        li(ng-repeat="item in storyLineData | orderBy: '-year'",
           data-id="item.year",
           ng-class="{'now': item.now, 'past': item.year < year, 'selected': selectedYear === item.year}",
-          ng-mouseover="highlightStoryLine(item.year, true)"
-          ng-mouseout="highlightStoryLine(item.year, false)")
+          ng-mouseover="highlightStoryLine(item.year)"
+          ng-mouseout="highlightStoryLine()")
           span.time
-            span.date {{item.tstamp | date: 'dd MMM' }}
-            span.year {{item.tstamp | date: 'yyyy' }}
+            span.date {{item.date | date: 'dd MMM' }}
+            span.year {{item.date | date: 'yyyy' }}
           span.title {{item.title}}
-      story-line
+      story-line(data="storyLineData", selected-year="selectedYear")
 
     div.rank
       h2 Rank

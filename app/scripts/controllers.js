@@ -11,7 +11,7 @@
         ProfileService.active = true;
         ProfileService.loading = false;
         onSuccess();
-      }, 1000);
+      }, 100);
     };
 
     if ($scope.forceUrl) {
@@ -114,19 +114,42 @@
 
   .controller('StoryCtrl', function ($scope, $rootScope, $filter, ProfileService, PopulationIOService) {
 
-    // //$scope.timeline = StoryService.getData();
-    // for (var i=0; i<$scope.timeline.length; i+=1) {
-    //   $scope.timeline[i].year = parseInt($filter('date')($scope.timeline[i].tstamp, 'yyyy'));
-    // }
+    $scope.storyLineData = [{
+      date: $filter('date')(Date.now(), 'yyyy-MM-dd'),
+      year: $filter('date')(Date.now(), 'yyyy'),
+      title: 'Now',
+      now: true
+    },{
+      date: $filter('date')(new Date(ProfileService.birthday), 'yyyy-MM-dd'),
+      year: $filter('date')(new Date(ProfileService.birthday), 'yyyy'),
+      title: 'Born',
+      born: true
+    }];
 
     $scope.year = $filter('date')(new Date(), 'yyyy');
 
-    $scope.$on('highlightStoryLine', function(e, year, highlight) {
-      $scope.selectedYear = highlight ? year : null;
-      if(!$scope.$$phase) {
-        $scope.$apply();
-      }
+    PopulationIOService.loadLifeExpectancyRemaining({
+      sex: ProfileService.gender,
+      country: ProfileService.country,
+      date: $filter('date')(new Date(ProfileService.birthday), 'yyyy-MM-dd'),
+      age: ProfileService.getAge()
+    }, function(remainingLife) {
+
+      var year = parseInt($filter('date')(Date.now(), 'yyyy'));
+      var month = $filter('date')(Date.now(), 'MM');
+      var day = $filter('date')(Date.now(), 'dd');
+      var date = new Date(parseInt(year + remainingLife), month, day);
+
+      $scope.storyLineData.push({
+        date: $filter('date')(date, 'yyyy-MM-dd'),
+        year: $filter('date')(date, 'yyyy'),
+        title: 'Life expectancy in ' + ProfileService.country
+      });
     });
+
+    $scope.highlightStoryLine = function(year) {
+      $scope.selectedYear = year;
+    };
 
     PopulationIOService.loadPopulation({
       year: $filter('date')(new Date(), 'yyyy'),
