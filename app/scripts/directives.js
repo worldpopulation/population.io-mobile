@@ -31,7 +31,7 @@
       };
     })
 
-    .directive('onePageScroll', function ($location, $routeParams) {
+    .directive('onePageScroll', function ($location, $state, $filter, ProfileService) {
       return {
         restrict: 'E',
         link: function ($scope, element) {
@@ -41,19 +41,37 @@
             scrollOverflow: true,
             verticalCentered: false,
             scrollingSpeed: 500,
-            afterLoad: function(anchorLink, index) {
+            afterLoad: function(anchor, index) {
+              // TODO: refactor me, duplicate code in controller
+              if (anchor !== 'stats') {
+                var birthday = ProfileService.birthday;
+                $state.go('section', {
+                  year: $filter('date')(birthday, 'yyyy'),
+                  month: $filter('date')(birthday, 'MM'),
+                  day: $filter('date')(birthday, 'dd'),
+                  country: ProfileService.country,
+                  state: anchor
+                });
+              } else {
+                $state.go('root');
+              }
               $scope.activeIndex = index;
               $scope.$apply();
-            },
+            }
           });
-
-          $.fn.fullpage.moveTo(1);
 
           $.fn.fullpage.setAllowScrolling(false);
           $.fn.fullpage.setKeyboardScrolling(false);
 
-          $scope.$on('pageChanged', function(e, page) {
-            console.info('pageChanged', page)
+          $scope.$watch(function() {
+            return ProfileService.active;
+          }, function(value) {
+            $.fn.fullpage.setAllowScrolling(value);
+            $.fn.fullpage.setKeyboardScrolling(value);
+          });
+
+          $scope.$on('pageChanged', function(e, anchor) {
+            $.fn.fullpage.moveTo(anchor);
           });
         }
       };

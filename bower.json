@@ -16,6 +16,7 @@
     "angular-resource": "~1.2.16",
     "angular-cookies": "~1.2.16",
     "angular-sanitize": "~1.2.16",
+    "angular-ui-router": "latest",
     "angular-route": "~1.2.16",
     "lodash": "latest",
     "fontawesome": "latest"

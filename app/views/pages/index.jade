@@ -9,15 +9,17 @@ block content
       include ../../../assets/shapes-05.svg
       include ../../../assets/shapes-05-large.svg
       include ../../../assets/storyline.svg
+  .share.animate(ng-show="profile.active")
+    a(ng-href="{{shareUrl}}") SHARE
   one-page-scroll
-    div.section
+    div.section(data-anchor="stats")
       section(ng-controller='StatsCtrl', stats-area)
-    div.section
+    div.section(data-anchor="people")
       section(ng-controller='PeopleCtrl', people-area)
-    div.section
+    div.section(data-anchor="story")
       section(ng-controller='StoryCtrl', story-area)
-    div.section
+    div.section(data-anchor="birthdays")
       section(ng-controller='BirthdaysCtrl', birthdays-area)
-    div.section
+    div.section(data-anchor="expectancy")
       section(ng-controller='ExpectancyCtrl', expectancy-area)
       include ../layouts/footer

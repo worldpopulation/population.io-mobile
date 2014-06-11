@@ -51,19 +51,25 @@ one-page-scroll
     background rgba(0,0,0,0.2) !important
 #fullPage-nav
   display none
+  li
+    height 25px
+    width 25px
+    margin 0
+    cursor pointer
   span
     width 6px
     height 6px
-    left 3px
+    left 9px
+    top 10px
     background #999
     border none
-  a.active span
-    left 0px
-    top -1px
-    width 10px
-    height 10px
-    background #fff
-    border 1px solid #999
+    &.active
+      left 6px
+      top 6px
+      width 10px
+      height 10px
+      background #fff
+      border 1px solid #999
 .active
   #fullPage-nav
     display block
@@ -75,6 +81,30 @@ svg.defs-area
   display none
 text
   cursor default
+
+// share
+.share
+  background highlight-yellow
+  position fixed
+  bottom -32px
+  font-size 14px
+  right -60px
+  z-index 10
+  padding-top 15px
+  height 80px
+  width 150px
+  text-align center
+  transform rotate(-45deg)
+.share.animate.ng-hide-add,
+.share.animate.ng-hide-remove
+  transition all ease 250ms
+  display block !important
+.share.animate.ng-hide-add.ng-hide-add-active,
+.share.animate.ng-hide-remove
+  transform translate3d(100px, 100px, 0) rotate(-45deg)
+.share.animate.ng-hide-add,
+.share.animate.ng-hide-remove.ng-hide-remove-active
+  transform translate3d(0, 0, 0) rotate(-45deg)
 
 // section
 section

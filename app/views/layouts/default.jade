@@ -9,7 +9,7 @@ html(ng-app="populationioApp")
     //Place favicon.ico and apple-touch-icon.png in the root directory
     link(rel="stylesheet", href="css/main.css")
 body(ng-controller='MainCtrl', ng-class="{'active': profile.active}")
-  div(ng-view)
+  ui-view
 
   include header
   block content
@@ -24,11 +24,12 @@ body(ng-controller='MainCtrl', ng-class="{'active': profile.active}")
 
   script(src='vendor/angular.min.js')
   script(src='vendor/angular-resource.min.js')
-  script(src='vendor/angular-route.min.js')
+  script(src='vendor/angular-ui-router.min.js')
   script(src='vendor/angular-animate.min.js')
   script(src='vendor/ui-bootstrap-tpls.min.js')
 
-  script(src='scripts/directives/d3Utils.js')
+  script(src='scripts/libs/d3Utils.js')
+  script(src='scripts/libs/jquery.fullPage.js')
 
   script(src='scripts/app.js')
   script(src='scripts/controllers.js')

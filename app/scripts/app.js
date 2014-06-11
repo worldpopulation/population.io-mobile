@@ -1,15 +1,21 @@
 (function () {
   'use strict';
 
-  angular.module('populationioApp', [ 'ngResource', 'ngRoute', 'ngAnimate', 'ui.bootstrap' ])
+  angular.module('populationioApp', [ 'ngResource', 'ui.router', 'ngAnimate', 'ui.bootstrap' ])
 
-  .config(function ($locationProvider, $routeProvider) {
-    $routeProvider
-      // .when('/:year/:month/:day/:country/:section', {
-      //   controller: 'MainCtrl',
-      //   template: ' '
-      // });
+  .config(function ($locationProvider, $urlRouterProvider, $stateProvider) {
+    $stateProvider
+      .state('root', {
+        url: '/',
+        controller: 'StateCtrl'
+      })
+      .state('section', {
+        url: '/:year/:month/:day/:country/:state',
+        controller: 'StateCtrl'
+      });
+
     // $locationProvider.html5Mode(false);
+    $urlRouterProvider.otherwise('/');
   })
 
   .run(function ($rootScope, $location) {

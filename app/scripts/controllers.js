@@ -3,17 +3,56 @@
 
   angular.module('populationioApp')
 
-  .controller('MainCtrl', function ($scope, $rootScope, $routeParams, ProfileService, PopulationIOService) {
-    $scope.showNextPage = function () {
-      if ($rootScope.currentPage < 5) {
-        $rootScope.currentPage += 1;
-      }
+  .controller('StateCtrl', function ($scope, $filter, $rootScope, $state, $stateParams, ProfileService) {
+
+    var _getDataFromAPI = function(onSuccess) {
+      ProfileService.loading = true;
+      setTimeout(function() {
+        ProfileService.active = true;
+        ProfileService.loading = false;
+        onSuccess();
+      }, 3000);
     };
 
-    $scope.$emit('pageChanged', $routeParams.section);
+    if ($stateParams.state) {
+      if (ProfileService.active) {
+        $scope.$emit('pageChanged', $stateParams.state);
+      } else {
+        _getDataFromAPI(function() {
+          $scope.$emit('pageChanged', $stateParams.state);
+        });
+      }
+    } else {
+      $scope.$emit('pageChanged', 'stats');
+    }
+
+    $rootScope.$on('profileChanged', function() {
+      _getDataFromAPI(function() {
+        // TODO: refactor me, duplicate code in directive
+        var birthday = ProfileService.birthday;
+        $state.go('section', {
+          year: $filter('date')(birthday, 'yyyy'),
+          month: $filter('date')(birthday, 'MM'),
+          day: $filter('date')(birthday, 'dd'),
+          country: ProfileService.country,
+          state: 'people'
+        });
+      });
+    });
+
+  })
+
+  .controller('MainCtrl', function ($scope, $rootScope, $state, $location, ProfileService, PopulationIOService) {
 
     $scope.profile = ProfileService;
     $scope.worldPopulation = PopulationIOService.getWorldPopulation();
+    $scope.shareUrl = $location.absUrl();
+
+    $scope.$watch(function() {
+      return $location.absUrl();
+    }, function(url) {
+      $scope.shareUrl = url;
+    });
 
     $rootScope.$on('populationChanged', function() {
       $scope.worldPopulation = PopulationIOService.getWorldPopulation();
@@ -21,32 +60,27 @@
     });
 
     $scope.showHomepage = function() {
-      $.fn.fullpage.moveTo(1);
+      $state.go('root');
     };
   })
 
-  .controller('StatsCtrl', function ($scope, $rootScope, PopulationIOService) {
+  .controller('StatsCtrl', function ($scope, $filter, $location, $state, $rootScope, ProfileService, PopulationIOService) {
 
     $scope.$watch('goForm.$invalid', function(invalid) {
       if (invalid) {
-        $scope.profile.active = false;
-        $.fn.fullpage.setAllowScrolling(false);
-        $.fn.fullpage.setKeyboardScrolling(false);
+        ProfileService.active = false;
       }
     });
 
     $scope.goGoGadget = function() {
-      $scope.profile.active = false;
-      $scope.loading = true;
-
-      setTimeout(function() {
-        $scope.loading = false;
-        $scope.profile.active = true;
-        $.fn.fullpage.setAllowScrolling(true);
-        $.fn.fullpage.setKeyboardScrolling(true);
-        $.fn.fullpage.moveTo(2);
-      }, 3000);
+      $rootScope.$emit('profileChanged');
     };
+
+    $scope.$watch(function() {
+      return ProfileService.loading;
+    }, function(value) {
+      $scope.loading = value;
+    });
 
     $scope.countries = PopulationIOService.getCountries();
 
