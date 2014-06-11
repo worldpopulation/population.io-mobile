@@ -27,7 +27,7 @@
     .service('ProfileService', function() {
       return {
         gender: 'female',
-        birthday: '1987-05-28',
+        birthday: '1988-07-15',
         country: 'Germany',
         active: false,
         getAge: function() {

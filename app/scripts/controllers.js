@@ -144,9 +144,16 @@
     });
 
     $scope.selectedCountryRef = ProfileService.country;
+    $scope.$watch(function() {
+      return ProfileService.country;
+    }, function() {
+      $scope.selectedCountryRef = ProfileService.country;
+    });
+
+    var date = $filter('date')(new Date(), 'yyyy-MM-dd');
 
     $scope.$on('timesliderChanged', function(e, year) {
-      var date = $filter('date')(new Date(year, 1, 1), 'yyyy-MM-dd');
+      date = $filter('date')(new Date(year, 1, 1), 'yyyy-MM-dd');
       if ($scope.selectedCountryRef) {
         _updateCountryRef(date);
       }
@@ -187,13 +194,13 @@
 
     $scope.$watch('selectedCountryRef', function(country) {
       if (country) {
-        _updateCountryRef($filter('date')(new Date(), 'yyyy-MM-dd'));
+        _updateCountryRef(date);
       }
     });
 
     $scope.$watch('selectedCountryRel', function(country) {
       if (country) {
-        _updateCountryRel($filter('date')(new Date(), 'yyyy-MM-dd'));
+        _updateCountryRel(date);
       }
     });
 
