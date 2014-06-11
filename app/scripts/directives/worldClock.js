@@ -86,7 +86,8 @@
               .attr({
                 'class': 'count-element',
                 transform: function (d, i) {
-                  return 'translate(' + [i * digitCellWidth, 0] + ')';
+                  var translate = 'translate(' + [(i * digitCellWidth), 0] + ')';
+                  return translate;
                 }
               });
 
