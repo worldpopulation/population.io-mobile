@@ -9,11 +9,12 @@
           var width = 380,
             height = 80,
             handleRadius = 11,
-            startYear = 1999,
-            margin = 30;
+            range = 20,
+            margin = 30,
+            currentYear = parseInt((new Date()).getFullYear(), 0);
 
           var data = [];
-          for (var i=startYear; i<=parseInt((new Date()).getFullYear(), 0); i+=1) {
+          for (var i=(currentYear-range); i<=currentYear; i+=1) {
             data.push({
               year: i
             });
@@ -42,17 +43,14 @@
                 idx = bisect(stepArr, d3.event.x - handleRadius);
 
               d3.select(this)
-                .transition()
-                .duration(100)
-                .attr('transform', 'translate(' + [stepArr[idx], 0] + ')')
-                .transition()
-                .duration(50)
-                .attr('transform', 'translate(' + [stepArr[idx], 0] + ') scale(1.2)')
-                .transition()
-                .duration(150)
-                .attr('transform', 'translate(' + [stepArr[idx], 0] + ') scale(1)');
+                .attr('transform', 'translate(' + [stepArr[idx], 0] + ')');
 
-              d3.select(this).select('text')[0][0].textContent = data[idx].year;
+              this.year = data[idx].year;
+
+              d3.select(this).select('text')[0][0].textContent = this.year;
+            })
+            .on('dragend', function() {
+              $scope.$emit('timesliderChanged', this.year);
             });
 
           var root = d3.select(element[0])
@@ -106,7 +104,10 @@
 
           var handle = slider.append('g')
             .attr({
-              'class': 'handle'
+              'class': 'handle',
+              transform: function() {
+                return 'translate(' + [stepArr[stepArr.length-1], 0] + ')';
+              }
             })
             .call(drag);
 
@@ -114,7 +115,7 @@
             .attr('r', handleRadius);
 
           handle.append('text')
-            .text(data[0].year);
+            .text(data[data.length-1].year);
 
           axis.append('text')
             .text(function(d, i) {

@@ -6,7 +6,16 @@
       var root = null,
         height = 500;
 
-      var _addDescriptionLine = function (node, type, data) {
+      var _addDescriptionLine = function (type, data) {
+        var node = d3.select('.country[data-id="' + data.country + '"]')[0][0];
+
+        if (!node) {
+          alert([
+            'Whoops "' + data.country + '"',
+            ' is not existing on this map!'
+          ].join(''));
+        }
+
         var d3Node = d3.select(node),
           bbox = d3Node[0][0].getBBox(),
           width = 1200,//root.node().parentNode.getBBox().width,
@@ -17,7 +26,7 @@
           };
 
         var _textTween = function (node, label) {
-          var value = node.innerHTML,
+          var value = Math.round(node.innerHTML * 100) / 100,
             i = d3.interpolate(0, value),
             prec = (value + '').split('.'),
             round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
@@ -133,13 +142,11 @@
       return {
         restrict: 'E',
         controller: function ($scope) {
-          $scope.highlightCountryRef = function (id, data) {
-            var node = d3.select('.country[data-id="' + id + '"]')[0][0];
-            _addDescriptionLine(node, 'ref', data);
+          $scope.highlightCountryRef = function (data) {
+            _addDescriptionLine('ref', data);
           };
-          $scope.highlightCountryRel = function (id, data) {
-            var node = d3.select('.country[data-id="' + id + '"]')[0][0];
-            _addDescriptionLine(node, 'rel', data);
+          $scope.highlightCountryRel = function (data) {
+            _addDescriptionLine('rel', data);
           };
         },
         link: function ($scope, element) {
@@ -169,7 +176,7 @@
               .attr({
                 'class': 'country',
                 d: path,
-                'data-id': function (d) { return d.id; },
+                'data-id': function (d) { return d.properties.name; },
                 title: function (d) { return d.properties.name; }
               });
           });

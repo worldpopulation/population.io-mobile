@@ -45,6 +45,7 @@
               // TODO: refactor me, duplicate code in controller
               if (anchor !== 'stats') {
                 var birthday = ProfileService.birthday;
+                $scope.forceUrl = true;
                 $state.go('section', {
                   year: $filter('date')(birthday, 'yyyy'),
                   month: $filter('date')(birthday, 'MM'),
@@ -68,10 +69,6 @@
           }, function(value) {
             $.fn.fullpage.setAllowScrolling(value);
             $.fn.fullpage.setKeyboardScrolling(value);
-          });
-
-          $scope.$on('pageChanged', function(e, anchor) {
-            $.fn.fullpage.moveTo(anchor);
           });
         }
       };

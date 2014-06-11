@@ -3,7 +3,7 @@
 
   angular.module('populationioApp', [ 'ngResource', 'ui.router', 'ngAnimate', 'ui.bootstrap' ])
 
-  .config(function ($locationProvider, $urlRouterProvider, $stateProvider) {
+  .config(function ($locationProvider, $urlRouterProvider, $stateProvider, $httpProvider) {
     $stateProvider
       .state('root', {
         url: '/',
@@ -16,6 +16,9 @@
 
     // $locationProvider.html5Mode(false);
     $urlRouterProvider.otherwise('/');
+
+    $httpProvider.defaults.useXDomain = true;
+    delete $httpProvider.defaults.headers.common['X-Requested-With'];
   })
 
   .run(function ($rootScope, $location) {

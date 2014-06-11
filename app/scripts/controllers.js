@@ -11,19 +11,24 @@
         ProfileService.active = true;
         ProfileService.loading = false;
         onSuccess();
-      }, 3000);
+      }, 1000);
     };
+
+    if ($scope.forceUrl) {
+      $scope.forceUrl = false;
+      return;
+    }
 
     if ($stateParams.state) {
       if (ProfileService.active) {
-        $scope.$emit('pageChanged', $stateParams.state);
+        $.fn.fullpage.moveTo($stateParams.state);
       } else {
         _getDataFromAPI(function() {
-          $scope.$emit('pageChanged', $stateParams.state);
+          $.fn.fullpage.moveTo($stateParams.state);
         });
       }
     } else {
-      $scope.$emit('pageChanged', 'stats');
+      $.fn.fullpage.moveTo('stats');
     }
 
     $rootScope.$on('profileChanged', function() {
@@ -35,7 +40,7 @@
           month: $filter('date')(birthday, 'MM'),
           day: $filter('date')(birthday, 'dd'),
           country: ProfileService.country,
-          state: 'people'
+          state: 'expectancy'
         });
       });
     });
@@ -82,13 +87,28 @@
       $scope.loading = value;
     });
 
-    $scope.countries = PopulationIOService.getCountries();
-
+    PopulationIOService.loadCountries(function(countries) {
+      $scope.countries = countries;
+    });
   })
 
-  .controller('PeopleCtrl', function ($scope, $rootScope, PopulationIOService, $interval) {
+  .controller('PeopleCtrl', function ($scope, PopulationIOService, ProfileService, $rootScope, $interval) {
 
-    $scope.rank = PopulationIOService.getRank();
+    PopulationIOService.loadWpRankToday({
+      dob: ProfileService.birthday,
+      sex: ProfileService.gender,
+      country: ProfileService.country
+    }, function(rank) {
+      $scope.rankLocal = rank;
+    });
+
+    PopulationIOService.loadWpRankToday({
+      dob: ProfileService.birthday,
+      sex: ProfileService.gender,
+      country: 'World'
+    }, function(rank) {
+      $scope.rankGlobal = rank;
+    });
 
   })
 
@@ -117,40 +137,63 @@
     // TODO: BirthdaysCtrl
   })
 
-  .controller('ExpectancyCtrl', function ($scope, $rootScope) {
+  .controller('ExpectancyCtrl', function ($scope, $rootScope, $filter, ProfileService, PopulationIOService) {
 
-    d3.json('scripts/world-topo-min.json', function(error, world) {
-      $scope.countries = [];
-      for (var i=0; i<world.objects.countries.geometries.length; i+=1) {
-        var country = world.objects.countries.geometries[i];
-        $scope.countries.push({
-          id: country.id,
-          name: country.properties.name
-        });
+    PopulationIOService.loadCountries(function(countries) {
+      $scope.countries = countries;
+    });
+
+    $scope.selectedCountryRef = ProfileService.country;
+
+    $scope.$on('timesliderChanged', function(e, year) {
+      var date = $filter('date')(new Date(year, 1, 1), 'yyyy-MM-dd');
+      if ($scope.selectedCountryRef) {
+        _updateCountryRef(date);
+      }
+      if ($scope.selectedCountryRel) {
+        _updateCountryRel(date);
       }
     });
 
-    var _getTestValue = function() {
-      return Math.round((50 * Math.random() + Math.random()) * 100) / 10;
+    var _updateCountryRef = function(date) {
+      PopulationIOService.loadLifeExpectancyRemaining({
+        sex: ProfileService.gender,
+        country: $scope.selectedCountryRef,
+        date: date,
+        age: ProfileService.getAge()
+      },function(remainingLife) {
+        $scope.highlightCountryRef({
+          country: $scope.selectedCountryRef,
+          yearsLeft: remainingLife,
+          lifeExpectancy: ProfileService.getAge() + remainingLife
+        });
+      });
+    };
+
+    var _updateCountryRel = function(date) {
+      PopulationIOService.loadLifeExpectancyRemaining({
+        sex: ProfileService.gender,
+        country: $scope.selectedCountryRel,
+        date: date,
+        age: ProfileService.getAge()
+      },function(remainingLife) {
+        $scope.highlightCountryRel({
+          country: $scope.selectedCountryRel,
+          yearsLeft: remainingLife,
+          lifeExpectancy: ProfileService.getAge() + remainingLife
+        });
+      });
     };
 
     $scope.$watch('selectedCountryRef', function(country) {
-      if (country instanceof Object) {
-        $scope.highlightCountryRef(country.id || country.originalObject.id, {
-          country: country.name || country.originalObject.name,
-          yearsLeft: _getTestValue(),
-          lifeExpectancy: _getTestValue()
-        });
+      if (country) {
+        _updateCountryRef($filter('date')(new Date(), 'yyyy-MM-dd'));
       }
     });
 
     $scope.$watch('selectedCountryRel', function(country) {
-      if (country instanceof Object) {
-        $scope.highlightCountryRel(country.id || country.originalObject.id, {
-          country: country.name || country.originalObject.name,
-          yearsLeft: _getTestValue(),
-          lifeExpectancy: _getTestValue()
-        });
+      if (country) {
+        _updateCountryRel($filter('date')(new Date(), 'yyyy-MM-dd'));
       }
     });
 

@@ -10,7 +10,7 @@
           type="text",
           placeholder="Country",
           ng-model="selectedCountryRef",
-          typeahead="country as country.name for country in countries | filter: {name:$viewValue}",
+          typeahead="country for country in countries | filter: $viewValue",
           typeahead-wait-ms="100",
           typeahead-editable="false"
         )
@@ -21,7 +21,7 @@
           type="text",
           placeholder="Country",
           ng-model="selectedCountryRel",
-          typeahead="country as country.name for country in countries | filter: {name:$viewValue}",
+          typeahead="country for country in countries | filter: $viewValue",
           typeahead-wait-ms="100",
           typeahead-editable="false"
         )
