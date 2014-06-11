@@ -114,38 +114,65 @@
 
   .controller('StoryCtrl', function ($scope, $rootScope, $filter, ProfileService, PopulationIOService) {
 
+    var _getDateWithOffset = function(date, offset) {
+      var year = parseInt($filter('date')(date, 'yyyy'), 0),
+        month = $filter('date')(date, 'MM'),
+        day = $filter('date')(date, 'dd');
+
+      return new Date(parseInt(year + offset, 0), month, day);
+    };
+
     $scope.storyLineData = [{
       date: $filter('date')(Date.now(), 'yyyy-MM-dd'),
       year: $filter('date')(Date.now(), 'yyyy'),
       title: 'Now',
       now: true
     },{
-      date: $filter('date')(new Date(ProfileService.birthday), 'yyyy-MM-dd'),
+      date: ProfileService.birthday,
       year: $filter('date')(new Date(ProfileService.birthday), 'yyyy'),
       title: 'Born',
       born: true
+    },{
+      date: _getDateWithOffset(new Date(ProfileService.birthday), 18),
+      year: $filter('date')(_getDateWithOffset(new Date(ProfileService.birthday), 18), 'yyyy'),
+      title: 'You turned 18!'
     }];
 
     $scope.year = $filter('date')(new Date(), 'yyyy');
 
-    PopulationIOService.loadLifeExpectancyRemaining({
-      sex: ProfileService.gender,
-      country: ProfileService.country,
-      date: $filter('date')(new Date(ProfileService.birthday), 'yyyy-MM-dd'),
-      age: ProfileService.getAge()
-    }, function(remainingLife) {
-
-      var year = parseInt($filter('date')(Date.now(), 'yyyy'));
-      var month = $filter('date')(Date.now(), 'MM');
-      var day = $filter('date')(Date.now(), 'dd');
-      var date = new Date(parseInt(year + remainingLife), month, day);
-
-      $scope.storyLineData.push({
-        date: $filter('date')(date, 'yyyy-MM-dd'),
-        year: $filter('date')(date, 'yyyy'),
-        title: 'Life expectancy in ' + ProfileService.country
+    var _loadLifeExpectancyTotal = function(country) {
+      PopulationIOService.loadLifeExpectancyTotal({
+        sex: ProfileService.gender,
+        country: country,
+        dob: ProfileService.birthday,
+      }, function(remainingLife) {
+        $scope.storyLineData.push({
+          date: $filter('date')(_getDateWithOffset(Date.now(), remainingLife), 'yyyy-MM-dd'),
+          year: $filter('date')(_getDateWithOffset(Date.now(), remainingLife), 'yyyy'),
+          title: 'Life expectancy in ' + country
+        });
       });
-    });
+    };
+    _loadLifeExpectancyTotal(ProfileService.country);
+    _loadLifeExpectancyTotal('World');
+
+    var _loadWpRankRanked = function(rank, atomicNumber) {
+      PopulationIOService.loadWpRankRanked({
+        dob: ProfileService.birthday,
+        sex: ProfileService.gender,
+        country: ProfileService.country,
+        rank: rank
+      }, function(date) {
+        $scope.storyLineData.push({
+          date: date,
+          year: $filter('date')(date, 'yyyy'),
+          title: atomicNumber + ' billion person'
+        });
+      });
+    };
+    _loadWpRankRanked(1000000000, '1th');
+    _loadWpRankRanked(5000000000, '5th');
+    _loadWpRankRanked(7000000000, '7th');
 
     $scope.highlightStoryLine = function(year) {
       $scope.selectedYear = year;

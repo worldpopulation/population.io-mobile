@@ -111,6 +111,33 @@
           });
         },
 
+        // GET /api/1.0/wp-rank/{dob}/{sex}/{country}/ranked/{rank}
+        loadWpRankRanked: function(args, onSuccess) {
+          $http({
+            method: 'get',
+            url: [
+              baseUrl,
+              'wp-rank',
+              args.dob,
+              args.sex,
+              args.country,
+              'ranked',
+              args.rank
+            ].join('/')
+          })
+          .success(function(data) {
+            if (data.date_on_rank) {
+              onSuccess(data.date_on_rank);
+            } else {
+              onSuccess('2050-01-01');
+            }
+          })
+          .error(function() {
+            console.error('loadWpRankRanked() error');
+            onSuccess('2050-01-01');
+          });
+        },
+
         // GET /api/1.0/life-expectancy/remaining/{sex}/{country}/{date}/{age}
         loadLifeExpectancyRemaining: function(args, onSuccess) {
           $http({
@@ -131,6 +158,29 @@
           })
           .error(function() {
             console.error('loadLifeExpectancyRemaining() error');
+          });
+        },
+
+        // GET /api/1.0/life-expectancy/total/{sex}/{country}/{dob}
+        loadLifeExpectancyTotal: function(args, onSuccess) {
+          $http({
+            method: 'get',
+            url: [
+              baseUrl,
+              'life-expectancy/total',
+              args.sex,
+              args.country,
+              args.dob
+            ].join('/')
+          })
+          .success(function(data) {
+            if (data.remaining_life_expectancy) {
+              onSuccess(data.remaining_life_expectancy);
+            }
+          })
+          .error(function() {
+            console.error('loadLifeExpectancyTotal() error');
+            onSuccess(0);
           });
         },
 

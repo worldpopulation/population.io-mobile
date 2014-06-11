@@ -69,6 +69,16 @@
                 'class': 'line',
                 d: bezierCurve
               });
+
+            root.append('g')
+              .attr({
+                'class': 'lines'
+              });
+
+           root.append('g')
+              .attr({
+                'class': 'circles'
+              });
           };
 
           var _updateGraph = function(data) {
@@ -117,19 +127,24 @@
             }
             pathOverlayData.push(pathNode.getPointAtLength(todayLength));
 
-            root.selectAll('.line.highlight').remove();
-            root.append('path')
+            var lines = root.selectAll('.lines');
+            lines.selectAll('path').remove();
+
+            lines.append('path')
               .attr({
                 'class': 'line highlight',
                 d: pathOverlayLine(pathOverlayData)
               });
-            root.append('path')
+            lines.append('path')
               .attr({
                 'class': 'line small',
                 d: pathOverlayLine(pathOverlayData)
               });
 
-            var dot = root
+            var circles = root.selectAll('.circles');
+            circles.selectAll('.dot').remove();
+
+            var dot = circles
               .selectAll('.dot')
               .data(function () {
                 var years = [],
@@ -161,10 +176,16 @@
               })
               .on('mouseover', function (d) {
                 $scope.selectedYear = d.year;
+                if (!$scope.$$phase) {
+                  $scope.$apply();
+                }
                 _highlightStoryLine(this);
               })
               .on('mouseout', function (d) {
                 $scope.selectedYear = null;
+                if (!$scope.$$phase) {
+                  $scope.$apply();
+                }
                 _removeHighlightStoryLine(this);
               });
 
