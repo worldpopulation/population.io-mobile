@@ -198,7 +198,14 @@
             dot.append('circle')
               .attr({
                 r: function (d) {
-                  return _getEventCount(d.year) > 1 ? 15 : 6;
+                  var r = 6;
+                  if (_getEventCount(d.year) > 1) {
+                    r = 15;
+                  }
+                  if (d.now) {
+                    r = 10;
+                  }
+                  return r;
                 }
               });
 

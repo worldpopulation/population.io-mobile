@@ -67,6 +67,9 @@
                   return 'translate(' + [ width - 10, height + 3 ] + ')';
                 }
               });
+
+            var chart = root.append('g')
+              .attr('class', 'chart');
           };
 
           var _updateGraph = function(data) {
@@ -98,8 +101,7 @@
               .y1(function (d) { return yScale(d.total); })
               .interpolate('basis');
 
-            var chart = root.append('g')
-              .attr('class', 'chart');
+            var chart = root.select('.chart');
 
             var graph = chart.append('path')
               .attr({
@@ -116,6 +118,7 @@
             var item = data[bisect(data, age)];
 
             if (item) {
+              chart.selectAll('.pointer').remove();
               var pointer = chart.append('g')
                 .attr({
                   'class': 'pointer',
@@ -126,14 +129,12 @@
                       height - (height - yScale(item.total))/1.5
                     ] + ')';
                   }
-                })
-
+                });
               pointer.transition()
                 .duration(500)
                 .attr({
                   opacity: 1
                 });
-
               pointer.append('line')
                 .attr({
                   x1: 0,

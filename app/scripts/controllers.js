@@ -3,46 +3,36 @@
 
   angular.module('populationioApp')
 
-    .controller('MainCtrl', function ($scope, $rootScope, $modal, $state, $location, $document, ProfileService, PopulationIOService) {
+    .controller('MainCtrl', function ($scope, $timeout, $interval, $rootScope, $modal, $state, $location, $document, ProfileService, PopulationIOService) {
+
+      $scope.profile = ProfileService;
+      $scope.shareUrl = $location.absUrl();
+      $scope.worldPopulation = PopulationIOService.getWorldPopulation();
 
       $rootScope.$on('duScrollspy:becameActive', function ($event, $element) {
-        //Automaticly update location
         var hash = $element.prop('id');
         if (hash) {
-          $scope.state = hash;
-//          $location.hash(hash.substr(1)).replace();
-          var path = $location.$$path;
-          path = path.replace(/[^/]*$/g, '');
-          console.log(path + hash)
-//          $location.hash(hash).replace();
+          if (hash.indexOf('stats') > -1) {
+            $rootScope.currentPage = 0;
+            return;
+          } else {
+            $rootScope.currentPage = 99;
+          }
+          var path = $location.$$path.replace(/[^/]*$/g, '');
           $location.path(path + hash).replace();
           $rootScope.$apply();
         }
       });
 
-      setTimeout(function () {
-        var path = $location.$$path;
-        path = path.replace(/.+[/](.*)$/g, '$1');
-        console.log(path)
-//          $location.hash(hash).replace();
-//        $location.path(path + hash).replace();
-//        $rootScope.$apply();
-
-
-        var someElement = angular.element(document.getElementById(path));
-        $document.scrollToElement(someElement, 80, 1000).then(function () {
-          console.log('done')
-        });
-
-      }, 200)
-
-//      $document.on('scroll', function() {
-//        console.log('Document scrolled to ', $document.scrollLeft(), $document.scrollTop());
-//        console.log($location.$$path)
-//      });
-
-      $scope.profile = ProfileService;
-      $scope.shareUrl = $location.absUrl();
+      $timeout(function () {
+        var path = $location.$$path.replace(/.+[/](.*)$/g, '$1'),
+          section = angular.element(document.getElementById(path));
+        if ($rootScope.currentPage > 1) {
+          $document.scrollToElement(section, 80, 1000).then(function () {
+            console.log('done');
+          });
+        }
+      }, 500);
 
       $scope.$watch(function () {
         return $location.absUrl();
@@ -50,10 +40,8 @@
         $scope.shareUrl = url;
       });
 
-      $scope.worldPopulation = PopulationIOService.getWorldPopulation();
-      setInterval(function () {
-        // $scope.worldPopulation = PopulationIOService.getWorldPopulation();
-        // $scope.$apply();
+      $interval(function () {
+        $scope.worldPopulation = PopulationIOService.getWorldPopulation();
       }, 1000);
 
       $rootScope.$on('$stateChangeStart', function (e, toState) {
@@ -61,10 +49,8 @@
       });
 
       $scope.showHomepage = function () {
-        $state.go('root');
-        $('html, body').animate({
-           scrollTop: $("#root").offset().top - 79
-         }, 1000);
+        var section = angular.element(document.getElementById('stats'));
+        $document.scrollToElement(section, 80, 1000);
       };
 
       $scope.showAbout = function() {
@@ -80,30 +66,35 @@
       };
     })
 
-    .controller('StatsCtrl', function ($scope, $filter, $location, $state, $rootScope, ProfileService, PopulationIOService) {
+    .controller('StatsCtrl', function ($scope, $document, $timeout, $filter, $location, $rootScope, ProfileService, PopulationIOService) {
 
       $scope.$watch('goForm.$invalid', function (invalid) {
         if (invalid) {
           ProfileService.active = false;
+          $location.path('');
         }
       });
 
       $scope.goGoGadget = function () {
-        ProfileService.active = true;
         $scope.loading = true;
-        setTimeout(function () {
+        $timeout(function () {
           $scope.loading = false;
-          $state.go('people', {
-            year: $filter('date')(ProfileService.birthday, 'yyyy'),
-            month: $filter('date')(ProfileService.birthday, 'MM'),
-            day: $filter('date')(ProfileService.birthday, 'dd'),
-            country: ProfileService.country
-          });
-          setTimeout(function () {
-             $('html, body').animate({
-               scrollTop: $("#people").offset().top - 79
-             }, 1000);
-           }, 500);
+          ProfileService.active = true;
+
+          var year = $filter('date')(ProfileService.birthday, 'yyyy'),
+            month = $filter('date')(ProfileService.birthday, 'MM'),
+            day = $filter('date')(ProfileService.birthday, 'dd');
+
+          $location.path([
+            year,
+            month,
+            day,
+            ProfileService.country,
+            'people'
+          ].join('/'));
+
+          var section = angular.element(document.getElementById('people'));
+          $document.scrollToElement(section, 80, 1000);
         }, 1000);
       };
 
@@ -297,7 +288,6 @@
       var countries = [];
       d3.csv('scripts/data/country_continent.csv', function(data) {
         countries = data;
-        _update();
       });
 
       var _getCountry = function(name) {

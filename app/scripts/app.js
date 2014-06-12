@@ -3,29 +3,7 @@
 
   angular
     .module('populationioApp', [ 'duScroll', 'ngResource', 'ui.router', 'ngAnimate', 'ui.bootstrap', 'restangular', 'td.easySocialShare' ])
-    .config(function ($locationProvider, $urlRouterProvider, $stateProvider, $httpProvider, RestangularProvider) {
-
-      $stateProvider
-        .state('root', {
-          url: '/',
-          controller: 'StatsCtrl'
-        })
-        .state('people', {
-          url: '/:year/:month/:day/:country/people',
-          controller: 'PeopleCtrl'
-        })
-        .state('story', {
-          url: '/:year/:month/:day/:country/story',
-          controller: 'StoryCtrl'
-        })
-        .state('birthdays', {
-          url: '/:year/:month/:day/:country/birthdays',
-          controller: 'BirthdaysCtrl'
-        })
-        .state('expectancy', {
-          url: '/:year/:month/:day/:country/expectancy',
-          controller: 'ExpectancyCtrl'
-        });
+    .config(function ($locationProvider, $urlRouterProvider, $httpProvider, RestangularProvider) {
 
       RestangularProvider.setBaseUrl('http://104.130.5.217:8000/api/1.0');
       RestangularProvider
@@ -45,13 +23,11 @@
           }
         });
 
-//      $locationProvider.html5Mode(true);
-      $urlRouterProvider.otherwise('/');
+      // $locationProvider.html5Mode(true);
 
+      // cross domain restriction fixes
       $httpProvider.defaults.useXDomain = true;
       delete $httpProvider.defaults.headers.common['X-Requested-With'];
-
-
     })
     .factory('Countries', function (Restangular) {
       return Restangular.service('countries')
@@ -63,9 +39,6 @@
     .run(function ($rootScope, $location, $document) {
       console.log('App is running...');
       $rootScope.currentPage = 0;
-//      $rootScope.$watch('currentPage', function (currentPage) {
-//        console.log('currentPage: ' + currentPage);
-//      });
     })
   ;
 }());

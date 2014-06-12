@@ -167,7 +167,7 @@
 
           var path = d3.geo.path().projection(projection);
 
-          d3.json('scripts/world-topo-min.json', function (error, world) {
+          d3.json('scripts/data/world-topo-min.json', function (error, world) {
 
             var countries = topojson.feature(world, world.objects.countries).features;
             var country = root.selectAll('.country').data(countries);

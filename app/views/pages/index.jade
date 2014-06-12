@@ -10,7 +10,7 @@ block content
       include ../../../assets/shapes-05.svg
       include ../../../assets/shapes-05-large.svg
       include ../../../assets/storyline.svg
-  .share.animate(ng-hide="state === 'root'")
+  .share.animate(ng-show="profile.active")
     a(ng-href="{{shareUrl}}", ng-click="share()") SHARE
     .links(
       share-square="true",
@@ -18,9 +18,9 @@ block content
       share-title="population.io"
     )
 
-  section#root(ng-controller='StatsCtrl', stats-area)
+  section#stats(ng-controller='StatsCtrl', du-scrollspy='stats', stats-area)
 
-  div(ng-class="{'hidden': state === 'root'}")
+  div(ng-class="{'hidden': !profile.active}")
     section#people(ng-controller='PeopleCtrl', people-area, du-scrollspy='people', offset='200')
     section#story(ng-controller='StoryCtrl', story-area, du-scrollspy='story', offset='200')
     section#birthdays(ng-controller='BirthdaysCtrl', birthdays-area, du-scrollspy='birthdays', offset='200')

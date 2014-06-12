@@ -1,13 +1,13 @@
 header
   .container
     .logo
-      a(href='#', ng-click="showHomepage()") Population.io
+      a(ng-click="showHomepage()") Population.io
     ul.link-list
       li
         a(ng-click="showAbout()") About
         a(ng-click="showDevelopers()") Developers
     .profile.animate(
-      ng-hide="state === 'root'",
+      ng-show="currentPage > 1",
       ng-click="showHomepage()"
     ) {{profile.birthday | date:'dd MMM yyyy' }}, {{profile.country}}
-    .world-population.animate(ng-hide="state === 'root'") {{worldPopulation | number:0}}
+    .world-population.animate(ng-show="currentPage > 1") {{worldPopulation | number:0}}

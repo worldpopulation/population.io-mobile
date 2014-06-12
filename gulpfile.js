@@ -28,7 +28,7 @@ var gulp = require('gulp'),
         'bower_components/lodash/dist/lodash.min.js'
       ],
       scripts: [
-        'app/scripts/**/*.js*'
+        'app/scripts/**/*.*'
       ],
       templates: 'app/views/layouts/*.jade',
       docs: 'app/views/pages/*.jade',
@@ -39,10 +39,14 @@ var gulp = require('gulp'),
         'app/stylus/main.styl'
       ],
       fonts: 'fonts/**',
-      overwatch: 'dist/**/*.*',
+      overwatch: [
+        'dist/**/*.*',
+        '!dist/celebrities/**'
+      ],
       images: [
         'assets/sprite-icons.svg'
-      ]
+      ],
+      celebs: 'assets/celebrities/**'
     },
     destinations = {
       vendor: 'dist/vendor/',
@@ -50,7 +54,8 @@ var gulp = require('gulp'),
       docs: 'dist/',
       partials: 'dist/partials',
       css: 'dist/css/',
-      images: 'dist/images/'
+      images: 'dist/images/',
+      celebs: 'dist/celebrities/'
     };
 
 // server task
@@ -163,6 +168,11 @@ gulp.task('images', function () {
     .pipe(gulp.dest(destinations.images));
 });
 
+gulp.task('celebs', function () {
+  return gulp.src(sources.celebs)
+    .pipe(gulp.dest(destinations.celebs));
+});
+
 gulp.task('fonts', function () {
   gulp.src(['bower_components/fontawesome/fonts/fontawesome-webfont.*'])
       .pipe(gulp.dest('dist/fonts/'));
@@ -193,6 +203,7 @@ gulp.task('default', [
   'serve',
   'fonts',
   'images',
+  'celebs',
   'jade:watch',
   'scripts:watch',
   'lint:watch',
