@@ -16,7 +16,7 @@ block content
   section#root(ng-controller='StatsCtrl', stats-area)
 
   div(ng-hide="state === 'root'")
-    section#people(ng-controller='PeopleCtrl', people-area)
-    section#story(ng-controller='StoryCtrl', story-area)
-    section#birthdays(ng-controller='BirthdaysCtrl', birthdays-area)
-    section#expectancy(ng-controller='ExpectancyCtrl', expectancy-area)
+    section#people(ng-controller='PeopleCtrl', people-area,, du-scrollspy='people', offset='200')
+    section#story(ng-controller='StoryCtrl', story-area, du-scrollspy='story', offset='200')
+    section#birthdays(ng-controller='BirthdaysCtrl', birthdays-area,, du-scrollspy='birthdays', offset='200')
+    section#expectancy(ng-controller='ExpectancyCtrl', expectancy-area,, du-scrollspy='expectancy', offset='200')

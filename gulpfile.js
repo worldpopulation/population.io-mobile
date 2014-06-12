@@ -11,6 +11,7 @@ var gulp = require('gulp'),
 
     sources = {
       vendor: [
+        'bower_components/angular-scroll/angular-scroll.min.js',
         'bower_components/jquery/dist/jquery.min.js',
         'bower_components/d3/d3.min.js',
         'bower_components/d3.slider/d3.slider.js',

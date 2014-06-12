@@ -8,7 +8,7 @@
         li(ng-repeat="item in storyLineData | orderBy: '-year'",
           data-id="item.year",
           ng-class="{'now': item.now, 'past': item.year < year, 'selected': selectedYear === item.year}",
-          ng-mouseover="highlightStoryLine(item.year)"
+          ng-mouseover="highlightStoryLine(item.year)",
           ng-mouseout="highlightStoryLine()")
           span.time
             span.date {{item.date | date: 'dd MMM' }}

@@ -20,7 +20,8 @@
     "angular-ui-router": "latest",
     "angular-route": "~1.2.16",
     "lodash": "latest",
-    "fontawesome": "latest"
+    "fontawesome": "latest",
+    "angular-scroll": "~0.5.7"
   },
   "description": "The World Population Project",
   "license": "",

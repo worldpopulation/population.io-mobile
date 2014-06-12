@@ -2,30 +2,30 @@
   'use strict';
 
   angular
-    .module('populationioApp', [ 'ngResource', 'ui.router', 'ngAnimate', 'ui.bootstrap', 'restangular' ])
+    .module('populationioApp', [ 'duScroll', 'ngResource', 'ui.router', 'ngAnimate', 'ui.bootstrap', 'restangular' ])
     .config(function ($locationProvider, $urlRouterProvider, $stateProvider, $httpProvider, RestangularProvider) {
 
       $stateProvider
-      .state('root', {
-        url: '/',
-        controller: 'StatsCtrl'
-      })
-      .state('people', {
-        url: '/:year/:month/:day/:country/people',
-        controller: 'PeopleCtrl'
-      })
-      .state('story', {
-        url: '/:year/:month/:day/:country/story',
-        controller: 'StoryCtrl'
-      })
-      .state('birthdays', {
-        url: '/:year/:month/:day/:country/birthdays',
-        controller: 'BirthdaysCtrl'
-      })
-      .state('expectancy', {
-        url: '/:year/:month/:day/:country/expectancy',
-        controller: 'ExpectancyCtrl'
-      });
+        .state('root', {
+          url: '/',
+          controller: 'StatsCtrl'
+        })
+        .state('people', {
+          url: '/:year/:month/:day/:country/people',
+          controller: 'PeopleCtrl'
+        })
+        .state('story', {
+          url: '/:year/:month/:day/:country/story',
+          controller: 'StoryCtrl'
+        })
+        .state('birthdays', {
+          url: '/:year/:month/:day/:country/birthdays',
+          controller: 'BirthdaysCtrl'
+        })
+        .state('expectancy', {
+          url: '/:year/:month/:day/:country/expectancy',
+          controller: 'ExpectancyCtrl'
+        });
 
       RestangularProvider.setBaseUrl('http://104.130.5.217:8000/api/1.0');
       RestangularProvider
@@ -45,7 +45,7 @@
           }
         });
 
-      // $locationProvider.html5Mode(false);
+//      $locationProvider.html5Mode(true);
       $urlRouterProvider.otherwise('/');
 
       $httpProvider.defaults.useXDomain = true;
