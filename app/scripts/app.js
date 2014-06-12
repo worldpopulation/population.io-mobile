@@ -60,12 +60,12 @@
       //http://104.130.5.217:8000/api/1.0/life-expectancy/remaining/male/Germany/2014-06-11/27/
       return Restangular.service('life-expectancy')
     })
-    .run(function ($rootScope, $location) {
+    .run(function ($rootScope, $location, $document) {
       console.log('App is running...');
       $rootScope.currentPage = 0;
-      $rootScope.$watch('currentPage', function (currentPage) {
-        console.log('currentPage: ' + currentPage);
-      });
+//      $rootScope.$watch('currentPage', function (currentPage) {
+//        console.log('currentPage: ' + currentPage);
+//      });
     })
   ;
 }());

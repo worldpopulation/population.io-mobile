@@ -19,6 +19,22 @@
         }
       });
 
+      setTimeout(function () {
+        var path = $location.$$path;
+        path = path.replace(/.+[/](.*)$/g, '$1');
+        console.log(path)
+//          $location.hash(hash).replace();
+//        $location.path(path + hash).replace();
+//        $rootScope.$apply();
+
+
+        var someElement = angular.element(document.getElementById(path));
+        $document.scrollToElement(someElement, 80, 1000).then(function () {
+          console.log('done')
+        });
+
+      }, 20)
+
 //      $document.on('scroll', function() {
 //        console.log('Document scrolled to ', $document.scrollLeft(), $document.scrollTop());
 //        console.log($location.$$path)
