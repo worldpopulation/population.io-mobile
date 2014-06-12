@@ -3,7 +3,7 @@
 
   angular.module('populationioApp')
 
-  .controller('MainCtrl', function ($scope, $rootScope, $state, $location, ProfileService, PopulationIOService) {
+  .controller('MainCtrl', function ($scope, $modal, $rootScope, $state, $location, ProfileService, PopulationIOService) {
 
     $scope.profile = ProfileService;
     $scope.shareUrl = $location.absUrl();
@@ -13,6 +13,18 @@
     }, function(url) {
       $scope.shareUrl = url;
     });
+
+    $scope.showAbout = function() {
+      $modal.open({
+        templateUrl: 'about.html'
+      });
+    };
+
+    $scope.showDevelopers = function() {
+      $modal.open({
+        templateUrl: 'developers.html'
+      });
+    };
 
     $scope.worldPopulation = PopulationIOService.getWorldPopulation();
     setInterval(function() {

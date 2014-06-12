@@ -62,22 +62,67 @@ svg.defs-area
 text
   cursor default
 
+// modal
+.modal
+  background rgba(0,0,0,0.5)
+  position absolute
+  left 0
+  top 0
+  height 100%
+  width 100%
+.modal-title
+  font-size 42px
+  font-family 'PlantinMTStd-Light', sans-serif
+.modal-body
+  margin 20px 0 40px 0
+  p
+    margin 0 0 20px 0
+.modal-footer
+  button
+    background #333
+    color #fff
+    cursor pointer
+    border none
+    border-radius 4px
+    padding 10px 50px
+.modal-dialog
+  background #fff
+  box-shadow 0 0 10px rgba(0,0,0,0.5)
+  border-radius 4px
+  box-sizing border-box
+  padding 40px
+  width 800px
+  left 50%
+  position absolute
+  top 50px
+  left 50%
+  margin-left -400px
+
 // share
 .share
   background highlight-yellow
   position fixed
-  bottom -32px
+  bottom -60px
   font-size 14px
-  right -60px
+  right -110px
   z-index 10
   padding-top 15px
-  height 80px
-  width 150px
+  height 120px
+  width 240px
   text-align center
   transform rotate(-45deg)
+  transition all ease 250ms
+  .links
+    opacity 0.5
+    margin 5px 0 0 0
+    font-size 24px
+.share:hover
+  right -90px
+  bottom -40px
+  .links
+    opacity 1.0
 .share.animate.ng-hide-add,
 .share.animate.ng-hide-remove
-  transition all ease 250ms
   display block !important
 .share.animate.ng-hide-add.ng-hide-add-active,
 .share.animate.ng-hide-remove
