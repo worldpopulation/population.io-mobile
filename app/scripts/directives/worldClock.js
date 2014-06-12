@@ -2,16 +2,16 @@
   'use strict';
 
   angular.module('populationioApp')
-    .directive('worldClock', function ($filter, PopulationIOService) {
+    .directive('worldClock', function ($filter, PopulationIOService, HelloWords) {
       return {
         restrict: 'E',
         link: function ($scope, element, attrs, ngModel) {
           var currentValue, digits, countElement, clockElement, digit, placeholder, digitText, placeholderText, chart,
-            babiesArea, baby, babiesList, lastReborn, helloBubble, babyWidth, helloWords,
+            babiesArea, baby, babiesList, lastReborn, helloBubble, babyWidth, countryTitle,
             digitCellWidth = 26,
             animationDuration = 300,
             parentWidth = element[0].offsetWidth,
-            parentHeight = 180
+            parentHeight = 220
             ;
           chart = d3.select(element[0])
             .append('svg')
@@ -22,41 +22,12 @@
 
 
           _initWorldClock();
-          //_initMap();
           _initBabiesFlood();
           _initHelloBubble();
 
           setInterval(_updateWorldClock, 1000);
           setInterval(_sayHello, 6000);
 
-          function _initMap() {
-            var width = 900;
-
-            var map = chart
-              .append('g')
-              .attr('class','world-clock-map')
-              .attr({transform: 'translate(300,20)'});
-
-            var projection = d3.geo.mercator()
-              .translate([(width / 2), 400])
-              .scale(900 / 2 / Math.PI);
-
-            var path = d3.geo.path().projection(projection);
-
-            d3.json('scripts/world-topo-min.json', function (error, world) {
-
-              var countries = topojson.feature(world, world.objects.countries).features;
-              var country = map.selectAll('.country').data(countries);
-
-              country.enter().insert('path')
-                .attr({
-                  class: 'country',
-                  d: path,
-                  'data-id': function (d) { return d.id; },
-                  title: function (d) { return d.properties.name; }
-                });
-            });
-          }
 
           function _initWorldClock() {
             currentValue = $filter('number')(
@@ -66,16 +37,19 @@
 
             var clip = chart.append("defs").append("svg:clipPath")
               .attr("id", "clip")
-              .append("svg:rect")
+              .append("rect")
               .attr("id", "clip-rect")
               .attr("x", "0")
               .attr("y", "0")
               .attr("width", digits.length * digitCellWidth)
               .attr("height", 40);
 
-            clockElement = chart.append('g').attr('class', 'counter')
+            clockElement = chart.append('g')
+              .attr('class', 'counter')
               .attr({
-                'clip-path': 'url(#clip)'
+                'clip-path': 'url(#clip)',
+                transform: 'translate(160, 90)'
+
               });
 
             countElement = clockElement
@@ -212,9 +186,33 @@
             babiesArea = chart
               .append('g')
               .attr({
-                class: 'babies-area',
-                transform: 'translate(0,100)'
+                class: 'babies-area'
               })
+            var countryTitleBackground = chart
+              .append('rect')
+              .attr({class: 'country-title-background',
+                transform: 'translate(' + [410, 180] + ')',
+                fill: '#fff',
+                width: 400,
+                height: 60
+              })
+
+              .text('hello')
+            var countryTitleLine = chart
+              .append('rect')
+              .attr({class: 'country-title-line',
+                transform: 'translate(' + [0, 180] + ')',
+                fill: '#ccc',
+                width: parentWidth,
+                height: 1
+              })
+
+              .text('hello')
+            countryTitle = chart
+              .append('text')
+              .attr({class: 'country-title', transform: 'translate(' + [610, 210] + ')'})
+
+              .text('hello')
 
             baby = babiesArea.selectAll('.baby')
               .data(babiesList)
@@ -224,34 +222,50 @@
                 class: 'baby',
                 opacity: 1
               });
-
+            baby
+              .on('mouseenter', function () {
+                d3.select(this).select('.hello-bubble').transition().attr('opacity', 1)
+              })
+              .on('mouseleave', function () {
+                d3.select(this).select('.hello-bubble').transition().attr('opacity', 0)
+              })
             baby
               .append("use")
               .attr({
                 'xlink:href': function () {
                   return ['#baby-girl', '#baby-boy'][_.random(0, 1)]
                 }
-              })
+              });
 
             baby.each(function (d, i) {
+              var helloWord, countryTitle;
+              var randomItem = _.random(0, HelloWords.length - 1)
+              helloWord = HelloWords[randomItem].greeting
+              countryTitle = HelloWords[randomItem].language
+
+              d.helloWord = helloWord;
+              d.countryTitle = countryTitle;
               babyWidth = d.babyWidth = this.getBBox().width;
             }).attr({
               transform: function (d, i) {
                 return 'translate(' + [i * d.babyWidth, 0] + ')'
               }
             })
+
             babiesArea.attr('transform', function () {
-              var xOffset = parentWidth - this.getBBox().width - 50;
-              var yOffset = parentHeight - this.getBBox().height - 40;
+              var xOffset = parentWidth - this.getBBox().width - 20;
+              var yOffset = parentHeight - this.getBBox().height - 80;
               return 'translate(' + [xOffset, yOffset] + ')'
             });
             _updateBabiesFlood();
+
+
           }
 
 
           function _updateBabiesFlood() {
+            var newTitle;
             var babies = d3.selectAll('.baby');
-
             babies.transition()
               .delay(100)
               .attr(
@@ -262,6 +276,11 @@
                 },
                 opacity: function (d, i) {
                   if (i == babies[0].length - 1) {
+                    var randomItem = _.random(0, HelloWords.length - 1)
+                    d.helloWord = HelloWords[randomItem].greeting;
+                    d.countryTitle = HelloWords[randomItem].language;
+
+
                     return 0
                   }
                 }
@@ -272,8 +291,10 @@
               .attr({
                 transform: function (d, i) {
                   if (i == babies[0].length - 1) {
+                    console.log(d)
+                    newTitle = d.countryTitle
                     d3.select(this).moveToBack()
-                    return 'translate(-40,50)';
+                    return 'translate(-70,50)';
 
                   }
                   else {
@@ -286,20 +307,22 @@
               .attr({
                 opacity: 1
               });
+            countryTitle
+              .transition()
+              .attr({opacity: 0})
+              .transition()
+              .delay(600)
+              .attr({opacity: 1})
+              .text(newTitle)
           }
 
           function _initHelloBubble() {
-            d3.json("scripts/hello-in-all-languages.json", function (error, json) {
-              if (error) return console.warn(error);
-              helloWords = json;
-            });
 
-
-            helloBubble = chart
+            helloBubble = baby
               .append('g')
               .attr({
                 class: 'hello-bubble',
-                transform: 'translate(-200,-200)',
+                transform: 'translate(-30,-90)',
                 opacity: 0
               })
             helloBubble.append("use")
@@ -318,22 +341,14 @@
           }
 
           function _sayHello() {
-            var multiplier = _.random(0, 10);
-//            console.log(multiplier, babyWidth * multiplier)
+            var seed = _.random(0, babiesList.length);
             helloBubble
-              .attr(
-              {
-                transform: function () {
-                  var xOffset = parentWidth - this.getBBox().width - babyWidth * multiplier - 20;
-                  var yOffset = parentHeight - this.getBBox().height - 90;
-                  return 'translate(' + [xOffset, yOffset] + ')'
-                }
-              }
-            )
               .transition()
               .delay(500)
               .attr({
-                opacity: 1
+                opacity: function (d, i) {
+                  return i == seed ? 1 : 0;
+                }
               })
               .transition()
               .delay(2000)
@@ -341,15 +356,8 @@
                 opacity: 0
               })
 
-            helloBubble.select('text').text(function () {
-              if (helloWords) {
-                var randomItem = _.random(0, helloWords.length - 1)
-                return helloWords[randomItem].greeting
-              }
-              else {
-                return 'Hello'
-              }
-
+            helloBubble.select('text').text(function (d, i) {
+              return d.helloWord
 
             })
           }
