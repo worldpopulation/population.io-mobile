@@ -2,39 +2,35 @@
   'use strict';
 
   angular.module('populationioApp')
-    .directive('birthdaysChart', function () {
+    .directive('birthdaysChart', function ($filter) {
       return {
         restrict: 'E',
-        link: function (scope, element, attrs, ngModel) {
+        scope: {
+          continentsData: '=',
+          worldData: '='
+        },
+        link: function ($scope, element, attrs, ngModel) {
           var parentWidth = 1200,
             parentHeight = 700;
-          var continentsData = [
-            {countryAbbr: 'PO', countryTitle: 'Poland', value: 500},
-            {countryAbbr: 'UK', countryTitle: 'United Kingdom', value: 2700},
-            {countryAbbr: 'HU', countryTitle: 'Hungary', value: 1000},
-            {countryAbbr: 'UA', countryTitle: 'Ukraine', value: 40},
 
-            {countryAbbr: 'IT', countryTitle: 'Italy', value: 300}
-          ];
-          var worldData = [
-            //            {countryAbbr: 'ROOT', countryTitle: 'Root Point', value: 0},
-            {countryAbbr: 'BR', countryTitle: 'Brazil', value: 100},
-            {countryAbbr: 'US', countryTitle: 'USA', value: 234},
-            {countryAbbr: 'GE', countryTitle: 'Germany', value: 1244},
-            {countryAbbr: 'KO', countryTitle: 'Spain', value: 567},
-            {countryAbbr: 'EQ', countryTitle: 'Equador', value: 862}
-          ];
+          $scope.$watch('continentsData', function(continentsData) {
+            if (continentsData) {
+              _buildContinentsChart(continentsData);
+            }
+          }, true);
+
+          $scope.$watch('worldData', function(worldData) {
+            if (worldData) {
+              _buildWorldChart(worldData);
+            }
+          }, true);
 
           var chart = d3.select(element[0]).append("svg")
             .attr("width", parentWidth)
             .attr("height", parentHeight);
 
 
-          _buildContinentsChart();
-          _buildWorldChart();
-
-
-          function _buildContinentsChart() {
+          function _buildContinentsChart(continentsData) {
             var continentsChart = chart.append('g').attr('class', 'continents-chart');
             var radius = d3.scale.linear()
               .domain([0, d3.max(continentsData, function (d, i) {return d.value})])
@@ -125,7 +121,7 @@
 
                 tooltipElement.select('.value-label').
                   text(function (d, i) {
-                    return _tooltip.data()[0].value
+                    return $filter('number')(_tooltip.data()[0].value, 0);
                   })
                 tooltipElement.select('.country-label').
                   text(function (d, i) {
@@ -250,7 +246,7 @@
 
           }
 
-          function _buildWorldChart() {
+          function _buildWorldChart(worldData) {
             var worldChart = chart.append('g')
               .attr({
                 class: 'world-chart',
@@ -359,7 +355,7 @@
             maleIcon.attr('transform', 'translate(' + [-50, -115] + ')')
 
             var color = d3.scale.linear()
-              .domain([0, continentsData.length])
+              .domain([0, worldData.length])
               .range(['#555', '#fff']);
 
 
@@ -398,7 +394,9 @@
               .attr("dx", function (d, i) {
                 return labelArc.centroid(d)[0] > -1 ? 135 : -135;
               })
-              .text(function (d) { return d.data.value; })
+              .text(function (d) {
+                return $filter('number')(d.data.value, 0);
+              })
               .style("text-anchor", function (d, i) {
                 return labelArc.centroid(d)[0] > -1 ? 'end' : 'begin';
               })

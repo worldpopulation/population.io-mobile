@@ -166,10 +166,10 @@
           sex: ProfileService.gender,
           country: country,
           dob: ProfileService.birthday
-        }, function (remainingLife) {
+        }, function (totalLifeExpectancy) {
           $scope.storyLineData.push({
-            date: $filter('date')(_getDateWithOffset(Date.now(), remainingLife), 'yyyy-MM-dd'),
-            year: $filter('date')(_getDateWithOffset(Date.now(), remainingLife), 'yyyy'),
+            date: $filter('date')(_getDateWithOffset(new Date(ProfileService.birthday), totalLifeExpectancy), 'yyyy-MM-dd'),
+            year: $filter('date')(_getDateWithOffset(new Date(ProfileService.birthday), totalLifeExpectancy), 'yyyy'),
             title: 'Life expectancy in ' + country
           });
         });
@@ -238,13 +238,13 @@
         });
 
         _loadWpRankRanked(1000000000, '1th');
-        _loadWpRankRanked(5000000000, '5th');
-        _loadWpRankRanked(7000000000, '7th', function (date) {
+        _loadWpRankRanked(2000000000, '2th');
+        _loadWpRankRanked(3000000000, '3th', function (date) {
           $scope.title = $sce.trustAsHtml([
             'Watch out on <span>',
               $filter('ordinal')($filter('date')(date, 'd')) + ' ',
               $filter('date')(date, 'MMM, yyyy') + '</span> becoming ',
-            'the <span>7th Billion</span> person on earth!'
+            'the <span>3th Billion</span> person on earth!'
           ].join(''));
         });
 
@@ -273,12 +273,71 @@
           }
         ];
       };
-
-      _update();
     })
 
-    .controller('BirthdaysCtrl', function ($scope, $state, $filter, $rootScope, ProfileService) {
+    .controller('BirthdaysCtrl', function ($scope, $state, $filter, $rootScope, PopulationIOService, ProfileService) {
 
+      $scope.$watch(function () {
+        return ProfileService.active;
+      }, function (active) {
+        if (active) {
+          _update();
+        }
+      });
+
+      var _loadPopulation = function(args, onSuccess) {
+        PopulationIOService.loadPopulation({
+          year: $filter('date')(Date.now(), 'yyyy'),
+          country: args.country
+        }, function (data) {
+          onSuccess(args.country, data[0]);
+        });
+      };
+
+      $scope.continentsData = [];
+      $scope.worldData = [];
+
+      var _update = function () {
+        $scope.continentsData = [];
+        $scope.worldData = [];
+
+        var countriesAroundTheWorld = [
+          'China', 'India', 'USA', 'Indonesia', 'Brazil',
+          'Pakistan', 'Russia', 'Japan', 'Nigeria',
+          'Bangladesh', 'Mexico'
+        ];
+        var countriesContinental = [
+          'Germany', 'Spain', 'Italy'
+        ];
+
+        for (var i=0; i<countriesAroundTheWorld.length; i+=1) {
+          _loadPopulation({
+            country: countriesAroundTheWorld[i],
+            age: ProfileService.getAge()
+          }, function(country, data) {
+            var value = ProfileService.gender === 'male' ? data.males : data.females;
+            $scope.worldData.push({
+              countryAbbr: country,
+              countryTitle: country,
+              value: value/365/24
+            });
+          });
+        }
+
+        for (var j=0; j<countriesContinental.length; j+=1) {
+          _loadPopulation({
+            country: countriesContinental[j],
+            age: ProfileService.getAge()
+          }, function(country, data) {
+            var value = ProfileService.gender === 'male' ? data.males : data.females;
+            $scope.continentsData.push({
+              countryAbbr: country,
+              countryTitle: country,
+              value: value/365/24
+            });
+          });
+        }
+      };
     })
 
     .controller('ExpectancyCtrl', function ($scope, $rootScope, $filter, ProfileService, PopulationIOService) {
@@ -292,6 +351,8 @@
           _update();
         }
       });
+
+      $scope.countries = [];
 
       var _update = function () {
         PopulationIOService.loadCountries(function (countries) {

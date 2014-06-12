@@ -39,7 +39,7 @@
 
     .service('PopulationIOService', function ($rootScope, $http) {
 
-      var baseUrl = 'http://p4fe123e8.dip0.t-ipconnect.de:8000/api/1.0',
+      var baseUrl = ' http://104.130.5.217:8000/api/1.0',
         countries = [];
 
       return {
@@ -176,15 +176,14 @@
               args.dob
             ].join('/') + '/'
           })
-            .success(function (data) {
-              if (data.remaining_life_expectancy) {
-                onSuccess(data.remaining_life_expectancy);
-              }
-            })
-            .error(function () {
-              console.error('loadLifeExpectancyTotal() error');
-              onSuccess(0);
-            });
+          .success(function (data) {
+            if (data.total_life_expectancy) {
+              onSuccess(data.total_life_expectancy);
+            }
+          })
+          .error(function () {
+            console.error('loadLifeExpectancyTotal() error');
+          });
         },
 
         // GET /api/1.0/population/{year}/{country}
