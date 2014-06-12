@@ -1,32 +1,60 @@
 (function () {
   'use strict';
 
-  angular.module('populationioApp', [ 'ngResource', 'ui.router', 'ngAnimate', 'ui.bootstrap' ])
+  angular
+    .module('populationioApp', [ 'ngResource', 'ui.router', 'ngAnimate', 'ui.bootstrap', 'restangular' ])
+    .config(function ($locationProvider, $urlRouterProvider, $stateProvider, $httpProvider, RestangularProvider) {
 
-  .config(function ($locationProvider, $urlRouterProvider, $stateProvider, $httpProvider) {
-    $stateProvider
-      .state('root', {
-        url: '/',
-        controller: 'StateCtrl'
-      })
-      .state('section', {
-        url: '/:year/:month/:day/:country/:state',
-        controller: 'StateCtrl'
+      RestangularProvider.setBaseUrl('http://104.130.5.217:8000/api/1.0');
+      RestangularProvider
+        .addResponseInterceptor(function (data, operation, what, url, response, deferred) {
+          switch (what) {
+            case 'countries':
+              var extractedData;
+              if (operation === "getList") {
+                // .. and handle the data and meta data
+                extractedData = data.countries;
+              } else {
+                extractedData = data;
+              }
+              return extractedData;
+            default:
+              return data
+          }
+        });
+
+
+      $stateProvider
+        .state('root', {
+          url: '/',
+          controller: 'StateCtrl'
+        })
+        .state('section', {
+          url: '/:year/:month/:day/:country/:state',
+          controller: 'StateCtrl'
+        });
+
+      // $locationProvider.html5Mode(false);
+      $urlRouterProvider.otherwise('/');
+
+      $httpProvider.defaults.useXDomain = true;
+      delete $httpProvider.defaults.headers.common['X-Requested-With'];
+
+
+    })
+    .factory('Countries', function (Restangular) {
+      return Restangular.service('countries')
+    })
+    .factory('LifeExpectancy', function (Restangular) {
+      //http://104.130.5.217:8000/api/1.0/life-expectancy/remaining/male/Germany/2014-06-11/27/
+      return Restangular.service('life-expectancy')
+    })
+    .run(function ($rootScope, $location) {
+      console.log('App is running...');
+      $rootScope.currentPage = 0;
+      $rootScope.$watch('currentPage', function (currentPage) {
+        console.log('currentPage: ' + currentPage);
       });
-
-    // $locationProvider.html5Mode(false);
-    $urlRouterProvider.otherwise('/');
-
-    $httpProvider.defaults.useXDomain = true;
-    delete $httpProvider.defaults.headers.common['X-Requested-With'];
-  })
-
-  .run(function ($rootScope, $location) {
-    console.log('running');
-    $rootScope.currentPage = 0;
-    $rootScope.$watch('currentPage', function (currentPage) {
-      console.log('currentPage: ' + currentPage);
-    });
-  })
+    })
   ;
 }());

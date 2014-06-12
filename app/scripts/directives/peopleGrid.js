@@ -81,102 +81,150 @@
               });
           };
 
-          var blocksPerRow = -1;
 
           var _buildNavigator = function () {
+            var blockData = [];
+            var _worldPopulation = PopulationIOService.getWorldPopulation();
+
             var nav = root.append('g')
               .attr('class', 'navigator');
-
             var blockSize = 2;
             var navWidth = 180;
             var navHeight = 400;
             var lensWidth = gridCols * blockSize - 1;
             var lensHeight = gridRows * (blockSize + 1);
-            var maxHuman = PeopleGridService.getWorldPopulation() / populationScale;
-            blocksPerRow = parseInt(navWidth / blockSize - 1, 0);
-            var blockData = [];
 
-            for (var i = 0; i < maxHuman / blocksPerRow; i += 1) {
-              blockData.push(i);
+
+            for (var i = 0; i < navHeight / 3 + 1; i++) {
+              blockData.push(i * 2)
             }
+            var peopleInOneRow = _worldPopulation / blockData.length
 
-            var bisect = d3.bisector(function (d) { return d; }).left,
-              meBlockIdx = bisect(blockData, PopulationIOService.getRank() / populationScale);
+            var yScale = d3.scale.linear()
+              .domain([0, _worldPopulation])
+              .range([0, navHeight])
+            var yScale2 = d3.scale.linear()
+              .domain([0, navHeight])
+              .range([0, _worldPopulation])
+
+            var xScale = d3.scale.linear()
+              .domain([0, peopleInOneRow])
+              .range([0, navWidth - 2])
+            var xScale2 = d3.scale.linear()
+              .domain([0, navWidth - 2])
+              .range([0, peopleInOneRow])
 
             nav.append('rect')
               .attr({
                 class: 'frame',
-                height: navHeight,
+                height: navHeight + lensHeight,
                 width: navWidth
               });
 
-            nav.append('text')
-              .text('People Navigator (in billions)')
-              .attr('class', 'title');
+            var blocksArea = nav
+              .append('g')
+              .attr({class: 'blocks', transform: 'translate(1,1)'})
 
-            var blocks = nav.append('g')
-                .attr({class: 'blocks',
-                  transform: 'translate(1,30)'})
-              ;
-
-            blocks.selectAll('.block')
+            console.log(_worldPopulation / blockData.length)
+            blocksArea.selectAll('rect')
               .data(blockData)
               .enter()
               .append('rect')
               .attr({
-                class: function (d, i) {
-                  var className = 'block';
-                  if (i === meBlockIdx) {
-                    className += ' me';
-                  }
-                  return className;
-                },
-                transform: function (d, i) {
-                  return 'translate(' + [
-                    0,
-                      i * 3
-                  ] + ')';
-                },
-//                transform: function (d, i) {
-//                  return 'translate(' + [
-//                      parseInt(i % blocksPerRow, 0) * blockSize,
-//                      parseInt(i / blocksPerRow, 0) * (blockSize + 1)
-//                  ] + ')';
-//                },
-                width: 178,
-                height: blockSize,
-                fill: function (d, i) {
-                  if (i % 10 === 0) {
-                    return 'white';
+                'data-range': yScale2,
+                class: 'block',
+                height: 2,
+                width: function (d, i) {
+                  if (i == blockData.length - 1) {
+                    return xScale(10000000)
                   }
                   else {
-                    return 'white';
+                    return navWidth - 2
                   }
+
+                },
+                transform: function (d, i) {
+
+                  return 'translate(' + [0, i * 3] + ')'
                 }
               });
 
-            var yAxis = nav.append('g')
-              .attr('class', 'y-axis');
 
-            for (var j = 1; j <= 7; j += 1) {
-              yAxis.append('text')
-                .text(j)
-                .attr({
-                  'transform': function () {
-                    return 'translate(' + [10 + navWidth, ((navHeight - 30) / 7) * j] + ')';
-                  }
-                });
-            }
+//            var maxHuman = PopulationIOService.getWorldPopulation() / populationScale;
+//            blocksPerRow = parseInt(navWidth / blockSize - 1, 0);
 
+
+//            var bisect = d3.bisector(function (d) { return d; }).left,
+//              meBlockIdx = bisect(blockData, PopulationIOService.getRank() / populationScale);
+//
+
+//            nav.append('text')
+//              .text('People Navigator (in billions)')
+//              .attr('class', 'title');
+
+
+//            blocks.selectAll('.block')
+//              .data(blockData)
+//              .enter()
+//              .append('rect')
+//              .attr({
+//                class: function (d, i) {
+//                  var className = 'block';
+//                  if (i === meBlockIdx) {
+//                    className += ' me';
+//                  }
+//                  return className;
+//                },
+//                transform: function (d, i) {
+//                  return 'translate(' + [
+//                    0,
+//                      i * 3
+//                  ] + ')';
+//                },
+////                transform: function (d, i) {
+////                  return 'translate(' + [
+////                      parseInt(i % blocksPerRow, 0) * blockSize,
+////                      parseInt(i / blocksPerRow, 0) * (blockSize + 1)
+////                  ] + ')';
+////                },
+//                width: 178,
+//                height: blockSize,
+//                fill: function (d, i) {
+//                  if (i % 10 === 0) {
+//                    return 'white';
+//                  }
+//                  else {
+//                    return 'white';
+//                  }
+//                }
+//              });
+
+//            var yAxis = nav.append('g')
+//              .attr('class', 'y-axis');
+
+//            for (var j = 1; j <= 7; j += 1) {
+//              yAxis.append('text')
+//                .text(j)
+//                .attr({
+//                  'transform': function () {
+//                    return 'translate(' + [10 + navWidth, ((navHeight - 30) / 7) * j] + ')';
+//                  }
+//                });
+//            }
+            var startRank, endRank;
             var drag = d3.behavior.drag()
               .on('drag', function () {
-                var x = Math.max(0,
-                  Math.min(navWidth - lensWidth, d3.event.x - lensWidth / 2));
-                var y = Math.max(30,
-                  Math.min(navHeight - lensHeight, d3.event.y - lensHeight / 2));
+                var x = Math.max(0, Math.min(navWidth - lensWidth, d3.event.x - lensWidth / 2));
+                var y = Math.max(0, Math.min(navHeight, d3.event.y - lensHeight / 2));
 
                 this.x = x;
                 this.y = y;
+//                startRank = parseInt(xScale2(x + lensWidth) + yScale2(y + lensHeight))
+//                startRank = parseInt(xScale2(x + lensWidth) + yScale2(y + lensHeight)) - parseInt(xScale2(x) + yScale2(y));
+//                console.log(x, y)
+//                console.log(x + lensWidth, y + lensHeight)
+                startRank = parseInt(xScale2(x) + yScale2(y));
+                endRank = startRank + peopleInOneRow * 2
 
                 d3.select(this).attr('transform', 'translate(' + [x, y] + ')');
               })
@@ -185,7 +233,7 @@
 
               })
               .on('dragend', function () {
-                _updateGrid((this.x + 1) / blockSize, (this.y - 30) / (blockSize + 1));
+                _updateGrid(startRank, endRank);
               });
 
 
@@ -385,11 +433,13 @@
               .transition()
               .attr('opacity', 0.2);
           };
-          var _updateGrid = function () {
+          var _updateGrid = function (startRank, endRank) {
+            console.log(startRank)
+            console.log(endRank)
             grid.selectAll('.person')
               .transition()
               .attr('opacity', 1);
-            _loadCelebrities(500000000)
+            _loadCelebrities(startRank, endRank)
 
           };
 
@@ -468,8 +518,8 @@
 
           }
 
-          function _loadCelebrities(startRank) {
-            var celebs = PopulationIOService.getCelebrities(startRank)
+          function _loadCelebrities(startRank, endRank) {
+            var celebs = PopulationIOService.getCelebrities(startRank, endRank)
 
             person.each(
               function (d, i) {
@@ -477,9 +527,9 @@
                 var celeb = _.find(celebs, function (celeb) {
                   return celeb.rank == d.rank;
                 });
-
+                var _person = d3.select(this);
                 if (celeb) {
-                  var _person = d3.select(this);
+
                   d.gender = celeb.gender;
                   d.name = celeb.name;
                   d.birthday = celeb.birthday;
@@ -493,7 +543,10 @@
                     return d.gender == 'female' ? 1 : 0;
                   })
                 }
-
+                else {
+                  _person.classed('celeb', false)
+                  _person.selectAll('path').style('fill', '')
+                }
 
               })
           }
