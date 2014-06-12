@@ -53,10 +53,6 @@
     $scope.worldPopulation = PopulationIOService.getWorldPopulation();
     $scope.shareUrl = $location.absUrl();
 
-    $scope.share = function(url) {
-      alert(url);
-    };
-
     $scope.$watch(function() {
       return $location.absUrl();
     }, function(url) {
@@ -70,6 +66,10 @@
 
     $scope.showHomepage = function() {
       $state.go('root');
+    };
+
+    $scope.share = function() {
+      alert($scope.shareUrl);
     };
   })
 
@@ -126,7 +126,7 @@
     };
   })
 
-  .controller('StoryCtrl', function ($scope, $rootScope, $filter, ProfileService, PopulationIOService) {
+  .controller('StoryCtrl', function ($scope, $rootScope, $filter, $sce, ProfileService, PopulationIOService) {
 
     var _getDateWithOffset = function(date, offset) {
       var year = parseInt($filter('date')(date, 'yyyy'), 0),
@@ -137,6 +137,7 @@
     };
 
     $scope.year = $filter('date')(new Date(), 'yyyy');
+    $scope.storyLineData = [];
 
     var _loadLifeExpectancyTotal = function(country) {
       PopulationIOService.loadLifeExpectancyTotal({
@@ -152,7 +153,7 @@
       });
     };
 
-    var _loadWpRankRanked = function(rank, atomicNumber) {
+    var _loadWpRankRanked = function(rank, atomicNumber, onSuccess) {
       PopulationIOService.loadWpRankRanked({
         dob: ProfileService.birthday,
         sex: ProfileService.gender,
@@ -164,6 +165,9 @@
           year: $filter('date')(date, 'yyyy'),
           title: atomicNumber + ' billion person'
         });
+        if (onSuccess) {
+          onSuccess(date);
+        }
       });
     };
 
@@ -213,7 +217,14 @@
 
       _loadWpRankRanked(1000000000, '1th');
       _loadWpRankRanked(5000000000, '5th');
-      _loadWpRankRanked(7000000000, '7th');
+      _loadWpRankRanked(7000000000, '7th', function(date) {
+        $scope.title = $sce.trustAsHtml([
+          'Watch out on <span>',
+          $filter('ordinal')($filter('date')(date, 'd')) + ' ',
+          $filter('date')(date, 'MMM, yyyy') + '</span> becoming ',
+          'the <span>7th Billion</span> person on earth!'
+        ].join(''));
+      });
 
       _loadLifeExpectancyTotal(ProfileService.country);
       _loadLifeExpectancyTotal('World');

@@ -10,7 +10,7 @@ block content
       include ../../../assets/shapes-05-large.svg
       include ../../../assets/storyline.svg
   .share.animate(ng-show="profile.active")
-    a(ng-href="{{shareUrl}}") SHARE
+    a(ng-href="{{shareUrl}}", ng-click="share()") SHARE
   one-page-scroll
     div.section(data-anchor="stats")
       section(ng-controller='StatsCtrl', stats-area)
