@@ -291,7 +291,6 @@
               .attr({
                 transform: function (d, i) {
                   if (i == babies[0].length - 1) {
-                    console.log(d)
                     newTitle = d.countryTitle
                     d3.select(this).moveToBack()
                     return 'translate(-70,50)';
