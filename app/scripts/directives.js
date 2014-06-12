@@ -3,6 +3,13 @@
 
   angular.module('populationioApp')
 
+    .directive('birthdaysArea', function () {
+      return {
+        restrict: 'A',
+        templateUrl: 'partials/birthdays-area.html'
+      };
+    })
+
     .directive('statsArea', function () {
       return {
         restrict: 'A',
