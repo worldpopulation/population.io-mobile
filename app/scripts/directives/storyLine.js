@@ -11,7 +11,7 @@
         },
         link: function ($scope, element) {
           var width = element.parent().width(),
-            height = 560,
+            height = 580,
             yearMax = 100,
             yearMin = 0;
 
@@ -19,7 +19,7 @@
             .append('svg')
             .attr({width: width, height: height})
             .append('g')
-            .attr({transform: 'translate(-20,-40)'});
+            .attr({transform: 'translate(-20,0)'});
 
           $scope.$watch('data', function(data) {
             if (data) {
@@ -61,7 +61,7 @@
 
           var _initGraph = function() {
             var bezierCurve = [
-              'M435.75,570c0-22.092-17.658-40-39.75-40H96c-22.092,0-40-17.908-40-40s17.908-40,40-40h300c22.092,0,40-17.908,40-40s-17.908-40-40-40H96c-22.092,0-40-17.908-40-40s17.908-40,40-40h300c22.092,0,40-17.908,40-40s-17.908-40-40-40H96c-22.092,0-40-17.908-40-40s17.908-40,40-40h300c22.092,0,40-17.908,40-40s-17.908-40-40-40H155'
+              'M428.75,559c0-22.092-17.658-40-39.75-40H89c-22.092,0-40-17.908-40-40s17.908-40,40-40h300c22.092,0,40-17.908,40-40s-17.908-40-40-40H89c-22.092,0-40-17.908-40-40s17.908-40,40-40h300c22.092,0,40-17.908,40-40s-17.908-40-40-40H89c-22.092,0-40-17.908-40-40s17.908-40,40-40h300c22.092,0,40-17.908,40-40s-17.908-40-40-40H169.5'
             ].join('');
 
             root.append('path')
@@ -70,12 +70,18 @@
                 d: bezierCurve
               });
 
+            root.append('use')
+              .attr({
+                'class': 'ticks',
+                'xlink:href': '#Layer_1'
+              });
+
             root.append('g')
               .attr({
                 'class': 'lines'
               });
 
-           root.append('g')
+            root.append('g')
               .attr({
                 'class': 'circles'
               });
@@ -208,7 +214,7 @@
               });
           };
 
-          _initGraph()
+          _initGraph();
         }
       };
     });

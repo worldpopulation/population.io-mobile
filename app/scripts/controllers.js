@@ -273,6 +273,8 @@
           }
         ];
       };
+
+      _update();
     })
 
     .controller('BirthdaysCtrl', function ($scope, $state, $filter, $rootScope, ProfileService) {
