@@ -26,3 +26,4 @@
 6. run jshint on app/scripts folder files
     gulp jshint
     
+7. For the first run, copy app/assets whole folder into dist folder, so it becomes dist/assets.
