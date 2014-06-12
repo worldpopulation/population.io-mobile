@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('populationioApp', [ 'duScroll', 'ngResource', 'ui.router', 'ngAnimate', 'ui.bootstrap', 'restangular' ])
+    .module('populationioApp', [ 'duScroll', 'ngResource', 'ui.router', 'ngAnimate', 'ui.bootstrap', 'restangular', 'td.easySocialShare' ])
     .config(function ($locationProvider, $urlRouterProvider, $stateProvider, $httpProvider, RestangularProvider) {
 
       $stateProvider
