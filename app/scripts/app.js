@@ -7,11 +7,23 @@
     $stateProvider
       .state('root', {
         url: '/',
-        controller: 'StateCtrl'
+        controller: 'StatsCtrl'
       })
-      .state('section', {
-        url: '/:year/:month/:day/:country/:state',
-        controller: 'StateCtrl'
+      .state('people', {
+        url: '/:year/:month/:day/:country/people',
+        controller: 'PeopleCtrl'
+      })
+      .state('story', {
+        url: '/:year/:month/:day/:country/story',
+        controller: 'StoryCtrl'
+      })
+      .state('birthdays', {
+        url: '/:year/:month/:day/:country/birthdays',
+        controller: 'BirthdaysCtrl'
+      })
+      .state('expectancy', {
+        url: '/:year/:month/:day/:country/expectancy',
+        controller: 'ExpectancyCtrl'
       });
 
     // $locationProvider.html5Mode(false);

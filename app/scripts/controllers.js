@@ -3,54 +3,9 @@
 
   angular.module('populationioApp')
 
-  .controller('StateCtrl', function ($scope, $filter, $rootScope, $state, $stateParams, ProfileService) {
-
-    var _getDataFromAPI = function(onSuccess) {
-      ProfileService.loading = true;
-      setTimeout(function() {
-        ProfileService.active = true;
-        ProfileService.loading = false;
-        onSuccess();
-      }, 100);
-    };
-
-    if ($scope.forceUrl) {
-      $scope.forceUrl = false;
-      return;
-    }
-
-    if ($stateParams.state) {
-      if (ProfileService.active) {
-        $.fn.fullpage.moveTo($stateParams.state);
-      } else {
-        _getDataFromAPI(function() {
-          $.fn.fullpage.moveTo($stateParams.state);
-        });
-      }
-    } else {
-      $.fn.fullpage.moveTo('stats');
-    }
-
-    $rootScope.$on('profileChanged', function() {
-      _getDataFromAPI(function() {
-        // TODO: refactor me, duplicate code in directive
-        var birthday = ProfileService.birthday;
-        $state.go('section', {
-          year: $filter('date')(birthday, 'yyyy'),
-          month: $filter('date')(birthday, 'MM'),
-          day: $filter('date')(birthday, 'dd'),
-          country: ProfileService.country,
-          state: 'story'
-        });
-      });
-    });
-
-  })
-
   .controller('MainCtrl', function ($scope, $rootScope, $state, $location, ProfileService, PopulationIOService) {
 
     $scope.profile = ProfileService;
-    $scope.worldPopulation = PopulationIOService.getWorldPopulation();
     $scope.shareUrl = $location.absUrl();
 
     $scope.$watch(function() {
@@ -59,9 +14,21 @@
       $scope.shareUrl = url;
     });
 
-    $rootScope.$on('populationChanged', function() {
-      $scope.worldPopulation = PopulationIOService.getWorldPopulation();
-      $scope.$apply();
+    $scope.worldPopulation = PopulationIOService.getWorldPopulation();
+    setInterval(function() {
+      // $scope.worldPopulation = PopulationIOService.getWorldPopulation();
+      // $scope.$apply();
+    }, 1000);
+
+    $rootScope.$on('$stateChangeStart', function(e, toState){
+      $scope.state = toState.name;
+      if ($scope.state) {
+        setTimeout(function() {
+          $('html, body').animate({
+            scrollTop: $("#" + $scope.state).offset().top - 79
+          }, 1000);
+        }, 500);
+      }
     });
 
     $scope.showHomepage = function() {
@@ -82,7 +49,17 @@
     });
 
     $scope.goGoGadget = function() {
-      $rootScope.$emit('profileChanged');
+      ProfileService.active = true;
+      $scope.loading = true;
+      setTimeout(function() {
+        $scope.loading = false;
+        $state.go('people', {
+          year: $filter('date')(ProfileService.birthday, 'yyyy'),
+          month: $filter('date')(ProfileService.birthday, 'MM'),
+          day: $filter('date')(ProfileService.birthday, 'dd'),
+          country: ProfileService.country
+        });
+      }, 1000);
     };
 
     $scope.$watch(function() {
@@ -97,7 +74,7 @@
     });
   })
 
-  .controller('PeopleCtrl', function ($scope, PopulationIOService, ProfileService, $rootScope, $interval) {
+  .controller('PeopleCtrl', function ($scope, $anchorScroll, $state, $filter, PopulationIOService, ProfileService, $rootScope, $interval) {
 
     $scope.$watch(function() {
       return ProfileService.active;
@@ -126,7 +103,7 @@
     };
   })
 
-  .controller('StoryCtrl', function ($scope, $rootScope, $filter, $sce, ProfileService, PopulationIOService) {
+  .controller('StoryCtrl', function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationIOService) {
 
     var _getDateWithOffset = function(date, offset) {
       var year = parseInt($filter('date')(date, 'yyyy'), 0),
@@ -143,7 +120,7 @@
       PopulationIOService.loadLifeExpectancyTotal({
         sex: ProfileService.gender,
         country: country,
-        dob: ProfileService.birthday,
+        dob: ProfileService.birthday
       }, function(remainingLife) {
         $scope.storyLineData.push({
           date: $filter('date')(_getDateWithOffset(Date.now(), remainingLife), 'yyyy-MM-dd'),
@@ -157,7 +134,7 @@
       PopulationIOService.loadWpRankRanked({
         dob: ProfileService.birthday,
         sex: ProfileService.gender,
-        country: ProfileService.country,
+        country: 'World',
         rank: rank
       }, function(date) {
         $scope.storyLineData.push({
@@ -249,8 +226,8 @@
     };
   })
 
-  .controller('BirthdaysCtrl', function ($scope, $rootScope) {
-    // TODO: BirthdaysCtrl
+  .controller('BirthdaysCtrl', function ($scope, $state, $filter, $rootScope, ProfileService) {
+
   })
 
   .controller('ExpectancyCtrl', function ($scope, $rootScope, $filter, ProfileService, PopulationIOService) {

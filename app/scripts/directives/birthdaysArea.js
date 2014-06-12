@@ -2,10 +2,9 @@
   'use strict';
 
   angular.module('populationioApp')
-    .directive('birthdaysArea', function () {
+    .directive('birthdaysChart', function () {
       return {
-        restrict: 'A',
-        templateUrl: 'partials/birthdays-area.html',
+        restrict: 'E',
         link: function (scope, element, attrs, ngModel) {
           var parentWidth = 1200,
             parentHeight = 700;
@@ -26,7 +25,7 @@
             {countryAbbr: 'EQ', countryTitle: 'Equador', value: 862}
           ];
 
-          var chart = d3.select(element[0]).select('.chart-area').append("svg")
+          var chart = d3.select(element[0]).append("svg")
             .attr("width", parentWidth)
             .attr("height", parentHeight);
 
