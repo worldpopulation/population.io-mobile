@@ -34,7 +34,7 @@
           console.log('done')
         });
 
-      }, 20)
+      }, 200)
 
 //      $document.on('scroll', function() {
 //        console.log('Document scrolled to ', $document.scrollLeft(), $document.scrollTop());
