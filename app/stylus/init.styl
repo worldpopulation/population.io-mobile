@@ -42,41 +42,17 @@ h2
 a
   text-decoration none
   color #222
-
-// one page scroll
-one-page-scroll
-  top 80px
-  position relative
-  display block
-  .slimScrollBar
-    width 5px !important
-    right 5px !important
-    cursor pointer
-    background rgba(0,0,0,0.2) !important
-#fullPage-nav
-  display none
-  li
-    height 25px
-    width 25px
-    margin 0
-    cursor pointer
-  span
-    width 6px
-    height 6px
-    left 9px
-    top 10px
-    background #999
-    border none
-    &.active
-      left 6px
-      top 6px
-      width 10px
-      height 10px
-      background #fff
-      border 1px solid #999
-.active
-  #fullPage-nav
-    display block
+.next
+  position absolute
+  background highlight-yellow
+  bottom 20px
+  left 50%
+  border-radius 4px
+  padding 10px
+  margin-left -100px
+  cursor pointer
+  width 200px
+  text-align center
 
 .container
   width container-width
@@ -115,6 +91,7 @@ section
   header
     padding 40px 0
     border-bottom 1px solid border-color
+    border-top 1px solid border-color
   header.divided
     clearfix()
     h1

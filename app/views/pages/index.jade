@@ -1,5 +1,6 @@
 extends ../layouts/default
 block content
+  ui-view
   svg.defs-area
     defs
       include ../../../assets/shapes-01.svg
@@ -9,17 +10,13 @@ block content
       include ../../../assets/shapes-05.svg
       include ../../../assets/shapes-05-large.svg
       include ../../../assets/storyline.svg
-  .share.animate(ng-show="profile.active")
+  .share.animate(ng-hide="state === 'root'")
     a(ng-href="{{shareUrl}}", ng-click="share()") SHARE
-  one-page-scroll
-    div.section(data-anchor="stats")
-      section(ng-controller='StatsCtrl', stats-area)
-    div.section(data-anchor="people")
-      section(ng-controller='PeopleCtrl', people-area)
-    div.section(data-anchor="story")
-      section(ng-controller='StoryCtrl', story-area)
-    div.section(data-anchor="birthdays")
-      section(ng-controller='BirthdaysCtrl', birthdays-area)
-    div.section(data-anchor="expectancy")
-      section(ng-controller='ExpectancyCtrl', expectancy-area)
-      include ../layouts/footer
+
+  section#root(ng-controller='StatsCtrl', stats-area)
+
+  div(ng-hide="state === 'root'")
+    section#people(ng-controller='PeopleCtrl', people-area)
+    section#story(ng-controller='StoryCtrl', story-area)
+    section#birthdays(ng-controller='BirthdaysCtrl', birthdays-area)
+    section#expectancy(ng-controller='ExpectancyCtrl', expectancy-area)

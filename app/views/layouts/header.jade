@@ -7,7 +7,7 @@ header
         a(href='#') About
         a(href='#') Developers
     .profile.animate(
-      ng-show="activeIndex > 1",
+      ng-hide="state === 'root'",
       ng-click="showHomepage()"
     ) {{profile.birthday | date:'dd MMM yyyy' }}, {{profile.country}}
-    .world-population.animate(ng-show="activeIndex > 1") {{worldPopulation | number:0}}
+    .world-population.animate(ng-hide="state === 'root'") {{worldPopulation | number:0}}
