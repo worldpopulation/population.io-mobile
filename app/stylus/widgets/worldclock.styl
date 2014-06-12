@@ -1,13 +1,21 @@
 world-clock
   display block
-  position relative
   h3
     font-weight normal
     font-size 18px
     line-height 1.1em
     position absolute
     color #666666
-    bottom 90px
+    bottom 71px
+    display block
+    padding-left 65px
+    .icon
+      background-icon()
+      position absolute
+      left 0
+      height 40px
+      width 60px
+      background-position -25px -130px
   clearfix()
   .digit
   .placeholder
@@ -17,6 +25,7 @@ world-clock
       font-size 20px
       text-anchor middle
   .counter
+    transform translate(210px, 112px)
     text
       font-size 48px
   .country-title

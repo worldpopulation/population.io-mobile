@@ -29,9 +29,22 @@
             .attr("width", parentWidth)
             .attr("height", parentHeight);
 
+          var worldChart = chart.append('g')
+            .attr({
+              'class': 'world-chart',
+              transform: 'translate(' + [parentWidth - parentWidth / 4, 350] + ') rotate(0)'
+            });
+          worldChart
+            .append("use")
+            .attr({
+              'xlink:href': '#male-large',
+              'transform': 'translate(' + [-50, -115] + ')'
+            });
+
+          var continentsChart = chart.append('g')
+            .attr('class', 'continents-chart');
 
           function _buildContinentsChart(continentsData) {
-            var continentsChart = chart.append('g').attr('class', 'continents-chart');
             var radius = d3.scale.linear()
               .domain([0, d3.max(continentsData, function (d, i) {return d.value})])
               .range([15, 100]);
@@ -43,7 +56,7 @@
               color = d3.scale.category10();
 
             var force = d3.layout.force()
-              .gravity(0.2)
+              .gravity(0.1)
               .charge(function (d, i) { return i ? 0 : -2000; })
               .nodes(nodes)
               .size([parentWidth / 2, parentHeight]);
@@ -52,10 +65,10 @@
 
             var birthdaysTotal = d3.sum(continentsData, function (d, i) {return d.value})
 
+            continentsChart.selectAll('g').remove();
 
             var tooltipElement = continentsChart.append('g')
-              .attr(
-              {
+              .attr({
                 class: 'tooltip',
                 opacity: 0
               })
@@ -247,11 +260,6 @@
           }
 
           function _buildWorldChart(worldData) {
-            var worldChart = chart.append('g')
-              .attr({
-                class: 'world-chart',
-                transform: 'translate(' + [parentWidth - parentWidth / 4, 350] + ') rotate(0)'
-              });
 
             var worldBirthdaysTotal = d3.sum(worldData, function (d, i) {return d.value})
             var arc = d3.svg.arc()
@@ -266,6 +274,8 @@
             var pie = d3.layout.pie()
               .sort(null)
               .value(function (d) { return d.value; });
+
+            worldChart.selectAll('.arc').remove();
 
             var pieChart = worldChart.selectAll(".arc")
               .data(pie(worldData))
@@ -312,7 +322,6 @@
                   .transition()
                   .attr('transform', 'translate(' + [parentWidth - parentWidth / 4, 350] + ') rotate(0)');
 
-
                 var _arc = d3.select(this);
 
                 _arc.select('line')
@@ -330,9 +339,7 @@
                 _arc.select('.world-chart-label-percentage')
                   .transition()
                   .delay(200)
-
                   .attr('opacity', 0)
-
 
                 _arc.select('path.main')
                   .transition()
@@ -341,18 +348,7 @@
                 d3.selectAll('.border')
                   .transition()
                   .attr('opacity', 1)
-
               });
-
-            var maleIcon = worldChart
-              .append("use")
-              .attr({
-                'xlink:href': '#male-large'
-              });
-
-//            var maleIconWidth = maleIcon[0][0].getBBox().width * 6;
-//            var maleIconHeight = maleIcon[0][0].getBBox().height * 6;
-            maleIcon.attr('transform', 'translate(' + [-50, -115] + ')')
 
             var color = d3.scale.linear()
               .domain([0, worldData.length])
@@ -377,7 +373,6 @@
                 d.innerRadius = 10; // Set Inner Coordinate
                 return "translate(" + labelArc.centroid(d) + ") rotate(" + angle(d) + ")";
               })
-
 
             labelArea.append("text")
               .attr('class', 'world-chart-label')

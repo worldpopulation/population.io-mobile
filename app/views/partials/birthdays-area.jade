@@ -1,7 +1,16 @@
 .container
   .birthdays-area
     header
-      h1 You share a birthday with <span>68,798</span> people around the world and <span>10,719</span> people were born in the same hour
+      h1 You share a birthday with ... <i ng-bind-html="birthdayShare"></i>
     h2.continental Continental<br/>statistics
     h2.world Birthdays around<br/>the world
     birthdays-chart(continents-data="continentsData", world-data="worldData")
+    .continents
+      span Birthdays in:
+      .toggle(ng-disabled="loading")
+        label(ng-model="selectedContinental" btn-radio="'Asia'") Asia
+        label(ng-model="selectedContinental" btn-radio="'Europe'") Europe
+        label(ng-model="selectedContinental" btn-radio="'Africa'") Africa
+        label(ng-model="selectedContinental" btn-radio="'North America'") North America
+        label(ng-model="selectedContinental" btn-radio="'South America'") South America
+        label(ng-model="selectedContinental" btn-radio="'Australia'") Australia

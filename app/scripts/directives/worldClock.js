@@ -9,8 +9,8 @@
           var currentValue, digits, countElement, clockElement, digit, placeholder, digitText, placeholderText, chart,
             babiesArea, baby, babiesList, lastReborn, helloBubble, babyWidth, countryTitle,
             digitCellWidth = 26,
-            animationDuration = 300,
-            parentWidth = element[0].offsetWidth,
+            animationDuration = 400,
+            parentWidth = 1200,
             parentHeight = 220
             ;
           chart = d3.select(element[0])
@@ -26,7 +26,9 @@
           _initHelloBubble();
 
           setInterval(_updateWorldClock, 1000);
-          setInterval(_sayHello, 6000);
+          setInterval(function() {
+            _sayHello(_.random(5, babiesList.length - 3));
+          }, 5000);
 
 
           function _initWorldClock() {
@@ -48,7 +50,7 @@
               .attr('class', 'counter')
               .attr({
                 'clip-path': 'url(#clip)',
-                transform: 'translate(160, 90)'
+                transform: 'translate(0, 0)'
 
               });
 
@@ -88,7 +90,6 @@
                 transform: 'translate(' + digitCellWidth / 2 + ',35)'
               });
 
-
             digit = countElement
               .append('g')
               .attr(
@@ -99,12 +100,10 @@
 
             digit.append('rect')
               .attr({
-//                fill: 'lightblue',
                 fill: 'transparent',
                 width: digitCellWidth,
                 height: 40
               });
-
 
             digitText = digit.append('text')
               .text(function (d) {
@@ -113,7 +112,6 @@
               .attr({
                 transform: 'translate(' + digitCellWidth / 2 + ',35)'
               });
-
           }
 
           function _updateWorldClock() {
@@ -148,6 +146,7 @@
                     transform: 'translate(0,0)'
                   });
 
+                _sayHello(0);
                 setTimeout(function () {
                   _updateBabiesFlood();
                   _digit.attr('transform', 'translate(0,0)')
@@ -158,14 +157,10 @@
               }
 
             });
-
           }
 
           function _initBabiesFlood() {
             babiesList = [
-              {},
-              {},
-              {},
               {},
               {},
               {},
@@ -196,8 +191,8 @@
                 width: 400,
                 height: 60
               })
+              .text('hello');
 
-              .text('hello')
             var countryTitleLine = chart
               .append('rect')
               .attr({class: 'country-title-line',
@@ -206,11 +201,11 @@
                 width: parentWidth,
                 height: 1
               })
+              .text('hello');
 
-              .text('hello')
             countryTitle = chart
               .append('text')
-              .attr({class: 'country-title', transform: 'translate(' + [610, 210] + ')'})
+              .attr({class: 'country-title', transform: 'translate(' + [697, 210] + ')'})
 
               .text('hello')
 
@@ -257,11 +252,9 @@
               var yOffset = parentHeight - this.getBBox().height - 80;
               return 'translate(' + [xOffset, yOffset] + ')'
             });
+
             _updateBabiesFlood();
-
-
           }
-
 
           function _updateBabiesFlood() {
             var newTitle;
@@ -279,9 +272,7 @@
                     var randomItem = _.random(0, HelloWords.length - 1)
                     d.helloWord = HelloWords[randomItem].greeting;
                     d.countryTitle = HelloWords[randomItem].language;
-
-
-                    return 0
+                    return 0;
                   }
                 }
 
@@ -312,7 +303,7 @@
               .transition()
               .delay(600)
               .attr({opacity: 1})
-              .text(newTitle)
+              .text(newTitle);
           }
 
           function _initHelloBubble() {
@@ -323,42 +314,42 @@
                 class: 'hello-bubble',
                 transform: 'translate(-30,-90)',
                 opacity: 0
-              })
+              });
             helloBubble.append("use")
               .attr({
                 'xlink:href': '#hello-bubble'
-
-              })
+              });
             helloBubble.append("text")
               .attr({
                 'fill': 'white',
                 'text-anchor': 'middle',
-                transform: 'translate(50,45)'
-
-              })
-
+                'alignment-baseline': 'central',
+                transform: 'translate(49,44)'
+              });
+            helloBubble.select('text').text(function (d, i) {
+              return d.helloWord;
+            })
+            .each(function(d) {
+              var bbox = this.getBBox(),
+                scale = Math.min(60/bbox.width, 40/bbox.height);
+              d.scale = scale;
+            })
+            .style('font-size', function(d) { return (14*d.scale) + "px"; });
           }
 
-          function _sayHello() {
-            var seed = _.random(0, babiesList.length);
-            helloBubble
+          function _sayHello(seed) {
+            var bubble = d3.select(babiesArea.selectAll('.hello-bubble')[0][seed]);
+            bubble
               .transition()
               .delay(500)
               .attr({
-                opacity: function (d, i) {
-                  return i == seed ? 1 : 0;
-                }
+                opacity: 1
               })
               .transition()
               .delay(2000)
               .attr({
                 opacity: 0
               })
-
-            helloBubble.select('text').text(function (d, i) {
-              return d.helloWord
-
-            })
           }
         }
       };

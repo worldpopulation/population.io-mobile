@@ -275,7 +275,7 @@
       };
     })
 
-    .controller('BirthdaysCtrl', function ($scope, $state, $filter, $rootScope, PopulationIOService, ProfileService) {
+    .controller('BirthdaysCtrl', function ($scope, $state, $sce, $filter, $rootScope, PopulationIOService, ProfileService) {
 
       $scope.$watch(function () {
         return ProfileService.active;
@@ -294,20 +294,76 @@
         });
       };
 
+      var countries = [];
+      d3.csv('scripts/data/country_continent.csv', function(data) {
+        countries = data;
+        _update();
+      });
+
+      var _getCountry = function(name) {
+        for (var i=0; i<countries.length; i+=1) {
+          var country = countries[i];
+          if (country.country === name) {
+            return country;
+          }
+        }
+      };
+
+      var _getCountriesByContinent = function(continent) {
+        var res = [];
+        for (var i=0; i<countries.length; i+=1) {
+          var country = countries[i];
+          if (country.continent === continent) {
+            res.push(country);
+          }
+        }
+        return res.length > 20 ? res.splice(0,19) : res;
+      };
+
       $scope.continentsData = [];
       $scope.worldData = [];
+      $scope.selectedContinental = 'Asia';
+
+      $scope.$watch('selectedContinental', function(newValue, oldValue) {
+        if (oldValue !== newValue) {
+          _updateContinentalCountries();
+        }
+      });
+
+      var _updateContinentalCountries = function() {
+        $scope.loading = true;
+        $scope.continentsData = [];
+
+        var countriesContinental = _getCountriesByContinent($scope.selectedContinental);
+        var responseCounter = 0;
+
+        for (var j=0; j<countriesContinental.length; j+=1) {
+          _loadPopulation({
+            country: countriesContinental[j].country,
+            age: ProfileService.getAge()
+          }, function(country, data) {
+            if (_getCountry(country).countriy_ISO_A2) {
+              var value = ProfileService.gender === 'male' ? data.males : data.females;
+              $scope.continentsData.push({
+                countryAbbr: _getCountry(country).countriy_ISO_A2,
+                countryTitle: country,
+                value: value/365/24
+              });
+            }
+            if (++responseCounter === countriesContinental.length) {
+              $scope.loading = false;
+            }
+          });
+        }
+      };
 
       var _update = function () {
-        $scope.continentsData = [];
         $scope.worldData = [];
 
         var countriesAroundTheWorld = [
           'China', 'India', 'USA', 'Indonesia', 'Brazil',
           'Pakistan', 'Russia', 'Japan', 'Nigeria',
           'Bangladesh', 'Mexico'
-        ];
-        var countriesContinental = [
-          'Germany', 'Spain', 'Italy'
         ];
 
         for (var i=0; i<countriesAroundTheWorld.length; i+=1) {
@@ -317,26 +373,27 @@
           }, function(country, data) {
             var value = ProfileService.gender === 'male' ? data.males : data.females;
             $scope.worldData.push({
-              countryAbbr: country,
+              countryAbbr: _getCountry(country).countriy_ISO_A2,
               countryTitle: country,
               value: value/365/24
             });
           });
         }
 
-        for (var j=0; j<countriesContinental.length; j+=1) {
-          _loadPopulation({
-            country: countriesContinental[j],
-            age: ProfileService.getAge()
-          }, function(country, data) {
-            var value = ProfileService.gender === 'male' ? data.males : data.females;
-            $scope.continentsData.push({
-              countryAbbr: country,
-              countryTitle: country,
-              value: value/365/24
-            });
-          });
-        }
+        _loadPopulation({
+          country: 'World',
+          age: ProfileService.getAge()
+        }, function(country, data) {
+          var value = ProfileService.gender === 'male' ? data.males : data.females;
+          $scope.birthdayShare = $sce.trustAsHtml([
+            '<span>' + $filter('number')(parseInt(value/365, 0), 0) + '</span> ',
+            'people around the world and ',
+            '<span>' + $filter('number')(parseInt(value/365/24, 0), 0) + '</span> ',
+            'people were born in the same hour'
+          ].join(''));
+        });
+
+        _updateContinentalCountries();
       };
     })
 
