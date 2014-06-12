@@ -3,12 +3,13 @@
 
   angular.module('populationioApp')
 
-    .controller('MainCtrl', function ($scope, $rootScope, $state, $location, $document, ProfileService, PopulationIOService) {
+    .controller('MainCtrl', function ($scope, $rootScope, $modal, $state, $location, $document, ProfileService, PopulationIOService) {
 
       $rootScope.$on('duScrollspy:becameActive', function ($event, $element) {
         //Automaticly update location
         var hash = $element.prop('id');
         if (hash) {
+          $scope.state = hash;
 //          $location.hash(hash.substr(1)).replace();
           var path = $location.$$path;
           path = path.replace(/[^/]*$/g, '');
@@ -55,23 +56,27 @@
         // $scope.$apply();
       }, 1000);
 
-//      $rootScope.$on('$stateChangeStart', function (e, toState) {
-//        $scope.state = toState.name;
-//        if ($scope.state) {
-//          setTimeout(function () {
-//            $('html, body').animate({
-//              scrollTop: $("#" + $scope.state).offset().top - 79
-//            }, 1000);
-//          }, 500);
-//        }
-//      });
+      $rootScope.$on('$stateChangeStart', function (e, toState) {
+        $scope.state = toState.name;
+      });
 
       $scope.showHomepage = function () {
         $state.go('root');
+        $('html, body').animate({
+           scrollTop: $("#root").offset().top - 79
+         }, 1000);
       };
 
-      $scope.share = function () {
-        alert($scope.shareUrl);
+      $scope.showAbout = function() {
+        $modal.open({
+          templateUrl: 'about.html'
+        });
+      };
+
+      $scope.showDevelopers = function() {
+        $modal.open({
+          templateUrl: 'developers.html'
+        });
       };
     })
 
@@ -94,6 +99,11 @@
             day: $filter('date')(ProfileService.birthday, 'dd'),
             country: ProfileService.country
           });
+          setTimeout(function () {
+             $('html, body').animate({
+               scrollTop: $("#people").offset().top - 79
+             }, 1000);
+           }, 500);
         }, 1000);
       };
 
