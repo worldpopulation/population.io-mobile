@@ -4,8 +4,8 @@ header
       a(href='#', ng-click="showHomepage()") Population.io
     ul.link-list
       li
-        a(href='#') About
-        a(href='#') Developers
+        a(ng-click="showAbout()") About
+        a(ng-click="showDevelopers()") Developers
     .profile.animate(
       ng-hide="state === 'root'",
       ng-click="showHomepage()"

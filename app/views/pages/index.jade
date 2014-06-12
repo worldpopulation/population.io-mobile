@@ -12,6 +12,11 @@ block content
       include ../../../assets/storyline.svg
   .share.animate(ng-hide="state === 'root'")
     a(ng-href="{{shareUrl}}", ng-click="share()") SHARE
+    .links(
+      share-square="true",
+      share-links="Facebook, Twitter, LinkedIn",
+      share-title="population.io"
+    )
 
   section#root(ng-controller='StatsCtrl', stats-area)
 
@@ -19,4 +24,24 @@ block content
     section#people(ng-controller='PeopleCtrl', people-area,, du-scrollspy='people', offset='200')
     section#story(ng-controller='StoryCtrl', story-area, du-scrollspy='story', offset='200')
     section#birthdays(ng-controller='BirthdaysCtrl', birthdays-area,, du-scrollspy='birthdays', offset='200')
-    section#expectancy(ng-controller='ExpectancyCtrl', expectancy-area,, du-scrollspy='expectancy', offset='200')
+    section#expectancy(ng-controller='ExpectancyCtrl', expectancy-area,, du-scrollspy='expectancy', offset='200')    section#people(ng-controller='PeopleCtrl', people-area)
+    section#story(ng-controller='StoryCtrl', story-area)
+    section#birthdays(ng-controller='BirthdaysCtrl', birthdays-area)
+    section#expectancy(ng-controller='ExpectancyCtrl', expectancy-area)
+
+  script(type="text/ng-template", id="about.html")
+    .modal-header
+      h3.modal-title About
+    .modal-body
+      p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    .modal-footer
+      button(ng-click="$close()") Got it!
+
+  script(type="text/ng-template", id="developers.html")
+    .modal-header
+      h3.modal-title Developers
+    .modal-body
+      p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    .modal-footer
+      button(ng-click="$close()") Got it!
