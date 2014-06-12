@@ -57,7 +57,6 @@
                 $state.go('root');
               }
               $scope.activeIndex = index;
-              $scope.$apply();
             }
           });
 

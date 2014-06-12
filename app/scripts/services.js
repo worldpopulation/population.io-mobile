@@ -39,11 +39,10 @@
 
     .service('PopulationIOService', function ($rootScope, $http) {
 
-      var baseUrl = 'http://104.130.5.217:8000/api/1.0',
+      var baseUrl = 'http://p4fe123e8.dip0.t-ipconnect.de:8000/api/1.0',
         countries = [];
 
       return {
-        worldPopulation: (7168 * 1000000000),
         getCelebrities: function (startRank) {
           return [
             {rank: 500000110, name: 'Britney Spears', 'birthday': '1983-04-17', gender: 'female', country: 'USA'},
@@ -55,10 +54,6 @@
         },
         getRank: function () {
           return 5040123456789;
-        },
-        setWorldPopulation: function(worldPopulation) {
-          this.worldPopulation = worldPopulation;
-          $rootScope.$emit('populationChanged');
         },
         getWorldPopulation: function () {
           var p2013 = 7203304915; // from api?
@@ -76,7 +71,7 @@
         loadCountries: function(onSuccess) {
           $http({
             method: 'get',
-            url: baseUrl + '/countries'
+            url: baseUrl + '/countries/'
           })
           .success(function(data) {
             if (data.countries) {
@@ -99,7 +94,7 @@
               args.sex,
               args.country,
               'today'
-            ].join('/')
+            ].join('/') + '/'
           })
           .success(function(data) {
             if (data.rank) {
@@ -111,7 +106,7 @@
           });
         },
 
-        // GET /api/1.0/wp-rank/{dob}/{sex}/{country}/ranked/{rank}
+        // GET /api/1.0/wp-rank/{dob}/{sex}/{country}/ranked/{rank}/
         loadWpRankRanked: function(args, onSuccess) {
           $http({
             method: 'get',
@@ -123,7 +118,7 @@
               args.country,
               'ranked',
               args.rank
-            ].join('/')
+            ].join('/') + '/'
           })
           .success(function(data) {
             if (data.date_on_rank) {
@@ -138,7 +133,7 @@
           });
         },
 
-        // GET /api/1.0/life-expectancy/remaining/{sex}/{country}/{date}/{age}
+        // GET /api/1.0/life-expectancy/remaining/{sex}/{country}/{date}/{age}/
         loadLifeExpectancyRemaining: function(args, onSuccess) {
           $http({
             method: 'get',
@@ -149,7 +144,7 @@
               args.country,
               args.date,
               args.age
-            ].join('/')
+            ].join('/') + '/'
           })
           .success(function(data) {
             if (data.remaining_life_expectancy) {
@@ -161,7 +156,7 @@
           });
         },
 
-        // GET /api/1.0/life-expectancy/total/{sex}/{country}/{dob}
+        // GET /api/1.0/life-expectancy/total/{sex}/{country}/{dob}/
         loadLifeExpectancyTotal: function(args, onSuccess) {
           $http({
             method: 'get',
@@ -171,7 +166,7 @@
               args.sex,
               args.country,
               args.dob
-            ].join('/')
+            ].join('/') + '/'
           })
           .success(function(data) {
             if (data.remaining_life_expectancy) {
@@ -184,7 +179,7 @@
           });
         },
 
-        // GET /api/1.0/population/{year}/{country}
+        // GET /api/1.0/population/{year}/{country}/
         loadPopulation: function(args, onSuccess) {
           $http({
             method: 'get',
@@ -193,7 +188,7 @@
               'population',
               args.year,
               args.country
-            ].join('/')
+            ].join('/') + '/'
           })
           .success(function(data) {
             if (data) {

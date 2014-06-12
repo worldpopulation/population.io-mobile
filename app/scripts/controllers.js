@@ -53,6 +53,10 @@
     $scope.worldPopulation = PopulationIOService.getWorldPopulation();
     $scope.shareUrl = $location.absUrl();
 
+    $scope.share = function(url) {
+      alert(url);
+    };
+
     $scope.$watch(function() {
       return $location.absUrl();
     }, function(url) {
@@ -87,6 +91,7 @@
       $scope.loading = value;
     });
 
+    $scope.countries = [];
     PopulationIOService.loadCountries(function(countries) {
       $scope.countries = countries;
     });
@@ -94,22 +99,31 @@
 
   .controller('PeopleCtrl', function ($scope, PopulationIOService, ProfileService, $rootScope, $interval) {
 
-    PopulationIOService.loadWpRankToday({
-      dob: ProfileService.birthday,
-      sex: ProfileService.gender,
-      country: ProfileService.country
-    }, function(rank) {
-      $scope.rankLocal = rank;
+    $scope.$watch(function() {
+      return ProfileService.active;
+    }, function(active) {
+      if (active) {
+        _update();
+      }
     });
 
-    PopulationIOService.loadWpRankToday({
-      dob: ProfileService.birthday,
-      sex: ProfileService.gender,
-      country: 'World'
-    }, function(rank) {
-      $scope.rankGlobal = rank;
-    });
+    var _update = function() {
+      PopulationIOService.loadWpRankToday({
+        dob: ProfileService.birthday,
+        sex: ProfileService.gender,
+        country: ProfileService.country
+      }, function(rank) {
+        $scope.rankLocal = rank;
+      });
 
+      PopulationIOService.loadWpRankToday({
+        dob: ProfileService.birthday,
+        sex: ProfileService.gender,
+        country: 'World'
+      }, function(rank) {
+        $scope.rankGlobal = rank;
+      });
+    };
   })
 
   .controller('StoryCtrl', function ($scope, $rootScope, $filter, ProfileService, PopulationIOService) {
@@ -121,22 +135,6 @@
 
       return new Date(parseInt(year + offset, 0), month, day);
     };
-
-    $scope.storyLineData = [{
-      date: $filter('date')(Date.now(), 'yyyy-MM-dd'),
-      year: $filter('date')(Date.now(), 'yyyy'),
-      title: 'Now',
-      now: true
-    },{
-      date: ProfileService.birthday,
-      year: $filter('date')(new Date(ProfileService.birthday), 'yyyy'),
-      title: 'Born',
-      born: true
-    },{
-      date: _getDateWithOffset(new Date(ProfileService.birthday), 18),
-      year: $filter('date')(_getDateWithOffset(new Date(ProfileService.birthday), 18), 'yyyy'),
-      title: 'You turned 18!'
-    }];
 
     $scope.year = $filter('date')(new Date(), 'yyyy');
 
@@ -153,8 +151,6 @@
         });
       });
     };
-    _loadLifeExpectancyTotal(ProfileService.country);
-    _loadLifeExpectancyTotal('World');
 
     var _loadWpRankRanked = function(rank, atomicNumber) {
       PopulationIOService.loadWpRankRanked({
@@ -170,46 +166,76 @@
         });
       });
     };
-    _loadWpRankRanked(1000000000, '1th');
-    _loadWpRankRanked(5000000000, '5th');
-    _loadWpRankRanked(7000000000, '7th');
 
     $scope.highlightStoryLine = function(year) {
       $scope.selectedYear = year;
     };
 
-    PopulationIOService.loadPopulation({
-      year: $filter('date')(new Date(), 'yyyy'),
-      country: ProfileService.country
-    }, function(data) {
-      $scope.localRankData = data;
+    $scope.$watch(function() {
+      return ProfileService.active;
+    }, function(active) {
+      if (active) {
+        _update();
+      }
     });
 
-    PopulationIOService.loadPopulation({
-      year: $filter('date')(new Date(), 'yyyy'),
-      country: 'World'
-    }, function(data) {
-      $scope.globalRankData = data;
-    });
+    var _update = function() {
+      PopulationIOService.loadPopulation({
+        year: $filter('date')(new Date(), 'yyyy'),
+        country: ProfileService.country
+      }, function(data) {
+        $scope.localRankData = data;
+      });
 
-    // TODO: refactor me, duplicate code, people controller
-    PopulationIOService.loadWpRankToday({
-      dob: ProfileService.birthday,
-      sex: ProfileService.gender,
-      country: ProfileService.country
-    }, function(rank) {
-      $scope.rankLocal = rank;
-    });
+      PopulationIOService.loadPopulation({
+        year: $filter('date')(new Date(), 'yyyy'),
+        country: 'World'
+      }, function(data) {
+        $scope.globalRankData = data;
+      });
 
-    PopulationIOService.loadWpRankToday({
-      dob: ProfileService.birthday,
-      sex: ProfileService.gender,
-      country: 'World'
-    }, function(rank) {
-      $scope.rankGlobal = rank;
-    });
+      // TODO: refactor me, duplicate code, people controller
+      PopulationIOService.loadWpRankToday({
+        dob: ProfileService.birthday,
+        sex: ProfileService.gender,
+        country: ProfileService.country
+      }, function(rank) {
+        $scope.rankLocal = rank;
+      });
 
-    $scope.country = ProfileService.country;
+      PopulationIOService.loadWpRankToday({
+        dob: ProfileService.birthday,
+        sex: ProfileService.gender,
+        country: 'World'
+      }, function(rank) {
+        $scope.rankGlobal = rank;
+      });
+
+      _loadWpRankRanked(1000000000, '1th');
+      _loadWpRankRanked(5000000000, '5th');
+      _loadWpRankRanked(7000000000, '7th');
+
+      _loadLifeExpectancyTotal(ProfileService.country);
+      _loadLifeExpectancyTotal('World');
+
+      $scope.country = ProfileService.country;
+
+      $scope.storyLineData = [{
+        date: $filter('date')(Date.now(), 'yyyy-MM-dd'),
+        year: $filter('date')(Date.now(), 'yyyy'),
+        title: 'Now',
+        now: true
+      },{
+        date: ProfileService.birthday,
+        year: $filter('date')(new Date(ProfileService.birthday), 'yyyy'),
+        title: 'Born',
+        born: true
+      },{
+        date: _getDateWithOffset(new Date(ProfileService.birthday), 18),
+        year: $filter('date')(_getDateWithOffset(new Date(ProfileService.birthday), 18), 'yyyy'),
+        title: 'You turned 18!'
+      }];
+    };
   })
 
   .controller('BirthdaysCtrl', function ($scope, $rootScope) {
@@ -218,18 +244,23 @@
 
   .controller('ExpectancyCtrl', function ($scope, $rootScope, $filter, ProfileService, PopulationIOService) {
 
-    PopulationIOService.loadCountries(function(countries) {
-      $scope.countries = countries;
-    });
-
-    $scope.selectedCountryRef = ProfileService.country;
-    $scope.$watch(function() {
-      return ProfileService.country;
-    }, function() {
-      $scope.selectedCountryRef = ProfileService.country;
-    });
-
     var date = $filter('date')(new Date(), 'yyyy-MM-dd');
+
+    $scope.$watch(function() {
+      return ProfileService.active;
+    }, function(active) {
+      if (active) {
+        _update();
+      }
+    });
+
+    var _update = function() {
+      PopulationIOService.loadCountries(function(countries) {
+        $scope.countries = countries;
+      });
+
+      $scope.selectedCountryRef = ProfileService.country;
+    };
 
     $scope.$on('timesliderChanged', function(e, year) {
       date = $filter('date')(new Date(year, 1, 1), 'yyyy-MM-dd');

@@ -148,8 +148,6 @@
             );
             var digits = ('' + currentValue).split('');
 
-            PopulationIOService.setWorldPopulation(currentValue);
-
             placeholderText.text(function (d, i) { return digits[i] });
             digit.each(function (d, i) {
               var _digit, _placeholder;
