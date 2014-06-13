@@ -206,8 +206,8 @@ gulp.task('clean', function () {
 // upload to server task
 gulp.task('upload', function () {
   gulp.src([
-    'dist/**',
-    '!dist/celebrities/**'
+    '!dist/celebrities/**',
+    'dist/**'
   ])
   .pipe(sftp({
       host: '104.130.5.217',
@@ -221,7 +221,6 @@ gulp.task('default', [
   'serve',
   'fonts',
   'images',
-  'celebs',
   'jade:watch',
   'scripts:watch',
   'lint:watch',

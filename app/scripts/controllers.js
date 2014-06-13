@@ -41,9 +41,7 @@
           section = angular.element(document.getElementById(path));
 
         if ($rootScope.currentPage > 1) {
-          $document.scrollToElement(section, 80, 1000).then(function () {
-            console.log('done');
-          });
+          $document.scrollToElement(section, 80, 1000);
         }
 
         // TODO: check the url path for date and section
@@ -84,7 +82,7 @@
           }
         })
           .success(function () {
-            alert($scope.email + ' has been registered!');
+            alert($scope.email + ' has been registered successfully!');
             $scope.email = '';
             $scope.sending = false;
           })

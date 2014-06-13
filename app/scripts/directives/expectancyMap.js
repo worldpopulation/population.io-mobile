@@ -59,8 +59,8 @@
                 y: bbox.y + bbox.height / 2
               };
 
-            var _textTween = function (node, label) {
-              var value = Math.round(node.innerHTML * 100) / 100,
+            var _textTween = function (data, node, label) {
+              var value = Math.round(data * 100) / 100,
                 i = d3.interpolate(0, value),
                 prec = (value + '').split('.'),
                 round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
@@ -137,7 +137,7 @@
               .transition()
               .duration(1000)
               .tween('text', function () {
-                return _textTween(this);
+                return _textTween(data.yearsLeft, this);
               });
 
             var textBlock1 = textCnt.append('g')
@@ -168,7 +168,7 @@
               .transition()
               .duration(1000)
               .tween('text', function () {
-                return _textTween(this, 'years');
+                return _textTween(data.lifeExpectancy, this, 'years');
               });
             textBlock2.append('text').text('life expectancy');
           };
