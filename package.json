@@ -12,6 +12,7 @@
     "gulp-stylus": "latest",
     "gulp-clean": "latest",
     "gulp-jshint": "latest",
-    "gulp-concat": "latest"
+    "gulp-concat": "latest",
+    "gulp-sftp": "latest"
   }
 }

@@ -7,7 +7,7 @@ header
         a(ng-click="showAbout()") About
         a(ng-click="showDevelopers()") Developers
     .profile.animate(
-      ng-show="currentPage > 1",
+      ng-show="currentPage > 0",
       ng-click="showHomepage()"
     ) {{profile.birthday | date:'dd MMM yyyy' }}, {{profile.country}}
-    .world-population.animate(ng-show="currentPage > 1") {{worldPopulation | number:0}}
+    .world-population.animate(ng-show="currentPage > 0") {{worldPopulation | number:0}}

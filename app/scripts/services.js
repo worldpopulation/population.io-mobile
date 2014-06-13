@@ -39,7 +39,7 @@
 
     .service('PopulationIOService', function ($rootScope, $http) {
 
-      var baseUrl = ' http://104.130.5.217:8000/api/1.0',
+      var baseUrl = ' http://api.population.io/1.0',
         countries = [];
 
       return {
