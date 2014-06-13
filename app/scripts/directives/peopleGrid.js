@@ -196,7 +196,6 @@
                 x: function () {return _.random(0, 180)},
                 y: function (d, i) {return yScale(rankScale(new Date(d.bday)))}
               });
-            console.log(ProfileService.birthday)
             personNavRect = blocksArea.append('rect')
               .attr({
                 'data-range': yScale2,
@@ -320,7 +319,7 @@
                     }
                   }
                 })
-              console.log(xScale(d.x))
+//              console.log(xScale(d.x))
 
               if (xScale(d.x) < 150) {
                 celebTooltip.attr({
@@ -534,7 +533,7 @@
 
             }
             else {
-              console.log(0)
+//              console.log(0)
               profilePerson.classed('me', false)
             }
 
@@ -832,21 +831,18 @@
 
           }
 
-          $timeout(function () {
-            _buildBarChart();
-            _buildNavigator();
-            _initCelebsBar();
-            _initGrid();
-            _loadCelebrities();
-            _loadProfilePerson();
-            _initCelebTooltip();
-            _loadActiveCelebrities();
-
-          }, 2000)
           scope.$watch(function () {
             return ProfileService.birthday;
           }, function (newVal, oldVal) {
             if (newVal && newVal != oldVal) {
+              _buildBarChart();
+              _buildNavigator();
+              _initCelebsBar();
+              _initGrid();
+              _loadCelebrities();
+              _loadProfilePerson();
+              _initCelebTooltip();
+              _loadActiveCelebrities();
 
             }
 
