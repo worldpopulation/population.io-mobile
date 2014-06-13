@@ -81,15 +81,15 @@
             email: $scope.email
           }
         })
-          .success(function () {
-            alert($scope.email + ' has been registered successfully!');
-            $scope.email = '';
-            $scope.sending = false;
-          })
-          .error(function () {
-            $scope.sending = false;
-            alert('Whoops, An error occurred!');
-          });
+        .success(function () {
+          alert($scope.email + ' has been registered successfully!');
+          $scope.email = '';
+          $scope.sending = false;
+        })
+        .error(function () {
+          $scope.sending = false;
+          alert('Whoops, An error occurred!');
+        });
       };
 
       $scope.showAbout = function () {
