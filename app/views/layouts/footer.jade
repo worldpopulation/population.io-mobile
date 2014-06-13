@@ -17,21 +17,16 @@ footer
         )
     .block
       h2.icon.icon-calendar Add your milestones to calendar
-      blockquote Watch out on June 4th becoming the 5th Billion<br/>person on earth
+      blockquote Watch out when you are becoming the 5th Billion<br/>person on earth!
       ul
         li
-          a(href="#") Email
-        li
-          a(href="#") Yahoo Calendar
-        li
-          a(href="#") iCal
+          a(ng-click="downloadICal()") iCal
     .block.small
       h2 Share
-      a(href="#").icon.icon-fb Facebook
-      a(href="#").icon.icon-twitter Twitter
-      a(href="#") More
+      a.fa.fa-facebook(target="_blank", href="http://facebook.com/sharer.php?u=http://www.population.io") Facebook
+      a.fa.fa-twitter(target="_blank", href="http://twitter.com/intent/tweet?text=Population.io%20http://www.population.io") Twiiter
+      a.fa.fa-linkedin(target="_blank", href="http://www.linkedin.com/shareArticle?mini=true&url=http://www.population.io&title=Population.io") LinkedIn
     .block.small
       h2 Want to know more?
-      a(href="#") Contact
-      a(href="#") Data
+      a(href="mailto:worldpopulationproject@gmail.com") Contact
       a(href="#") API

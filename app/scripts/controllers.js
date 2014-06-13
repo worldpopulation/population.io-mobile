@@ -27,9 +27,13 @@
         }
       });
 
+      $scope.downloadICal = function() {
+        alert('Feature coming soon!');
+      };
+
       $scope.showSection = function(id) {
         var section = angular.element(document.getElementById(id));
-        $document.scrollToElement(section, 80, 1000);
+        $document.scrollToElement(section, 79, 1000);
       };
 
       $timeout(function () {
@@ -37,7 +41,7 @@
           section = angular.element(document.getElementById(path));
 
         if ($rootScope.currentPage > 1) {
-          $document.scrollToElement(section, 80, 1000);
+          $document.scrollToElement(section, 79, 1000);
         }
 
         // TODO: check the url path for date and section
@@ -65,7 +69,7 @@
 
       $scope.showHomepage = function () {
         var section = angular.element(document.getElementById('stats'));
-        $document.scrollToElement(section, 80, 1000);
+        $document.scrollToElement(section, 79, 1000);
       };
 
       $scope.registerMail = function() {
@@ -129,7 +133,7 @@
 
           $timeout(function() {
             var section = angular.element(document.getElementById(target));
-            $document.scrollToElement(section, 80, 1000);
+            $document.scrollToElement(section, 79, 1000);
           }, 500);
         }, 1000);
       });

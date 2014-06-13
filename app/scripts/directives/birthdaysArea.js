@@ -118,6 +118,7 @@
               .attr('class', 'country-element')
               .on('mouseenter', function (d, i) {
                 var _tooltip = d3.select(this);
+
                 d3.select(this).select('circle')
                   .transition()
                   .attr({ r: function (d, i) {return d.radius + 3} })
