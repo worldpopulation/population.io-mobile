@@ -192,7 +192,7 @@
       $scope.year = $filter('date')(new Date(), 'yyyy');
       $scope.storyLineData = [];
 
-      var _loadLifeExpectancyTotal = function (country) {
+      var _loadLifeExpectancyTotal = function (country, onSuccess) {
         PopulationIOService.loadLifeExpectancyTotal({
           sex: ProfileService.gender,
           country: country,
@@ -203,6 +203,9 @@
             year: $filter('date')(_getDateWithOffset(new Date(ProfileService.birthday), totalLifeExpectancy), 'yyyy'),
             title: 'Life expectancy in ' + country
           });
+          if (onSuccess) {
+            onSuccess(totalLifeExpectancy);
+          }
         });
       };
 
@@ -269,17 +272,23 @@
         });
 
         _loadWpRankRanked(1000000000, '1th');
-        _loadWpRankRanked(2000000000, '2th');
-        _loadWpRankRanked(3000000000, '3th', function (date) {
-          $scope.title = $sce.trustAsHtml([
-            'Watch out on <span>',
-              $filter('ordinal')($filter('date')(date, 'd')) + ' ',
-              $filter('date')(date, 'MMM, yyyy') + '</span> becoming ',
-            'the <span>3th Billion</span> person on earth!'
+        _loadWpRankRanked(2000000000, '2nd');
+        _loadWpRankRanked(3000000000, '3rd', function (date) {
+          $scope.titleAlive = $sce.trustAsHtml([
+            'On <span>' + $filter('ordinal')($filter('date')(date, 'd')) + ' ',
+            $filter('date')(date, 'MMM, yyyy') + '</span> you’ll be person <span>3rd ',
+            'Billion</span> to be alive in the <span>world</span>.'
           ].join(''));
         });
 
-        _loadLifeExpectancyTotal(ProfileService.country);
+        _loadLifeExpectancyTotal(ProfileService.country, function(totalLifeExpectancy) {
+          var date = _getDateWithOffset(new Date(ProfileService.birthday), totalLifeExpectancy);
+          $scope.titleDie = $sce.trustAsHtml([
+            'You will die on <span>',
+            $filter('ordinal')($filter('date')(date, 'd')) + ' ',
+            $filter('date')(date, 'MMM, yyyy') + '</span>'
+          ].join(''));
+        });
         _loadLifeExpectancyTotal('World');
 
         $scope.country = ProfileService.country;
@@ -466,11 +475,14 @@
           date: date,
           age: ProfileService.getAge()
         }, function (remainingLife) {
-          $scope.highlightCountryRef({
+          $scope.activeCountryRef = {
             country: $scope.selectedCountryRef,
             yearsLeft: remainingLife,
             lifeExpectancy: ProfileService.getAge() + remainingLife
-          });
+          };
+          if (!$scope.$$phase) {
+            $scope.$apply();
+          }
         });
       };
 
@@ -481,12 +493,28 @@
           date: date,
           age: ProfileService.getAge()
         }, function (remainingLife) {
-          $scope.highlightCountryRel({
+          $scope.activeCountryRel = {
             country: $scope.selectedCountryRel,
             yearsLeft: remainingLife,
             lifeExpectancy: ProfileService.getAge() + remainingLife
-          });
+          };
+          if (!$scope.$$phase) {
+            $scope.$apply();
+          }
         });
+      };
+
+      var _isCountryAvailable = function(country) {
+        if ($scope.countries.length > 0) {
+          for(var i=0; i<$scope.countries.length; i+=1) {
+            if ($scope.countries[i] === country) {
+              return true;
+            }
+          }
+          return false;
+        } else {
+          return true;
+        }
       };
 
       $scope.$watch('selectedCountryRef', function (country) {
@@ -498,6 +526,16 @@
       $scope.$watch('selectedCountryRel', function (country) {
         if (country) {
           _updateCountryRel(date);
+        }
+      });
+
+      $rootScope.$on('countryRelChanged', function (e, country) {
+        if (country) {
+          if (_isCountryAvailable(country)) {
+            $scope.selectedCountryRel = country;
+          } else {
+            alert(country + ' not available!');
+          }
         }
       });
 
