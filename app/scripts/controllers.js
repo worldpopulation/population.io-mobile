@@ -27,11 +27,11 @@
         }
       });
 
-      $scope.downloadICal = function() {
+      $scope.downloadICal = function () {
         alert('Feature coming soon!');
       };
 
-      $scope.showSection = function(id) {
+      $scope.showSection = function (id) {
         var section = angular.element(document.getElementById(id));
         $document.scrollToElement(section, 79, 1000);
       };
@@ -74,7 +74,7 @@
         $document.scrollToElement(section, 79, 1000);
       };
 
-      $scope.registerMail = function() {
+      $scope.registerMail = function () {
         $scope.sending = true;
         $http({
           url: 'http://api.47nord.de/population.io/v1/mail.php?auth=jLFscl7E7oz85D8P',
@@ -83,24 +83,24 @@
             email: $scope.email
           }
         })
-        .success(function() {
-          alert($scope.email + ' has been registered!');
-          $scope.email = '';
-          $scope.sending = false;
-        })
-        .error(function() {
-          $scope.sending = false;
-          alert('Whoops, An error occurred!');
-        });
+          .success(function () {
+            alert($scope.email + ' has been registered!');
+            $scope.email = '';
+            $scope.sending = false;
+          })
+          .error(function () {
+            $scope.sending = false;
+            alert('Whoops, An error occurred!');
+          });
       };
 
-      $scope.showAbout = function() {
+      $scope.showAbout = function () {
         $modal.open({
           templateUrl: 'about.html'
         });
       };
 
-      $scope.showDevelopers = function() {
+      $scope.showDevelopers = function () {
         $modal.open({
           templateUrl: 'developers.html'
         });
@@ -115,7 +115,7 @@
         }
       });
 
-      $rootScope.$on('go', function(e, target) {
+      $rootScope.$on('go', function (e, target) {
         $scope.loading = true;
         $timeout(function () {
           $scope.loading = false;
@@ -133,7 +133,7 @@
             target
           ].join('/'));
 
-          $timeout(function() {
+          $timeout(function () {
             var section = angular.element(document.getElementById(target));
             $document.scrollToElement(section, 79, 1000);
           }, 500);
@@ -281,18 +281,18 @@
         _loadWpRankRanked(2000000000, '2nd');
         _loadWpRankRanked(3000000000, '3rd', function (date) {
           $scope.titleAlive = $sce.trustAsHtml([
-            'On <span>' + $filter('ordinal')($filter('date')(date, 'd')) + ' ',
-            $filter('date')(date, 'MMM, yyyy') + '</span> you’ll be person <span>3rd ',
+              'On <span>' + $filter('ordinal')($filter('date')(date, 'd')) + ' ',
+              $filter('date')(date, 'MMM, yyyy') + '</span> you’ll be person <span>3rd ',
             'Billion</span> to be alive in the <span>world</span>.'
           ].join(''));
         });
 
-        _loadLifeExpectancyTotal(ProfileService.country, function(totalLifeExpectancy) {
+        _loadLifeExpectancyTotal(ProfileService.country, function (totalLifeExpectancy) {
           var date = _getDateWithOffset(new Date(ProfileService.birthday), totalLifeExpectancy);
           $scope.titleDie = $sce.trustAsHtml([
             'You will die on <span>',
-            $filter('ordinal')($filter('date')(date, 'd')) + ' ',
-            $filter('date')(date, 'MMM, yyyy') + '</span>'
+              $filter('ordinal')($filter('date')(date, 'd')) + ' ',
+              $filter('date')(date, 'MMM, yyyy') + '</span>'
           ].join(''));
         });
         _loadLifeExpectancyTotal('World');
@@ -331,7 +331,7 @@
         }
       });
 
-      var _loadPopulation = function(args, onSuccess) {
+      var _loadPopulation = function (args, onSuccess) {
         PopulationIOService.loadPopulation({
           year: $filter('date')(Date.now(), 'yyyy'),
           country: args.country
@@ -341,12 +341,12 @@
       };
 
       var countries = [];
-      d3.csv('scripts/data/country_continent.csv', function(data) {
+      d3.csv('scripts/data/country_continent.csv', function (data) {
         countries = data;
       });
 
-      var _getCountry = function(name) {
-        for (var i=0; i<countries.length; i+=1) {
+      var _getCountry = function (name) {
+        for (var i = 0; i < countries.length; i += 1) {
           var country = countries[i];
           if (country.country === name) {
             return country;
@@ -354,49 +354,50 @@
         }
       };
 
-      var _getCountriesByContinent = function(continent) {
+      var _getCountriesByContinent = function (continent) {
         var res = [];
-        for (var i=0; i<countries.length; i+=1) {
+        for (var i = 0; i < countries.length; i += 1) {
           var country = countries[i];
           if (country.continent === continent) {
             res.push(country);
           }
         }
-        return res.length > 20 ? res.splice(0,19) : res;
+        return res.length > 20 ? res.splice(0, 19) : res;
       };
 
       $scope.continentsData = [];
       $scope.worldData = [];
       $scope.selectedContinental = 'Asia';
 
-      $scope.$watch('selectedContinental', function(newValue, oldValue) {
+      $scope.$watch('selectedContinental', function (newValue, oldValue) {
         if (oldValue !== newValue) {
           _updateContinentalCountries();
         }
       });
 
-      var _updateContinentalCountries = function() {
+      var _updateContinentalCountries = function () {
         $scope.loading = true;
         $scope.continentsData = [];
 
         var countriesContinental = _getCountriesByContinent($scope.selectedContinental);
         var responseCounter = 0;
 
-        for (var j=0; j<countriesContinental.length; j+=1) {
+        for (var j = 0; j < countriesContinental.length; j += 1) {
           _loadPopulation({
             country: countriesContinental[j].country,
             age: ProfileService.getAge()
-          }, function(country, data) {
+          }, function (country, data) {
             if (_getCountry(country).countriy_ISO_A2) {
               var value = ProfileService.gender === 'male' ? data.males : data.females;
               $scope.continentsData.push({
                 countryAbbr: _getCountry(country).countriy_ISO_A2,
                 countryTitle: country,
-                value: value/365/24
+                value: value / 365 / 24
               });
             }
             if (++responseCounter === countriesContinental.length) {
               $scope.loading = false;
+              $scope.$broadcast('continentsDataLoaded')
             }
           });
         }
@@ -411,31 +412,36 @@
           'Bangladesh', 'Mexico'
         ];
 
-        for (var i=0; i<countriesAroundTheWorld.length; i+=1) {
+        for (var i = 0; i < countriesAroundTheWorld.length; i += 1) {
           _loadPopulation({
             country: countriesAroundTheWorld[i],
             age: ProfileService.getAge()
-          }, function(country, data) {
+          }, function (country, data) {
             var value = ProfileService.gender === 'male' ? data.males : data.females;
             $scope.worldData.push({
               countryAbbr: _getCountry(country).countriy_ISO_A2,
               countryTitle: country,
-              value: value/365/24
+              value: value / 365 / 24
             });
+            if ($scope.worldData.length == countriesAroundTheWorld.length) {
+              $scope.$broadcast('worldDataLoaded')
+            }
           });
+
         }
 
         _loadPopulation({
           country: 'World',
           age: ProfileService.getAge()
-        }, function(country, data) {
+        }, function (country, data) {
           var value = ProfileService.gender === 'male' ? data.males : data.females;
           $scope.birthdayShare = $sce.trustAsHtml([
-            '<span>' + $filter('number')(parseInt(value/365, 0), 0) + '</span> ',
+              '<span>' + $filter('number')(parseInt(value / 365, 0), 0) + '</span> ',
             'people around the world and ',
-            '<span>' + $filter('number')(parseInt(value/365/24, 0), 0) + '</span> ',
+              '<span>' + $filter('number')(parseInt(value / 365 / 24, 0), 0) + '</span> ',
             'people were born in the same hour'
           ].join(''));
+
         });
 
         _updateContinentalCountries();
@@ -510,9 +516,9 @@
         });
       };
 
-      var _isCountryAvailable = function(country) {
+      var _isCountryAvailable = function (country) {
         if ($scope.countries.length > 0) {
-          for(var i=0; i<$scope.countries.length; i+=1) {
+          for (var i = 0; i < $scope.countries.length; i += 1) {
             if ($scope.countries[i] === country) {
               return true;
             }

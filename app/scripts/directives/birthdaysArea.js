@@ -13,17 +13,13 @@
           var parentWidth = 1200,
             parentHeight = 700;
 
-          $scope.$watch('continentsData', function(continentsData) {
-            if (continentsData) {
-              _buildContinentsChart(continentsData);
-            }
-          }, true);
-
-          $scope.$watch('worldData', function(worldData) {
-            if (worldData) {
-              _buildWorldChart(worldData);
-            }
-          }, true);
+          $scope.$on('continentsDataLoaded', function () {
+            _buildContinentsChart($scope.continentsData);
+          })
+          $scope.$on('worldDataLoaded', function () {
+            console.log($scope.worldData)
+            _buildWorldChart($scope.worldData);
+          })
 
           var chart = d3.select(element[0]).append("svg")
             .attr("width", parentWidth)
@@ -262,12 +258,12 @@
 
           function _buildWorldChart(worldData) {
 
-            worldData = worldData.sort(function(a,b) {
-                if (a.countryTitle > b.countryTitle) {
-                  return 1;
-                } else {
-                  return -1;
-                }
+            worldData = worldData.sort(function (a, b) {
+              if (a.countryTitle > b.countryTitle) {
+                return 1;
+              } else {
+                return -1;
+              }
             });
 
             var worldBirthdaysTotal = d3.sum(worldData, function (d, i) {return d.value})
