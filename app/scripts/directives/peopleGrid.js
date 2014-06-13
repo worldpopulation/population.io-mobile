@@ -24,6 +24,8 @@
             rankScale,
             rankScale2,
             birthdayScale,
+            celebTooltipPointerShadow,
+            celebTooltipPointer,
             lens,
             youXPosition = _.random(40, 140),
             gridRows = 8,
@@ -308,9 +310,34 @@
 
               celebTooltip
                 .attr({
-                  opacity: 1,
-                  transform: 'translate(' + [xScale(d.x) - (150 - personWidth / 2), yScale(d.y) + personHeight + 30] + ')'});
+                  opacity: 1
+                })
+              console.log(xScale(d.x))
 
+              if (xScale(d.x) < 150) {
+                celebTooltip.attr({
+                  transform: 'translate(' + [xScale(d.x) - (150 - personWidth / 2) + 120, yScale(d.y) + personHeight + 30] + ')'
+                })
+                celebTooltipPointerShadow.attr({
+                  transform: 'translate(32,-18) rotate(45)'
+                })
+                celebTooltipPointer.attr({
+                  transform: 'translate(30,-18) rotate(45)'
+                })
+              }
+              else {
+                celebTooltip.attr({
+                  transform: 'translate(' + [xScale(d.x) - (150 - personWidth / 2), yScale(d.y) + personHeight + 30] + ')'
+                })
+                celebTooltipPointerShadow.attr({
+                  transform: 'translate(152,-18) rotate(45)'
+                })
+                celebTooltipPointer.attr({
+                  transform: 'translate(150,-18) rotate(45)'
+                })
+
+
+              }
               celebTooltipTitle.text(function () {
                 return d.name
               })
@@ -399,6 +426,7 @@
             celebTooltip.append('rect')
               .style('fill', 'rgba(0,0,0,0.2)')
               .attr({
+                class: 'box-shadow',
                 width: 300,
                 height: 100,
                 rx: 10,
@@ -406,9 +434,10 @@
                 x: 2,
                 y: 2
               })
-            celebTooltip.append('rect')
+            celebTooltipPointerShadow = celebTooltip.append('rect')
               .style('fill', 'rgba(0,0,0,0.2)')
               .attr({
+                class: 'pointer-shadow',
                 width: 40,
                 height: 40,
                 rx: 5,
@@ -424,9 +453,10 @@
                 rx: 10,
                 ry: 10
               })
-            celebTooltip.append('rect')
+            celebTooltipPointer = celebTooltip.append('rect')
               .style('fill', '#ff6')
               .attr({
+                class: 'pointer',
                 width: 40,
                 height: 40,
                 rx: 5,
