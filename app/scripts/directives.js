@@ -44,7 +44,7 @@
           $scope.$watch(function() {
             return $location.absUrl();
           }, function(url) {
-            _update(url);
+            _update(encodeURIComponent(url));
           });
 
           var _update = function(url) {
