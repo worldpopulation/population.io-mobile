@@ -30,12 +30,26 @@
               'class': 'world-chart',
               transform: 'translate(' + [parentWidth - parentWidth / 4, 350] + ') rotate(0)'
             });
-          worldChart
-            .append("use")
+          var human = worldChart.append('g')
             .attr({
-              'xlink:href': '#male-large',
+              class: 'human',
               'transform': 'translate(' + [-50, -115] + ')'
-            });
+            })
+            .attr('opacity', 0);
+
+          human.append('path')
+            .attr('d', 'M50,74.726c-3.808,0-6.906-3.252-6.906-7.248s3.098-7.244,6.906-7.244c3.813,0,6.911,3.252,6.911,7.244 C56.911,71.474,53.808,74.726,50,74.726z')
+          human.append('path')
+            .attr('d', 'M69.707,120.204c0,2.287-1.775,4.145-3.957,4.145h-1.985V91.295H59.86v74.321 c0,2.287-1.775,4.145-3.957,4.145c-2.16,0-3.922-1.823-3.957-4.08c0-0.022,0-0.044,0-0.065c0-0.017,0-0.039,0-0.052v-45.36h-3.9 v45.417c0,0.026,0,0.044,0,0.065c-0.031,2.257-1.797,4.08-3.957,4.08c-2.183,0-3.953-1.858-3.953-4.145V91.295h-3.905v33.05h-1.985 c-2.183,0-3.953-1.858-3.953-4.145V89.231c0-5.701,4.421-10.342,9.86-10.342h19.689c5.438,0,9.864,4.636,9.864,10.342 L69.707,120.204L69.707,120.204z')
+          ;
+
+          human
+
+            .transition()
+            .delay(3000)
+            .duration(1000)
+            .attr('opacity', 1);
+
 
           var continentsChart = chart.append('g')
             .attr('class', 'continents-chart');
@@ -267,12 +281,18 @@
             });
 
             var worldBirthdaysTotal = d3.sum(worldData, function (d, i) {return d.value})
+            var arc0 = d3.svg.arc()
+              .outerRadius(120)
+              .innerRadius(120);
             var arc = d3.svg.arc()
               .outerRadius(200)
               .innerRadius(120);
             var labelArc = d3.svg.arc()
               .outerRadius(200)
               .innerRadius(90);
+            var arcBorder0 = d3.svg.arc()
+              .outerRadius(200)
+              .innerRadius(200);
             var arcBorder = d3.svg.arc()
               .outerRadius(130)
               .innerRadius(120);
@@ -280,11 +300,12 @@
               .sort(null)
               .value(function (d) { return d.value; });
 
-            worldChart.selectAll('.arc').remove();
+//            worldChart.selectAll('.arc').remove();
 
             var pieChart = worldChart.selectAll(".arc")
               .data(pie(worldData))
-              .enter().append("g")
+              .enter()
+              .append("g")
               .attr("class", "arc")
               .on('mouseenter', function () {
 
@@ -361,17 +382,34 @@
 
 
             pieChart.append("path")
-              .attr("d", arc)
+              .attr("d", arc0)
               .attr('class', 'main')
-              .style("fill", function (d) { return '#eee'; });
+              .style("fill", '#eee')
+              .transition()
+              .delay(function (d, i) {
+                return 2000 + i * 300
+              })
+              .duration(1000)
+              .attr('d', arc)
 
             pieChart.append("path")
-              .attr("d", arcBorder)
+              .attr("d", arcBorder0)
               .attr('class', 'border')
               .style("fill", function (d, i) { return color(i); })
-              .attr('opacity', 1);
+              .attr('opacity', 0)
+              .transition()
+              .delay(function (d, i) {
+                return 5000 + i * 200
+              })
+              .duration(400)
+              .attr('d', arcBorder)
+              .attr('opacity', 1)
+
+
+            ;
             var labelArea = pieChart.append('g')
               .attr('class', 'label-area')
+              .attr('opacity', 0)
               .attr("transform", function (d) { //set the label's origin to the center of the arc
                 //we have to make sure to set these before calling arc.centroid
                 d.outerRadius = 100; // Set Outer Coordinate
@@ -440,6 +478,12 @@
                 y2: -10
               })
             ;
+            labelArea
+              .transition()
+              .delay(function (d, i) {
+                return 3000 + i * 300
+              })
+              .attr('opacity', 1)
 
           }
 
