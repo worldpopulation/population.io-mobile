@@ -3,7 +3,11 @@
 
   angular.module('populationioApp')
 
-    .controller('MainCtrl', function ($scope, $timeout, $interval, $rootScope, $modal, $state, $location, $document, ProfileService, PopulationIOService) {
+    .controller('MainCtrl', function ($scope, $timeout, $http, $interval, $rootScope, $modal, $state, $location, $document, ProfileService, PopulationIOService, BrowserService) {
+
+      if (BrowserService.isSupported()) {
+        alert('This showcase is optimized for WebKit browsers (Safari, Chrome)!');
+      }
 
       $scope.profile = ProfileService;
       $scope.worldPopulation = PopulationIOService.getWorldPopulation();
@@ -16,7 +20,6 @@
             return;
           } else {
             $rootScope.currentPage = $element.attr('data-index');
-            console.log($rootScope.currentPage)
           }
           var path = $location.$$path.replace(/[^/]*$/g, '');
           $location.path(path + hash).replace();
@@ -32,8 +35,23 @@
       $timeout(function () {
         var path = $location.$$path.replace(/.+[/](.*)$/g, '$1'),
           section = angular.element(document.getElementById(path));
+
         if ($rootScope.currentPage > 1) {
           $document.scrollToElement(section, 80, 1000);
+        }
+
+        // TODO: check the url path for date and section
+        if (path && !ProfileService.active) {
+          var pathItems = $location.$$path.split('/'),
+            year = pathItems[1],
+            month = pathItems[2],
+            day = pathItems[3],
+            country = pathItems[4];
+
+          ProfileService.birthday = [ year, month, day ].join('-');
+          ProfileService.country = country;
+
+          $rootScope.$emit('go', path);
         }
       }, 500);
 
@@ -48,6 +66,26 @@
       $scope.showHomepage = function () {
         var section = angular.element(document.getElementById('stats'));
         $document.scrollToElement(section, 80, 1000);
+      };
+
+      $scope.registerMail = function() {
+        $scope.sending = true;
+        $http({
+          url: 'http://api.47nord.de/population.io/v1/mail.php?auth=jLFscl7E7oz85D8P',
+          method: 'POST',
+          data: {
+            email: $scope.email
+          }
+        })
+        .success(function() {
+          alert($scope.email + ' has been registered!');
+          $scope.email = '';
+          $scope.sending = false;
+        })
+        .error(function() {
+          $scope.sending = false;
+          alert('Whoops, An error occurred!');
+        });
       };
 
       $scope.showAbout = function() {
@@ -68,11 +106,10 @@
       $scope.$watch('goForm.$invalid', function (invalid) {
         if (invalid) {
           ProfileService.active = false;
-          $location.path('');
         }
       });
 
-      $scope.goGoGadget = function () {
+      $rootScope.$on('go', function(e, target) {
         $scope.loading = true;
         $timeout(function () {
           $scope.loading = false;
@@ -87,12 +124,18 @@
             month,
             day,
             ProfileService.country,
-            'people'
+            target
           ].join('/'));
 
-          var section = angular.element(document.getElementById('people'));
-          $document.scrollToElement(section, 80, 1000);
+          $timeout(function() {
+            var section = angular.element(document.getElementById(target));
+            $document.scrollToElement(section, 80, 1000);
+          }, 500);
         }, 1000);
+      });
+
+      $scope.goGoGadget = function () {
+        $rootScope.$emit('go', 'people');
       };
 
       $scope.$watch(function () {

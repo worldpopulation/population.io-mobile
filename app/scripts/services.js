@@ -27,8 +27,8 @@
     .service('ProfileService', function() {
       return {
         gender: 'male',
-        birthday: '1954-06-12',
-        country: 'Germany',
+        birthday: '',
+        country: '',
         active: false,
         getAge: function() {
           var ageDate = new Date(Date.now() - (new Date(this.birthday)).getTime());
@@ -205,7 +205,16 @@
             .error(function () {
               console.error('loadPopulation() error');
             });
-        },
+        }
+      };
+    })
+
+    .service('BrowserService', function($window) {
+      return {
+        isSupported: function() {
+          var isWebKit = 'WebkitAppearance' in document.documentElement.style;
+          return !isWebKit;
+        }
       };
     })
   ;

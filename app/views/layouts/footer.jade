@@ -13,7 +13,7 @@ footer
         button.btn(
           type="button",
           ng-click="registerMail()",
-          ng-disabled="emailForm.$invalid"
+          ng-disabled="emailForm.$invalid || sending"
         )
     .block
       h2.icon.icon-calendar Add your milestones to calendar
