@@ -467,8 +467,7 @@
 
           function _loadProfilePerson() {
 
-            var middlePerson = parseInt(person[0].length / 2) + 40;
-            var profilePerson = d3.select(person[0][middlePerson])
+            var profilePerson = d3.select(person[0][142]);
 
             var startX = parseInt(lens.select('rect').attr('x'));
             var startY = parseInt(lens.select('rect').attr('y'));
@@ -478,8 +477,16 @@
 
             var personX = parseInt(personNavRect.attr('x'))
             var personY = parseInt(personNavRect.attr('y'))
-            if ((personX >= startX && personX <= endX) && (personY >= startY && personY <= endY)) {
 
+            profilePerson.select('.icon .male').attr('opacity', function (d, i) {
+              return d.gender == 'male' ? 1 : 0;
+            });
+            profilePerson.select('.icon .female').attr('opacity', function (d, i) {
+              return d.gender == 'female' ? 1 : 0;
+            })
+
+
+            if ((personX >= startX && personX <= endX) && (personY >= startY && personY <= endY)) {
 
               profilePerson.data()[0]['birthday'] = moment(ProfileService.birthday).format('Do MMM, YYYY')
               profilePerson.data()[0]['name'] = 'You'
@@ -489,6 +496,7 @@
 
             }
             else {
+              console.log(0)
               profilePerson.classed('me', false)
             }
 
@@ -551,7 +559,7 @@
 
             person.each(function (d, i) {
 
-              if (randomizedGrid[i]) {
+              if (randomizedGrid[i] && i != 142) {
                 var a = d3.selectAll(activeCelebs).filter(function (d, n) { return n == randomizedGrid[i] })
                 if (!_.isEmpty(a.data())) {
                   d.name = a.data()[0].name;
@@ -560,6 +568,14 @@
                   d.gender = '';
                 }
                 d3.select(this).classed('celeb', true)
+              }
+              else if (i == 142) {
+                d3.select(this).classed('celeb', false)
+                d3.select(this).classed('me', true)
+                d.name = 'You';
+                d.country = ProfileService.country;
+                d.birthday = moment(ProfileService.birthday).format('Do MMM, YYYY')
+
               }
               else {
                 d3.select(this).classed('celeb', false)
@@ -783,13 +799,20 @@
             _buildNavigator();
             _initCelebsBar();
             _initGrid();
-            _loadProfilePerson();
             _loadCelebrities();
+            _loadProfilePerson();
             _initCelebTooltip();
             _loadActiveCelebrities();
 
           }, 2000)
+          scope.$watch(function () {
+            return ProfileService.birthday;
+          }, function (newVal, oldVal) {
+            if (newVal && newVal != oldVal) {
 
+            }
+
+          })
         }
       };
     });
