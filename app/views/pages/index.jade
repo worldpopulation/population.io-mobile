@@ -1,6 +1,5 @@
 extends ../layouts/default
 block content
-  ui-view
   svg.defs-area
     defs
       include ../../../assets/shapes-01.svg
@@ -10,21 +9,26 @@ block content
       include ../../../assets/shapes-05.svg
       include ../../../assets/shapes-05-large.svg
       include ../../../assets/storyline.svg
+
   .share.animate(ng-show="profile.active")
-    a(ng-href="{{shareUrl}}", ng-click="share()") SHARE
-    .links(
-      share-square="true",
-      share-links="Facebook, Twitter, LinkedIn",
-      share-title="population.io"
-    )
+    span SHARE
+    .links
+      a.fa.fa-facebook-square(target="_blank", share="facebook", share-title="population.io")
+      a.fa.fa-twitter-square(target="_blank", share="twitter", share-title="population.io")
+      a.fa.fa-linkedin-square(target="_blank", share="linkedin", share-title="population.io")
 
-  section#stats(ng-controller='StatsCtrl', du-scrollspy='stats', stats-area)
+  ul.navigation(ng-show="profile.active")
+    li(ng-class="{'active': currentPage == 0}", ng-click="showSection('stats')") <span></span>
+    li(ng-class="{'active': currentPage == 1}", ng-click="showSection('people')") <span></span>
+    li(ng-class="{'active': currentPage == 2}", ng-click="showSection('story')") <span></span>
+    li(ng-class="{'active': currentPage == 3}", ng-click="showSection('birthdays')") <span></span>
+    li(ng-class="{'active': currentPage == 4}", ng-click="showSection('expectancy')") <span></span>
 
-  div(ng-class="{'hidden': !profile.active}")
-    section#people(ng-controller='PeopleCtrl', people-area, du-scrollspy='people', offset='200')
-    section#story(ng-controller='StoryCtrl', story-area, du-scrollspy='story', offset='200')
-    section#birthdays(ng-controller='BirthdaysCtrl', birthdays-area, du-scrollspy='birthdays', offset='200')
-    section#expectancy(ng-controller='ExpectancyCtrl', expectancy-area, du-scrollspy='expectancy', offset='200')
+  section#stats(ng-controller='StatsCtrl', du-scrollspy='stats', data-index="0", stats-area)
+  section#people(ng-controller='PeopleCtrl', people-area, du-scrollspy='people', offset='200', data-index="1", ng-class="{'hidden': !profile.active}")
+  section#story(ng-controller='StoryCtrl', story-area, du-scrollspy='story', offset='200', data-index="2", ng-class="{'hidden': !profile.active}")
+  section#birthdays(ng-controller='BirthdaysCtrl', birthdays-area, du-scrollspy='birthdays', data-index="3", offset='200', ng-class="{'hidden': !profile.active}")
+  section#expectancy(ng-controller='ExpectancyCtrl', expectancy-area, du-scrollspy='expectancy', data-index="4", offset='200', ng-class="{'hidden': !profile.active}")
 
   script(type="text/ng-template", id="about.html")
     .modal-header

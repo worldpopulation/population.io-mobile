@@ -6,7 +6,6 @@
     .controller('MainCtrl', function ($scope, $timeout, $interval, $rootScope, $modal, $state, $location, $document, ProfileService, PopulationIOService) {
 
       $scope.profile = ProfileService;
-      $scope.shareUrl = $location.absUrl();
       $scope.worldPopulation = PopulationIOService.getWorldPopulation();
 
       $rootScope.$on('duScrollspy:becameActive', function ($event, $element) {
@@ -16,7 +15,8 @@
             $rootScope.currentPage = 0;
             return;
           } else {
-            $rootScope.currentPage = 99;
+            $rootScope.currentPage = $element.attr('data-index');
+            console.log($rootScope.currentPage)
           }
           var path = $location.$$path.replace(/[^/]*$/g, '');
           $location.path(path + hash).replace();
@@ -24,21 +24,18 @@
         }
       });
 
+      $scope.showSection = function(id) {
+        var section = angular.element(document.getElementById(id));
+        $document.scrollToElement(section, 80, 1000);
+      };
+
       $timeout(function () {
         var path = $location.$$path.replace(/.+[/](.*)$/g, '$1'),
           section = angular.element(document.getElementById(path));
         if ($rootScope.currentPage > 1) {
-          $document.scrollToElement(section, 80, 1000).then(function () {
-            console.log('done');
-          });
+          $document.scrollToElement(section, 80, 1000);
         }
       }, 500);
-
-      $scope.$watch(function () {
-        return $location.absUrl();
-      }, function (url) {
-        $scope.shareUrl = url;
-      });
 
       $interval(function () {
         $scope.worldPopulation = PopulationIOService.getWorldPopulation();
