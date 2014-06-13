@@ -305,12 +305,20 @@
 
               });
             person.on('mouseenter', function (d, i) {
-              d3.select(this).selectAll('path').transition()
+              var personItem = this;
+              d3.select(personItem).selectAll('path').transition()
                 .style('fill', '#21edff')
 
               celebTooltip
                 .attr({
-                  opacity: 1
+                  opacity: function () {
+                    if (d3.select(personItem).classed('celeb') || d3.select(personItem).classed('me')) {
+                      return 1
+                    }
+                    else {
+                      return 0
+                    }
+                  }
                 })
               console.log(xScale(d.x))
 
