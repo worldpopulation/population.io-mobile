@@ -291,8 +291,8 @@
               .outerRadius(200)
               .innerRadius(90);
             var arcBorder0 = d3.svg.arc()
-              .outerRadius(200)
-              .innerRadius(200);
+              .outerRadius(120)
+              .innerRadius(120);
             var arcBorder = d3.svg.arc()
               .outerRadius(130)
               .innerRadius(120);
@@ -385,12 +385,14 @@
               .attr("d", arc0)
               .attr('class', 'main')
               .style("fill", '#eee')
+              .attr('opacity', 0)
               .transition()
               .delay(function (d, i) {
-                return 2000 + i * 300
+                return i * 100
               })
-              .duration(1000)
+              .duration(400)
               .attr('d', arc)
+              .attr('opacity', 1)
 
             pieChart.append("path")
               .attr("d", arcBorder0)
@@ -399,7 +401,7 @@
               .attr('opacity', 0)
               .transition()
               .delay(function (d, i) {
-                return 5000 + i * 200
+                return 1000 + i * 100
               })
               .duration(400)
               .attr('d', arcBorder)
@@ -481,7 +483,7 @@
             labelArea
               .transition()
               .delay(function (d, i) {
-                return 3000 + i * 300
+                return 2000 + i * 100
               })
               .attr('opacity', 1)
 
