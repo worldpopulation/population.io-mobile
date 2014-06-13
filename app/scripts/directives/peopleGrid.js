@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('populationioApp')
-    .directive('peopleGrid', function (PeopleGridService, PopulationIOService, Celebrities, ProfileService) {
+    .directive('peopleGrid', function (PeopleGridService, PopulationIOService, Celebrities, ProfileService, $timeout) {
       return {
         restrict: 'E',
         link: function (scope, element) {
@@ -194,6 +194,7 @@
                 x: function () {return _.random(0, 180)},
                 y: function (d, i) {return yScale(rankScale(new Date(d.bday)))}
               });
+            console.log(ProfileService.birthday)
             personNavRect = blocksArea.append('rect')
               .attr({
                 'data-range': yScale2,
@@ -487,7 +488,7 @@
               profilePerson.classed('me', true)
 
             }
-            else{
+            else {
               profilePerson.classed('me', false)
             }
 
@@ -777,14 +778,17 @@
 
           }
 
-          _buildBarChart();
-          _buildNavigator();
-          _initCelebsBar();
-          _initGrid();
-          _loadProfilePerson();
-          _loadCelebrities();
-          _initCelebTooltip();
-          _loadActiveCelebrities();
+          $timeout(function () {
+            _buildBarChart();
+            _buildNavigator();
+            _initCelebsBar();
+            _initGrid();
+            _loadProfilePerson();
+            _loadCelebrities();
+            _initCelebTooltip();
+            _loadActiveCelebrities();
+
+          }, 2000)
 
         }
       };
