@@ -8,6 +8,7 @@ var gulp = require('gulp'),
     stylus = require('gulp-stylus'),
     concat = require('gulp-concat'),
     nib = require('gulp-stylus/node_modules/nib'),
+    sftp = require('gulp-sftp'),
 
     sources = {
       vendor: [
@@ -47,7 +48,8 @@ var gulp = require('gulp'),
       ],
       images: [
         'assets/sprite-icons.svg',
-        'assets/favicon.png'
+        'assets/favicon.png',
+        'assets/wip.svg'
       ],
       celebs: 'assets/celebrities/**'
     },
@@ -201,6 +203,19 @@ gulp.task('clean', function () {
       .pipe(clean());
 });
 
+// upload to server task
+gulp.task('upload', function () {
+  gulp.src([
+    'dist/**',
+    '!dist/celebrities/**'
+  ])
+  .pipe(sftp({
+      host: '104.130.5.217',
+      auth: 'keyMain',
+      remotePath:'/var/www/population.io'
+  }));
+});
+
 // default tasks
 gulp.task('default', [
   'serve',
@@ -211,4 +226,15 @@ gulp.task('default', [
   'scripts:watch',
   'lint:watch',
   'stylus:watch'
+]);
+
+gulp.task('deploy', [
+  'serve',
+  'fonts',
+  'images',
+  'celebs',
+  'jade',
+  'scripts',
+  'stylus',
+  'upload'
 ]);
