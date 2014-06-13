@@ -10,7 +10,7 @@
           selectedYear: '='
         },
         link: function ($scope, element) {
-          var width = element.parent().width(),
+          var width = 460,
             height = 580,
             yearMax = 100,
             yearMin = 0;

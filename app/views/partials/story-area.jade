@@ -1,7 +1,18 @@
 .container
   .story-area
     header
-      h1 The story of your life in numbers and dates...  <i ng-bind-html="title"></i>
+      h1 What are the milestones to expect in your life? <i ng-bind-html="titleAlive"></i> <i ng-bind-html="titleDie"></i>
+    div.rank
+      h2 Rank
+      .global-rank
+        rank-graph(country="ALL", data="globalRankData")
+        .title Your global rank
+        .value {{rankGlobal | number:0 }}
+      .local-rank
+        rank-graph(country="{{countryLocal}}", data="localRankData")
+        .title Your rank in {{country}}
+        .value {{rankLocal | number:0 }}
+
     div.timeline
       h2 Timeline
       ul
@@ -16,13 +27,3 @@
           span.title {{item.title}}
       story-line(data="storyLineData", selected-year="selectedYear")
 
-    div.rank
-      h2 Rank
-      .global-rank
-        rank-graph(country="ALL", data="globalRankData")
-        .title Your global rank
-        .value {{rankGlobal | number:0 }}
-      .local-rank
-        rank-graph(country="{{countryLocal}}", data="localRankData")
-        .title Your rank in {{country}}
-        .value {{rankLocal | number:0 }}

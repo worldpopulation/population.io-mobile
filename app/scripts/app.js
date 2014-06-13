@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('populationioApp', [ 'duScroll', 'ngResource', 'ui.router', 'ngAnimate', 'ui.bootstrap', 'restangular', 'td.easySocialShare' ])
+    .module('populationioApp', [ 'duScroll', 'ngResource', 'ui.router', 'ngAnimate', 'ui.bootstrap', 'restangular'])
     .config(function ($locationProvider, $urlRouterProvider, $httpProvider, RestangularProvider) {
 
       RestangularProvider.setBaseUrl('http://104.130.5.217:8000/api/1.0');

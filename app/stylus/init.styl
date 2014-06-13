@@ -3,7 +3,6 @@ body
   padding 0
   margin 0
   font-family 'Theinhardt-Light', 'Helvetica', sans-serif
-
 ul
 li
   list-style-type none
@@ -73,6 +72,8 @@ text
     font-size 24px
   p
     margin 0 0 20px 0
+  a
+    text-decoration underline
 .modal-footer
   button
     background #333
@@ -94,6 +95,35 @@ text
   left 50%
   margin-left -400px
 
+// navigation
+.navigation
+  position fixed
+  right 20px
+  top 50%
+  li
+    cursor pointer
+    position relative
+    width 20px
+    height 20px
+  span
+    left 8px
+    top 4px
+    position absolute
+    display block
+    width 5px
+    height 5px
+    background #999999
+    border-radius 5px
+  li.active
+    span
+      border-radius 10px
+      top 1px
+      left 5px
+      width 10px
+      height 10px
+      background #fff
+      border 1px solid #999999
+
 // share
 .share
   background highlight-yellow
@@ -112,6 +142,8 @@ text
     opacity 0.5
     margin 5px 0 0 0
     font-size 24px
+    a
+      margin 0 2px
 .share:hover
   right -90px
   bottom -40px

@@ -6,10 +6,24 @@ html(ng-app="populationioApp")
     meta(http-equiv="X-UA-Compatible", content="IE=edge")
     meta(name="viewport", content="width=device-width, initial-scale=1, user-scalable=0, maximum-scale=1.0")
     meta(name="description", content="The World Population Project")
-    //Place favicon.ico and apple-touch-icon.png in the root directory
+
+    meta(property="og:title", content="Population.io")
+    meta(roperty="og:url", content="http://www.population.io")
+    meta(property="og:description", content="The World Population Project")
+    meta(property="og:type", content="website")
+
+    meta(name="twitter:title", value="Population.io")
+    meta(name="twitter:description", value="The World Population Project")
+    meta(name="twitter:url", value="http://www.population.io")
+
+    meta(name="apple-mobile-web-app-capable", content="yes")
+    meta(name="apple-mobile-web-app-status-bar-style", content="black")
+
+    link(rel="icon", href="images/favicon.png", type="image/png")
     link(href="//fnt.webink.com/wfs/webink.css/?project=AF88B1EA-2FED-4222-BF48-D08A87927738&fonts=864889ED-8E73-7E19-00E2-BBE0F997E58C:f=Theinhardt-Thin,2272E54A-6BEF-79F6-B479-9FB26CE41DD7:f=Theinhardt-BlackIta,602BD939-0B36-207C-56E5-E3E6434C3273:f=Theinhardt-HairlineIta,9773ABFB-EF93-0C1B-AE14-35A7DD420754:f=Theinhardt-UltraLight,8B459781-89CC-B7EA-6A87-7EC561303F45:f=Theinhardt-BoldIta,2A04CF10-789B-A5BB-9721-E19ACED96EEB:f=Theinhardt-Black,F1909AAE-4087-F011-EEAD-AB047C3C6A43:f=Theinhardt-Hairline,82DA4627-8191-9CE4-706C-58F3C2615A95:f=Theinhardt-Bold,70F8A7D9-BDFF-D029-E465-E7FC928A5994:f=Theinhardt-MediumIta,5F278FF9-E581-1824-0F92-F6D72B137A6A:f=Theinhardt-HeavyIta,F77BBDE3-5270-5846-90AD-5529C2FFDA57:f=Theinhardt-Medium,A7E06AF3-FA3A-4B28-764F-AC325B3529DA:f=Theinhardt-Heavy,BF522E13-B921-2C59-5FD3-9D3C689FC32B:f=Theinhardt-LightIta,BA766C3D-9F83-4950-AFCD-AD9F2BF5CEAB:f=Theinhardt-Regular,0684BC34-8E92-BE61-25F1-D15CB377C180:f=Theinhardt-UltraLightIta,008579D7-00D8-1E34-1306-843EC6BC82EA:f=Theinhardt-Light,BFE4A44E-8D1D-66D8-BBF8-42F52771F0D3:f=Theinhardt-ThinIta,DC84A178-A66C-DB8D-5140-7E5BF64AB28F:f=Theinhardt-RegularIta", rel="stylesheet", type="text/css")
     link(rel="stylesheet", href="fonts/plantin/MyFontsWebfontsKit.css")
     link(rel="stylesheet", href="css/main.css")
+
 body(ng-controller='MainCtrl')
   include header
   block content
@@ -28,7 +42,6 @@ body(ng-controller='MainCtrl')
   script(src='vendor/angular-animate.min.js')
   script(src='vendor/angular-scroll.min.js')
   script(src='vendor/ui-bootstrap-tpls.min.js')
-  script(src='vendor/easy-social-share.js')
 
   script(src='scripts/libs/d3Utils.js')
 

@@ -3,10 +3,13 @@
 
   angular.module('populationioApp')
 
-    .controller('MainCtrl', function ($scope, $timeout, $interval, $rootScope, $modal, $state, $location, $document, ProfileService, PopulationIOService) {
+    .controller('MainCtrl', function ($scope, $timeout, $http, $interval, $rootScope, $modal, $state, $location, $document, ProfileService, PopulationIOService, BrowserService) {
+
+      if (BrowserService.isSupported()) {
+        alert('This showcase is optimized for WebKit browsers (Safari, Chrome)!');
+      }
 
       $scope.profile = ProfileService;
-      $scope.shareUrl = $location.absUrl();
       $scope.worldPopulation = PopulationIOService.getWorldPopulation();
 
       $rootScope.$on('duScrollspy:becameActive', function ($event, $element) {
@@ -16,7 +19,7 @@
             $rootScope.currentPage = 0;
             return;
           } else {
-            $rootScope.currentPage = 99;
+            $rootScope.currentPage = $element.attr('data-index');
           }
           var path = $location.$$path.replace(/[^/]*$/g, '');
           $location.path(path + hash).replace();
@@ -24,19 +27,39 @@
         }
       });
 
+      $scope.downloadICal = function() {
+        alert('Feature coming soon!');
+      };
+
+      $scope.showSection = function(id) {
+        var section = angular.element(document.getElementById(id));
+        $document.scrollToElement(section, 79, 1000);
+      };
+
       $timeout(function () {
         var path = $location.$$path.replace(/.+[/](.*)$/g, '$1'),
           section = angular.element(document.getElementById(path));
+
         if ($rootScope.currentPage > 1) {
-          $document.scrollToElement(section, 80, 1000);
+          $document.scrollToElement(section, 80, 1000).then(function () {
+            console.log('done');
+          });
+        }
+
+        // TODO: check the url path for date and section
+        if (path && !ProfileService.active) {
+          var pathItems = $location.$$path.split('/'),
+            year = pathItems[1],
+            month = pathItems[2],
+            day = pathItems[3],
+            country = pathItems[4];
+
+          ProfileService.birthday = [ year, month, day ].join('-');
+          ProfileService.country = country;
+
+          $rootScope.$emit('go', path);
         }
       }, 500);
-
-      $scope.$watch(function () {
-        return $location.absUrl();
-      }, function (url) {
-        $scope.shareUrl = url;
-      });
 
       $interval(function () {
         $scope.worldPopulation = PopulationIOService.getWorldPopulation();
@@ -48,7 +71,27 @@
 
       $scope.showHomepage = function () {
         var section = angular.element(document.getElementById('stats'));
-        $document.scrollToElement(section, 80, 1000);
+        $document.scrollToElement(section, 79, 1000);
+      };
+
+      $scope.registerMail = function() {
+        $scope.sending = true;
+        $http({
+          url: 'http://api.47nord.de/population.io/v1/mail.php?auth=jLFscl7E7oz85D8P',
+          method: 'POST',
+          data: {
+            email: $scope.email
+          }
+        })
+        .success(function() {
+          alert($scope.email + ' has been registered!');
+          $scope.email = '';
+          $scope.sending = false;
+        })
+        .error(function() {
+          $scope.sending = false;
+          alert('Whoops, An error occurred!');
+        });
       };
 
       $scope.showAbout = function() {
@@ -69,11 +112,10 @@
       $scope.$watch('goForm.$invalid', function (invalid) {
         if (invalid) {
           ProfileService.active = false;
-          $location.path('');
         }
       });
 
-      $scope.goGoGadget = function () {
+      $rootScope.$on('go', function(e, target) {
         $scope.loading = true;
         $timeout(function () {
           $scope.loading = false;
@@ -88,12 +130,18 @@
             month,
             day,
             ProfileService.country,
-            'people'
+            target
           ].join('/'));
 
-          var section = angular.element(document.getElementById('people'));
-          $document.scrollToElement(section, 80, 1000);
+          $timeout(function() {
+            var section = angular.element(document.getElementById(target));
+            $document.scrollToElement(section, 79, 1000);
+          }, 500);
         }, 1000);
+      });
+
+      $scope.goGoGadget = function () {
+        $rootScope.$emit('go', 'people');
       };
 
       $scope.$watch(function () {
@@ -150,7 +198,7 @@
       $scope.year = $filter('date')(new Date(), 'yyyy');
       $scope.storyLineData = [];
 
-      var _loadLifeExpectancyTotal = function (country) {
+      var _loadLifeExpectancyTotal = function (country, onSuccess) {
         PopulationIOService.loadLifeExpectancyTotal({
           sex: ProfileService.gender,
           country: country,
@@ -161,6 +209,9 @@
             year: $filter('date')(_getDateWithOffset(new Date(ProfileService.birthday), totalLifeExpectancy), 'yyyy'),
             title: 'Life expectancy in ' + country
           });
+          if (onSuccess) {
+            onSuccess(totalLifeExpectancy);
+          }
         });
       };
 
@@ -227,17 +278,23 @@
         });
 
         _loadWpRankRanked(1000000000, '1th');
-        _loadWpRankRanked(2000000000, '2th');
-        _loadWpRankRanked(3000000000, '3th', function (date) {
-          $scope.title = $sce.trustAsHtml([
-            'Watch out on <span>',
-              $filter('ordinal')($filter('date')(date, 'd')) + ' ',
-              $filter('date')(date, 'MMM, yyyy') + '</span> becoming ',
-            'the <span>3th Billion</span> person on earth!'
+        _loadWpRankRanked(2000000000, '2nd');
+        _loadWpRankRanked(3000000000, '3rd', function (date) {
+          $scope.titleAlive = $sce.trustAsHtml([
+            'On <span>' + $filter('ordinal')($filter('date')(date, 'd')) + ' ',
+            $filter('date')(date, 'MMM, yyyy') + '</span> you’ll be person <span>3rd ',
+            'Billion</span> to be alive in the <span>world</span>.'
           ].join(''));
         });
 
-        _loadLifeExpectancyTotal(ProfileService.country);
+        _loadLifeExpectancyTotal(ProfileService.country, function(totalLifeExpectancy) {
+          var date = _getDateWithOffset(new Date(ProfileService.birthday), totalLifeExpectancy);
+          $scope.titleDie = $sce.trustAsHtml([
+            'You will die on <span>',
+            $filter('ordinal')($filter('date')(date, 'd')) + ' ',
+            $filter('date')(date, 'MMM, yyyy') + '</span>'
+          ].join(''));
+        });
         _loadLifeExpectancyTotal('World');
 
         $scope.country = ProfileService.country;
@@ -424,11 +481,14 @@
           date: date,
           age: ProfileService.getAge()
         }, function (remainingLife) {
-          $scope.highlightCountryRef({
+          $scope.activeCountryRef = {
             country: $scope.selectedCountryRef,
             yearsLeft: remainingLife,
             lifeExpectancy: ProfileService.getAge() + remainingLife
-          });
+          };
+          if (!$scope.$$phase) {
+            $scope.$apply();
+          }
         });
       };
 
@@ -439,12 +499,28 @@
           date: date,
           age: ProfileService.getAge()
         }, function (remainingLife) {
-          $scope.highlightCountryRel({
+          $scope.activeCountryRel = {
             country: $scope.selectedCountryRel,
             yearsLeft: remainingLife,
             lifeExpectancy: ProfileService.getAge() + remainingLife
-          });
+          };
+          if (!$scope.$$phase) {
+            $scope.$apply();
+          }
         });
+      };
+
+      var _isCountryAvailable = function(country) {
+        if ($scope.countries.length > 0) {
+          for(var i=0; i<$scope.countries.length; i+=1) {
+            if ($scope.countries[i] === country) {
+              return true;
+            }
+          }
+          return false;
+        } else {
+          return true;
+        }
       };
 
       $scope.$watch('selectedCountryRef', function (country) {
@@ -456,6 +532,16 @@
       $scope.$watch('selectedCountryRel', function (country) {
         if (country) {
           _updateCountryRel(date);
+        }
+      });
+
+      $rootScope.$on('countryRelChanged', function (e, country) {
+        if (country) {
+          if (_isCountryAvailable(country)) {
+            $scope.selectedCountryRel = country;
+          } else {
+            alert(country + ' not available!');
+          }
         }
       });
 

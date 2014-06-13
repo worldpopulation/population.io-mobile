@@ -118,6 +118,7 @@
               .attr('class', 'country-element')
               .on('mouseenter', function (d, i) {
                 var _tooltip = d3.select(this);
+
                 d3.select(this).select('circle')
                   .transition()
                   .attr({ r: function (d, i) {return d.radius + 3} })
@@ -260,6 +261,14 @@
           }
 
           function _buildWorldChart(worldData) {
+
+            worldData = worldData.sort(function(a,b) {
+                if (a.countryTitle > b.countryTitle) {
+                  return 1;
+                } else {
+                  return -1;
+                }
+            });
 
             var worldBirthdaysTotal = d3.sum(worldData, function (d, i) {return d.value})
             var arc = d3.svg.arc()

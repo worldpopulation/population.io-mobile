@@ -16,7 +16,6 @@
     "angular-resource": "~1.2.17",
     "angular-cookies": "~1.2.17",
     "angular-sanitize": "~1.2.17",
-    "angular-easy-social-share": "latest",
     "restangular": "latest",
     "angular-ui-router": "latest",
     "angular-route": "~1.2.16",

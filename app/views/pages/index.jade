@@ -1,6 +1,5 @@
 extends ../layouts/default
 block content
-  ui-view
   svg.defs-area
     defs
       include ../../../assets/shapes-01.svg
@@ -10,29 +9,34 @@ block content
       include ../../../assets/shapes-05.svg
       include ../../../assets/shapes-05-large.svg
       include ../../../assets/storyline.svg
+
   .share.animate(ng-show="profile.active")
-    a(ng-href="{{shareUrl}}", ng-click="share()") SHARE
-    .links(
-      share-square="true",
-      share-links="Facebook, Twitter, LinkedIn",
-      share-title="population.io"
-    )
+    span SHARE
+    .links
+      a.fa.fa-facebook-square(target="_blank", share="facebook", share-title="population.io")
+      a.fa.fa-twitter-square(target="_blank", share="twitter", share-title="population.io")
+      a.fa.fa-linkedin-square(target="_blank", share="linkedin", share-title="population.io")
 
-  section#stats(ng-controller='StatsCtrl', du-scrollspy='stats', stats-area)
+  ul.navigation(ng-show="profile.active")
+    li(ng-class="{'active': currentPage == 0}", ng-click="showSection('stats')") <span></span>
+    li(ng-class="{'active': currentPage == 1}", ng-click="showSection('people')") <span></span>
+    li(ng-class="{'active': currentPage == 2}", ng-click="showSection('story')") <span></span>
+    li(ng-class="{'active': currentPage == 3}", ng-click="showSection('birthdays')") <span></span>
+    li(ng-class="{'active': currentPage == 4}", ng-click="showSection('expectancy')") <span></span>
 
-  div(ng-class="{'hidden': !profile.active}")
-    section#people(ng-controller='PeopleCtrl', people-area, du-scrollspy='people', offset='200')
-    section#story(ng-controller='StoryCtrl', story-area, du-scrollspy='story', offset='200')
-    section#birthdays(ng-controller='BirthdaysCtrl', birthdays-area, du-scrollspy='birthdays', offset='200')
-    section#expectancy(ng-controller='ExpectancyCtrl', expectancy-area, du-scrollspy='expectancy', offset='200')
+  section#stats(ng-controller='StatsCtrl', du-scrollspy='stats', data-index="0", stats-area)
+  section#people(ng-controller='PeopleCtrl', people-area, du-scrollspy='people', offset='200', data-index="1", ng-class="{'hidden': !profile.active}")
+  section#story(ng-controller='StoryCtrl', story-area, du-scrollspy='story', offset='200', data-index="2", ng-class="{'hidden': !profile.active}")
+  section#birthdays(ng-controller='BirthdaysCtrl', birthdays-area, du-scrollspy='birthdays', data-index="3", offset='200', ng-class="{'hidden': !profile.active}")
+  section#expectancy(ng-controller='ExpectancyCtrl', expectancy-area, du-scrollspy='expectancy', data-index="4", offset='200', ng-class="{'hidden': !profile.active}")
 
   script(type="text/ng-template", id="about.html")
     .modal-header
       h3.modal-title About
     .modal-body
-      p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      p The World Population Project (WPP) aims to make demography - the statistical study of human populations -  accessible to a wider audience. We believe demography and demographic data are key to understanding social and economic phenomena, and that a better appreciation of demographic trends helps individuals see their place in the world.
       h4 Credits
-      p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim a.
+      p <a href="http://www.worldbank.org/">The World Bank</a>, <a href="http://benedikt-gross.de/">Benedikt Groß</a> & <a href="http://www.47nord.de/">47 Nord</a>, Other Members
     .modal-footer
       button(ng-click="$close()") Got it!
 
@@ -40,7 +44,7 @@ block content
     .modal-header
       h3.modal-title Developers
     .modal-body
-      p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      p Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      p All of the data you see on this World Population Project (WPP) site is comes from a <a href="http://en.wikipedia.org/wiki/Representational_state_transfer">restful API</a> which is [documented] (link) with details of methods and data sources used.
+      p The source code behind this site and the API is also available at: <a href="https://github.com/worldpopulation/">github.com/worldpopulation</a> and developers are welcome to build on both the application and API.
     .modal-footer
       button(ng-click="$close()") Got it!

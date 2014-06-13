@@ -46,7 +46,8 @@ var gulp = require('gulp'),
         '!dist/celebrities/**'
       ],
       images: [
-        'assets/sprite-icons.svg'
+        'assets/sprite-icons.svg',
+        'assets/favicon.png'
       ],
       celebs: 'assets/celebrities/**'
     },
