@@ -11,13 +11,15 @@ var gulp = require('gulp'),
 
     sources = {
       vendor: [
-        'bower_components/angular-scroll/angular-scroll.min.js',
+
+        'bower_components/momentjs/min/moment.min.js',
         'bower_components/jquery/dist/jquery.min.js',
         'bower_components/d3/d3.min.js',
         'bower_components/d3.slider/d3.slider.js',
         'bower_components/topojson/topojson.js',
         'bower_components/angular/angular.min.js',
         'bower_components/restangular/dist/restangular.min.js',
+        'bower_components/angular-scroll/angular-scroll.min.js',
         'bower_components/angular-animate/angular-animate.min.js',
         'bower_components/angular-easy-social-share/easy-social-share.js',
         'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',

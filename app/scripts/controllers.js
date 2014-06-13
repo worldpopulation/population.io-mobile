@@ -28,9 +28,7 @@
         var path = $location.$$path.replace(/.+[/](.*)$/g, '$1'),
           section = angular.element(document.getElementById(path));
         if ($rootScope.currentPage > 1) {
-          $document.scrollToElement(section, 80, 1000).then(function () {
-            console.log('done');
-          });
+          $document.scrollToElement(section, 80, 1000);
         }
       }, 500);
 

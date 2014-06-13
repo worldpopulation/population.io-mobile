@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('populationioApp')
-    .directive('peopleGrid', function (PeopleGridService, PopulationIOService) {
+    .directive('peopleGrid', function (PeopleGridService, PopulationIOService, Celebrities, ProfileService) {
       return {
         restrict: 'E',
         link: function (scope, element) {
@@ -10,9 +10,6 @@
             personHeight = 50,
             parentWidth = element.parent().width(),
             parentHeight = 650,
-            populationScale = 1000000000 * 0.68,
-            gridRows = 8,
-            gridCols = 32,
             person,
             celebTooltip,
             celebTooltipTitle,
@@ -22,10 +19,23 @@
             celebsBar,
             prevCelebsButton,
             nextCelebsButton,
-            celebsRoll
+            personNavRect,
+            celebsRoll,
+            rankScale,
+            rankScale2,
+            birthdayScale,
+            lens,
+            youXPosition = _.random(40, 140),
+            gridRows = 8,
+            gridCols = 32,
+
+            blockSize = 2,
+            navWidth = 180,
+            navHeight = 400,
+            lensWidth = gridCols * blockSize - 1,
+            lensHeight = gridRows * (blockSize + 1)
 
             ;
-
 
           var chart = d3.select(element[0])
             .append('svg')
@@ -91,17 +101,27 @@
 
 
           var _buildNavigator = function () {
+
+            var celebs = Celebrities.all();
+
             var blockData = [];
             var _worldPopulation = PopulationIOService.getWorldPopulation();
 
+
+            rankScale = d3.time.scale()
+              .domain([new Date('1920-01-01'), new Date()])
+              .range([_worldPopulation, 0]);
+
+            rankScale2 = d3.scale.linear()
+              .domain([_worldPopulation, 0])
+              .range([new Date('1920-01-01'), new Date()])
+            ;
+
+
+//            console.log(rankScale(new Date('1920-01-01')))
+//            console.log(parseInt(rankScale(new Date('1983-08-03'))))
             var nav = chart.append('g')
               .attr('class', 'navigator');
-            var blockSize = 2;
-            var navWidth = 180;
-            var navHeight = 400;
-            var lensWidth = gridCols * blockSize - 1;
-            var lensHeight = gridRows * (blockSize + 1);
-
 
             for (var i = 0; i < navHeight / 3 + 1; i++) {
               blockData.push(i * 2)
@@ -109,18 +129,21 @@
             var peopleInOneRow = _worldPopulation / blockData.length
 
             var yScale = d3.scale.linear()
-              .domain([0, _worldPopulation])
+              .domain([_worldPopulation, 0])
               .range([0, navHeight])
             var yScale2 = d3.scale.linear()
               .domain([0, navHeight])
-              .range([0, _worldPopulation])
+              .range([_worldPopulation, 0])
+            birthdayScale = d3.time.scale()
+              .domain([new Date('1920-01-01'), new Date()])
+              .range([0, navHeight])
 
             var xScale = d3.scale.linear()
-              .domain([0, peopleInOneRow])
+              .domain([peopleInOneRow, 0 ])
               .range([0, navWidth - 2])
             var xScale2 = d3.scale.linear()
               .domain([0, navWidth - 2])
-              .range([0, peopleInOneRow])
+              .range([peopleInOneRow, 0 ])
 
             nav.append('rect')
               .attr({
@@ -132,9 +155,11 @@
             var blocksArea = nav
               .append('g')
               .attr({class: 'blocks', transform: 'translate(1,1)'})
+            var personsArea = nav
+              .append('g')
+              .attr({class: 'persons', transform: 'translate(1,1)'})
 
-            console.log(_worldPopulation / blockData.length)
-            blocksArea.selectAll('rect')
+            blocksArea.selectAll('.block')
               .data(blockData)
               .enter()
               .append('rect')
@@ -156,6 +181,29 @@
                   return 'translate(' + [0, i * 3] + ')'
                 }
               });
+            personsArea.selectAll('.person')
+              .data(celebs)
+              .enter()
+              .append('rect')
+              .attr({
+                'data-range': yScale2,
+                fill: '#999',
+                class: 'person',
+                height: 2,
+                width: 2,
+                x: function () {return _.random(0, 180)},
+                y: function (d, i) {return yScale(rankScale(new Date(d.bday)))}
+              });
+            personNavRect = blocksArea.append('rect')
+              .attr({
+                'data-range': yScale2,
+                fill: 'red',
+                class: 'person me',
+                height: 2,
+                width: 2,
+                x: youXPosition,
+                y: yScale(rankScale(new Date(ProfileService.birthday)))
+              });
 
             var startRank, endRank;
             var drag = d3.behavior.drag()
@@ -172,18 +220,18 @@
                 startRank = parseInt(xScale2(x) + yScale2(y));
                 endRank = parseInt(startRank + peopleInOneRow * 2)
 
-                d3.select(this).attr('transform', 'translate(' + [x, y] + ')');
+                d3.select(this).select('rect').attr({x: x, y: y});
               })
               .on('dragstart', function () {
                 _fadeGrid();
 
               })
               .on('dragend', function () {
-                _updateGrid(startRank, endRank);
+                _updateGrid();
               });
 
 
-            var lens = nav.append('g')
+            lens = nav.append('g')
               .attr({
                 class: 'lens'
               })
@@ -193,11 +241,15 @@
               .attr({
                 width: lensWidth,
                 height: lensHeight,
-                rx: 2
+                rx: 2,
+                x: function () {return youXPosition - lensWidth / 2},
+                y: function () {return birthdayScale(new Date(ProfileService.birthday)) - lensHeight / 2}
+
               });
           };
 
-          var _initGrid = function (startRank) {
+          var _initGrid = function () {
+            var startRank = parseInt(rankScale(new Date(ProfileService.birthday)))
 
             grid = chart.append('g')
               .attr({
@@ -239,7 +291,9 @@
               .enter()
               .append('g')
               .attr({
-                'data-rank': function (d, i) {return d.rank},
+                'data-rank': function (d, i) {
+                  return d.rank
+                },
                 opacity: 1,
                 class: 'person',
                 transform: function (d, i) {
@@ -260,7 +314,8 @@
                 return d.name
               })
               celebTooltipDetails.text(function () {
-                return d.gender + ', ' + d.country + ', ' + d.birthday
+//                return d.gender + ', ' + d.country + ', ' + d.birthday
+                return d.country + ', ' + d.birthday
               })
               celebTooltipRank.text(function () {
                 return d.rank
@@ -282,7 +337,7 @@
               .attr({
                 width: personWidth,
                 height: personHeight,
-                class: 'background-area',
+                class: 'background-area'
 
               })
               .style('fill', 'transparent');
@@ -317,12 +372,20 @@
               .attr('opacity', 0.2);
           };
           var _updateGrid = function (startRank, endRank) {
-            console.log(startRank)
-            console.log(endRank)
+
+//            console.log(startRank)
+//            console.log(endRank)
+//
+//            console.log(new Date(rankScale2(startRank)))
+//            console.log(new Date(rankScale2(endRank)))
+//
+
             grid.selectAll('.person')
               .transition()
               .attr('opacity', 1);
-            _loadCelebrities(startRank, endRank)
+
+            _loadActiveCelebrities();
+            _loadProfilePerson();
 
           };
 
@@ -401,14 +464,44 @@
 
           }
 
-          function _loadCelebrities(startRank, endRank) {
-            var celebs = PopulationIOService.getCelebrities(startRank, endRank)
+          function _loadProfilePerson() {
 
+            var middlePerson = parseInt(person[0].length / 2) + 40;
+            var profilePerson = d3.select(person[0][middlePerson])
+
+            var startX = parseInt(lens.select('rect').attr('x'));
+            var startY = parseInt(lens.select('rect').attr('y'));
+
+            var endX = parseInt(lens.select('rect').attr('x')) + lensWidth;
+            var endY = parseInt(lens.select('rect').attr('y')) + lensHeight;
+
+            var personX = parseInt(personNavRect.attr('x'))
+            var personY = parseInt(personNavRect.attr('y'))
+            if ((personX >= startX && personX <= endX) && (personY >= startY && personY <= endY)) {
+
+
+              profilePerson.data()[0]['birthday'] = moment(ProfileService.birthday).format('Do MMM, YYYY')
+              profilePerson.data()[0]['name'] = 'You'
+              profilePerson.data()[0]['country'] = ProfileService.country
+              profilePerson.data()[0]['gender'] = ProfileService.gender
+              profilePerson.classed('me', true)
+
+            }
+            else{
+              profilePerson.classed('me', false)
+            }
+
+
+          }
+
+          function _loadCelebrities(startRank, endRank) {
+            var celebs = Celebrities.getRange(ProfileService.birthday, 5);
             person.each(
               function (d, i) {
 
-                var celeb = _.find(celebs, function (celeb) {
-                  return celeb.rank == d.rank;
+                var celeb = _.find(celebs, function (item) {
+//                  console.log(parseInt(rankScale(new Date(item.bday))), d.rank);
+                  return parseInt(rankScale(new Date(item.bday))) == d.rank;
                 });
                 var _person = d3.select(this);
                 if (celeb) {
@@ -417,6 +510,7 @@
                   d.name = celeb.name;
                   d.birthday = celeb.birthday;
                   d.country = celeb.country;
+                  d.rank = parseInt(rankScale(new Date(celeb.birthday)))
                   _person.classed('celeb', true)
                   _person.selectAll('path').style('fill', '#333')
                   _person.select('.icon .male').attr('opacity', function (d, i) {
@@ -432,6 +526,80 @@
                 }
 
               })
+          }
+
+          function _loadActiveCelebrities() {
+            var persons = d3.select('.persons').selectAll('.person');
+            var startX = parseInt(lens.select('rect').attr('x'));
+            var startY = parseInt(lens.select('rect').attr('y'));
+
+            var endX = parseInt(lens.select('rect').attr('x')) + lensWidth;
+            var endY = parseInt(lens.select('rect').attr('y')) + lensHeight;
+
+            var activeCelebs = _.filter(persons[0], function (person) {
+              var personX = parseInt(d3.select(person).attr('x'))
+              var personY = parseInt(d3.select(person).attr('y'))
+              return (personX >= startX && personX <= endX) && (personY >= startY && personY <= endY)
+            })
+
+            var emptyCells = new Array(person[0].length - activeCelebs.length)
+            for (var i = 0; i < activeCelebs.length; i++) {
+              emptyCells.push(i);
+            }
+            var randomizedGrid = _.shuffle(emptyCells)
+
+            person.each(function (d, i) {
+
+              if (randomizedGrid[i]) {
+                var a = d3.selectAll(activeCelebs).filter(function (d, n) { return n == randomizedGrid[i] })
+                if (!_.isEmpty(a.data())) {
+                  d.name = a.data()[0].name;
+                  d.country = a.data()[0].country;
+                  d.birthday = moment(a.data()[0].bday).format('Do MMM, YYYY');
+                  d.gender = '';
+                }
+                d3.select(this).classed('celeb', true)
+              }
+              else {
+                d3.select(this).classed('celeb', false)
+                d.name = 'Unknown';
+                d.country = '';
+                d.birthday = 'Unknown'
+              }
+            });
+
+//            person.each(
+//              function (d, i) {
+//
+//                var celeb = _.find(celebs, function (item) {
+////                  console.log(parseInt(rankScale(new Date(item.bday))), d.rank);
+//                  return parseInt(rankScale(new Date(item.bday))) == d.rank;
+//                });
+//                var _person = d3.select(this);
+//                if (celeb) {
+//
+//                  d.gender = celeb.gender;
+//                  d.name = celeb.name;
+//                  d.birthday = celeb.birthday;
+//                  d.country = celeb.country;
+//                  d.rank = parseInt(rankScale(new Date(celeb.birthday)))
+//                  _person.classed('celeb', true)
+//                  _person.selectAll('path').style('fill', '#333')
+//                  _person.select('.icon .male').attr('opacity', function (d, i) {
+//                    return d.gender == 'male' ? 1 : 0;
+//                  });
+//                  _person.select('.icon .female').attr('opacity', function (d, i) {
+//                    return d.gender == 'female' ? 1 : 0;
+//                  })
+//                }
+//                else {
+//                  _person.classed('celeb', false)
+//                  _person.selectAll('path').style('fill', '')
+//                }
+//
+//              })
+
+
           }
 
           function _initCelebsBar() {
@@ -612,9 +780,11 @@
           _buildBarChart();
           _buildNavigator();
           _initCelebsBar();
-          _initGrid(500000000);
-          _loadCelebrities(500000000);
+          _initGrid();
+          _loadProfilePerson();
+          _loadCelebrities();
           _initCelebTooltip();
+          _loadActiveCelebrities();
 
         }
       };
