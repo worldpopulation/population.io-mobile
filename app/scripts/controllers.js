@@ -483,7 +483,7 @@
           sex: ProfileService.gender,
           country: $scope.selectedCountryRef,
           date: date,
-          age: ProfileService.getAge()
+          age: ProfileService.getAge() + 'y'
         }, function (remainingLife) {
           $scope.activeCountryRef = {
             country: $scope.selectedCountryRef,
@@ -501,7 +501,7 @@
           sex: ProfileService.gender,
           country: $scope.selectedCountryRel,
           date: date,
-          age: ProfileService.getAge()
+          age: ProfileService.getAge()  + 'y'
         }, function (remainingLife) {
           $scope.activeCountryRel = {
             country: $scope.selectedCountryRel,
