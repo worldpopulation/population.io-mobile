@@ -9,6 +9,10 @@
         alert('This showcase is optimized for WebKit browsers (Safari, Chrome)!');
       }
 
+      if (BrowserService.isTouchDevice()) {
+        alert('The alpha version does not support touch devices, yet!');
+      }
+
       $scope.profile = ProfileService;
       $scope.worldPopulation = PopulationIOService.getWorldPopulation();
 

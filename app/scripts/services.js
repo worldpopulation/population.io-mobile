@@ -214,6 +214,9 @@
         isSupported: function() {
           var isWebKit = 'WebkitAppearance' in document.documentElement.style;
           return !isWebKit;
+        },
+        isTouchDevice: function() {
+          return !!('ontouchstart' in window);
         }
       };
     })
