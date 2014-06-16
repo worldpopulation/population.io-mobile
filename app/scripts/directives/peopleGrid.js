@@ -5,10 +5,16 @@
     .directive('peopleGrid', function (PeopleGridService, PopulationIOService, Celebrities, ProfileService, $timeout) {
       return {
         restrict: 'E',
-        link: function (scope, element) {
+        scope: {
+          rankLocal: "=",
+          rankLocalTotal: "=",
+          rankGlobal: "=",
+          rankGlobalTotal: "="
+        },
+        link: function ($scope, element) {
           var personWidth = 30,
             personHeight = 50,
-            parentWidth = element.parent().width(),
+            parentWidth = 1200,
             parentHeight = 650,
             person,
             celebTooltip,
@@ -51,11 +57,112 @@
             .attr("id", "clip-circle")
             .attr("cx", 0)
             .attr("cy", 0)
-            .attr("r", 20)
+            .attr("r", 20);
+
+          $scope.$watch('rankLocal', function(rank) {
+            if (rank) {
+              _updateLocalBar(rank, $scope.rankLocalTotal);
+            }
+          });
+
+          $scope.$watch('rankGlobal', function(rank) {
+            if (rank) {
+              _updateGlobalBar(rank, $scope.rankGlobalTotal);
+            }
+          });
+
+          var _updateLocalBar = function(rank, rankTotal) {
+            var bar = chart.select('.bar.local'),
+              width = parseInt((rank/rankTotal) * parentWidth, 0),
+              ticks = 5;
+
+            bar.select('rect.highlight')
+              .transition()
+              .duration(1000)
+              .attr({
+                width: width
+              });
+            bar.select('text')
+              .text(parseInt(100 * rank/rankTotal, 0) + '%')
+              .transition()
+              .duration(1000)
+              .attr({
+                x: width
+              });
+
+            var xScale = d3.scale.linear()
+              .domain([0, rankTotal])
+              .range([0, parentWidth]);
+
+            var xAxis = d3.svg.axis()
+              .scale(xScale)
+              .orient('bottom')
+              .ticks(ticks);
+
+            bar.select('.x-axis')
+              .call(xAxis)
+              .selectAll('.tick')
+              .attr({
+                'class': function(d, i) {
+                  var className = 'tick';
+                  if (i === 0) {
+                    className += ' first';
+                  }
+                  if (i === ticks - 1) {
+                    className += ' last';
+                  }
+                  return className;
+                }
+              });
+          };
+
+          var _updateGlobalBar = function(rank, rankTotal) {
+            var bar = chart.select('.bar.world'),
+              width = (rank/rankTotal) * parentWidth,
+              ticks = 5;
+
+            bar.select('rect.highlight')
+              .transition()
+              .duration(1000)
+              .attr({
+                width: width
+              });
+            bar.select('.percent')
+              .text(parseInt(100 * rank/rankTotal, 0) + '%')
+              .transition()
+              .duration(1000)
+              .attr({
+                x: width
+              });
+
+            var xScale = d3.scale.linear()
+              .domain([0, rankTotal])
+              .range([0, parentWidth]);
+
+            var xAxis = d3.svg.axis()
+              .scale(xScale)
+              .orient('top')
+              .ticks(ticks);
+
+            bar.select('.x-axis')
+              .call(xAxis)
+              .selectAll('.tick')
+              .attr({
+                'class': function(d, i) {
+                  var className = 'tick';
+                  if (i === 0) {
+                    className += ' first';
+                  }
+                  if (i === ticks - 1) {
+                    className += ' last';
+                  }
+                  return className;
+                }
+              });
+          };
 
           var _buildBarChart = function () {
-            var worldPercent = 0.5;
-            var localPercent = 0.8;
+            var barHeight = 17;
 
             var barChart = chart.append('g')
               .attr('class', 'bar-chart');
@@ -65,47 +172,51 @@
 
             worldBar.append('rect')
               .attr({
-                height: 10,
+                height: barHeight,
                 width: parentWidth
               });
             worldBar.append('rect')
               .attr({
-                class: 'highlight',
-                height: 10,
-                width: (worldPercent * parentWidth)
+                'class': 'highlight',
+                height: barHeight,
+                width: 0
               });
             worldBar.append('text')
-              .text((worldPercent * 100) + '%')
+              .text('0%')
               .attr({
-                x: (worldPercent * parentWidth)
+                'class': 'percent',
+                x: 0
               });
+            worldBar.append('g')
+              .attr('class', 'x-axis');
 
             var localBar = barChart.append('g')
               .attr('class', 'bar local');
 
             localBar.append('rect')
               .attr({
-                height: 10,
+                height: barHeight,
                 width: parentWidth
               });
             localBar.append('rect')
               .attr({
                 class: 'highlight',
-                height: 10,
-                width: (localPercent * parentWidth)
+                height: barHeight,
+                width: 0
               });
             localBar.append('text')
-              .text((localPercent * 100) + '%')
+              .text('0%')
               .attr({
-                x: (localPercent * parentWidth)
+                'class': 'percent',
+                x: 0
               });
+            localBar.append('g')
+              .attr('class', 'x-axis');
           };
-
 
           var _buildNavigator = function () {
 
             var celebs = Celebrities.all();
-
             var blockData = [];
             var _worldPopulation = PopulationIOService.getWorldPopulation();
 
@@ -199,8 +310,9 @@
             personNavRect = blocksArea.append('rect')
               .attr({
                 'data-range': yScale2,
-                fill: 'red',
-                class: 'person me',
+                'class': function() {
+                  return 'person me ' + ProfileService.gender;
+                },
                 height: 2,
                 width: 2,
                 x: youXPosition,
@@ -252,6 +364,8 @@
 
           var _initGrid = function () {
             var startRank = parseInt(rankScale(new Date(ProfileService.birthday)))
+
+            chart.select('.grid').remove();
 
             grid = chart.append('g')
               .attr({
@@ -530,11 +644,14 @@
               profilePerson.data()[0]['country'] = ProfileService.country
               profilePerson.data()[0]['gender'] = ProfileService.gender
               profilePerson.classed('me', true)
+              profilePerson.classed(ProfileService.gender, true)
 
             }
             else {
 //              console.log(0)
               profilePerson.classed('me', false)
+              profilePerson.classed('female', false)
+              profilePerson.classed('male', false)
             }
 
 
@@ -831,11 +948,10 @@
 
           }
 
-          scope.$watch(function () {
-            return ProfileService.birthday;
-          }, function (newVal, oldVal) {
-            if (newVal && newVal != oldVal) {
-              _buildBarChart();
+          $scope.$watch(function () {
+            return ProfileService.active;
+          }, function (active) {
+            if (active) {
               _buildNavigator();
               _initCelebsBar();
               _initGrid();
@@ -843,10 +959,10 @@
               _loadProfilePerson();
               _initCelebTooltip();
               _loadActiveCelebrities();
-
             }
+          });
 
-          })
+          _buildBarChart();
         }
       };
     });

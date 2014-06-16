@@ -19,20 +19,48 @@ people-grid
     &.me
       path
         fill red
+    &.me.female
+      .female
+        opacity 1 !important
+      .male
+        opacity 0 !important
+    &.me.male
+      .female
+        opacity 0 !important
+      .male
+        opacity 1 !important
     &.celeb
       path
         fill #333
   .bar-chart
     transform translate(0, 15px)
-    .bar
+    .x-axis
+      transform translate(0, 21px)
+      path
+        fill none
       text
+        font-size 10px
+        fill #aaa
+      .tick.first
+        text
+          text-anchor start !important
+          transform translate(5px, 0)
+      .tick.last
+        text
+          text-anchor end !important
+          transform translate(-5px, 0)
+    .local
+      .x-axis
+        transform translate(0, -3px)
+    .bar
+      .percent
         font-size 11px
         fill #333333
         text-anchor end
       &.local
-        transform translate(0, 10px)
-        text
-          transform translate(0, 24px)
+        transform translate(0, 17px)
+        .percent
+          transform translate(0, 30px)
         rect
           fill #eee
         rect.highlight
@@ -42,7 +70,7 @@ people-grid
           fill border-color
         rect.highlight
           fill highlight-yellow
-        text
+        .percent
           transform translate(0, -7px)
   .navigator
     transform translate(1000px, 100px)
