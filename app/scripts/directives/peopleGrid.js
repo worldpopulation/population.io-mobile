@@ -22,6 +22,7 @@
             celebTooltipDetails,
             celebTooltipRank,
             grid,
+            rollScale,
             celebsBar,
             prevCelebsButton,
             nextCelebsButton,
@@ -37,15 +38,15 @@
             youXPosition = _.random(40, 140),
             gridRows = 8,
             gridCols = 32,
-
+            celebTooltipImage,
             blockSize = 2,
             navWidth = 180,
             navHeight = 400,
             lensWidth = gridCols * blockSize - 1,
             lensHeight = gridRows * (blockSize + 1),
-            celebWidth
-
-            ;
+            celebWidth,
+            currentCeleb = 0;
+          ;
 
           var chart = d3.select(element[0])
             .append('svg')
@@ -347,12 +348,12 @@
                 d3.select(this).select('rect').attr({x: x, y: y});
               })
               .on('dragstart', function () {
-                _fadeGrid();
+                _fadeControls();
 
               })
               .on('dragend', function () {
                 _updateGrid();
-                _updateCelebsBar();
+                _populateCelebsBar();
               });
 
 
@@ -430,7 +431,8 @@
               });
             person.on('mouseenter', function (d, i) {
               var personItem = this;
-              d3.select(personItem).selectAll('path').transition()
+              d3.select(personItem).selectAll('path')
+                .transition()
                 .style('fill', '#21edff')
 
               celebTooltip
@@ -443,12 +445,12 @@
                       return 0
                     }
                   }
-                })
+                });
 //              console.log(xScale(d.x))
 
               if (xScale(d.x) < 150) {
                 celebTooltip.attr({
-                  transform: 'translate(' + [xScale(d.x) - (150 - personWidth / 2) + 120, yScale(d.y) + personHeight + 30] + ')'
+                  transform: 'translate(' + [xScale(d.x) - (150 - personWidth / 2) + 120, yScale(d.y) + personHeight + 120] + ')'
                 })
                 celebTooltipPointerShadow.attr({
                   transform: 'translate(32,-18) rotate(45)'
@@ -459,7 +461,7 @@
               }
               else {
                 celebTooltip.attr({
-                  transform: 'translate(' + [xScale(d.x) - (150 - personWidth / 2), yScale(d.y) + personHeight + 30] + ')'
+                  transform: 'translate(' + [xScale(d.x) - (150 - personWidth / 2), yScale(d.y) + personHeight + 120] + ')'
                 })
                 celebTooltipPointerShadow.attr({
                   transform: 'translate(152,-18) rotate(45)'
@@ -472,6 +474,13 @@
               }
               celebTooltipTitle.text(function () {
                 return d.name
+              })
+
+              celebTooltipImage.attr({
+                'xlink:href': function () {
+                  return d.thumbnail
+                }
+
               })
               celebTooltipDetails.text(function () {
 //                return d.gender + ', ' + d.country + ', ' + d.birthday
@@ -526,21 +535,20 @@
             femaleIcon.append('path').attr('d', 'M7.501,5.812c-0.928,0-1.683-0.741-1.683-1.653c0-0.911,0.755-1.653,1.683-1.653 c0.928,0,1.683,0.741,1.683,1.653C9.184,5.071,8.429,5.812,7.501,5.812z')
 
           };
-          var _fadeGrid = function () {
+          var _fadeControls = function () {
             grid.selectAll('.person')
+              .transition()
+              .attr('opacity', 0.2);
+            celebsBar
               .transition()
               .attr('opacity', 0.2);
           };
           var _updateGrid = function (startRank, endRank) {
-
-//            console.log(startRank)
-//            console.log(endRank)
-//
-//            console.log(new Date(rankScale2(startRank)))
-//            console.log(new Date(rankScale2(endRank)))
-//
-
             grid.selectAll('.person')
+              .transition()
+              .attr('opacity', 1);
+
+            celebsBar
               .transition()
               .attr('opacity', 1);
 
@@ -550,7 +558,7 @@
           };
 
           function _initCelebTooltip() {
-            celebTooltip = grid.append('g')
+            celebTooltip = chart.append('g')
               .attr({
                 class: 'celeb-tooltip',
                 transform: 'translate(-200,-200)'
@@ -601,7 +609,7 @@
                 'stroke-width': 1
               })
               .attr({
-                x1: 60,
+                x1: 80,
                 y1: 60,
                 x2: 280,
                 y2: 60
@@ -609,19 +617,32 @@
             celebTooltipTitle = celebTooltip.append('text')
               .attr({
                 class: 'celeb-tooltip-title',
-                transform: 'translate(60,30)'
+                transform: 'translate(80,30)'
               })
               .text('')
+            celebTooltipImage = celebTooltip
+              .append('image').attr(
+              {
+                width: 40,
+                height: 40,
+                x: -20,
+                y: -20,
+                'clip-path': 'url(#rounded-corners-clip)',
+                transform: 'translate(40,40)'
+
+
+              }
+            );
             celebTooltipDetails = celebTooltip.append('text')
               .attr({
                 class: 'celeb-tooltip-details',
-                transform: 'translate(60,50)'
+                transform: 'translate(80,50)'
               })
               .text('')
             celebTooltipRank = celebTooltip.append('text')
               .attr({
                 class: 'celeb-tooltip-rank',
-                transform: 'translate(60,80)'
+                transform: 'translate(80,80)'
               })
               .text('')
 
@@ -787,9 +808,7 @@
           }
 
           function _initCelebsBar() {
-            var currentCeleb = 0;
             celebWidth = (parentWidth - 200 - 300) / 4;
-            var celebs = person.data().filter(function (d, i) { return d.name != 'Unknown' });
             celebsBar = chart.append('g')
               .attr({
                 class: 'celebrities-bar',
@@ -836,9 +855,7 @@
               }
             )
 
-            var rollScale = d3.scale.linear()
-              .domain([0, celebs.length])
-              .range([0, -celebWidth * celebs.length])
+            rollScale = d3.scale.linear()
 
             var celebsRollWrapper = celebsBar.append('g').attr('class', 'celebs-roll-wrapper').attr('transform', 'translate(150,0)')
             celebsRollWrapper.attr(
@@ -848,8 +865,7 @@
             )
 
             celebsRoll = celebsRollWrapper.append('g').attr('class', 'celebs-roll')
-
-            prevCelebsButton = celebsBar.append('g').attr('class', 'prev-celebs-button').attr('transform', 'translate(' + [70, 50] + ')')
+            prevCelebsButton = celebsBar.append('g').attr('class', 'prev-celebs-button').attr('transform', 'translate(' + [70, 50] + ')').style('display', 'none')
             nextCelebsButton = celebsBar.append('g').attr('class', 'next-celebs-button').attr('transform', 'translate(' + [parentWidth - 200 - 70, 50] + ')')
             nextCelebsButton
               .on('mouseenter', function () {
@@ -858,13 +874,6 @@
               .on('mouseleave', function () {
                 d3.select(this).select('circle').transition().attr('r', 20)
               })
-              .on('click', function () {
-                currentCeleb += 4;
-                console.log(rollScale(currentCeleb))
-                celebsRoll
-                  .transition()
-                  .attr({transform: 'translate(' + [rollScale(currentCeleb), 0] + ')'})
-              });
             prevCelebsButton
               .on('mouseenter', function () {
                 d3.select(this).select('circle').transition().attr('r', 24)
@@ -872,15 +881,6 @@
               .on('mouseleave', function () {
                 d3.select(this).select('circle').transition().attr('r', 20)
               })
-
-              .on('click', function () {
-                currentCeleb -= 4;
-                console.log(rollScale(currentCeleb))
-                celebsRoll
-                  .transition()
-                  .attr({transform: 'translate(' + [rollScale(currentCeleb), 0] + ')'})
-
-              });
             celebsRoll.append('rect')
               .attr(
               {
@@ -890,6 +890,101 @@
 
               });
 
+            prevCelebsButton.append('circle')
+              .attr(
+              {
+                fill: '#fff',
+                'stroke-width': 1,
+                stroke: '#ccc',
+                r: 20,
+                cx: 0,
+                cy: 0
+              }
+            )
+            prevCelebsButton.append('polygon')
+              .attr(
+              {
+                fill: '#444',
+                points: '10.002,4.503 1.906,4.503 5.224,1.198 4.519,0.496 -0.002,5 4.519,9.504 5.224,8.802 1.906,5.497 10.002,5.497',
+                transform: 'translate(-5,-5)'
+
+              }
+            )
+            nextCelebsButton.append('circle')
+              .attr(
+              {
+                fill: '#fff',
+                'stroke-width': 1,
+                stroke: '#ccc',
+                r: 20,
+                cx: 0,
+                cy: 0
+              }
+            )
+            nextCelebsButton.append('polygon')
+              .attr(
+              {
+                fill: '#444',
+                points: '-0.002,4.503 8.094,4.503 4.776,1.198 5.481,0.496 10.002,5 5.481,9.504 4.776,8.802 8.094,5.497 -0.002,5.497',
+                transform: 'translate(-5,-5)'
+
+              }
+            )
+
+          }
+
+          function _populateCelebsBar() {
+            currentCeleb = 0;
+            var celebs = person.data().filter(function (d, i) { return d.name != 'Unknown' });
+            rollScale
+              .domain([0, celebs.length])
+              .range([0, -celebWidth * celebs.length])
+            celebsRoll.selectAll('.celeb').remove()
+            celebsRoll.attr({transform: 'translate(0,0)'})
+            prevCelebsButton.style('display', 'none')
+
+
+            nextCelebsButton
+              .on('click', function () {
+                if (currentCeleb >= celebs.length - 8) {
+                  currentCeleb = celebs.length - 4
+                  nextCelebsButton.style('display', 'none')
+                } else {
+                  currentCeleb += 4;
+                  nextCelebsButton.style('display', 'block')
+                }
+                if (currentCeleb > 0) {
+                  prevCelebsButton.style('display', 'block')
+                } else {
+                  prevCelebsButton.style('display', 'block')
+                }
+                celebsRoll
+                  .transition()
+                  .attr({transform: 'translate(' + [rollScale(currentCeleb), 0] + ')'})
+              });
+            prevCelebsButton
+              .on('click', function () {
+                if (currentCeleb < 8) {
+                  currentCeleb = 0;
+                  prevCelebsButton.style('display', 'none')
+                }
+                else {
+                  currentCeleb -= 4;
+                  prevCelebsButton.style('display', 'block')
+                }
+
+                if (currentCeleb >= celebs.length - 5) {
+                  nextCelebsButton.style('display', 'none')
+                } else {
+                  nextCelebsButton.style('display', 'block')
+                }
+
+
+                celebsRoll
+                  .transition()
+                  .attr({transform: 'translate(' + [rollScale(currentCeleb), 0] + ')'})
+
+              });
 
             var celeb = celebsRoll.selectAll('.celeb')
               .data(celebs)
@@ -943,52 +1038,6 @@
                 return d.name
               })
 
-
-            prevCelebsButton.append('circle')
-              .attr(
-              {
-                fill: '#fff',
-                'stroke-width': 1,
-                stroke: '#ccc',
-                r: 20,
-                cx: 0,
-                cy: 0
-              }
-            )
-            prevCelebsButton.append('polygon')
-              .attr(
-              {
-                fill: '#444',
-                points: '10.002,4.503 1.906,4.503 5.224,1.198 4.519,0.496 -0.002,5 4.519,9.504 5.224,8.802 1.906,5.497 10.002,5.497',
-                transform: 'translate(-5,-5)'
-
-              }
-            )
-            nextCelebsButton.append('circle')
-              .attr(
-              {
-                fill: '#fff',
-                'stroke-width': 1,
-                stroke: '#ccc',
-                r: 20,
-                cx: 0,
-                cy: 0
-              }
-            )
-            nextCelebsButton.append('polygon')
-              .attr(
-              {
-                fill: '#444',
-                points: '-0.002,4.503 8.094,4.503 4.776,1.198 5.481,0.496 10.002,5 5.481,9.504 4.776,8.802 8.094,5.497 -0.002,5.497',
-                transform: 'translate(-5,-5)'
-
-              }
-            )
-
-          }
-
-          function _updateCelebsBar() {
-
           }
 
           $scope.$watch(function () {
@@ -999,9 +1048,11 @@
               _initGrid();
               _loadCelebrities();
               _loadProfilePerson();
-              _initCelebTooltip();
               _loadActiveCelebrities();
               _initCelebsBar();
+              _initCelebTooltip();
+              _populateCelebsBar();
+
             }
           });
 
