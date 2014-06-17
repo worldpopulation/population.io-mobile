@@ -452,7 +452,7 @@
           }, function (country, data) {
             if (_getCountry(country).countriy_ISO_A2) {
               var value = ProfileService.gender === 'male' ? data.males : data.females,
-                birthdays = value / 365 / 24;
+                birthdays = value / 365;
 
               if (parseInt(birthdays) > 0) {
                 $scope.continentsData.push({
@@ -488,7 +488,7 @@
             $scope.worldData.push({
               countryAbbr: _getCountry(country).countriy_ISO_A2,
               countryTitle: country,
-              value: value / 365 / 24
+              value: value / 365
             });
             if ($scope.worldData.length == countriesAroundTheWorld.length) {
               $scope.$broadcast('worldDataLoaded')
