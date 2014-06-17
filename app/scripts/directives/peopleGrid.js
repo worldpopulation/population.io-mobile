@@ -32,6 +32,7 @@
             birthdayScale,
             celebTooltipPointerShadow,
             celebTooltipPointer,
+            activeCelebs,
             lens,
             youXPosition = _.random(40, 140),
             gridRows = 8,
@@ -41,7 +42,8 @@
             navWidth = 180,
             navHeight = 400,
             lensWidth = gridCols * blockSize - 1,
-            lensHeight = gridRows * (blockSize + 1)
+            lensHeight = gridRows * (blockSize + 1),
+            celebWidth
 
             ;
 
@@ -50,30 +52,38 @@
             .attr({width: parentWidth, height: parentHeight})
             .append('g')
             .attr({transform: 'translate(0,0)'});
-
-          var roundedCornersClip = chart.append("defs").append("svg:clipPath")
+          var defs = chart.append("defs")
+          var roundedCornersClip = defs.append("svg:clipPath")
             .attr("id", "rounded-corners-clip")
             .append("circle")
             .attr("id", "clip-circle")
             .attr("cx", 0)
             .attr("cy", 0)
             .attr("r", 20);
+          var celebsRollClip = defs.append("svg:clipPath")
+            .attr("id", "celebs-roll-clip")
+            .append("rect")
+            .attr("id", "clip-rect")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", (parentWidth - 200 - 300))
+            .attr("height", 200);
 
-          $scope.$watch('rankLocal', function(rank) {
+          $scope.$watch('rankLocal', function (rank) {
             if (rank) {
               _updateLocalBar(rank, $scope.rankLocalTotal);
             }
           });
 
-          $scope.$watch('rankGlobal', function(rank) {
+          $scope.$watch('rankGlobal', function (rank) {
             if (rank) {
               _updateGlobalBar(rank, $scope.rankGlobalTotal);
             }
           });
 
-          var _updateLocalBar = function(rank, rankTotal) {
+          var _updateLocalBar = function (rank, rankTotal) {
             var bar = chart.select('.bar.local'),
-              width = parseInt((rank/rankTotal) * parentWidth, 0),
+              width = parseInt((rank / rankTotal) * parentWidth, 0),
               ticks = 5;
 
             bar.select('rect.highlight')
@@ -83,7 +93,7 @@
                 width: width
               });
             bar.select('text')
-              .text(parseInt(100 * rank/rankTotal, 0) + '%')
+              .text(parseInt(100 * rank / rankTotal, 0) + '%')
               .transition()
               .duration(1000)
               .attr({
@@ -103,7 +113,7 @@
               .call(xAxis)
               .selectAll('.tick')
               .attr({
-                'class': function(d, i) {
+                'class': function (d, i) {
                   var className = 'tick';
                   if (i === 0) {
                     className += ' first';
@@ -116,9 +126,9 @@
               });
           };
 
-          var _updateGlobalBar = function(rank, rankTotal) {
+          var _updateGlobalBar = function (rank, rankTotal) {
             var bar = chart.select('.bar.world'),
-              width = (rank/rankTotal) * parentWidth,
+              width = (rank / rankTotal) * parentWidth,
               ticks = 5;
 
             bar.select('rect.highlight')
@@ -128,7 +138,7 @@
                 width: width
               });
             bar.select('.percent')
-              .text(parseInt(100 * rank/rankTotal, 0) + '%')
+              .text(parseInt(100 * rank / rankTotal, 0) + '%')
               .transition()
               .duration(1000)
               .attr({
@@ -148,7 +158,7 @@
               .call(xAxis)
               .selectAll('.tick')
               .attr({
-                'class': function(d, i) {
+                'class': function (d, i) {
                   var className = 'tick';
                   if (i === 0) {
                     className += ' first';
@@ -310,7 +320,7 @@
             personNavRect = blocksArea.append('rect')
               .attr({
                 'data-range': yScale2,
-                'class': function() {
+                'class': function () {
                   return 'person me ' + ProfileService.gender;
                 },
                 height: 2,
@@ -342,6 +352,7 @@
               })
               .on('dragend', function () {
                 _updateGrid();
+                _updateCelebsBar();
               });
 
 
@@ -699,11 +710,11 @@
             var endX = parseInt(lens.select('rect').attr('x')) + lensWidth;
             var endY = parseInt(lens.select('rect').attr('y')) + lensHeight;
 
-            var activeCelebs = _.filter(persons[0], function (person) {
+            activeCelebs = _.filter(persons[0], function (person) {
               var personX = parseInt(d3.select(person).attr('x'))
               var personY = parseInt(d3.select(person).attr('y'))
               return (personX >= startX && personX <= endX) && (personY >= startY && personY <= endY)
-            })
+            });
 
             var emptyCells = new Array(person[0].length - activeCelebs.length)
             for (var i = 0; i < activeCelebs.length; i++) {
@@ -718,6 +729,8 @@
                 if (!_.isEmpty(a.data())) {
                   d.name = a.data()[0].name;
                   d.country = a.data()[0].country;
+                  d.thumbnail = '/celebrities/' + a.data()[0].thumbnail;
+                  console.log(d.thumbnail)
                   d.birthday = moment(a.data()[0].bday).format('Do MMM, YYYY');
                   d.gender = '';
                 }
@@ -774,6 +787,9 @@
           }
 
           function _initCelebsBar() {
+            var currentCeleb = 0;
+            celebWidth = (parentWidth - 200 - 300) / 4;
+            var celebs = person.data().filter(function (d, i) { return d.name != 'Unknown' });
             celebsBar = chart.append('g')
               .attr({
                 class: 'celebrities-bar',
@@ -819,16 +835,52 @@
 
               }
             )
-            celebsRoll = celebsBar.append('g').attr('class', 'celebs-roll').attr('transform', 'translate(150,0)')
+
+            var rollScale = d3.scale.linear()
+              .domain([0, celebs.length])
+              .range([0, -celebWidth * celebs.length])
+
+            var celebsRollWrapper = celebsBar.append('g').attr('class', 'celebs-roll-wrapper').attr('transform', 'translate(150,0)')
+            celebsRollWrapper.attr(
+              {
+                'clip-path': 'url(#celebs-roll-clip)'
+              }
+            )
+
+            celebsRoll = celebsRollWrapper.append('g').attr('class', 'celebs-roll')
+
             prevCelebsButton = celebsBar.append('g').attr('class', 'prev-celebs-button').attr('transform', 'translate(' + [70, 50] + ')')
             nextCelebsButton = celebsBar.append('g').attr('class', 'next-celebs-button').attr('transform', 'translate(' + [parentWidth - 200 - 70, 50] + ')')
-            var celebs = [
-              {name: 'John Doe', thumbnail: '/celebrities/thumbnails/april/ace-frehley.jpg'},
-              {name: 'Patrick Bateman', thumbnail: '/celebrities/thumbnails/july/aj-cook.jpg'},
-              {name: 'Jim Beam', thumbnail: '/celebrities/thumbnails/july/barry-bonds.jpg'},
-              {name: 'Max Payne', thumbnail: '/celebrities/thumbnails/july/bill-cosby.jpg'},
-              {name: 'Jane Doe', thumbnail: '/celebrities/thumbnails/july/amanda-steele.jpg'},
-            ]
+            nextCelebsButton
+              .on('mouseenter', function () {
+                d3.select(this).select('circle').transition().attr('r', 24)
+              })
+              .on('mouseleave', function () {
+                d3.select(this).select('circle').transition().attr('r', 20)
+              })
+              .on('click', function () {
+                currentCeleb += 4;
+                console.log(rollScale(currentCeleb))
+                celebsRoll
+                  .transition()
+                  .attr({transform: 'translate(' + [rollScale(currentCeleb), 0] + ')'})
+              });
+            prevCelebsButton
+              .on('mouseenter', function () {
+                d3.select(this).select('circle').transition().attr('r', 24)
+              })
+              .on('mouseleave', function () {
+                d3.select(this).select('circle').transition().attr('r', 20)
+              })
+
+              .on('click', function () {
+                currentCeleb -= 4;
+                console.log(rollScale(currentCeleb))
+                celebsRoll
+                  .transition()
+                  .attr({transform: 'translate(' + [rollScale(currentCeleb), 0] + ')'})
+
+              });
             celebsRoll.append('rect')
               .attr(
               {
@@ -836,8 +888,9 @@
                 width: parentWidth - 200 - 300,
                 height: 100
 
-              })
-            var celebWidth = (parentWidth - 200 - 300) / celebs.length;
+              });
+
+
             var celeb = celebsRoll.selectAll('.celeb')
               .data(celebs)
               .enter()
@@ -847,15 +900,7 @@
                 transform: function (d, i) {
                   return 'translate(' + [i * celebWidth, 0] + ')'
                 }
-              })
-//            celeb.append('rect').attr(
-//              {
-//                fill: 'green',
-//                width: celebWidth-1,
-//                height: 100
-//
-//              }
-//            )
+              });
             celeb.append('circle').attr(
               {
                 fill: 'white',
@@ -867,7 +912,7 @@
 
 
               }
-            )
+            );
             celeb.append('image').attr(
               {
                 width: 40,
@@ -882,7 +927,7 @@
 
 
               }
-            )
+            );
             celeb.append('text')
               .style(
               {
@@ -908,9 +953,6 @@
                 r: 20,
                 cx: 0,
                 cy: 0
-
-//                transform: 'translate(0,0)'
-
               }
             )
             prevCelebsButton.append('polygon')
@@ -931,9 +973,6 @@
                 r: 20,
                 cx: 0,
                 cy: 0
-
-//                transform: 'translate(0,0)'
-
               }
             )
             nextCelebsButton.append('polygon')
@@ -948,17 +987,21 @@
 
           }
 
+          function _updateCelebsBar() {
+
+          }
+
           $scope.$watch(function () {
             return ProfileService.active;
           }, function (active) {
             if (active) {
               _buildNavigator();
-              _initCelebsBar();
               _initGrid();
               _loadCelebrities();
               _loadProfilePerson();
               _initCelebTooltip();
               _loadActiveCelebrities();
+              _initCelebsBar();
             }
           });
 

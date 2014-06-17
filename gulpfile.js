@@ -228,12 +228,5 @@ gulp.task('default', [
 ]);
 
 gulp.task('deploy', [
-  'serve',
-  'fonts',
-  'images',
-  'celebs',
-  'jade',
-  'scripts',
-  'stylus',
   'upload'
 ]);
