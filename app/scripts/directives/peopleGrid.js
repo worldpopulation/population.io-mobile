@@ -26,7 +26,7 @@
             celebsBar,
             prevCelebsButton,
             nextCelebsButton,
-            personNavRect,
+            personNavPointer,
             celebsRoll,
             rankScale,
             rankScale2,
@@ -37,7 +37,7 @@
             lens,
             youXPosition = _.random(40, 140),
             gridRows = 8,
-            gridCols = 32,
+            gridCols = 30,
             celebTooltipImage,
             blockSize = 2,
             navWidth = 180,
@@ -53,7 +53,7 @@
             .attr({width: parentWidth, height: parentHeight})
             .append('g')
             .attr({transform: 'translate(0,0)'});
-          var defs = chart.append("defs")
+          var defs = chart.append("defs");
           var roundedCornersClip = defs.append("svg:clipPath")
             .attr("id", "rounded-corners-clip")
             .append("circle")
@@ -230,104 +230,166 @@
             var celebs = Celebrities.all();
             var blockData = [];
             var _worldPopulation = PopulationIOService.getWorldPopulation();
+            var _populationTopLimit = 8000000000;
 
 
             rankScale = d3.time.scale()
               .domain([new Date('1920-01-01'), new Date()])
-              .range([_worldPopulation, 0]);
-
+              .range([0, _worldPopulation]);
             rankScale2 = d3.scale.linear()
-              .domain([_worldPopulation, 0])
+              .domain([0, _worldPopulation])
               .range([new Date('1920-01-01'), new Date()])
             ;
+//            var yScale = d3.scale.linear()
+//              .domain([0, _populationTopLimit])
+//              .range([0, navHeight]);
+
+
+            var yScale2 = d3.scale.linear()
+              .domain([0, navHeight])
+              .range([0, _populationTopLimit]);
 
 
 //            console.log(rankScale(new Date('1920-01-01')))
 //            console.log(parseInt(rankScale(new Date('1983-08-03'))))
-            var nav = chart.append('g')
-              .attr('class', 'navigator');
+            var navigator = chart
+              .append('g')
+              .attr({
+                class: 'navigator',
+                transform: 'translate(950, 100)'
+              });
 
-            for (var i = 0; i < navHeight / 3 + 1; i++) {
-              blockData.push(i * 2)
+            for (var i = 0; i < navHeight / 3; i++) {
+              blockData.push({
+                i: i * 2,
+                population: yScale2(i * 3)
+              })
             }
-            var peopleInOneRow = _worldPopulation / blockData.length
+            var peopleInOneRow = _worldPopulation / blockData.length;
 
-            var yScale = d3.scale.linear()
-              .domain([_worldPopulation, 0])
-              .range([0, navHeight])
-            var yScale2 = d3.scale.linear()
-              .domain([0, navHeight])
-              .range([_worldPopulation, 0])
+            var rows = []
+            for (var i = 0; i < blockData.length; i++) {
+              rows.push(i * 3)
+            }
+            var yScale = d3.scale.quantize()
+              .domain([0, _populationTopLimit])
+              .range(rows);
+
+
             birthdayScale = d3.time.scale()
               .domain([new Date('1920-01-01'), new Date()])
-              .range([0, navHeight])
+              .range([0, navHeight]);
+            var formatBillions = d3.format(".1s");
+            var yAxis = d3.svg.axis()
+              .scale(yScale)
+              .orient('right')
+              .ticks(8)
+              .tickFormat(function (d) { return formatBillions(d).replace('G', 'b');});
 
-            var xScale = d3.scale.linear()
-              .domain([peopleInOneRow, 0 ])
-              .range([0, navWidth - 2])
+
+//            var xScale = d3.scale.linear()
+//              .domain([0, peopleInOneRow ])
+//              .range([0, navWidth - 2]);
+            var xRows = [];
+            for (var i = 0; i < navWidth - 3; i++) {
+              xRows.push(i)
+            }
+            var xScale = d3.scale.quantize()
+              .domain([0, peopleInOneRow ])
+              .range(xRows);
+
             var xScale2 = d3.scale.linear()
               .domain([0, navWidth - 2])
-              .range([peopleInOneRow, 0 ])
+              .range([peopleInOneRow, 0 ]);
 
-            nav.append('rect')
+            navigator.append('rect')
               .attr({
                 class: 'frame',
-                height: navHeight + lensHeight,
+                height: navHeight,
                 width: navWidth
               });
 
-            var blocksArea = nav
+            var blocksArea = navigator
               .append('g')
-              .attr({class: 'blocks', transform: 'translate(1,1)'})
-            var personsArea = nav
+              .attr({
+                class: 'blocks',
+                transform: 'translate(1,1)'
+              });
+            var celebsArea = navigator
               .append('g')
-              .attr({class: 'persons', transform: 'translate(1,1)'})
-
+              .attr({
+                class: 'celebs',
+                transform: 'translate(1,1)'
+              });
+            var yAxisElement = navigator.append('g')
+              .attr({
+                class: 'y-axis',
+                transform: 'translate(190,0)'
+              })
+              .call(yAxis)
+              .selectAll('text').attr('dy', '-4px');
+            var lastPopulationBlock = true;
             blocksArea.selectAll('.block')
               .data(blockData)
               .enter()
               .append('rect')
               .attr({
-                'data-range': yScale2,
-                class: 'block',
-                height: 2,
-                width: function (d, i) {
-                  if (i == blockData.length - 1) {
-                    return xScale(10000000)
-                  }
-                  else {
-                    return navWidth - 2
-                  }
-
+                'data-population': function (d, i) {
+                  return Math.floor(d.population)
                 },
+                'data-i': function (d, i) {
+                  return i
+                },
+                class: function (d, i) {
+                  var limit = '';
+                  if (d.population > _worldPopulation) {
+                    limit = ' overlimit';
+                    if (lastPopulationBlock) {
+                      limit += ' first';
+                      lastPopulationBlock = false;
+                    }
+                  }
+                  return 'block' + limit
+                },
+                height: 2,
+                width: navWidth - 2,
                 transform: function (d, i) {
-
                   return 'translate(' + [0, i * 3] + ')'
                 }
               });
-            personsArea.selectAll('.person')
+            blocksArea.select('.block.overlimit.first').attr('width', function (d, i) {
+              return xScale(d.population - _worldPopulation);
+            });
+            celebsArea.selectAll('rect')
               .data(celebs)
               .enter()
               .append('rect')
               .attr({
-                'data-range': yScale2,
-                fill: '#999',
-                class: 'person',
                 height: 2,
                 width: 2,
-                x: function () {return _.random(0, 180)},
-                y: function (d, i) {return yScale(rankScale(new Date(d.bday)))}
+//                x: function () {return _.random(0, 180)},
+                x: function (d, i) {
+                  return xScale(peopleInOneRow - rankScale(new Date(d.birthday)) % peopleInOneRow)
+                },
+                y: function (d, i) {
+//                  console.log(Math.floor(rankScale(new Date(d.birthday))))
+                  return yScale(rankScale(new Date(d.birthday)))
+                }
               });
-            personNavRect = blocksArea.append('rect')
+            personNavPointer = celebsArea.append('circle')
               .attr({
-                'data-range': yScale2,
                 'class': function () {
                   return 'person me ' + ProfileService.gender;
                 },
-                height: 2,
-                width: 2,
-                x: youXPosition,
-                y: yScale(rankScale(new Date(ProfileService.birthday)))
+                r: 0,
+                cx: youXPosition,
+                cy: yScale(rankScale(new Date(ProfileService.birthday)))
+              });
+            personNavPointer
+              .transition()
+              .delay(4000)
+              .attr({
+                r: 3
               });
 
             var startRank, endRank;
@@ -343,7 +405,7 @@
 //                console.log(x, y)
 //                console.log(x + lensWidth, y + lensHeight)
                 startRank = parseInt(xScale2(x) + yScale2(y));
-                endRank = parseInt(startRank + peopleInOneRow * 2)
+                endRank = parseInt(startRank + peopleInOneRow * 2);
 
                 d3.select(this).select('rect').attr({x: x, y: y});
               })
@@ -357,7 +419,7 @@
               });
 
 
-            lens = nav.append('g')
+            lens = navigator.append('g')
               .attr({
                 class: 'lens'
               })
@@ -375,7 +437,7 @@
           };
 
           var _initGrid = function () {
-            var startRank = parseInt(rankScale(new Date(ProfileService.birthday)))
+            var startRank = parseInt(rankScale(new Date(ProfileService.birthday)));
 
             chart.select('.grid').remove();
 
@@ -433,7 +495,7 @@
               var personItem = this;
               d3.select(personItem).selectAll('path')
                 .transition()
-                .style('fill', '#21edff')
+                .style('fill', '#21edff');
 
               celebTooltip
                 .attr({
@@ -451,10 +513,10 @@
               if (xScale(d.x) < 150) {
                 celebTooltip.attr({
                   transform: 'translate(' + [xScale(d.x) - (150 - personWidth / 2) + 120, yScale(d.y) + personHeight + 120] + ')'
-                })
+                });
                 celebTooltipPointerShadow.attr({
                   transform: 'translate(32,-18) rotate(45)'
-                })
+                });
                 celebTooltipPointer.attr({
                   transform: 'translate(30,-18) rotate(45)'
                 })
@@ -462,10 +524,10 @@
               else {
                 celebTooltip.attr({
                   transform: 'translate(' + [xScale(d.x) - (150 - personWidth / 2), yScale(d.y) + personHeight + 120] + ')'
-                })
+                });
                 celebTooltipPointerShadow.attr({
                   transform: 'translate(152,-18) rotate(45)'
-                })
+                });
                 celebTooltipPointer.attr({
                   transform: 'translate(150,-18) rotate(45)'
                 })
@@ -474,18 +536,18 @@
               }
               celebTooltipTitle.text(function () {
                 return d.name
-              })
+              });
 
               celebTooltipImage.attr({
                 'xlink:href': function () {
                   return d.thumbnail
                 }
 
-              })
+              });
               celebTooltipDetails.text(function () {
 //                return d.gender + ', ' + d.country + ', ' + d.birthday
                 return d.country + ', ' + d.birthday
-              })
+              });
               celebTooltipRank.text(function () {
                 return d.rank
               })
@@ -493,13 +555,13 @@
             person.on('mouseleave', function (d, i) {
               d3.select(this).selectAll('path').transition().style('fill', function (d, i) {
                 return ''
-              })
+              });
 
               celebTooltip
                 .attr({
                   opacity: 0,
                   transform: 'translate(-200,-200)'})
-            })
+            });
 //            person.append('rect').attr({width: personWidth, height: personHeight}).style('fill', 'rgba(0,0,0,0.05)')
 
             person.append('rect')
@@ -526,12 +588,12 @@
                 return d.gender == 'female' ? 1 : 0;
               });
 
-            maleIcon.append('path').attr('d', 'M7.5,5.809c-0.869,0-1.576-0.742-1.576-1.654c0-0.912,0.707-1.653,1.576-1.653 c0.87,0,1.577,0.742,1.577,1.653C9.077,5.067,8.369,5.809,7.5,5.809z')
-            maleIcon.append('path').attr('d', 'M11.997,16.187c0,0.522-0.405,0.946-0.903,0.946h-0.453V9.59H9.75v16.96c0,0.522-0.405,0.946-0.903,0.946 c-0.493,0-0.895-0.416-0.903-0.931c0-0.005,0-0.01,0-0.015c0-0.004,0-0.009,0-0.012V16.187H7.054v10.364c0,0.006,0,0.01,0,0.015 c-0.007,0.515-0.41,0.931-0.903,0.931c-0.498,0-0.902-0.424-0.902-0.946V9.59H4.358v7.542H3.905c-0.498,0-0.902-0.424-0.902-0.946 V9.119c0-1.301,1.009-2.36,2.25-2.36h4.493c1.241,0,2.251,1.058,2.251,2.36L11.997,16.187L11.997,16.187z')
+            maleIcon.append('path').attr('d', 'M7.5,5.809c-0.869,0-1.576-0.742-1.576-1.654c0-0.912,0.707-1.653,1.576-1.653 c0.87,0,1.577,0.742,1.577,1.653C9.077,5.067,8.369,5.809,7.5,5.809z');
+            maleIcon.append('path').attr('d', 'M11.997,16.187c0,0.522-0.405,0.946-0.903,0.946h-0.453V9.59H9.75v16.96c0,0.522-0.405,0.946-0.903,0.946 c-0.493,0-0.895-0.416-0.903-0.931c0-0.005,0-0.01,0-0.015c0-0.004,0-0.009,0-0.012V16.187H7.054v10.364c0,0.006,0,0.01,0,0.015 c-0.007,0.515-0.41,0.931-0.903,0.931c-0.498,0-0.902-0.424-0.902-0.946V9.59H4.358v7.542H3.905c-0.498,0-0.902-0.424-0.902-0.946 V9.119c0-1.301,1.009-2.36,2.25-2.36h4.493c1.241,0,2.251,1.058,2.251,2.36L11.997,16.187L11.997,16.187z');
 
-            femaleIcon.append('path').attr('d', 'M7.025,20.425v6.123c0,0.005,0,0.01,0,0.015c-0.008,0.515-0.437,0.931-0.964,0.931 c-0.531,0-0.963-0.424-0.963-0.946v-6.123c0-0.001,0-0.002,0-0.004h1.927C7.025,20.422,7.025,20.423,7.025,20.425z')
-            femaleIcon.append('path').attr('d', 'M9.903,20.425v6.123c0,0.522-0.432,0.946-0.964,0.946c-0.526,0-0.955-0.416-0.963-0.931 c0-0.005,0-0.009,0-0.015c0-0.004,0-0.008,0-0.012v-6.111c0-0.001,0-0.002,0-0.004h1.927C9.903,20.422,9.903,20.423,9.903,20.425z')
-            femaleIcon.append('path').attr('d', 'M11.777,16.874l-1.792-7.39L9.059,9.7l2.374,9.787H3.542L5.916,9.7L4.99,9.484l-1.79,7.384l-0.472-0.111 c-0.517-0.121-0.837-0.631-0.714-1.139l1.711-7.048c0,0,0,0,0.001-0.001c0.259-1.065,1.22-1.808,2.336-1.808h2.878 c1.117,0,2.078,0.744,2.337,1.809l0,0l1.711,7.046c0,0,0,0,0,0.001c0.123,0.508-0.197,1.019-0.714,1.139L11.777,16.874z')
+            femaleIcon.append('path').attr('d', 'M7.025,20.425v6.123c0,0.005,0,0.01,0,0.015c-0.008,0.515-0.437,0.931-0.964,0.931 c-0.531,0-0.963-0.424-0.963-0.946v-6.123c0-0.001,0-0.002,0-0.004h1.927C7.025,20.422,7.025,20.423,7.025,20.425z');
+            femaleIcon.append('path').attr('d', 'M9.903,20.425v6.123c0,0.522-0.432,0.946-0.964,0.946c-0.526,0-0.955-0.416-0.963-0.931 c0-0.005,0-0.009,0-0.015c0-0.004,0-0.008,0-0.012v-6.111c0-0.001,0-0.002,0-0.004h1.927C9.903,20.422,9.903,20.423,9.903,20.425z');
+            femaleIcon.append('path').attr('d', 'M11.777,16.874l-1.792-7.39L9.059,9.7l2.374,9.787H3.542L5.916,9.7L4.99,9.484l-1.79,7.384l-0.472-0.111 c-0.517-0.121-0.837-0.631-0.714-1.139l1.711-7.048c0,0,0,0,0.001-0.001c0.259-1.065,1.22-1.808,2.336-1.808h2.878 c1.117,0,2.078,0.744,2.337,1.809l0,0l1.711,7.046c0,0,0,0,0,0.001c0.123,0.508-0.197,1.019-0.714,1.139L11.777,16.874z');
             femaleIcon.append('path').attr('d', 'M7.501,5.812c-0.928,0-1.683-0.741-1.683-1.653c0-0.911,0.755-1.653,1.683-1.653 c0.928,0,1.683,0.741,1.683,1.653C9.184,5.071,8.429,5.812,7.501,5.812z')
 
           };
@@ -573,7 +635,7 @@
                 ry: 10,
                 x: 2,
                 y: 2
-              })
+              });
             celebTooltipPointerShadow = celebTooltip.append('rect')
               .style('fill', 'rgba(0,0,0,0.2)')
               .attr({
@@ -583,7 +645,7 @@
                 rx: 5,
                 ry: 5,
                 transform: 'translate(154,-18) rotate(45)'
-              })
+              });
 
             celebTooltip.append('rect')
               .style('fill', '#ff6')
@@ -592,7 +654,7 @@
                 height: 100,
                 rx: 10,
                 ry: 10
-              })
+              });
             celebTooltipPointer = celebTooltip.append('rect')
               .style('fill', '#ff6')
               .attr({
@@ -602,7 +664,7 @@
                 rx: 5,
                 ry: 5,
                 transform: 'translate(150,-20) rotate(45)'
-              })
+              });
             celebTooltip.append('line')
               .style({
                 stroke: 'rgba(0,0,0,0.2)',
@@ -613,13 +675,13 @@
                 y1: 60,
                 x2: 280,
                 y2: 60
-              })
+              });
             celebTooltipTitle = celebTooltip.append('text')
               .attr({
                 class: 'celeb-tooltip-title',
                 transform: 'translate(80,30)'
               })
-              .text('')
+              .text('');
             celebTooltipImage = celebTooltip
               .append('image').attr(
               {
@@ -638,7 +700,7 @@
                 class: 'celeb-tooltip-details',
                 transform: 'translate(80,50)'
               })
-              .text('')
+              .text('');
             celebTooltipRank = celebTooltip.append('text')
               .attr({
                 class: 'celeb-tooltip-rank',
@@ -658,31 +720,31 @@
             var endX = parseInt(lens.select('rect').attr('x')) + lensWidth;
             var endY = parseInt(lens.select('rect').attr('y')) + lensHeight;
 
-            var personX = parseInt(personNavRect.attr('x'))
-            var personY = parseInt(personNavRect.attr('y'))
+            var personX = parseInt(personNavPointer.attr('x'));
+            var personY = parseInt(personNavPointer.attr('y'));
 
             profilePerson.select('.icon .male').attr('opacity', function (d, i) {
               return d.gender == 'male' ? 1 : 0;
             });
             profilePerson.select('.icon .female').attr('opacity', function (d, i) {
               return d.gender == 'female' ? 1 : 0;
-            })
+            });
 
 
             if ((personX >= startX && personX <= endX) && (personY >= startY && personY <= endY)) {
 
-              profilePerson.data()[0]['birthday'] = moment(ProfileService.birthday).format('Do MMM, YYYY')
-              profilePerson.data()[0]['name'] = 'You'
-              profilePerson.data()[0]['country'] = ProfileService.country
-              profilePerson.data()[0]['gender'] = ProfileService.gender
-              profilePerson.classed('me', true)
+              profilePerson.data()[0]['birthday'] = moment(ProfileService.birthday).format('Do MMM, YYYY');
+              profilePerson.data()[0]['name'] = 'You';
+              profilePerson.data()[0]['country'] = ProfileService.country;
+              profilePerson.data()[0]['gender'] = ProfileService.gender;
+              profilePerson.classed('me', true);
               profilePerson.classed(ProfileService.gender, true)
 
             }
             else {
 //              console.log(0)
-              profilePerson.classed('me', false)
-              profilePerson.classed('female', false)
+              profilePerson.classed('me', false);
+              profilePerson.classed('female', false);
               profilePerson.classed('male', false)
             }
 
@@ -695,8 +757,8 @@
               function (d, i) {
 
                 var celeb = _.find(celebs, function (item) {
-//                  console.log(parseInt(rankScale(new Date(item.bday))), d.rank);
-                  return parseInt(rankScale(new Date(item.bday))) == d.rank;
+//                  console.log(parseInt(rankScale(new Date(item.birthday))), d.rank);
+                  return parseInt(rankScale(new Date(item.birthday))) == d.rank;
                 });
                 var _person = d3.select(this);
                 if (celeb) {
@@ -705,9 +767,9 @@
                   d.name = celeb.name;
                   d.birthday = celeb.birthday;
                   d.country = celeb.country;
-                  d.rank = parseInt(rankScale(new Date(celeb.birthday)))
-                  _person.classed('celeb', true)
-                  _person.selectAll('path').style('fill', '#333')
+                  d.rank = parseInt(rankScale(new Date(celeb.birthday)));
+                  _person.classed('celeb', true);
+                  _person.selectAll('path').style('fill', '#333');
                   _person.select('.icon .male').attr('opacity', function (d, i) {
                     return d.gender == 'male' ? 1 : 0;
                   });
@@ -716,7 +778,7 @@
                   })
                 }
                 else {
-                  _person.classed('celeb', false)
+                  _person.classed('celeb', false);
                   _person.selectAll('path').style('fill', '')
                 }
 
@@ -724,49 +786,58 @@
           }
 
           function _loadActiveCelebrities() {
-            var persons = d3.select('.persons').selectAll('.person');
+            var persons = d3.select('.navigator .celebs').selectAll('.celeb');
             var startX = parseInt(lens.select('rect').attr('x'));
             var startY = parseInt(lens.select('rect').attr('y'));
 
             var endX = parseInt(lens.select('rect').attr('x')) + lensWidth;
             var endY = parseInt(lens.select('rect').attr('y')) + lensHeight;
-
             activeCelebs = _.filter(persons[0], function (person) {
-              var personX = parseInt(d3.select(person).attr('x'))
-              var personY = parseInt(d3.select(person).attr('y'))
+              var personX = parseInt(d3.select(person).attr('x'));
+              var personY = parseInt(d3.select(person).attr('y'));
               return (personX >= startX && personX <= endX) && (personY >= startY && personY <= endY)
             });
 
-            var emptyCells = new Array(person[0].length - activeCelebs.length)
+            var xScale = d3.scale.linear()
+              .domain([0, lensWidth])
+              .range([0, personWidth * gridCols]);
+            var yScale = d3.scale.linear()
+              .domain([0, lensHeight])
+              .range([0, personHeight * gridRows]);
+
+
+            d3.select(activeCelebs[20]).style('fill', 'red');
+            var mappedX = xScale(d3.select(activeCelebs[20]).attr('x') - startX);
+            var mappedY = yScale(startY - d3.select(activeCelebs[20]).attr('y'));
+
+            var emptyCells = new Array(person[0].length - activeCelebs.length);
             for (var i = 0; i < activeCelebs.length; i++) {
               emptyCells.push(i);
             }
-            var randomizedGrid = _.shuffle(emptyCells)
+            var randomizedGrid = _.shuffle(emptyCells);
 
             person.each(function (d, i) {
-
               if (randomizedGrid[i] && i != 142) {
-                var a = d3.selectAll(activeCelebs).filter(function (d, n) { return n == randomizedGrid[i] })
+                var a = d3.selectAll(activeCelebs).filter(function (d, n) { return n == randomizedGrid[i] });
                 if (!_.isEmpty(a.data())) {
                   d.name = a.data()[0].name;
                   d.country = a.data()[0].country;
                   d.thumbnail = '/celebrities/' + a.data()[0].thumbnail;
-                  console.log(d.thumbnail)
-                  d.birthday = moment(a.data()[0].bday).format('Do MMM, YYYY');
+                  d.birthday = moment(a.data()[0].birthday).format('Do MMM, YYYY');
                   d.gender = '';
                 }
                 d3.select(this).classed('celeb', true)
               }
               else if (i == 142) {
-                d3.select(this).classed('celeb', false)
-                d3.select(this).classed('me', true)
+                d3.select(this).classed('celeb', false);
+                d3.select(this).classed('me', true);
                 d.name = 'You';
                 d.country = ProfileService.country;
                 d.birthday = moment(ProfileService.birthday).format('Do MMM, YYYY')
 
               }
               else {
-                d3.select(this).classed('celeb', false)
+                d3.select(this).classed('celeb', false);
                 d.name = 'Unknown';
                 d.country = '';
                 d.birthday = 'Unknown'
@@ -777,8 +848,8 @@
 //              function (d, i) {
 //
 //                var celeb = _.find(celebs, function (item) {
-////                  console.log(parseInt(rankScale(new Date(item.bday))), d.rank);
-//                  return parseInt(rankScale(new Date(item.bday))) == d.rank;
+////                  console.log(parseInt(rankScale(new Date(item.birthday))), d.rank);
+//                  return parseInt(rankScale(new Date(item.birthday))) == d.rank;
 //                });
 //                var _person = d3.select(this);
 //                if (celeb) {
@@ -823,7 +894,7 @@
                 transform: 'translate(0,0)'
 
               }
-            )
+            );
             celebsBar.append('rect')
               .attr(
               {
@@ -833,7 +904,7 @@
                 transform: 'translate(0,0)'
 
               }
-            )
+            );
             celebsBar.append('rect')
               .attr(
               {
@@ -843,7 +914,7 @@
                 transform: 'translate(0,99)'
 
               }
-            )
+            );
             celebsBar.append('rect')
               .attr(
               {
@@ -853,34 +924,34 @@
                 transform: 'translate(0,50)'
 
               }
-            )
+            );
 
-            rollScale = d3.scale.linear()
+            rollScale = d3.scale.linear();
 
-            var celebsRollWrapper = celebsBar.append('g').attr('class', 'celebs-roll-wrapper').attr('transform', 'translate(150,0)')
+            var celebsRollWrapper = celebsBar.append('g').attr('class', 'celebs-roll-wrapper').attr('transform', 'translate(150,0)');
             celebsRollWrapper.attr(
               {
                 'clip-path': 'url(#celebs-roll-clip)'
               }
-            )
+            );
 
-            celebsRoll = celebsRollWrapper.append('g').attr('class', 'celebs-roll')
-            prevCelebsButton = celebsBar.append('g').attr('class', 'prev-celebs-button').attr('transform', 'translate(' + [70, 50] + ')').style('display', 'none')
-            nextCelebsButton = celebsBar.append('g').attr('class', 'next-celebs-button').attr('transform', 'translate(' + [parentWidth - 200 - 70, 50] + ')')
+            celebsRoll = celebsRollWrapper.append('g').attr('class', 'celebs-roll');
+            prevCelebsButton = celebsBar.append('g').attr('class', 'prev-celebs-button').attr('transform', 'translate(' + [70, 50] + ')').style('display', 'none');
+            nextCelebsButton = celebsBar.append('g').attr('class', 'next-celebs-button').attr('transform', 'translate(' + [parentWidth - 200 - 70, 50] + ')');
             nextCelebsButton
               .on('mouseenter', function () {
                 d3.select(this).select('circle').transition().attr('r', 24)
               })
               .on('mouseleave', function () {
                 d3.select(this).select('circle').transition().attr('r', 20)
-              })
+              });
             prevCelebsButton
               .on('mouseenter', function () {
                 d3.select(this).select('circle').transition().attr('r', 24)
               })
               .on('mouseleave', function () {
                 d3.select(this).select('circle').transition().attr('r', 20)
-              })
+              });
             celebsRoll.append('rect')
               .attr(
               {
@@ -900,7 +971,7 @@
                 cx: 0,
                 cy: 0
               }
-            )
+            );
             prevCelebsButton.append('polygon')
               .attr(
               {
@@ -909,7 +980,7 @@
                 transform: 'translate(-5,-5)'
 
               }
-            )
+            );
             nextCelebsButton.append('circle')
               .attr(
               {
@@ -920,7 +991,7 @@
                 cx: 0,
                 cy: 0
               }
-            )
+            );
             nextCelebsButton.append('polygon')
               .attr(
               {
@@ -938,16 +1009,16 @@
             var celebs = person.data().filter(function (d, i) { return d.name != 'Unknown' });
             rollScale
               .domain([0, celebs.length])
-              .range([0, -celebWidth * celebs.length])
-            celebsRoll.selectAll('.celeb').remove()
-            celebsRoll.attr({transform: 'translate(0,0)'})
-            prevCelebsButton.style('display', 'none')
+              .range([0, -celebWidth * celebs.length]);
+            celebsRoll.selectAll('.celeb').remove();
+            celebsRoll.attr({transform: 'translate(0,0)'});
+            prevCelebsButton.style('display', 'none');
 
 
             nextCelebsButton
               .on('click', function () {
                 if (currentCeleb >= celebs.length - 8) {
-                  currentCeleb = celebs.length - 4
+                  currentCeleb = celebs.length - 4;
                   nextCelebsButton.style('display', 'none')
                 } else {
                   currentCeleb += 4;

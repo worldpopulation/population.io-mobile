@@ -73,16 +73,17 @@ people-grid
         .percent
           transform translate(0, -7px)
   .navigator
-    transform translate(1000px, 100px)
     .title
       transform translate(10px, 20px)
       font-size 12px
       fill #999999
     .blocks
-      &.me
-        fill black
       .block
-        fill #fff
+        fill white
+        &.overlimit.first
+          fill white
+        &.overlimit
+          fill transparent
     .frame
       fill #ebebeb
     .lens
@@ -91,10 +92,22 @@ people-grid
         stroke #333
         stroke-width 2
     .y-axis
+      .tick
+        line
+          stroke-width 1px
+          stroke #666
+      .domain
+        display none
       text
         fill #666666
         font-size 9px
         alignment-baseline hanging
+    .celebs
+      rect
+        fill #999
+    .person.me
+      fill red
+
 .celeb-tooltip-title
   font-size 18px
   text-anchor begin

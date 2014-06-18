@@ -17,7 +17,6 @@
             _buildContinentsChart($scope.continentsData);
           })
           $scope.$on('worldDataLoaded', function () {
-            console.log($scope.worldData)
             _buildWorldChart($scope.worldData);
           })
 

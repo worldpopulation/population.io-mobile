@@ -52,7 +52,6 @@
             {rank: 5000000152, name: 'Patrick Bateman', 'birthday': '1974-03-22', gender: 'male', country: 'Germany'},
             {rank: 7000000000, name: 'Jane Doe', 'birthday': '1992-03-22', gender: 'female', country: 'Russia'}
           ];
-          console.log(_.filter(celebs, function (celeb) {return celeb.rank >= startRank && celeb.rank <= endRank}))
 
           return _.filter(celebs, function (celeb) {return celeb.rank <= endRank && celeb.rank >= startRank})
         },
