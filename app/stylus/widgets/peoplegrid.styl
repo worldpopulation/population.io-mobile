@@ -4,7 +4,7 @@ people-grid
   .person
     .icon
       path
-        fill rgba(0, 0, 0, 0.2)
+        fill rgba(0, 0, 0, 1)
     text
       font-size 8px
       fill black
@@ -16,22 +16,12 @@ people-grid
       .icon
         path
           fill rgba(0, 0, 0, 1)
-    &.me
-      path
-        fill red
-    &.me.female
-      .female
-        opacity 1 !important
-      .male
-        opacity 0 !important
-    &.me.male
-      .female
-        opacity 0 !important
-      .male
-        opacity 1 !important
     &.celeb
       path
         fill #333
+  .profile-person
+    path
+      fill red
   .bar-chart
     transform translate(0, 15px)
     .x-axis
