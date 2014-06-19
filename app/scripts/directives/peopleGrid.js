@@ -38,14 +38,16 @@
             gridRows = 8,
             gridCols = 30,
             celebTooltipImage,
-            blockSize = 2,
+            celebsInCelebsBar = 5,
+            blockHeight = 2,
+            blockWidth = 2,
             navWidth = 180,
             navHeight = 400,
-            lensWidth = gridCols * blockSize - 1,
-            lensHeight = gridRows * (blockSize + 1),
+            lensWidth = gridCols * blockWidth,
+            lensHeight = gridRows * (blockHeight + 1) + blockHeight + 1,
             celebWidth,
+            firstRun = true,
             currentCeleb = 0;
-          ;
 
           var chart = d3.select(element[0])
             .append('svg')
@@ -272,13 +274,16 @@
             var yScale = d3.scale.quantize()
               .domain([0, _populationTopLimit])
               .range(rows);
+            var yAxisScale = d3.scale.linear()
+              .domain([0, _populationTopLimit])
+              .range([0, navHeight]);
 
             birthdayScale = d3.time.scale()
               .domain([new Date('1920-01-01'), new Date()])
               .range([0, navHeight]);
             var formatBillions = d3.format(".1s");
             var yAxis = d3.svg.axis()
-              .scale(yScale)
+              .scale(yAxisScale)
               .orient('right')
               .ticks(8)
               .tickFormat(function (d) { return formatBillions(d).replace('G', 'b');});
@@ -301,10 +306,17 @@
 
             navigator.append('rect')
               .attr({
+                opacity: 0,
                 class: 'frame',
                 height: navHeight,
                 width: navWidth
-              });
+              })
+              .transition()
+              .delay(2000)
+              .attr({
+                opacity: 1
+              })
+            ;
 
             var blocksArea = navigator
               .append('g')
@@ -320,9 +332,16 @@
               });
             var yAxisElement = navigator.append('g')
               .attr({
+                opacity: 0,
                 class: 'y-axis',
                 transform: 'translate(190,0)'
               })
+              .transition()
+              .delay(2000)
+              .attr({
+                opacity: 1
+              })
+
               .call(yAxis)
               .selectAll('text').attr('dy', '-4px');
             var lastPopulationBlock = true;
@@ -349,19 +368,35 @@
                   return 'block' + limit
                 },
                 height: 2,
-                width: navWidth - 2,
+                width: 0,
                 transform: function (d, i) {
                   return 'translate(' + [0, i * 3] + ')'
                 }
+              })
+              .transition()
+              .duration(2000)
+              .delay(function (d, i) {
+                return 2000 + i * 10
+              })
+              .attr({
+                width: navWidth - 2
               });
-            blocksArea.select('.block.overlimit.first').attr('width', function (d, i) {
-              return xScale(d.population - _worldPopulation);
-            });
+            blocksArea.select('.block.overlimit.first')
+              .transition()
+              .delay(5000)
+              .duration(2000)
+              .attr(
+              {
+                width: function (d, i) {
+                  return xScale(d.population - _worldPopulation);
+                }
+              });
             celebsArea.selectAll('rect')
               .data(celebs)
               .enter()
               .append('rect')
               .attr({
+                opacity: 0,
                 height: 2,
                 width: 2,
 //                x: function () {return _.random(0, 180)},
@@ -373,17 +408,30 @@
                   return d.y = yScale(rankScale(new Date(d.birthday)))
                 }
               });
-            personNavPointer = celebsArea.append('circle')
+            celebsArea.selectAll('rect')
+              .transition()
+              .delay(function (d, i) {
+                return 4000 + _.random(100, 1000)
+              })
+              .duration(function (d, i) {
+                return  _.random(300, 2000)
+              })
               .attr({
-                'class': function () {
-                  return 'person me ' + ProfileService.gender;
-                },
-                r: 0,
-                cx: function (d, i) {
-                  return xScale(peopleInOneRow - rankScale(new Date(ProfileService.birthday)) % peopleInOneRow)
-                },
-                cy: yScale(rankScale(new Date(ProfileService.birthday)))
-              });
+                opacity: 1
+              })
+            personNavPointer =
+              celebsArea
+                .append('circle')
+                .attr({
+                  'class': function () {
+                    return 'person me ' + ProfileService.gender;
+                  },
+                  r: 0,
+                  cx: function (d, i) {
+                    return xScale(peopleInOneRow - rankScale(new Date(ProfileService.birthday)) % peopleInOneRow)
+                  },
+                  cy: yScale(rankScale(new Date(ProfileService.birthday)))
+                });
             personNavPointer
               .transition()
               .delay(4000)
@@ -423,10 +471,14 @@
 
             lens = navigator.append('g')
               .attr({
-                class: 'lens'
+                class: 'lens',
+                opacity: 0
               })
               .call(drag);
-
+            lens
+              .transition()
+              .delay(5000)
+              .attr({opacity: 1})
             lens.append('rect')
               .attr({
                 width: lensWidth,
@@ -480,38 +532,47 @@
               .domain([gridRows, 0])
               .range(rows);
 
-
             var cells = celebs.data();
             _.each(cells, function (d, i) {
               d.cell = xScale(endX - d.x) + ' ' + yScale(endY - d.y)
-              d.localX = endX - d.x
-              d.localY = endY - d.y
-            });
-            var uniq = _.uniq(cells, function (celeb) {
-              return celeb.cell
+              d.localCellX = Math.floor((endX - d.x) / 2)
+              d.localCellY = Math.floor((endY - d.y) / 3)
             });
 
             for (var x = 0; x < gridCols; x++) {
               for (var y = 0; y < gridRows; y++) {
-                ghosts.push({x: x, y: y})
+                ghosts.push({
+                  x: x,
+                  y: y,
+                  localCellX: x,
+                  localCellY: y
+                })
               }
             }
+            console.log(ghosts)
             var ghostsArea = grid.append('g').attr('class', 'ghosts-area');
             var ghost = ghostsArea.selectAll('.ghost')
-              .data(ghosts)
-              .enter()
-              .append('g')
-              .attr({
-                'data-rank': function (d, i) {
-                  return d.rank
-                },
-                opacity: 1,
-                class: 'ghost',
-                transform: function (d, i) {
-                  return 'translate(' + [xScale(d.x), yScale(d.y)] + ')';
-                }
+                .data(ghosts)
+                .enter()
+                .append('g')
+                .attr({
+                  opacity: 0,
+                  class: 'ghost',
+                  transform: function (d, i) {
+                    return 'translate(' + [xScale(d.localCellX + 1), yScale(d.localCellY + 1)] + ')'
+                  }
 
-              });
+                })
+              ;
+            ghost
+              .transition()
+              .delay(function (d, i) {
+                return 1000 + _.random(100, 400)
+              })
+              .attr({
+                opacity: 1
+              })
+
             var ghostIcon = ghost.append('g')
               .attr({
                 class: 'ghost-icon',
@@ -541,13 +602,23 @@
               .enter()
               .append('g')
               .attr({
-                'data-cell': function (d, i) {return d.cell},
+                opacity: 0,
+                'data-id': function (d, i) {return d.id},
                 class: 'person',
                 transform: function (d, i) {
-                  return 'translate(' + [xScale(d.localX), yScale(d.localY)] + ')'
+                  return 'translate(' + [xScale(d.localCellX), yScale(d.localCellY)] + ')'
                 }
               })
 
+            person
+              .transition()
+              .delay(function (d, i) {
+                var delay = firstRun ? 2000 : 0;
+                return delay + i * _.random(0, 20)
+              })
+              .attr({
+                opacity: 1
+              });
 
             person.append('rect')
               .attr({
@@ -587,20 +658,23 @@
                 .attr({
                   opacity: 1
                 });
-              if (xScale(d.localX) < 150) {
+
+              _activateCelebInCelebsBar(d3.select(personItem).data()[0].id)
+
+              if (xScale(d.localCellX) < 150 || yScale(d.localCellY) > 220) {
                 celebTooltip.attr({
-                  transform: 'translate(' + [xScale(d.localX) - (150 - personWidth / 2) + 120, yScale(d.localY) + personHeight + 120] + ')'
+                  transform: 'translate(' + [xScale(d.localCellX) - (150 - personWidth / 2) + 190, yScale(d.localCellY) + personHeight + 20] + ')'
                 });
                 celebTooltipPointerShadow.attr({
-                  transform: 'translate(32,-18) rotate(45)'
+                  transform: 'translate(10,20) rotate(45)'
                 });
                 celebTooltipPointer.attr({
-                  transform: 'translate(30,-18) rotate(45)'
+                  transform: 'translate(10, 18) rotate(45)'
                 })
               }
               else {
                 celebTooltip.attr({
-                  transform: 'translate(' + [xScale(d.localX) - (150 - personWidth / 2), yScale(d.localY) + personHeight + 120] + ')'
+                  transform: 'translate(' + [xScale(d.localCellX) - (150 - personWidth / 2), yScale(d.localCellY) + personHeight + 120] + ')'
                 });
                 celebTooltipPointerShadow.attr({
                   transform: 'translate(152,-18) rotate(45)'
@@ -608,9 +682,20 @@
                 celebTooltipPointer.attr({
                   transform: 'translate(150,-18) rotate(45)'
                 })
-
-
               }
+//              else {
+//                celebTooltip.attr({
+//                  transform: 'translate(' + [xScale(d.localCellX) - (150 - personWidth / 2), yScale(d.localCellY) + personHeight - 120] + ')'
+//                });
+//                celebTooltipPointerShadow.attr({
+//                  transform: 'translate(152,-18) rotate(45)'
+//                });
+//                celebTooltipPointer.attr({
+//                  transform: 'translate(150,-18) rotate(45)'
+//                })
+//
+//
+//              }
               celebTooltipTitle.text(function () {
                 return d.name
               });
@@ -641,38 +726,19 @@
             });
 //            person.append('rect').attr({width: personWidth, height: personHeight}).style('fill', 'rgba(0,0,0,0.05)')
 
-            person.append('rect')
-              .attr({
-                width: personWidth,
-                height: personHeight,
-                class: 'background-area'
-
-              })
-              .style('fill', 'transparent');
-            var icon = person.append('g')
-              .attr({
-                class: 'icon',
-                transform: 'translate(7.5,10)'
+            function _activateCelebInCelebsBar(id) {
+              celebs = celebsRoll.selectAll('.celeb').data();
+              currentCeleb = _.findIndex(celebs, function (celeb, index) {
+                return celeb.id == id
               });
-            var maleIcon = icon.append('g')
-              .attr('class', 'male')
-              .attr('opacity', function (d, i) {
-                return d.gender == 'male' ? 1 : 0;
-              });
-            var femaleIcon = icon.append('g')
-              .attr('class', 'female')
-              .attr('opacity', function (d, i) {
-                return d.gender == 'female' ? 1 : 0;
-              });
+              celebsRoll
+                .transition()
+                .attr({
+                  transform: 'translate(' + [rollScale(currentCeleb - 2), 0] + ')'
+                })
+            }
 
-            maleIcon.append('path').attr('d', 'M7.5,5.809c-0.869,0-1.576-0.742-1.576-1.654c0-0.912,0.707-1.653,1.576-1.653 c0.87,0,1.577,0.742,1.577,1.653C9.077,5.067,8.369,5.809,7.5,5.809z');
-            maleIcon.append('path').attr('d', 'M11.997,16.187c0,0.522-0.405,0.946-0.903,0.946h-0.453V9.59H9.75v16.96c0,0.522-0.405,0.946-0.903,0.946 c-0.493,0-0.895-0.416-0.903-0.931c0-0.005,0-0.01,0-0.015c0-0.004,0-0.009,0-0.012V16.187H7.054v10.364c0,0.006,0,0.01,0,0.015 c-0.007,0.515-0.41,0.931-0.903,0.931c-0.498,0-0.902-0.424-0.902-0.946V9.59H4.358v7.542H3.905c-0.498,0-0.902-0.424-0.902-0.946 V9.119c0-1.301,1.009-2.36,2.25-2.36h4.493c1.241,0,2.251,1.058,2.251,2.36L11.997,16.187L11.997,16.187z');
-
-            femaleIcon.append('path').attr('d', 'M7.025,20.425v6.123c0,0.005,0,0.01,0,0.015c-0.008,0.515-0.437,0.931-0.964,0.931 c-0.531,0-0.963-0.424-0.963-0.946v-6.123c0-0.001,0-0.002,0-0.004h1.927C7.025,20.422,7.025,20.423,7.025,20.425z');
-            femaleIcon.append('path').attr('d', 'M9.903,20.425v6.123c0,0.522-0.432,0.946-0.964,0.946c-0.526,0-0.955-0.416-0.963-0.931 c0-0.005,0-0.009,0-0.015c0-0.004,0-0.008,0-0.012v-6.111c0-0.001,0-0.002,0-0.004h1.927C9.903,20.422,9.903,20.423,9.903,20.425z');
-            femaleIcon.append('path').attr('d', 'M11.777,16.874l-1.792-7.39L9.059,9.7l2.374,9.787H3.542L5.916,9.7L4.99,9.484l-1.79,7.384l-0.472-0.111 c-0.517-0.121-0.837-0.631-0.714-1.139l1.711-7.048c0,0,0,0,0.001-0.001c0.259-1.065,1.22-1.808,2.336-1.808h2.878 c1.117,0,2.078,0.744,2.337,1.809l0,0l1.711,7.046c0,0,0,0,0,0.001c0.123,0.508-0.197,1.019-0.714,1.139L11.777,16.874z');
-            femaleIcon.append('path').attr('d', 'M7.501,5.812c-0.928,0-1.683-0.741-1.683-1.653c0-0.911,0.755-1.653,1.683-1.653 c0.928,0,1.683,0.741,1.683,1.653C9.184,5.071,8.429,5.812,7.501,5.812z')
-
+            firstRun = false;
           };
           var _fadeControls = function () {
             grid
@@ -702,7 +768,7 @@
               .style('fill', 'rgba(0,0,0,0.2)')
               .attr({
                 class: 'box-shadow',
-                width: 300,
+                width: 270,
                 height: 100,
                 rx: 10,
                 ry: 10,
@@ -723,7 +789,7 @@
             celebTooltip.append('rect')
               .style('fill', '#ff6')
               .attr({
-                width: 300,
+                width: 270,
                 height: 100,
                 rx: 10,
                 ry: 10
@@ -746,7 +812,7 @@
               .attr({
                 x1: 80,
                 y1: 60,
-                x2: 280,
+                x2: 240,
                 y2: 60
               });
             celebTooltipTitle = celebTooltip.append('text')
@@ -796,8 +862,19 @@
 
 
             if ((personX >= startX && personX <= endX) && (personY >= startY && personY <= endY)) {
-              var profilePerson = grid.append('g')
-                .attr('class', 'profile-person')
+              var profilePerson = grid
+                .append('g')
+                .attr({
+                  class: 'profile-person',
+                  opacity: 0
+                })
+              profilePerson
+                .transition()
+                .delay(function () {
+                  console.log(firstRun)
+                  return 2000
+                })
+                .attr({opacity: 1})
               profilePerson.append('rect')
                 .attr({
                   width: personWidth,
@@ -876,12 +953,6 @@
                   d.rank = parseInt(rankScale(new Date(celeb.birthday)));
                   _person.classed('celeb', true);
                   _person.selectAll('path').style('fill', '#333');
-                  _person.select('.icon .male').attr('opacity', function (d, i) {
-                    return d.gender == 'male' ? 1 : 0;
-                  });
-                  _person.select('.icon .female').attr('opacity', function (d, i) {
-                    return d.gender == 'female' ? 1 : 0;
-                  })
                 }
                 else {
                   _person.classed('celeb', false);
@@ -937,7 +1008,7 @@
           }
 
           function _initCelebsBar() {
-            celebWidth = (parentWidth - 200 - 300) / 4;
+            celebWidth = (parentWidth - 200 - 300) / celebsInCelebsBar;
             celebsBar = chart.append('g')
               .attr({
                 class: 'celebrities-bar',
@@ -1065,7 +1136,7 @@
 
           function _populateCelebsBar() {
             currentCeleb = 0;
-            var celebs = person.data().filter(function (d, i) { return d.name != 'Unknown' });
+            var celebs = person.data();
             rollScale
               .domain([0, celebs.length])
               .range([0, -celebWidth * celebs.length]);
@@ -1076,11 +1147,12 @@
 
             nextCelebsButton
               .on('click', function () {
-                if (currentCeleb >= celebs.length - 8) {
-                  currentCeleb = celebs.length - 4;
+
+                if (currentCeleb >= celebs.length - celebsInCelebsBar * 2) {
+                  currentCeleb = celebs.length - celebsInCelebsBar;
                   nextCelebsButton.style('display', 'none')
                 } else {
-                  currentCeleb += 4;
+                  currentCeleb += celebsInCelebsBar;
                   nextCelebsButton.style('display', 'block')
                 }
                 if (currentCeleb > 0) {
@@ -1091,19 +1163,27 @@
                 celebsRoll
                   .transition()
                   .attr({transform: 'translate(' + [rollScale(currentCeleb), 0] + ')'})
+                var startRange = currentCeleb - 2;
+                var celebsInBar = celebsRoll.selectAll('.celeb')
+                celebsInBar.each(function (d, i) {
+                  if (i == startRange) {
+                    console.log(d.id)
+                  }
+                })
               });
+
             prevCelebsButton
               .on('click', function () {
-                if (currentCeleb < 8) {
+                if (currentCeleb < celebsInCelebsBar * 2) {
                   currentCeleb = 0;
                   prevCelebsButton.style('display', 'none')
                 }
                 else {
-                  currentCeleb -= 4;
+                  currentCeleb -= celebsInCelebsBar;
                   prevCelebsButton.style('display', 'block')
                 }
 
-                if (currentCeleb >= celebs.length - 5) {
+                if (currentCeleb >= celebs.length - celebsInCelebsBar - 1) {
                   nextCelebsButton.style('display', 'none')
                 } else {
                   nextCelebsButton.style('display', 'block')
@@ -1160,7 +1240,8 @@
                 'font-size': 12,
                 'text-anchor': 'middle'
               }
-            ).attr({
+            )
+              .attr({
                 transform: 'translate(' + [celebWidth / 2, 0] + ')',
                 dy: 87
               })
@@ -1168,6 +1249,38 @@
                 return d.name
               })
 
+            celeb.append('rect').attr(
+              {
+                width: celebWidth,
+                height: 100,
+                x: 0,
+                y: 0
+              }
+            )
+              .style({
+                fill: 'transparent'
+              })
+            ;
+
+            celeb.on('mouseover', function (d, i) {
+              var personInGrid = grid.select('.person[data-id="' + d.id + '"]');
+              personInGrid.selectAll('path')
+                .transition()
+                .style({fill: 'white'})
+              personInGrid.selectAll('rect')
+                .transition()
+                .style({fill: 'purple'})
+            })
+            celeb.on('mouseleave', function (d, i) {
+              var allPersonsInGrid = grid.selectAll('.person');
+              allPersonsInGrid.selectAll('rect')
+                .transition()
+                .style({fill: 'white'});
+              allPersonsInGrid.selectAll('path')
+                .transition()
+                .style({fill: 'black'});
+
+            })
           }
 
           $scope.$watch(function () {
@@ -1176,7 +1289,7 @@
             if (active) {
               _buildNavigator();
               _initGrid();
-//              _loadCelebrities();
+              _loadCelebrities();
               _loadProfilePerson();
 
               _initCelebsBar();
