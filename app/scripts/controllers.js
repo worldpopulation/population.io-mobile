@@ -254,7 +254,7 @@
       var _loadWpRankRanked = function (rank, atomicNumber, onSuccess) {
         PopulationIOService.loadWpRankRanked({
           dob: ProfileService.birthday,
-          sex: ProfileService.gender,
+          sex: 'unisex',
           country: 'World',
           rank: rank
         }, function (date) {
