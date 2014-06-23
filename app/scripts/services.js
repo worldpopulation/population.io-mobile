@@ -63,8 +63,8 @@
           $rootScope.$emit('populationChanged');
         },
         getWorldPopulation: function () {
-          var p2013 = 7203304915; // from api?
-          var p2014 = 7211239210; // from api?
+          var p2013 = 7162119000;
+          var p2014 = 7243784000;
           var growthRate = Math.log(p2014 / p2013) / (365 * 24 * 60 * 60);
           var start = new Date(2013, 7, 1, 12, 0, 0, 0);
           var now = new Date();

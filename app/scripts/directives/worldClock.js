@@ -146,9 +146,11 @@
                     transform: 'translate(0,0)'
                   });
 
-                _sayHello(0);
                 setTimeout(function () {
                   _updateBabiesFlood();
+                }, animationDuration);
+
+                setTimeout(function () {
                   _digit.attr('transform', 'translate(0,0)')
                   _placeholder.attr('transform', 'translate(0,40)')
                   digitText.text(function (d, i) { return digits[i] });
@@ -160,23 +162,12 @@
           }
 
           function _initBabiesFlood() {
-            babiesList = [
-              {},
-              {},
-              {},
-              {},
-              {},
-              {},
-              {},
-              {},
-              {},
-              {},
-              {},
-              {},
-              {},
-              {},
-              {}
-            ];
+            babiesList = [];
+
+            for(var i=0; i<15; i+=1) {
+              babiesList.push({});
+            }
+
             lastReborn = babiesList.length;
             babiesArea = chart
               .append('g')
@@ -260,9 +251,7 @@
             var newTitle;
             var babies = d3.selectAll('.baby');
             babies.transition()
-              .delay(100)
-              .attr(
-              {
+              .attr({
                 'data-i': function (d, i) {return i},
                 transform: function (d, i) {
                   return 'translate(' + [i * d.babyWidth + d.babyWidth, 0] + ')'
@@ -275,7 +264,6 @@
                     return 0;
                   }
                 }
-
               }
             )
               .transition()
