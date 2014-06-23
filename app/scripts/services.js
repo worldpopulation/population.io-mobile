@@ -130,13 +130,10 @@
           .success(function (data) {
             if (data.date_on_rank) {
               onSuccess(data.date_on_rank);
-            } else {
-              onSuccess('2050-01-01');
             }
           })
           .error(function () {
             console.error('loadWpRankRanked() error');
-            onSuccess('2050-01-01');
           });
         },
 

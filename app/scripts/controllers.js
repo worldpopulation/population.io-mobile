@@ -218,9 +218,9 @@
 
       $scope.$watch(function() {
         return PopulationIOService.getWorldPopulation();
-      }, function() {
-        $scope.rankGlobal += 0.6;
-        $scope.rankLocal += 0.4;
+      }, function(newValue, oldValue) {
+        $scope.rankGlobal += (newValue - oldValue);
+        $scope.rankLocal += 2;
         $rootScope.$broadcast('ranksChanged', $scope.rankGlobal, $scope.rankLocal);
       });
 
