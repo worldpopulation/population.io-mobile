@@ -3,7 +3,9 @@
 
   angular.module('populationioApp')
 
-    .controller('MainCtrl', function ($scope, $timeout, $http, $interval, $rootScope, $modal, $state, $location, $document, ProfileService, PopulationIOService, BrowserService) {
+    .controller('MainCtrl', function ($scope, $timeout, $http, $interval,
+      $modal, $state, $location, $document, $rootScope,
+      ProfileService, PopulationIOService, BrowserService) {
 
       if (BrowserService.isSupported()) {
         alert('This showcase is optimized for WebKit browsers (Safari, Chrome)!');
@@ -110,14 +112,15 @@
 
     })
 
-    .controller('StatsCtrl', function ($scope, $document, $timeout, $filter, $location, $rootScope, ProfileService, PopulationIOService) {
+    .controller('StatsCtrl', function ($scope, $document, $timeout, $filter, $location,
+      $rootScope, ProfileService, PopulationIOService) {
 
       $scope.$watch('goForm.$invalid', function (invalid) {
         if (invalid) {
           ProfileService.active = false;
         }
       });
-      $scope.$watch('profile.gender', function (invalid) {
+      $scope.$watch('profile.gender', function () {
         ProfileService.active = false;
       });
 
@@ -162,7 +165,8 @@
       });
     })
 
-    .controller('PeopleCtrl', function ($scope, $anchorScroll, $state, $filter, PopulationIOService, ProfileService, $rootScope, $interval) {
+    .controller('PeopleCtrl', function ($scope, $rootScope, $interval, $anchorScroll,
+      $state, $filter, PopulationIOService, ProfileService) {
 
       $scope.$watch(function () {
         return ProfileService.active;
@@ -222,11 +226,12 @@
 
     })
 
-    .controller('StoryCtrl', function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationIOService) {
+    .controller('StoryCtrl', function ($scope, $rootScope, $state, $filter, $sce,
+      ProfileService, PopulationIOService) {
 
       var _getDateWithOffset = function (date, offset) {
         var year = parseInt($filter('date')(date, 'yyyy'), 0),
-          month = parseInt($filter('date')(date, 'M')) - 1,
+          month = parseInt($filter('date')(date, 'M'), 0) - 1,
           day = $filter('date')(date, 'dd');
 
         return new Date(parseInt(year + offset, 0), month, day);
@@ -242,8 +247,14 @@
           dob: ProfileService.birthday
         }, function (totalLifeExpectancy) {
           $scope.storyLineData.push({
-            date: $filter('date')(_getDateWithOffset(new Date(ProfileService.birthday), totalLifeExpectancy), 'yyyy-MM-dd'),
-            year: $filter('date')(_getDateWithOffset(new Date(ProfileService.birthday), totalLifeExpectancy), 'yyyy'),
+            date: $filter('date')(_getDateWithOffset(
+              new Date(ProfileService.birthday),
+              totalLifeExpectancy
+            ), 'yyyy-MM-dd'),
+            year: $filter('date')(_getDateWithOffset(
+              new Date(ProfileService.birthday),
+              totalLifeExpectancy
+            ), 'yyyy'),
             title: 'Life expectancy in ' + country
           });
           if (onSuccess) {
@@ -343,24 +354,26 @@
         _loadWpRankRanked(2000000000, '2nd');
         _loadWpRankRanked(3000000000, '3rd', function (date) {
           $scope.titleAlive = $sce.trustAsHtml([
-              'On <span>' + $filter('ordinal')($filter('date')(date, 'd')) + ' ',
-              $filter('date')(date, 'MMM, yyyy') + '</span> you’ll be person <span>3rd ',
+            'On <span>' + $filter('ordinal')($filter('date')(date, 'd')) + ' ',
+            $filter('date')(date, 'MMM, yyyy') + '</span> you’ll be person <span>3rd ',
             'Billion</span> to be alive in the <span>world</span>.'
           ].join(''));
         });
 
         _loadLifeExpectancyTotal(ProfileService.country, function (totalLifeExpectancy) {
-          var date = _getDateWithOffset(new Date(ProfileService.birthday), totalLifeExpectancy);
+          var date = _getDateWithOffset(
+            new Date(ProfileService.birthday),
+            totalLifeExpectancy
+          );
           $scope.titleDie = $sce.trustAsHtml([
             'You will die on <span>',
-              $filter('ordinal')($filter('date')(date, 'd')) + ' ',
-              $filter('date')(date, 'MMM, yyyy') + '</span>'
+            $filter('ordinal')($filter('date')(date, 'd')) + ' ',
+            $filter('date')(date, 'MMM, yyyy') + '</span>'
           ].join(''));
         });
         _loadLifeExpectancyTotal('World');
 
         $scope.country = ProfileService.country;
-
         $scope.storyLineData = [
           {
             date: $filter('date')(Date.now(), 'yyyy-MM-dd'),
@@ -376,14 +389,18 @@
           },
           {
             date: _getDateWithOffset(new Date(ProfileService.birthday), 18),
-            year: $filter('date')(_getDateWithOffset(new Date(ProfileService.birthday), 18), 'yyyy'),
+            year: $filter('date')(_getDateWithOffset(
+              new Date(ProfileService.birthday),
+              18
+            ), 'yyyy'),
             title: 'You turned 18!'
           }
         ];
       };
     })
 
-    .controller('BirthdaysCtrl', function ($scope, $state, $sce, $filter, $rootScope, PopulationIOService, ProfileService) {
+    .controller('BirthdaysCtrl', function ($scope, $state, $sce, $filter, $rootScope,
+      PopulationIOService, ProfileService) {
 
       $scope.$watch(function () {
         return ProfileService.active;
@@ -444,28 +461,33 @@
         var countriesContinental = _getCountriesByContinent($scope.selectedContinental);
         var responseCounter = 0;
 
+        var _onSuccess = function(country, data) {
+          if (_getCountry(country).countriy_ISO_A2) {
+            var value = ProfileService.gender === 'male' ? data.males : data.females,
+              birthdays = value / 365;
+
+            if (parseInt(birthdays, 0) > 0) {
+              $scope.continentsData.push({
+                countryAbbr: _getCountry(country).countriy_ISO_A2,
+                countryTitle: country,
+                value: birthdays
+              });
+            }
+          }
+
+          responseCounter += 1;
+
+          if (responseCounter === countriesContinental.length) {
+            $scope.loading = false;
+            $scope.$broadcast('continentsDataLoaded');
+          }
+        };
+
         for (var j = 0; j < countriesContinental.length; j += 1) {
           _loadPopulation({
             country: countriesContinental[j].country,
             age: ProfileService.getAge()
-          }, function (country, data) {
-            if (_getCountry(country).countriy_ISO_A2) {
-              var value = ProfileService.gender === 'male' ? data.males : data.females,
-                birthdays = value / 365;
-
-              if (parseInt(birthdays) > 0) {
-                $scope.continentsData.push({
-                  countryAbbr: _getCountry(country).countriy_ISO_A2,
-                  countryTitle: country,
-                  value: birthdays
-                });
-              }
-            }
-            if (++responseCounter === countriesContinental.length) {
-              $scope.loading = false;
-              $scope.$broadcast('continentsDataLoaded')
-            }
-          });
+          }, _onSuccess);
         }
       };
 
@@ -478,22 +500,23 @@
           'Bangladesh', 'Mexico'
         ];
 
+        var _onSuccess = function (country, data) {
+          var value = ProfileService.gender === 'male' ? data.males : data.females;
+          $scope.worldData.push({
+            countryAbbr: _getCountry(country).countriy_ISO_A2,
+            countryTitle: country,
+            value: value / 365
+          });
+          if ($scope.worldData.length === countriesAroundTheWorld.length) {
+            $scope.$broadcast('worldDataLoaded');
+          }
+        };
+
         for (var i = 0; i < countriesAroundTheWorld.length; i += 1) {
           _loadPopulation({
             country: countriesAroundTheWorld[i],
             age: ProfileService.getAge()
-          }, function (country, data) {
-            var value = ProfileService.gender === 'male' ? data.males : data.females;
-            $scope.worldData.push({
-              countryAbbr: _getCountry(country).countriy_ISO_A2,
-              countryTitle: country,
-              value: value / 365
-            });
-            if ($scope.worldData.length == countriesAroundTheWorld.length) {
-              $scope.$broadcast('worldDataLoaded')
-            }
-          });
-
+          }, _onSuccess);
         }
 
         _loadPopulation({
@@ -502,9 +525,9 @@
         }, function (country, data) {
           var value = ProfileService.gender === 'male' ? data.males : data.females;
           $scope.birthdayShare = $sce.trustAsHtml([
-              '<span>' + $filter('number')(parseInt(value / 365, 0), 0) + '</span> ',
+            '<span>' + $filter('number')(parseInt(value / 365, 0), 0) + '</span> ',
             'people around the world and ',
-              '<span>' + $filter('number')(parseInt(value / 365 / 24, 0), 0) + '</span> ',
+            '<span>' + $filter('number')(parseInt(value / 365 / 24, 0), 0) + '</span> ',
             'people were born in the same hour'
           ].join(''));
 
@@ -514,7 +537,8 @@
       };
     })
 
-    .controller('ExpectancyCtrl', function ($scope, $rootScope, $filter, ProfileService, PopulationIOService) {
+    .controller('ExpectancyCtrl', function ($scope, $rootScope, $filter,
+      ProfileService, PopulationIOService) {
 
       var date = $filter('date')(new Date(), 'yyyy-MM-dd');
 
@@ -587,16 +611,17 @@
       };
 
       var _isCountryAvailable = function (country) {
-        if ($scope.countries.length > 0) {
-          for (var i = 0; i < $scope.countries.length; i += 1) {
-            if ($scope.countries[i] === country) {
-              return true;
-            }
-          }
-          return false;
-        } else {
+        if ($scope.countries.length === 0) {
           return true;
         }
+
+        for (var i = 0; i < $scope.countries.length; i += 1) {
+          if ($scope.countries[i] === country) {
+            return true;
+          }
+        }
+
+        return false;
       };
 
       $scope.$watch('selectedCountryRef', function (country) {
