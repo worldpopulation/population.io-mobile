@@ -225,7 +225,7 @@
 
       var _getDateWithOffset = function (date, offset) {
         var year = parseInt($filter('date')(date, 'yyyy'), 0),
-          month = $filter('date')(date, 'MM'),
+          month = parseInt($filter('date')(date, 'M')) - 1,
           day = $filter('date')(date, 'dd');
 
         return new Date(parseInt(year + offset, 0), month, day);
