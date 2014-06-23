@@ -7,7 +7,7 @@
         restrict: 'E',
         scope: {
           countryRef: '=',
-          countryRel: '=',
+          countryRel: '='
         },
         link: function ($scope, element) {
           var width = 1200,
@@ -86,7 +86,7 @@
 
             var desc = root.append('g')
               .attr({
-                class: 'desc desc-' + type,
+                'class': 'desc desc-' + type,
                 transform: 'translate(' + [ center.x, center.y ] + ')'
               });
 
@@ -114,7 +114,7 @@
 
             var textCnt = desc.append('g')
               .attr({
-                class: 'text-' + type,
+                'class': 'text-' + type,
                 transform: function () {
                   var pos = [],
                     y = center.y + textCntHeight > height ? -textCntHeight : 0;
@@ -132,7 +132,7 @@
             textCnt.append('text')
               .text(data.yearsLeft)
               .attr({
-                class: 'years-left'
+                'class': 'years-left'
               })
               .transition()
               .duration(1000)
@@ -142,7 +142,7 @@
 
             var textBlock1 = textCnt.append('g')
               .attr({
-                class: 'text-block'
+                'class': 'text-block'
               });
 
             textBlock1.append('text').text('years of life left');
@@ -153,7 +153,7 @@
 
             var textBlock2 = textCnt.append('g')
               .attr({
-                class: 'text-block'
+                'class': 'text-block'
               });
 
             textBlock2.append('line')
