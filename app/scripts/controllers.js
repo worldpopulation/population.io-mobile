@@ -307,7 +307,7 @@
 
           PopulationIOService.loadWpRankToday({
             dob: ProfileService.birthday,
-            sex: ProfileService.gender,
+            sex: 'unisex',
             country: ProfileService.country
           }, function (rank) {
             $scope.rankLocal = $scope.rankLocalTotal - rank;
@@ -325,7 +325,7 @@
 
           PopulationIOService.loadWpRankToday({
             dob: ProfileService.birthday,
-            sex: ProfileService.gender,
+            sex: 'unisex',
             country: 'World'
           }, function (rank) {
             $scope.rankGlobal = $scope.rankGlobalTotal - rank;
