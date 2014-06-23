@@ -217,6 +217,7 @@
       }, function() {
         $scope.rankGlobal += 0.6;
         $scope.rankLocal += 0.4;
+        $rootScope.$broadcast('ranksChanged', $scope.rankGlobal, $scope.rankLocal);
       });
 
     })
@@ -333,11 +334,9 @@
 
         });
 
-        $scope.$watch(function() {
-          return PopulationIOService.getWorldPopulation();
-        }, function() {
-          $scope.rankGlobal += 0.6;
-          $scope.rankLocal += 0.4;
+        $scope.$on('ranksChanged', function(e, rankGlobal, rankLocal) {
+          $scope.rankGlobal = rankGlobal;
+          $scope.rankLocal = rankLocal;
         });
 
         _loadWpRankRanked(1000000000, '1th');
