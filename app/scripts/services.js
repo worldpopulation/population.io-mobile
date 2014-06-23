@@ -208,7 +208,7 @@
       };
     })
 
-    .service('BrowserService', function($window) {
+    .service('BrowserService', function() {
       return {
         isSupported: function() {
           var isWebKit = 'WebkitAppearance' in document.documentElement.style;
