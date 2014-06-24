@@ -185,55 +185,30 @@
       var _update = function() {
 
         PopulationIOService.loadWpRankToday({
-          dob: '1920-01-01',
+          dob: ProfileService.birthday,
           sex: 'unisex',
           country: ProfileService.country
-        }, function(rankTotal) {
-
-          PopulationIOService.loadWpRankToday({
-            dob: ProfileService.birthday,
-            sex: 'unisex',
-            country: ProfileService.country
-          }, function(rank) {
-            $scope.rankLocal = rankTotal - rank;
-            $rootScope.$broadcast('rankLocalChanged', $scope.rankLocal);
-          });
-
+        }, function(rank) {
+          $scope.rankLocal = rank;
+          $rootScope.$broadcast('rankLocalChanged', $scope.rankLocal);
         });
 
         PopulationIOService.loadWpRankToday({
-          dob: '1920-01-01',
+          dob: ProfileService.birthday,
           sex: 'unisex',
           country: 'World'
-        }, function(rankTotal) {
-
-          PopulationIOService.loadWpRankToday({
-            dob: ProfileService.birthday,
-            sex: 'unisex',
-            country: 'World'
-          }, function(rank) {
-            $scope.rankGlobal = rankTotal - rank;
-            $rootScope.$broadcast('rankGlobalChanged', $scope.rankGlobal);
-          });
-
+        }, function(rank) {
+          $scope.rankGlobal = rank;
+          $rootScope.$broadcast('rankGlobalChanged', $scope.rankGlobal);
         });
 
         PopulationIOService.loadWpRankOnDate({
-          dob: '1920-01-01',
+          dob: ProfileService.birthday,
           sex: 'unisex',
           country: ProfileService.country,
           date: $filter('date')(_getNextDay(), 'yyyy-MM-dd')
-        }, function(rankTotal) {
-
-          PopulationIOService.loadWpRankOnDate({
-            dob: ProfileService.birthday,
-            sex: 'unisex',
-            country: ProfileService.country,
-            date: $filter('date')(_getNextDay(), 'yyyy-MM-dd')
-          }, function(rank) {
-            $scope.rankLocalTomorrow = rankTotal - rank;
-          });
-
+        }, function(rank) {
+          $scope.rankLocalTomorrow = rank;
         });
 
       };
@@ -246,7 +221,7 @@
       });
 
       $interval(function() {
-        var diff = ($scope.rankLocal - $scope.rankLocalTomorrow)/24/60/60;
+        var diff = ($scope.rankLocalTomorrow - $scope.rankLocal)/24/60/60;
         if (diff) {
           $scope.rankLocal += diff;
           $rootScope.$broadcast('rankLocalChanged', $scope.rankLocal);
