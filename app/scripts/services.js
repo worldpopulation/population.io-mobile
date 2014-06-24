@@ -113,6 +113,30 @@
           });
         },
 
+        // GET /wp-rank/{dob}/{sex}/{country}/on/{date}/
+        loadWpRankOnDate: function (args, onSuccess) {
+          $http({
+            method: 'get',
+            url: [
+              baseUrl,
+              'wp-rank',
+              args.dob,
+              args.sex,
+              args.country,
+              'on',
+              args.date
+            ].join('/') + '/'
+          })
+          .success(function (data) {
+            if (data.rank) {
+              onSuccess(data.rank);
+            }
+          })
+          .error(function () {
+            console.error('loadWpRankOnDate() error');
+          });
+        },
+
         // GET /api/1.0/wp-rank/{dob}/{sex}/{country}/ranked/{rank}
         loadWpRankRanked: function(args, onSuccess) {
           $http({
