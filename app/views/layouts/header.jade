@@ -8,6 +8,7 @@ header
         a(ng-click="showDevelopers()") Developers
     .profile.animate(
       ng-show="currentPage > 0",
-      ng-click="showHomepage()"
+      ng-click="showHomepage()",
+      ng-cloak
     ) {{profile.birthday | date:'dd MMM yyyy' }}, {{profile.country}}
-    .world-population.animate(ng-show="currentPage > 0") {{worldPopulation | number:0}}
+    .world-population.animate(ng-show="currentPage > 0", ng-cloak) {{worldPopulation | number:0}}

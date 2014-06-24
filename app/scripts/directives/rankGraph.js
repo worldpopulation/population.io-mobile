@@ -6,7 +6,8 @@
       return {
         restrict: 'E',
         scope: {
-          data: '='
+          data: '=',
+          country: '='
         },
         link: function ($scope, element, attr) {
           var width = 300,
@@ -75,12 +76,7 @@
           var _updateGraph = function(data) {
             var age = ProfileService.getAge();
 
-            var percentPeopleScale = d3.scale.linear()
-               .domain([
-                0,
-                d3.sum(data, function (d) { return d.total; })
-              ])
-              .range([0,1]);
+            var peopleTotal = d3.sum(data, function (d) { return d.total; });
 
             var xScale = d3.scale.linear()
               .domain([
@@ -103,7 +99,7 @@
 
             var chart = root.select('.chart');
 
-            var graph = chart.append('path')
+            chart.append('path')
               .attr({
                 d: area(data),
                 opacity: 0
@@ -148,11 +144,29 @@
                 });
               pointer.append('text')
                 .text(function() {
-                  return (Math.round(percentPeopleScale(item.total) * 1000) / 10) + '%';
+                  return (Math.round(item.total/peopleTotal * 1000) / 10) + '%';
                 })
                 .attr({
                   transform: function () {
-                    return 'translate(' + [width - xScale(age) - 10, -10] + ')';
+                    return 'translate(' + [width - xScale(age) - 10, -55] + ')';
+                  }
+                });
+              pointer.append('text')
+                .text(function() {
+                  return 'of people in ' + $scope.country;
+                })
+                .attr({
+                  'class': 'desc',
+                  transform: function () {
+                    return 'translate(' + [width - xScale(age) - 10, -30] + ')';
+                  }
+                });
+              pointer.append('text')
+                .text('in your age')
+                .attr({
+                  'class': 'desc',
+                  transform: function () {
+                    return 'translate(' + [width - xScale(age) - 10, -15] + ')';
                   }
                 });
             }
