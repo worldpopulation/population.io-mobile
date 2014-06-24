@@ -99,15 +99,19 @@
 
             var chart = root.select('.chart');
 
-            chart.append('path')
-              .attr({
-                d: area(data),
-                opacity: 0
-              })
-              .transition()
-              .duration(500)
-              .attr({
-                opacity: 1
+            var path = chart.selectAll('path')
+              .data(data);
+
+            path.transition()
+              .duration(1000)
+              .attr('d', function() {
+                return area(data);
+              });
+
+            path.enter()
+              .append('path')
+              .attr('d', function() {
+                return area(data);
               });
 
             var bisect = d3.bisector(function(d) { return d.age; }).right;
@@ -118,18 +122,12 @@
               var pointer = chart.append('g')
                 .attr({
                   'class': 'pointer',
-                  opacity: 0,
                   transform: function () {
                     return 'translate(' + [
                       xScale(age),
                       height - (height - yScale(item.total))/1.5
                     ] + ')';
                   }
-                });
-              pointer.transition()
-                .duration(500)
-                .attr({
-                  opacity: 1
                 });
               pointer.append('line')
                 .attr({
@@ -153,7 +151,7 @@
                 });
               pointer.append('text')
                 .text(function() {
-                  return 'of people in ' + $scope.country;
+                  return 'people in ' + $scope.country;
                 })
                 .attr({
                   'class': 'desc',

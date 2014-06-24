@@ -180,19 +180,12 @@
                   return d3.select(this).attr('transform');
                 }
               })
-              .on('mouseover', function (d) {
+              .on('click', function (d) {
                 $scope.selectedYear = d.year;
                 if (!$scope.$$phase) {
                   $scope.$apply();
                 }
                 _highlightStoryLine(this);
-              })
-              .on('mouseout', function (d) {
-                $scope.selectedYear = null;
-                if (!$scope.$$phase) {
-                  $scope.$apply();
-                }
-                _removeHighlightStoryLine(this);
               });
 
             dot.append('circle')

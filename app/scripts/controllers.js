@@ -285,8 +285,25 @@
         });
       };
 
+
       $scope.highlightStoryLine = function(year) {
+
         $scope.selectedYear = year;
+
+        PopulationIOService.loadPopulation({
+          year: $scope.selectedYear,
+          country: ProfileService.country
+        }, function(data) {
+          $scope.localRankData = data;
+        });
+
+        PopulationIOService.loadPopulation({
+          year: $scope.selectedYear,
+          country: 'World'
+        }, function(data) {
+          $scope.globalRankData = data;
+        });
+
       };
 
       $scope.$watch(function() {
@@ -298,19 +315,6 @@
       });
 
       var _update = function() {
-        PopulationIOService.loadPopulation({
-          year: $filter('date')(new Date(), 'yyyy'),
-          country: ProfileService.country
-        }, function(data) {
-          $scope.localRankData = data;
-        });
-
-        PopulationIOService.loadPopulation({
-          year: $filter('date')(new Date(), 'yyyy'),
-          country: 'World'
-        }, function(data) {
-          $scope.globalRankData = data;
-        });
 
         $scope.$on('rankGlobalChanged', function(e, rankGlobal) {
           $scope.rankGlobal = rankGlobal;
@@ -366,6 +370,10 @@
             title: 'You turned 18!'
           }
         ];
+
+        setTimeout(function() {
+          $scope.highlightStoryLine($filter('date')(new Date(), 'yyyy'));
+        }, 3000);
       };
     })
 
