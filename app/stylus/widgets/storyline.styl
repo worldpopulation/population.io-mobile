@@ -10,14 +10,22 @@ story-line
   .line.highlight
     stroke-width 10
     stroke highlight-yellow
+  .dot-wrapper
+    transition all 500ms ease
+    transform scale(1.0)
+  .dot-wrapper:hover,
+  .highlight .dot-wrapper
+    transform scale(2.0)
   .dot
+    cursor pointer
     circle
       stroke #fff
       stroke-width 2
       cursor pointer
+      fill #000
+    circle.colored
+      fill highlight-blue
     text
       fill #fff
       font-size 14px
       transform translate(0, 5px)
-    &.highlight
-      cursor pointer

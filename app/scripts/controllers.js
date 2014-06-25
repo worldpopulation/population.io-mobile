@@ -300,23 +300,33 @@
           ].join(''));
         };
 
+        var _resetColorFlag = function() {
+          for(var i=0; i<$scope.storyLineData.length; i+=1) {
+            $scope.storyLineData[i].colored = false;
+          }
+        };
+
         PopulationIOService.loadWpRankRanked({
           dob: ProfileService.birthday,
           sex: 'unisex',
           country: 'World',
           rank: rank
         }, function(date) {
-          $scope.storyLineData.push({
-            date: date,
-            year: $filter('date')(date, 'yyyy'),
-            title: atomicNumber + ' billion person'
-          });
+          var colored = false;
           if (_isDateGreaterThenToday(date)) {
             if (new Date(date) < $scope.nextYear || !$scope.nextYear) {
               _updateTitleAlive(date, atomicNumber);
+              _resetColorFlag();
+              colored = true;
             }
             $scope.nextYear = new Date(date);
           }
+          $scope.storyLineData.push({
+            date: date,
+            colored: colored,
+            year: $filter('date')(date, 'yyyy'),
+            title: atomicNumber + ' billion person'
+          });
         });
       };
 
@@ -341,6 +351,10 @@
 
       };
 
+      $rootScope.$on('selectedYearChanged', function(e, year) {
+        $scope.highlightStoryLine(year);
+      });
+
       $scope.$watch(function() {
         return ProfileService.active;
       }, function(active) {
@@ -362,8 +376,8 @@
         _loadWpRankRanked(1000000000, '1th');
         _loadWpRankRanked(2000000000, '2nd');
         _loadWpRankRanked(3000000000, '3rd');
-        _loadWpRankRanked(4000000000, '4th');
         _loadWpRankRanked(5000000000, '5th');
+        _loadWpRankRanked(4000000000, '4th');
 
         _loadLifeExpectancyTotal(ProfileService.country, function(totalLifeExpectancy) {
           var date = _getDateWithOffset(

@@ -33,12 +33,12 @@
           var _initGraph = function() {
             var frame = root.append('g')
               .attr({
-                class: 'frame'
+                'class': 'frame'
               });
 
             frame.append('line')
               .attr({
-                class: 'coord',
+                'class': 'coord',
                 x1: 0,
                 x2: width - 50,
                 y1: height,
@@ -46,7 +46,7 @@
               });
             frame.append('line')
               .attr({
-                class: 'coord',
+                'class': 'coord',
                 x1: 0,
                 x2: 0,
                 y1: 70,
@@ -55,7 +55,7 @@
             frame.append('text')
               .text('People')
               .attr({
-                class: 'people',
+                'class': 'people',
                 transform: function () {
                   return 'translate(' + [ 3, 50 ] + ') rotate(-90)';
                 }
@@ -63,14 +63,14 @@
             frame.append('text')
               .text('Age')
               .attr({
-                class: 'age',
+                'class': 'age',
                 transform: function () {
                   return 'translate(' + [ width - 10, height + 3 ] + ')';
                 }
               });
 
-            var chart = root.append('g')
-              .attr('class', 'chart');
+            root.append('g').attr('class', 'chart');
+            root.append('g').attr('class', 'pointer');
           };
 
           var _updateGraph = function(data) {
@@ -97,6 +97,12 @@
               .y1(function (d) { return yScale(d.total); })
               .interpolate('basis');
 
+            var areaNull = d3.svg.area()
+              .x(function (d) { return xScale(d.age); })
+              .y0(function () { return height; })
+              .y1(function () { return height; })
+              .interpolate('basis');
+
             var chart = root.select('.chart');
 
             var path = chart.selectAll('path')
@@ -111,6 +117,11 @@
             path.enter()
               .append('path')
               .attr('d', function() {
+                return areaNull(data);
+              })
+              .transition()
+              .duration(1000)
+              .attr('d', function() {
                 return area(data);
               });
 
@@ -118,10 +129,30 @@
             var item = data[bisect(data, age)];
 
             if (item) {
-              chart.selectAll('.pointer').remove();
-              var pointer = chart.append('g')
+              var pointer = root.select('.pointer');
+
+              var group = pointer.selectAll('.pointer-wrapper')
+                .data([item])
+                .enter()
+                .append('g')
+                .attr('class', 'pointer-wrapper');
+
+              // TODO: refactore me in a good d3 way
+              if (pointer.select('.percentage').empty()) {
+                pointer.attr({
+                  transform: function () {
+                    return 'translate(' + [
+                      xScale(age),
+                      height
+                    ] + ')';
+                  }
+                });
+              }
+
+              pointer
+                .transition()
+                .duration(1000)
                 .attr({
-                  'class': 'pointer',
                   transform: function () {
                     return 'translate(' + [
                       xScale(age),
@@ -129,43 +160,57 @@
                     ] + ')';
                   }
                 });
-              pointer.append('line')
+
+              group.append('line')
                 .attr({
                   x1: 0,
                   y1: 0,
                   x2: width - xScale(age),
                   y2: 0
                 });
-              pointer.append('circle')
+              group.append('circle')
                 .attr({
                   r: 3
                 });
-              pointer.append('text')
-                .text(function() {
-                  return (Math.round(item.total/peopleTotal * 1000) / 10) + '%';
-                })
+
+              var textBlock = group.append('g');
+
+              textBlock.append('text')
                 .attr({
+                  'class': 'percentage',
                   transform: function () {
-                    return 'translate(' + [width - xScale(age) - 10, -55] + ')';
+                    return 'translate(' + [0, -55] + ')';
                   }
                 });
-              pointer.append('text')
-                .text(function() {
-                  return 'people in ' + $scope.country;
-                })
+              textBlock.append('text')
                 .attr({
-                  'class': 'desc',
+                  'class': 'desc country',
                   transform: function () {
-                    return 'translate(' + [width - xScale(age) - 10, -30] + ')';
+                    return 'translate(' + [0, -30] + ')';
                   }
                 });
-              pointer.append('text')
+              textBlock.append('text')
                 .text('in your age')
                 .attr({
                   'class': 'desc',
                   transform: function () {
-                    return 'translate(' + [width - xScale(age) - 10, -15] + ')';
+                    return 'translate(' + [0, -15] + ')';
                   }
+                });
+
+              textBlock.attr({
+                  'class': 'text-block',
+                  transform: function () {
+                    return 'translate(' + [width - xScale(age) - 10, 0] + ')';
+                  }
+                });
+              pointer.select('.percentage')
+                .text(function() {
+                  return (Math.round(item.total/peopleTotal * 1000) / 10) + '%';
+                });
+              pointer.select('.desc.country')
+                .text(function() {
+                  return 'people in ' + $scope.country;
                 });
             }
           };

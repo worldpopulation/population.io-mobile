@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('populationioApp')
-    .directive('storyLine', function () {
+    .directive('storyLine', function ($rootScope) {
       return {
         restrict: 'E',
         scope: {
@@ -28,40 +28,35 @@
           }, true);
 
           $scope.$watch('selectedYear', function(year) {
-            _removeHighlightStoryLine();
             if (year) {
+              _removeAllHighlights();
               var node = d3.select('.dot[data-id="' + year + '"]')[0][0];
-              _highlightStoryLine(node);
+              _addHighlight(node);
             }
           });
 
-          var _highlightStoryLine = function (node) {
-            var translate = d3.select(node).attr('data-transform');
+          var _addHighlight = function (node) {
             node.parentNode.appendChild(node);
             d3.select(node)
-              .classed('highlight', true)
-              .transition()
-              .attr({
-                'transform': translate + ' scale(2.0)'
-              });
+              .classed('highlight', true);
           };
 
-          var _removeHighlightStoryLine = function () {
+          var _removeAllHighlights = function () {
             var node = d3.select('.dot.highlight')[0][0];
             if (node) {
-              var translate = d3.select(node).attr('data-transform');
               d3.select(node)
-                .classed('highlight', false)
-                .transition()
-                .attr({
-                  'transform': translate + ' scale(1.0)'
-                });
+                .classed('highlight', false);
             }
           };
 
           var _initGraph = function() {
             var bezierCurve = [
-              'M428.75,559c0-22.092-17.658-40-39.75-40H89c-22.092,0-40-17.908-40-40s17.908-40,40-40h300c22.092,0,40-17.908,40-40s-17.908-40-40-40H89c-22.092,0-40-17.908-40-40s17.908-40,40-40h300c22.092,0,40-17.908,40-40s-17.908-40-40-40H89c-22.092,0-40-17.908-40-40s17.908-40,40-40h300c22.092,0,40-17.908,40-40s-17.908-40-40-40H169.5'
+              'M428.75,559c0-22.092-17.658-40-39.75-40H89c-22.092,',
+              '0-40-17.908-40-40s17.908-40,40-40h300c22.092,0,40-17.908,',
+              '40-40s-17.908-40-40-40H89c-22.092,0-40-17.908-40-40s17.908',
+              '-40,40-40h300c22.092,0,40-17.908,40-40s-17.908-40-40-40H89',
+              'c-22.092,0-40-17.908-40-40s17.908-40,40-40h300c22.092,0,40-',
+              '17.908,40-40s-17.908-40-40-40H169.5'
             ].join('');
 
             root.append('path')
@@ -171,38 +166,36 @@
                 'data-id': function (d) {
                   return d.year;
                 },
-                class: 'dot',
+                'class': 'dot',
                 transform: function (d) {
                   var pos = pathNode.getPointAtLength(scale(_getYear(d)));
                   return 'translate(' + [ pos.x, pos.y ] + ')';
-                },
-                'data-transform': function () {
-                  return d3.select(this).attr('transform');
                 }
               })
               .on('click', function (d) {
-                $scope.selectedYear = d.year;
-                if (!$scope.$$phase) {
-                  $scope.$apply();
-                }
-                _highlightStoryLine(this);
+                $rootScope.$broadcast('selectedYearChanged', d.year);
+                _removeAllHighlights();
+                _addHighlight(this);
               });
 
-            dot.append('circle')
+            var dotWrapper = dot.append('g')
+              .attr('class', 'dot-wrapper');
+
+            dotWrapper.append('circle')
               .attr({
+                'class': function(d) {
+                  return d.colored ? 'colored' : '';
+                },
                 r: function (d) {
                   var r = 6;
                   if (_getEventCount(d.year) > 1) {
                     r = 15;
                   }
-                  if (d.now) {
-                    r = 10;
-                  }
                   return r;
                 }
               });
 
-            dot.append('text')
+            dotWrapper.append('text')
               .text(function (d) {
                 var count = _getEventCount(d.year);
                 if (count > 1) {
