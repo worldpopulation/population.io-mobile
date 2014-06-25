@@ -35,8 +35,8 @@
             celebTooltipPointer,
             activeCelebs,
             lens,
-            gridRows = 8,
-            gridCols = 30,
+            gridRows = 200,
+            gridCols = 100,
             celebTooltipImage,
             celebsInCelebsBar = 5,
             blockHeight = 2,
@@ -72,7 +72,30 @@
             .attr("y", 0)
             .attr("width", (parentWidth - 200 - 300))
             .attr("height", 200);
+          var gridClip = defs.append("svg:clipPath")
+            .attr("id", "grid-clip")
+            .append("rect")
+            .attr("id", "clip-rect")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", parentWidth - 300)
+            .attr("height", 400);
 
+          var ghostsPattern = defs.append('pattern')
+            .attr({id: 'ghostspattern',
+              x: 100,
+              y: 100,
+              width: 20,
+              height: 20,
+              patternUnits: "userSpaceOnUse"
+            });
+          ghostsPattern.append('circle').attr({
+            cx: 10,
+            cy: 10,
+            r: 5,
+            fill: "rgba(255,0,0,0.2)"
+
+          })
 
           var _updateLocalBar = function (rank, rankTotal) {
             var bar = chart.select('.bar.local'),
@@ -508,16 +531,47 @@
                 })
               ;
             chart.select('.grid').remove();
-            grid = chart.append('g')
+
+            var getXYFromTranslate = function (translateString) {
+              var split = translateString.split(",");
+              var x = split[0] ? ~~split[0].split("(")[1] : 0;
+              var y = split[1] ? ~~split[1].split(")")[0] : 0;
+              return [x, y];
+            };
+            var frameX = 0;
+            var frameY = 0
+            var drag = d3.behavior.drag()
+              .on('dragstart', function () {
+
+                var frameTranslate = getXYFromTranslate(d3.select(this).attr('transform'));
+                frameX = frameTranslate[0];
+                frameY = frameTranslate[1];
+              })
+              .on('drag', function () {
+                var scale = 1;
+                d3.event.sourceEvent.stopImmediatePropagation();
+                frameX += d3.event.dx;
+                frameY += d3.event.dy;
+                d3.select(this).attr("transform", "translate(" + frameX + "," + frameY + ")");
+                var translate = [(-frameX * scale), (-frameY * scale)];
+                target.attr("transform", "translate(" + translate + ")scale(" + scale + ")");
+              })
+
+            var gridWrapper = chart.append('g').attr({class: 'grid-wrapper'}).attr({ 'clip-path': 'url(#grid-clip)', transform: 'translate(' + personWidth + ', 100)'});
+
+
+            grid = gridWrapper.append('g')
               .attr({
-                transform: 'translate(' + personWidth + ', 100)',
                 class: 'grid',
                 opacity: 1
               });
 
+
+            grid.append('rect').style({fill: "url(#ghostspattern)"}).attr({width: 180 * 20, height: 400 * 20})
+            grid.call(drag)
+
             var cols = [];
             var rows = [];
-            var ghosts = [];
             _.times(gridCols, function (i) {cols.push(i * personWidth)});
             _.times(gridRows, function (i) {rows.push(i * personHeight)});
 
@@ -537,62 +591,8 @@
               .sortBy(function (celeb) { return celeb.birthday })
               .uniq(function (celeb) { return celeb.cell })
               .value()
-            for (var x = -1; x < gridCols - 1; x++) {
-              for (var y = 0; y < gridRows; y++) {
-                ghosts.push({
-                  x: x,
-                  y: y,
-                  localCellX: x,
-                  localCellY: y
-                })
-              }
-            }
-            var ghostsArea = grid.append('g').attr('class', 'ghosts-area');
-            var ghost = ghostsArea.selectAll('.ghost')
-                .data(ghosts)
-                .enter()
-                .append('g')
-                .attr({
-                  opacity: 0,
-                  class: 'ghost',
-                  transform: function (d, i) {
-                    return 'translate(' + [xScale(d.localCellX + 1), yScale(d.localCellY + 1)] + ')'
-                  }
 
-                })
-              ;
-            ghost
-              .transition()
-              .delay(function (d, i) {
-                return 1000 + _.random(100, 400)
-              })
-              .attr({
-                opacity: 1
-              });
-
-            var ghostIcon = ghost.append('g')
-              .attr({
-                class: 'ghost-icon',
-                transform: 'translate(7.5,10)',
-                opacity: 0.1
-              });
-            ghostIcon.each(function (d, x) {
-              var ghostIconElement = d3.select(this);
-              var gender = ['male', 'female'][_.random(1)];
-              if (gender == 'male') {
-                ghostIconElement.append('path').attr('d', 'M7.5,5.809c-0.869,0-1.576-0.742-1.576-1.654c0-0.912,0.707-1.653,1.576-1.653 c0.87,0,1.577,0.742,1.577,1.653C9.077,5.067,8.369,5.809,7.5,5.809z');
-                ghostIconElement.append('path').attr('d', 'M11.997,16.187c0,0.522-0.405,0.946-0.903,0.946h-0.453V9.59H9.75v16.96c0,0.522-0.405,0.946-0.903,0.946 c-0.493,0-0.895-0.416-0.903-0.931c0-0.005,0-0.01,0-0.015c0-0.004,0-0.009,0-0.012V16.187H7.054v10.364c0,0.006,0,0.01,0,0.015 c-0.007,0.515-0.41,0.931-0.903,0.931c-0.498,0-0.902-0.424-0.902-0.946V9.59H4.358v7.542H3.905c-0.498,0-0.902-0.424-0.902-0.946 V9.119c0-1.301,1.009-2.36,2.25-2.36h4.493c1.241,0,2.251,1.058,2.251,2.36L11.997,16.187L11.997,16.187z');
-              }
-              else {
-                ghostIconElement.append('path').attr('d', 'M7.025,20.425v6.123c0,0.005,0,0.01,0,0.015c-0.008,0.515-0.437,0.931-0.964,0.931 c-0.531,0-0.963-0.424-0.963-0.946v-6.123c0-0.001,0-0.002,0-0.004h1.927C7.025,20.422,7.025,20.423,7.025,20.425z');
-                ghostIconElement.append('path').attr('d', 'M9.903,20.425v6.123c0,0.522-0.432,0.946-0.964,0.946c-0.526,0-0.955-0.416-0.963-0.931 c0-0.005,0-0.009,0-0.015c0-0.004,0-0.008,0-0.012v-6.111c0-0.001,0-0.002,0-0.004h1.927C9.903,20.422,9.903,20.423,9.903,20.425z');
-                ghostIconElement.append('path').attr('d', 'M11.777,16.874l-1.792-7.39L9.059,9.7l2.374,9.787H3.542L5.916,9.7L4.99,9.484l-1.79,7.384l-0.472-0.111 c-0.517-0.121-0.837-0.631-0.714-1.139l1.711-7.048c0,0,0,0,0.001-0.001c0.259-1.065,1.22-1.808,2.336-1.808h2.878 c1.117,0,2.078,0.744,2.337,1.809l0,0l1.711,7.046c0,0,0,0,0,0.001c0.123,0.508-0.197,1.019-0.714,1.139L11.777,16.874z');
-                ghostIconElement.append('path').attr('d', 'M7.501,5.812c-0.928,0-1.683-0.741-1.683-1.653c0-0.911,0.755-1.653,1.683-1.653 c0.928,0,1.683,0.741,1.683,1.653C9.184,5.071,8.429,5.812,7.501,5.812z')
-
-              }
-            });
-
-
+            console.log('cells: ' + cells.length)
             person = grid
               .append('g')
               .attr('class', 'persons-area')
@@ -654,6 +654,7 @@
             person.on('mouseenter', _showTooltip);
             person.on('mouseleave', _hideTooltip);
             firstRun = false;
+
           };
 
           function _showTooltip(d, i) {
@@ -1351,12 +1352,11 @@
             if (active) {
               _buildNavigator();
               _initGrid();
-              _loadCelebrities();
-//              _loadProfilePerson();
-
-              _initCelebsBar();
-              _initCelebTooltip();
-              _populateCelebsBar();
+//              _loadCelebrities();
+//
+//              _initCelebsBar();
+//              _initCelebTooltip();
+//              _populateCelebsBar();
 
             }
           });
