@@ -283,7 +283,23 @@
         });
       };
 
-      var _loadWpRankRanked = function(rank, atomicNumber, onSuccess) {
+      var _loadWpRankRanked = function(rank, atomicNumber) {
+
+        var _isDateGreaterThenToday = function(date) {
+          var yearToday = parseInt($filter('date')(new Date(), 'yyyy'), 0),
+            year = parseInt($filter('date')(date, 'yyyy'), 0);
+
+          return year > yearToday;
+        };
+
+        var _updateTitleAlive = function(date, atomicNumber) {
+          $scope.titleAlive = $sce.trustAsHtml([
+            'On <span>' + $filter('ordinal')($filter('date')(date, 'd')) + ' ',
+            $filter('date')(date, 'MMM, yyyy') + '</span> you’ll be person <span>',
+            atomicNumber + ' Billion</span> to be alive in the <span>world</span>.'
+          ].join(''));
+        };
+
         PopulationIOService.loadWpRankRanked({
           dob: ProfileService.birthday,
           sex: 'unisex',
@@ -295,8 +311,11 @@
             year: $filter('date')(date, 'yyyy'),
             title: atomicNumber + ' billion person'
           });
-          if (onSuccess) {
-            onSuccess(date);
+          if (_isDateGreaterThenToday(date)) {
+            if (new Date(date) < $scope.nextYear || !$scope.nextYear) {
+              _updateTitleAlive(date, atomicNumber);
+            }
+            $scope.nextYear = new Date(date);
           }
         });
       };
@@ -342,13 +361,9 @@
 
         _loadWpRankRanked(1000000000, '1th');
         _loadWpRankRanked(2000000000, '2nd');
-        _loadWpRankRanked(3000000000, '3rd', function(date) {
-          $scope.titleAlive = $sce.trustAsHtml([
-            'On <span>' + $filter('ordinal')($filter('date')(date, 'd')) + ' ',
-            $filter('date')(date, 'MMM, yyyy') + '</span> you’ll be person <span>3rd ',
-            'Billion</span> to be alive in the <span>world</span>.'
-          ].join(''));
-        });
+        _loadWpRankRanked(3000000000, '3rd');
+        _loadWpRankRanked(4000000000, '4th');
+        _loadWpRankRanked(5000000000, '5th');
 
         _loadLifeExpectancyTotal(ProfileService.country, function(totalLifeExpectancy) {
           var date = _getDateWithOffset(
