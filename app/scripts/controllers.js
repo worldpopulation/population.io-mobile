@@ -185,6 +185,22 @@
       var _update = function() {
 
         PopulationIOService.loadWpRankToday({
+          dob: '1920-01-01',
+          sex: 'unisex',
+          country: ProfileService.country
+        }, function(rank) {
+          $scope.rankLocalTotal = rank;
+        });
+
+        PopulationIOService.loadWpRankToday({
+          dob: '1920-01-01',
+          sex: 'unisex',
+          country: 'World'
+        }, function(rank) {
+          $scope.rankGlobalTotal = rank;
+        });
+
+        PopulationIOService.loadWpRankToday({
           dob: ProfileService.birthday,
           sex: 'unisex',
           country: ProfileService.country

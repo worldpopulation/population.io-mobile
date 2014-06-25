@@ -100,7 +100,7 @@
             var chart = root.select('.chart');
 
             var path = chart.selectAll('path')
-              .data(data);
+              .data([data]);
 
             path.transition()
               .duration(1000)
