@@ -47,7 +47,9 @@
             lensHeight = gridRows * (blockHeight + 1) + blockHeight + 1,
             celebWidth,
             firstRun = true,
-            currentCeleb = 0;
+            currentCeleb = 0,
+            formatBillions = d3.format(".1s"),
+            formatLeadingZeros = d3.format("03d");
 
           var chart = d3.select(element[0])
             .append('svg')
@@ -71,17 +73,6 @@
             .attr("width", (parentWidth - 200 - 300))
             .attr("height", 200);
 
-          $scope.$watch('rankLocal', function (rank) {
-            if (rank) {
-              _updateLocalBar(rank, $scope.rankLocalTotal);
-            }
-          });
-
-          $scope.$watch('rankGlobal', function (rank) {
-            if (rank) {
-              _updateGlobalBar(rank, $scope.rankGlobalTotal);
-            }
-          });
 
           var _updateLocalBar = function (rank, rankTotal) {
             var bar = chart.select('.bar.local'),
@@ -269,7 +260,7 @@
             var peopleInOneRow = _worldPopulation / blockData.length;
 
             var rows = [];
-            _.times(blockData.length, function (i) {rows.push(i * 3)})
+            _.times(blockData.length, function (i) {rows.push(i * 3)});
 
             var yScale = d3.scale.quantize()
               .domain([0, _populationTopLimit])
@@ -281,7 +272,6 @@
             birthdayScale = d3.time.scale()
               .domain([new Date('1920-01-01'), new Date()])
               .range([0, navHeight]);
-            var formatBillions = d3.format(".1s");
             var yAxis = d3.svg.axis()
               .scale(yAxisScale)
               .orient('right')
@@ -303,7 +293,6 @@
             var xScale2 = d3.scale.linear()
               .domain([0, navWidth - 2])
               .range([peopleInOneRow, 0 ]);
-
             navigator.append('rect')
               .attr({
                 opacity: 0,
@@ -418,7 +407,7 @@
               })
               .attr({
                 opacity: 1
-              })
+              });
             personNavPointer =
               celebsArea
                 .append('circle')
@@ -478,7 +467,7 @@
             lens
               .transition()
               .delay(5000)
-              .attr({opacity: 1})
+              .attr({opacity: 1});
             lens.append('rect')
               .attr({
                 width: lensWidth,
@@ -532,13 +521,21 @@
               .domain([gridRows, 0])
               .range(rows);
 
-            var cells = celebs.data();
-            _.each(cells, function (d, i) {
-              d.cell = xScale(endX - d.x) + ' ' + yScale(endY - d.y)
-              d.localCellX = Math.floor((endX - d.x) / 2)
-              d.localCellY = Math.floor((endY - d.y) / 3)
-            });
-
+//            var cells = celebs.data();
+//            _.each(cells, function (d, i) {
+//              d.localCellX = Math.floor((endX - d.x) / 2);
+//              d.localCellY = Math.floor((endY - d.y) / 3)
+//            });
+            var cells = _.chain(celebs.data())
+              .each(function (d, i) {
+                d.localCellX = Math.floor((endX - d.x) / 2);
+                d.localCellY = Math.floor((endY - d.y) / 3)
+                d.cell = 'y' + formatLeadingZeros(yScale(d.localCellY)) + 'x' + formatLeadingZeros(xScale(d.localCellX));
+//                console.log(d.cell)
+              })
+              .sortBy(function (celeb) { return celeb.cell })
+              .uniq(function (celeb) { return celeb.cell })
+              .value()
             for (var x = 0; x < gridCols; x++) {
               for (var y = 0; y < gridRows; y++) {
                 ghosts.push({
@@ -549,7 +546,6 @@
                 })
               }
             }
-            console.log(ghosts)
             var ghostsArea = grid.append('g').attr('class', 'ghosts-area');
             var ghost = ghostsArea.selectAll('.ghost')
                 .data(ghosts)
@@ -571,7 +567,7 @@
               })
               .attr({
                 opacity: 1
-              })
+              });
 
             var ghostIcon = ghost.append('g')
               .attr({
@@ -593,7 +589,7 @@
                 ghostIconElement.append('path').attr('d', 'M7.501,5.812c-0.928,0-1.683-0.741-1.683-1.653c0-0.911,0.755-1.653,1.683-1.653 c0.928,0,1.683,0.741,1.683,1.653C9.184,5.071,8.429,5.812,7.501,5.812z')
 
               }
-            })
+            });
 
 
             person = grid
@@ -603,12 +599,14 @@
               .append('g')
               .attr({
                 opacity: 0,
-                'data-id': function (d, i) {return d.id},
+                'data-id': function (d, i) {
+                  return d.id
+                },
                 class: 'person',
                 transform: function (d, i) {
                   return 'translate(' + [xScale(d.localCellX), yScale(d.localCellY)] + ')'
                 }
-              })
+              });
 
             person
               .transition()
@@ -619,7 +617,6 @@
               .attr({
                 opacity: 1
               });
-
             person.append('rect')
               .attr({
                 width: personWidth,
@@ -647,7 +644,7 @@
                 iconElement.append('path').attr('d', 'M7.501,5.812c-0.928,0-1.683-0.741-1.683-1.653c0-0.911,0.755-1.653,1.683-1.653 c0.928,0,1.683,0.741,1.683,1.653C9.184,5.071,8.429,5.812,7.501,5.812z')
 
               }
-            })
+            });
             person.on('mouseenter', function (d, i) {
               var personItem = this;
               d3.select(personItem).selectAll('path')
@@ -659,7 +656,7 @@
                   opacity: 1
                 });
 
-              _activateCelebInCelebsBar(d3.select(personItem).data()[0].id)
+              _activateCelebInCelebsBar(d3.select(personItem).data()[0].id);
 
               if (xScale(d.localCellX) < 150 || yScale(d.localCellY) > 220) {
                 celebTooltip.attr({
@@ -758,7 +755,7 @@
           };
 
           function _initCelebTooltip() {
-            chart.select('.celeb-tooltip').remove()
+            chart.select('.celeb-tooltip').remove();
             celebTooltip = chart.append('g')
               .attr({
                 class: 'celeb-tooltip',
@@ -850,7 +847,7 @@
           }
 
           function _loadProfilePerson() {
-            grid.select('.profile-person').remove()
+            grid.select('.profile-person').remove();
             var startX = parseInt(lens.select('rect').attr('x'));
             var startY = parseInt(lens.select('rect').attr('y'));
 
@@ -867,26 +864,26 @@
                 .attr({
                   class: 'profile-person',
                   opacity: 0
-                })
+                });
               profilePerson
                 .transition()
                 .delay(function () {
-                  console.log(firstRun)
+//                  console.log(firstRun)
                   return 2000
                 })
-                .attr({opacity: 1})
+                .attr({opacity: 1});
               profilePerson.append('rect')
                 .attr({
                   width: personWidth,
                   height: personHeight
                 })
-                .style('fill', 'white')
+                .style('fill', 'white');
 
               var profilePersonIcon = profilePerson.append('g')
                 .attr({
                   class: 'icon',
                   transform: 'translate(' + [personWidth / 4, personHeight / 4 - 3] + ')'
-                })
+                });
               var gender = ProfileService.gender;
               if (gender == 'male') {
                 profilePersonIcon.append('path').attr('d', 'M7.5,5.809c-0.869,0-1.576-0.742-1.576-1.654c0-0.912,0.707-1.653,1.576-1.653 c0.87,0,1.577,0.742,1.577,1.653C9.077,5.067,8.369,5.809,7.5,5.809z');
@@ -915,7 +912,7 @@
 
               profilePerson.attr({
                 transform: 'translate(' + [xScale((endX - personX) / 2), yScale((endY - personY) / 2)] + ')'
-              })
+              });
 
 //              profilePerson.data()[0]['birthday'] = moment(ProfileService.birthday).format('Do MMM, YYYY');
 //              profilePerson.data()[0]['name'] = 'You';
@@ -970,7 +967,7 @@
               .domain([0, lensHeight])
               .range([0, personHeight * gridRows]);
 
-            console.log(d3.select(activeCelebs[3]).attr('x'), xScale(d3.select(activeCelebs[3]).attr('x')))
+            console.log(d3.select(activeCelebs[3]).attr('x'), xScale(d3.select(activeCelebs[3]).attr('x')));
 
             var emptyCells = new Array(person[0].length - activeCelebs.length);
             for (var i = 0; i < activeCelebs.length; i++) {
@@ -1136,7 +1133,12 @@
 
           function _populateCelebsBar() {
             currentCeleb = 0;
-            var celebs = person.data();
+            var celebs = person.data()
+//            console.log(celebs)
+//            console.log(celebs[0])
+//            console.log(celebs[celebs.length - 1])
+
+
             rollScale
               .domain([0, celebs.length])
               .range([0, -celebWidth * celebs.length]);
@@ -1162,9 +1164,9 @@
                 }
                 celebsRoll
                   .transition()
-                  .attr({transform: 'translate(' + [rollScale(currentCeleb), 0] + ')'})
+                  .attr({transform: 'translate(' + [rollScale(currentCeleb), 0] + ')'});
                 var startRange = currentCeleb - 2;
-                var celebsInBar = celebsRoll.selectAll('.celeb')
+                var celebsInBar = celebsRoll.selectAll('.celeb');
                 celebsInBar.each(function (d, i) {
                   if (i == startRange) {
                     console.log(d.id)
@@ -1247,7 +1249,7 @@
               })
               .text(function (d, i) {
                 return d.name
-              })
+              });
 
             celeb.append('rect').attr(
               {
@@ -1266,11 +1268,11 @@
               var personInGrid = grid.select('.person[data-id="' + d.id + '"]');
               personInGrid.selectAll('path')
                 .transition()
-                .style({fill: 'white'})
+                .style({fill: 'white'});
               personInGrid.selectAll('rect')
                 .transition()
                 .style({fill: 'purple'})
-            })
+            });
             celeb.on('mouseleave', function (d, i) {
               var allPersonsInGrid = grid.selectAll('.person');
               allPersonsInGrid.selectAll('rect')
@@ -1298,6 +1300,19 @@
 
             }
           });
+          $scope.$watch('rankLocal', function (rank) {
+            if (rank) {
+//              console.log(rank)
+//              console.log($scope.rankLocalTotal)
+              _updateLocalBar(rank, $scope.rankLocalTotal);
+            }
+          });
+
+//          $scope.$watch('rankGlobal', function (rank) {
+//            if (rank) {
+//              _updateGlobalBar(rank, $scope.rankGlobalTotal);
+//            }
+//          });
 
           _buildBarChart();
         }

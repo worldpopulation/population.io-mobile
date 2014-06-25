@@ -15,10 +15,10 @@
 
           $scope.$on('continentsDataLoaded', function () {
             _buildContinentsChart($scope.continentsData);
-          })
+          });
           $scope.$on('worldDataLoaded', function () {
             _buildWorldChart($scope.worldData);
-          })
+          });
 
           var chart = d3.select(element[0]).append("svg")
             .attr("width", parentWidth)
@@ -37,7 +37,7 @@
             .attr('opacity', 0);
 
           human.append('path')
-            .attr('d', 'M50,74.726c-3.808,0-6.906-3.252-6.906-7.248s3.098-7.244,6.906-7.244c3.813,0,6.911,3.252,6.911,7.244 C56.911,71.474,53.808,74.726,50,74.726z')
+            .attr('d', 'M50,74.726c-3.808,0-6.906-3.252-6.906-7.248s3.098-7.244,6.906-7.244c3.813,0,6.911,3.252,6.911,7.244 C56.911,71.474,53.808,74.726,50,74.726z');
           human.append('path')
             .attr('d', 'M69.707,120.204c0,2.287-1.775,4.145-3.957,4.145h-1.985V91.295H59.86v74.321 c0,2.287-1.775,4.145-3.957,4.145c-2.16,0-3.922-1.823-3.957-4.08c0-0.022,0-0.044,0-0.065c0-0.017,0-0.039,0-0.052v-45.36h-3.9 v45.417c0,0.026,0,0.044,0,0.065c-0.031,2.257-1.797,4.08-3.957,4.08c-2.183,0-3.953-1.858-3.953-4.145V91.295h-3.905v33.05h-1.985 c-2.183,0-3.953-1.858-3.953-4.145V89.231c0-5.701,4.421-10.342,9.86-10.342h19.689c5.438,0,9.864,4.636,9.864,10.342 L69.707,120.204L69.707,120.204z')
           ;
@@ -72,7 +72,7 @@
 
             force.start();
 
-            var birthdaysTotal = d3.sum(continentsData, function (d, i) {return d.value})
+            var birthdaysTotal = d3.sum(continentsData, function (d, i) {return d.value});
 
             continentsChart.selectAll('g').remove();
 
@@ -80,7 +80,7 @@
               .attr({
                 class: 'tooltip',
                 opacity: 0
-              })
+              });
             tooltipElement.append('line')
               .attr({
                 class: 'tooltip-line',
@@ -140,16 +140,16 @@
                 tooltipElement.select('.percentage-label').
                   text(function (d, i) {
                     return Math.round((_tooltip.data()[0].value / birthdaysTotal) * 100) + '%'
-                  })
+                  });
 
                 tooltipElement.select('.value-label').
                   text(function (d, i) {
                     return $filter('number')(_tooltip.data()[0].value, 0);
-                  })
+                  });
                 tooltipElement.select('.country-label').
                   text(function (d, i) {
                     return 'in ' + _tooltip.data()[0].countryTitle
-                  })
+                  });
                 tooltipElement
                   .transition()
                   .attr({
@@ -165,7 +165,7 @@
               .on('mouseleave', function (d, i) {
                 tooltipElement
                   .transition()
-                  .attr('opacity', 0)
+                  .attr('opacity', 0);
                 //                .attr('transform', 'translate(' + [0, d3.select(this).data()[0].y] + ')');
 
                 d3.select(this).select('circle')
@@ -279,7 +279,7 @@
               }
             });
 
-            var worldBirthdaysTotal = d3.sum(worldData, function (d, i) {return d.value})
+            var worldBirthdaysTotal = d3.sum(worldData, function (d, i) {return d.value});
             var arc0 = d3.svg.arc()
               .outerRadius(120)
               .innerRadius(120);
@@ -321,23 +321,23 @@
                   {x2: function (d, i) {
                     return labelArc.centroid(d)[0] > -1 ? 170 : -170;
                   }}
-                )
+                );
                 _arc.select('.world-chart-label-total')
                   .transition()
                   .delay(200)
-                  .attr('opacity', 1)
+                  .attr('opacity', 1);
                 _arc.select('.world-chart-shared-birthdays-label')
                   .transition()
                   .delay(250)
-                  .attr('opacity', 1)
+                  .attr('opacity', 1);
                 _arc.select('.world-chart-label-percentage')
                   .transition()
                   .delay(300)
-                  .attr('opacity', 1)
+                  .attr('opacity', 1);
 
                 _arc.select('path.main')
                   .transition()
-                  .style('fill', '#21edff')
+                  .style('fill', '#21edff');
                 _arc.select('path.border')
                   .transition()
                   .attr('opacity', 0)
@@ -351,24 +351,24 @@
 
                 _arc.select('line')
                   .transition()
-                  .attr({x2: 0})
+                  .attr({x2: 0});
                 _arc.select('.world-chart-label-total')
                   .transition()
                   .delay(300)
-                  .attr('opacity', 0)
+                  .attr('opacity', 0);
                 _arc.select('.world-chart-shared-birthdays-label')
                   .transition()
                   .delay(250)
-                  .attr('opacity', 0)
+                  .attr('opacity', 0);
 
                 _arc.select('.world-chart-label-percentage')
                   .transition()
                   .delay(200)
-                  .attr('opacity', 0)
+                  .attr('opacity', 0);
 
                 _arc.select('path.main')
                   .transition()
-                  .style('fill', '#eee')
+                  .style('fill', '#eee');
 
                 d3.selectAll('.border')
                   .transition()
@@ -391,7 +391,7 @@
               })
               .duration(400)
               .attr('d', arc)
-              .attr('opacity', 1)
+              .attr('opacity', 1);
 
             pieChart.append("path")
               .attr("d", arcBorder0)
@@ -416,7 +416,7 @@
                 d.outerRadius = 100; // Set Outer Coordinate
                 d.innerRadius = 10; // Set Inner Coordinate
                 return "translate(" + labelArc.centroid(d) + ") rotate(" + angle(d) + ")";
-              })
+              });
 
             labelArea.append("text")
               .attr('class', 'world-chart-label')

@@ -139,13 +139,6 @@
           "thumbnail": "celebrities\/thumbnails\/january\/loic-remy.jpg"
         },
         {
-          "name": "Kirk Hinrich",
-          "desc": "Basketball Player",
-          "birthday": "1981-01-02",
-          "country": "Iowa",
-          "thumbnail": "celebrities\/thumbnails\/january\/kirk-hinrich.jpg"
-        },
-        {
           "name": "Eli Manning",
           "desc": "Football Player",
           "birthday": "1981-01-03",
@@ -697,13 +690,6 @@
           "birthday": "1973-01-10",
           "country": "Puerto Rico",
           "thumbnail": "celebrities\/thumbnails\/january\/felix-trinidad.jpg"
-        },
-        {
-          "name": "Alex Meraz",
-          "desc": "Movie Actor",
-          "birthday": "1985-01-10",
-          "country": "Arizona",
-          "thumbnail": "celebrities\/thumbnails\/january\/alex-meraz.jpg"
         },
         {
           "name": "Cody Simpson",
