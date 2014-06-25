@@ -49,6 +49,7 @@ var gulp = require('gulp'),
       ],
       images: [
         'assets/sprite-icons.svg',
+        'assets/human.png',
         'assets/favicon.png',
         'assets/wip.svg'
       ],

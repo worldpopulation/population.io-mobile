@@ -7594,7 +7594,7 @@
           "thumbnail": "celebrities\/thumbnails\/april\/melissa-joan-hart.jpg"
         },
         {
-          "name": "Rosie Huntington-Whiteley",
+          "name": "Rosie Huntington",
           "desc": "Movie Actress",
           "birthday": "1987-04-18",
           "country": "England",

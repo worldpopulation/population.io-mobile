@@ -19,9 +19,15 @@ people-grid
     &.celeb
       path
         fill #333
-  .profile-person
+    &.me
+      path
+        fill red
     path
-      fill red
+      transition fill 0.2s
+    &.highlighted
+    &:hover
+      path
+        fill #21edff
   .bar-chart
     transform translate(0, 15px)
     .x-axis

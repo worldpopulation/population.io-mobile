@@ -220,6 +220,16 @@
           var _buildNavigator = function () {
 
             var celebs = Celebrities.all();
+            celebs.unshift({
+              birthday: ProfileService.birthday,
+              name: 'You',
+              country: ProfileService.country,
+              gender: ProfileService.gender,
+              thumbnail: 'images/human.png',
+              id: celebs.length
+
+            });
+
             var blockData = [];
             var _worldPopulation = PopulationIOService.getWorldPopulation();
             var _populationTopLimit = 8000000000;
@@ -248,7 +258,7 @@
               .append('g')
               .attr({
                 class: 'navigator',
-                transform: 'translate(950, 100)'
+                transform: 'translate(' + [950 + personWidth / 2, 100] + ')'
               });
 
             for (var i = 0; i < navHeight / 3; i++) {
@@ -282,13 +292,13 @@
 //            var xScale = d3.scale.linear()
 //              .domain([0, peopleInOneRow ])
 //              .range([0, navWidth - 2]);
-            var xRows = [];
+            var xCols = [];
             for (var i = 0; i < navWidth - 3; i++) {
-              xRows.push(i)
+              xCols.push(i)
             }
             var xScale = d3.scale.quantize()
               .domain([0, peopleInOneRow ])
-              .range(xRows);
+              .range(xCols);
 
             var xScale2 = d3.scale.linear()
               .domain([0, navWidth - 2])
@@ -388,12 +398,10 @@
                 opacity: 0,
                 height: 2,
                 width: 2,
-//                x: function () {return _.random(0, 180)},
                 x: function (d, i) {
                   return d.x = xScale(peopleInOneRow - rankScale(new Date(d.birthday)) % peopleInOneRow)
                 },
                 y: function (d, i) {
-//                  console.log(Math.floor(rankScale(new Date(d.birthday))))
                   return d.y = yScale(rankScale(new Date(d.birthday)))
                 }
               });
@@ -498,16 +506,14 @@
                   return (d.x >= startX && d.x <= endX) && (d.y >= startY && d.y <= endY)
                 })
               ;
-
             chart.select('.grid').remove();
             grid = chart.append('g')
               .attr({
-                transform: 'translate(0, 100)',
+                transform: 'translate(' + personWidth + ', 100)',
                 class: 'grid',
                 opacity: 1
               });
 
-            var data = [];
             var cols = [];
             var rows = [];
             var ghosts = [];
@@ -515,28 +521,22 @@
             _.times(gridRows, function (i) {rows.push(i * personHeight)});
 
             var xScale = d3.scale.quantize()
-              .domain([gridCols, 0])
+              .domain([0, gridCols])
               .range(cols);
             var yScale = d3.scale.quantize()
               .domain([gridRows, 0])
               .range(rows);
 
-//            var cells = celebs.data();
-//            _.each(cells, function (d, i) {
-//              d.localCellX = Math.floor((endX - d.x) / 2);
-//              d.localCellY = Math.floor((endY - d.y) / 3)
-//            });
             var cells = _.chain(celebs.data())
               .each(function (d, i) {
                 d.localCellX = Math.floor((endX - d.x) / 2);
-                d.localCellY = Math.floor((endY - d.y) / 3)
-                d.cell = 'y' + formatLeadingZeros(yScale(d.localCellY)) + 'x' + formatLeadingZeros(xScale(d.localCellX));
-//                console.log(d.cell)
+                d.localCellY = Math.floor((endY - d.y) / 3);
+                d.cell = formatLeadingZeros(yScale(d.localCellY)) + formatLeadingZeros(xScale(d.localCellX));
               })
-              .sortBy(function (celeb) { return celeb.cell })
+              .sortBy(function (celeb) { return celeb.birthday })
               .uniq(function (celeb) { return celeb.cell })
               .value()
-            for (var x = 0; x < gridCols; x++) {
+            for (var x = -1; x < gridCols - 1; x++) {
               for (var y = 0; y < gridRows; y++) {
                 ghosts.push({
                   x: x,
@@ -593,6 +593,8 @@
 
 
             person = grid
+              .append('g')
+              .attr('class', 'persons-area')
               .selectAll('.person')
               .data(cells)
               .enter()
@@ -606,6 +608,9 @@
                 transform: function (d, i) {
                   return 'translate(' + [xScale(d.localCellX), yScale(d.localCellY)] + ')'
                 }
+              })
+              .classed('me', function (d, i) {
+                return d.name == 'You'
               });
 
             person
@@ -645,86 +650,86 @@
 
               }
             });
-            person.on('mouseenter', function (d, i) {
-              var personItem = this;
-              d3.select(personItem).selectAll('path')
-                .transition()
-                .style('fill', '#21edff');
+            person.on('mouseenter', _showTooltip);
+            person.on('mouseleave', _hideTooltip);
+            firstRun = false;
+          };
 
-              celebTooltip
-                .attr({
-                  opacity: 1
-                });
+          function _showTooltip(d, i) {
+            console.log(d.id)
+            var cols = [];
+            var rows = [];
+            var ghosts = [];
+            _.times(gridCols, function (i) {cols.push(i * personWidth)});
+            _.times(gridRows, function (i) {rows.push(i * personHeight)});
 
-              _activateCelebInCelebsBar(d3.select(personItem).data()[0].id);
+            var xScale = d3.scale.quantize()
+              .domain([0, gridCols])
+              .range(cols);
+            var yScale = d3.scale.quantize()
+              .domain([gridRows, 0])
+              .range(rows);
 
-              if (xScale(d.localCellX) < 150 || yScale(d.localCellY) > 220) {
-                celebTooltip.attr({
-                  transform: 'translate(' + [xScale(d.localCellX) - (150 - personWidth / 2) + 190, yScale(d.localCellY) + personHeight + 20] + ')'
-                });
-                celebTooltipPointerShadow.attr({
-                  transform: 'translate(10,20) rotate(45)'
-                });
-                celebTooltipPointer.attr({
-                  transform: 'translate(10, 18) rotate(45)'
-                })
-              }
-              else {
-                celebTooltip.attr({
-                  transform: 'translate(' + [xScale(d.localCellX) - (150 - personWidth / 2), yScale(d.localCellY) + personHeight + 120] + ')'
-                });
-                celebTooltipPointerShadow.attr({
-                  transform: 'translate(152,-18) rotate(45)'
-                });
-                celebTooltipPointer.attr({
-                  transform: 'translate(150,-18) rotate(45)'
-                })
-              }
-//              else {
-//                celebTooltip.attr({
-//                  transform: 'translate(' + [xScale(d.localCellX) - (150 - personWidth / 2), yScale(d.localCellY) + personHeight - 120] + ')'
-//                });
-//                celebTooltipPointerShadow.attr({
-//                  transform: 'translate(152,-18) rotate(45)'
-//                });
-//                celebTooltipPointer.attr({
-//                  transform: 'translate(150,-18) rotate(45)'
-//                })
-//
-//
-//              }
-              celebTooltipTitle.text(function () {
-                return d.name
+            var personItem = d3.select('.persons-area .person[data-id="' + d.id + '"]');
+
+            celebTooltip.attr({ opacity: 1 });
+            if (this) {
+              _activateCelebInCelebsBar(d.id);
+            }
+
+            if (xScale(d.localCellX) < 150 || yScale(d.localCellY) > 220) {
+              celebTooltip.attr({
+                transform: 'translate(' + [xScale(d.localCellX) - (150 - personWidth / 2) + 190 + personWidth, yScale(d.localCellY) + personHeight + 20] + ')'
               });
-
-              celebTooltipImage.attr({
-                'xlink:href': function () {
-                  return d.thumbnail
-                }
-
+              celebTooltipPointerShadow.attr({
+                transform: 'translate(10,20) rotate(45)'
               });
-              celebTooltipDetails.text(function () {
-//                return d.gender + ', ' + d.country + ', ' + d.birthday
-                return d.country + ', ' + d.birthday
-              });
-              celebTooltipRank.text(function () {
-                return d.rank
+              celebTooltipPointer.attr({
+                transform: 'translate(10, 18) rotate(45)'
               })
-            });
-            person.on('mouseleave', function (d, i) {
-              d3.select(this).selectAll('path').transition().style('fill', function (d, i) {
-                return ''
+            }
+            else {
+              celebTooltip.attr({
+                transform: 'translate(' + [xScale(d.localCellX) - (150 - personWidth / 2) + personWidth, yScale(d.localCellY) + personHeight + 120] + ')'
               });
-
-              celebTooltip
-                .attr({
-                  opacity: 0,
-                  transform: 'translate(-200,-200)'})
+              celebTooltipPointerShadow.attr({
+                transform: 'translate(152,-18) rotate(45)'
+              });
+              celebTooltipPointer.attr({
+                transform: 'translate(150,-18) rotate(45)'
+              })
+            }
+            celebTooltipTitle.text(function () {
+              return d.name
             });
-//            person.append('rect').attr({width: personWidth, height: personHeight}).style('fill', 'rgba(0,0,0,0.05)')
 
-            function _activateCelebInCelebsBar(id) {
-              celebs = celebsRoll.selectAll('.celeb').data();
+            celebTooltipImage.attr({
+              'xlink:href': function () {
+                return d.thumbnail
+              }
+
+            });
+            celebTooltipDetails.text(function () {
+//                return d.gender + ', ' + d.country + ', ' + d.birthday
+              return d.country + ', ' + d.birthday
+            });
+            celebTooltipRank.text(function () {
+              return d.rank
+            })
+          }
+
+          function _hideTooltip() {
+            celebTooltip
+              .attr({
+                opacity: 0,
+                transform: 'translate(-200,-200)'})
+            _activateCelebInCelebsBar();
+          }
+
+          function _activateCelebInCelebsBar(id) {
+            var celebs = celebsRoll.selectAll('.celeb').data();
+
+            if (id) {
               currentCeleb = _.findIndex(celebs, function (celeb, index) {
                 return celeb.id == id
               });
@@ -733,10 +738,49 @@
                 .attr({
                   transform: 'translate(' + [rollScale(currentCeleb - 2), 0] + ')'
                 })
-            }
+              var currentCelebElement = celebsRoll.select('.celeb[data-local-id="' + currentCeleb + '"]');
+              currentCelebElement
+                .select('circle')
+                .transition()
+                .delay(500)
+                .attr({
+                  r: 70
+                })
+              nextCelebsButton.style({
+                display: function () {
+                  return currentCeleb >= celebs.length - 1 ? 'none' : 'block';
+                }
+              })
+              prevCelebsButton.style({
+                display: function () {
+                  return currentCeleb <= 2 ? 'none' : 'block';
+                }
+              })
 
-            firstRun = false;
-          };
+
+            }
+            else {
+              if (currentCeleb + 2 >= celebs.length - 1) {
+                celebsRoll
+                  .transition()
+                  .attr({
+                    transform: 'translate(' + [rollScale(celebs.length - celebsInCelebsBar), 0] + ')'
+                  })
+              }
+              else if (currentCeleb <= 2) {
+                celebsRoll
+                  .transition()
+                  .attr({
+                    transform: 'translate(' + [0, 0] + ')'
+                  })
+              }
+              celebsRoll.selectAll('circle')
+                .transition()
+                .attr({r: 20})
+
+            }
+          }
+
           var _fadeControls = function () {
             grid
               .transition()
@@ -865,6 +909,7 @@
                   class: 'profile-person',
                   opacity: 0
                 });
+
               profilePerson
                 .transition()
                 .delay(function () {
@@ -896,10 +941,8 @@
                 profilePersonIcon.append('path').attr('d', 'M7.501,5.812c-0.928,0-1.683-0.741-1.683-1.653c0-0.911,0.755-1.653,1.683-1.653 c0.928,0,1.683,0.741,1.683,1.653C9.184,5.071,8.429,5.812,7.501,5.812z')
               }
 
-              var data = [];
               var cols = [];
               var rows = [];
-              var ghosts = [];
               _.times(gridCols, function (i) {cols.push(i * personWidth)});
               _.times(gridRows, function (i) {rows.push(i * personHeight)});
 
@@ -914,12 +957,19 @@
                 transform: 'translate(' + [xScale((endX - personX) / 2), yScale((endY - personY) / 2)] + ')'
               });
 
-//              profilePerson.data()[0]['birthday'] = moment(ProfileService.birthday).format('Do MMM, YYYY');
-//              profilePerson.data()[0]['name'] = 'You';
-//              profilePerson.data()[0]['country'] = ProfileService.country;
-//              profilePerson.data()[0]['gender'] = ProfileService.gender;
-//              profilePerson.classed('me', true);
-//              profilePerson.classed(ProfileService.gender, true)
+              profilePerson.data([
+                {
+                  birthday: moment(ProfileService.birthday).format('Do MMM, YYYY'),
+                  name: 'You',
+                  country: ProfileService.country,
+                  gender: ProfileService.gender
+                }
+              ]);
+              profilePerson.classed('me', true);
+              profilePerson.classed(ProfileService.gender, true)
+              profilePerson.on('mouseenter', function (d, i) {
+                console.log(d)
+              });
 
             }
             else {
@@ -959,50 +1009,6 @@
               })
           }
 
-          function _loadActiveCelebrities() {
-            var xScale = d3.scale.linear()
-              .domain([0, lensWidth])
-              .range([0, personWidth * gridCols]);
-            var yScale = d3.scale.linear()
-              .domain([0, lensHeight])
-              .range([0, personHeight * gridRows]);
-
-            console.log(d3.select(activeCelebs[3]).attr('x'), xScale(d3.select(activeCelebs[3]).attr('x')));
-
-            var emptyCells = new Array(person[0].length - activeCelebs.length);
-            for (var i = 0; i < activeCelebs.length; i++) {
-              emptyCells.push(i);
-            }
-//            var randomizedGrid = _.shuffle(emptyCells);
-
-//            person.each(function (d, i) {
-//              if (randomizedGrid[i] && i != 142) {
-//                var a = d3.selectAll(activeCelebs).filter(function (d, n) { return n == randomizedGrid[i] });
-//                if (!_.isEmpty(a.data())) {
-//                  d.name = a.data()[0].name;
-//                  d.country = a.data()[0].country;
-//                  d.thumbnail = '/celebrities/' + a.data()[0].thumbnail;
-//                  d.birthday = moment(a.data()[0].birthday).format('Do MMM, YYYY');
-//                  d.gender = '';
-//                }
-//                d3.select(this).classed('celeb', true)
-//              }
-//              else if (i == 142) {
-//                d3.select(this).classed('celeb', false);
-//                d3.select(this).classed('me', true);
-//                d.name = 'You';
-//                d.country = ProfileService.country;
-//                d.birthday = moment(ProfileService.birthday).format('Do MMM, YYYY')
-//
-//              }
-//              else {
-//                d3.select(this).classed('celeb', false);
-//                d.name = 'Unknown';
-//                d.country = '';
-//                d.birthday = 'Unknown'
-//              }
-//            });
-          }
 
           function _initCelebsBar() {
             celebWidth = (parentWidth - 200 - 300) / celebsInCelebsBar;
@@ -1134,9 +1140,6 @@
           function _populateCelebsBar() {
             currentCeleb = 0;
             var celebs = person.data()
-//            console.log(celebs)
-//            console.log(celebs[0])
-//            console.log(celebs[celebs.length - 1])
 
 
             rollScale
@@ -1204,6 +1207,7 @@
               .append('g')
               .attr({
                 class: 'celeb',
+                'data-local-id': function (d, i) {return i},
                 transform: function (d, i) {
                   return 'translate(' + [i * celebWidth, 0] + ')'
                 }
@@ -1263,24 +1267,79 @@
                 fill: 'transparent'
               })
             ;
+            var ghost = celebsRoll.selectAll('.ghost')
+              .data([0, 1, 2, 3])
+              .enter()
+              .append('g')
+              .attr({
+                class: 'ghost',
+                transform: function (d, i) {
+                  if (i < 2) {
+                    return 'translate(' + [0 - (i + 1) * celebWidth, 0] + ')'
+                  }
+                  else {
+                    return 'translate(' + [-rollScale(celebs.length - 2 + i), 0] + ')'
+                  }
+                }
+              });
+            ghost.append('circle').attr(
+              {
+                fill: '#eee',
+                r: 20,
+                cx: celebWidth / 2,
+                cy: 50,
+                'stroke-width': 1,
+                stroke: '#eee'
 
-            celeb.on('mouseover', function (d, i) {
+
+              }
+            );
+            ghost.append('rect').attr(
+              {
+                width: celebWidth,
+                height: 100,
+                x: 0,
+                y: 0
+              }
+            )
+              .style({
+                fill: 'transparent'
+              })
+            ;
+            console.log(celebs.length)
+            $timeout(function () {
+              _activateCelebInCelebsBar(d3.select('.persons-area .person.me').attr('data-id'));
+            }, 3000)
+            celeb.on('mouseenter', function (d, i) {
+              d3.selectAll('.celeb')
+                .select('circle')
+                .transition()
+                .attr({
+                  r: 20
+                })
+
+              d3.select(this)
+                .select('circle')
+                .transition()
+                .attr({
+                  r: 70
+                })
+
               var personInGrid = grid.select('.person[data-id="' + d.id + '"]');
-              personInGrid.selectAll('path')
-                .transition()
-                .style({fill: 'white'});
-              personInGrid.selectAll('rect')
-                .transition()
-                .style({fill: 'purple'})
+              _showTooltip(d, i)
+              personInGrid.classed('highlighted', true)
             });
             celeb.on('mouseleave', function (d, i) {
+              d3.select(this)
+                .select('circle')
+                .transition()
+                .attr({
+                  r: 20
+                })
+
               var allPersonsInGrid = grid.selectAll('.person');
-              allPersonsInGrid.selectAll('rect')
-                .transition()
-                .style({fill: 'white'});
-              allPersonsInGrid.selectAll('path')
-                .transition()
-                .style({fill: 'black'});
+              allPersonsInGrid.classed('highlighted', false)
+              _hideTooltip(d, i)
 
             })
           }
@@ -1292,7 +1351,7 @@
               _buildNavigator();
               _initGrid();
               _loadCelebrities();
-              _loadProfilePerson();
+//              _loadProfilePerson();
 
               _initCelebsBar();
               _initCelebTooltip();
@@ -1308,11 +1367,11 @@
             }
           });
 
-//          $scope.$watch('rankGlobal', function (rank) {
-//            if (rank) {
-//              _updateGlobalBar(rank, $scope.rankGlobalTotal);
-//            }
-//          });
+          $scope.$watch('rankGlobal', function (rank) {
+            if (rank) {
+              _updateGlobalBar(rank, $scope.rankGlobalTotal);
+            }
+          });
 
           _buildBarChart();
         }
