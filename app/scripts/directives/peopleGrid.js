@@ -220,6 +220,7 @@
           var _buildNavigator = function () {
 
             var celebs = Celebrities.all();
+            console.log(celebs.length)
             celebs.unshift({
               birthday: ProfileService.birthday,
               name: 'You',
@@ -656,7 +657,6 @@
           };
 
           function _showTooltip(d, i) {
-            console.log(d.id)
             var cols = [];
             var rows = [];
             var ghosts = [];
@@ -679,7 +679,7 @@
 
             if (xScale(d.localCellX) < 150 || yScale(d.localCellY) > 220) {
               celebTooltip.attr({
-                transform: 'translate(' + [xScale(d.localCellX) - (150 - personWidth / 2) + 190 + personWidth, yScale(d.localCellY) + personHeight + 20] + ')'
+                transform: 'translate(' + [xScale(d.localCellX) - (150 - personWidth / 2) + 190 + personWidth, yScale(d.localCellY) + personHeight + 30] + ')'
               });
               celebTooltipPointerShadow.attr({
                 transform: 'translate(10,20) rotate(45)'
@@ -728,6 +728,7 @@
 
           function _activateCelebInCelebsBar(id) {
             var celebs = celebsRoll.selectAll('.celeb').data();
+
 
             if (id) {
               currentCeleb = _.findIndex(celebs, function (celeb, index) {

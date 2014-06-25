@@ -25592,7 +25592,7 @@
           var sortedByBirthday = _.sortBy(celebrities, function (celeb) {return celeb.birthday});
           var onlyFrom19200101 = _.filter(sortedByBirthday, function (celeb) {return celeb.birthday >= '1920-01-01'});
           var sorted = _.sortBy(onlyFrom19200101, function (celeb) {return celeb.birthday});
-          var unique = _.unique(sorted, function (celeb) {return celeb.birthday});
+          var unique = _.uniq(sorted, function (celeb) {return celeb.birthday});
           _.each(unique, function (item, i) { item.id = i })
           return unique
         }
