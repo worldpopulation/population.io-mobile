@@ -456,7 +456,7 @@
             res.push(country);
           }
         }
-        return res.length > 20 ? res.splice(0, 19) : res;
+        return res;
       };
 
       $scope.continentsData = [];

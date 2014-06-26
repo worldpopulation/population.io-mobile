@@ -43,47 +43,58 @@
           ;
 
           human
-
             .transition()
             .delay(3000)
             .duration(1000)
             .attr('opacity', 1);
-
 
           var continentsChart = chart.append('g')
             .attr('class', 'continents-chart');
 
           function _buildContinentsChart(continentsData) {
             var radius = d3.scale.linear()
-              .domain([0, d3.max(continentsData, function (d, i) {return d.value})])
+              .domain([0, d3.max(continentsData, function (d, i) {
+                return d.value;
+              })])
               .range([15, 100]);
             var labelSize = d3.scale.linear()
-              .domain([0, d3.max(continentsData, function (d, i) {return d.value})])
+              .domain([0, d3.max(continentsData, function (d, i) {
+                return d.value;
+              })])
               .range([8, 20]);
 
-            var nodes = continentsData.map(function (d, i) { return {value: d.value, radius: radius(d.value), countryAbbr: d.countryAbbr, countryTitle: d.countryTitle}; }),
+            var nodes = continentsData.map(function (d, i) {
+                return {
+                  value: d.value,
+                  radius: radius(d.value),
+                  countryAbbr: d.countryAbbr,
+                  countryTitle: d.countryTitle
+                };
+              }),
               color = d3.scale.category10();
 
             var force = d3.layout.force()
               .gravity(0.1)
               .charge(function (d, i) { return i ? 0 : -2000; })
               .nodes(nodes)
-              .size([parentWidth / 2, parentHeight]);
+              .size([parentWidth/2, parentHeight - 100]);
 
             force.start();
 
-            var birthdaysTotal = d3.sum(continentsData, function (d, i) {return d.value});
+            var birthdaysTotal = d3.sum(continentsData, function (d, i) {
+              return d.value;
+            });
 
             continentsChart.selectAll('g').remove();
 
             var tooltipElement = continentsChart.append('g')
               .attr({
-                class: 'tooltip',
+                'class': 'tooltip',
                 opacity: 0
               });
             tooltipElement.append('line')
               .attr({
-                class: 'tooltip-line',
+                'class': 'tooltip-line',
                 x1: 0,
                 x2: 0,
                 y1: 0,
@@ -91,14 +102,14 @@
               });
             tooltipElement.append('text')
               .attr({
-                class: 'percentage-label',
+                'class': 'percentage-label',
                 x: 0,
                 y: 15
               })
               .text('');
             tooltipElement.append('text')
               .attr({
-                class: 'value-label',
+                'class': 'value-label',
                 x: 50,
                 y: 21
               })
@@ -106,14 +117,14 @@
 
             tooltipElement.append('text')
               .attr({
-                class: 'shared-label',
+                'class': 'shared-label',
                 x: 50,
                 y: 40
               })
               .text('shared birthdays');
             tooltipElement.append('text')
               .attr({
-                class: 'country-label',
+                'class': 'country-label',
                 x: 50,
                 y: 55
               })
@@ -130,7 +141,7 @@
 
                 d3.select(this).select('circle')
                   .transition()
-                  .attr({ r: function (d, i) {return d.radius + 3} })
+                  .attr({ r: function (d, i) {return d.radius + 3;} })
                   .style({ fill: 'rgba(0,0,0,0.8)' });
 
                 _tooltip.select('text')
@@ -139,7 +150,7 @@
 
                 tooltipElement.select('.percentage-label').
                   text(function (d, i) {
-                    return Math.round((_tooltip.data()[0].value / birthdaysTotal) * 100) + '%'
+                    return Math.round((_tooltip.data()[0].value / birthdaysTotal) * 100) + '%';
                   });
 
                 tooltipElement.select('.value-label').
@@ -148,7 +159,7 @@
                   });
                 tooltipElement.select('.country-label').
                   text(function (d, i) {
-                    return 'in ' + _tooltip.data()[0].countryTitle
+                    return 'in ' + _tooltip.data()[0].countryTitle;
                   });
                 tooltipElement
                   .transition()
@@ -204,7 +215,7 @@
               })
               .attr(
               {
-                class: 'country-title',
+                'class': 'country-title',
                 y: function (d, i) {
                   return labelSize(d.value) / 2
                 }
@@ -228,8 +239,6 @@
                 .attr('transform', function (d, i) {
                   return 'translate(' + [d.x, d.y] + ')'
                 });
-
-
             });
 
             //          svg.on("mousemove", function () {
@@ -404,10 +413,8 @@
               })
               .duration(400)
               .attr('d', arcBorder)
-              .attr('opacity', 1)
+              .attr('opacity', 1);
 
-
-            ;
             var labelArea = pieChart.append('g')
               .attr('class', 'label-area')
               .attr('opacity', 0)
