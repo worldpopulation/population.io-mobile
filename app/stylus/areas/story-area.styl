@@ -10,12 +10,24 @@
     li:hover
       background #f3f3f3
     li
-      padding 20px 20px 20px 94px
+      padding 20px 20px 20px 110px
       font-size 18px
       position relative
       cursor pointer
-      &.colored:before
-        background highlight-blue
+      &:after
+        content ''
+        height 6px
+        width 6px
+        border-radius 6px
+        position absolute
+        margin-top -3px
+        left 90px
+        top 50%
+        background black
+      &.color-1:after
+        background highlight-color1
+      &.color-2:after
+        background highlight-color2
       &.selected
         background #f3f3f3
         cursor pointer
@@ -30,7 +42,7 @@
       &.past:before
         background highlight-yellow
       &.now:before
-        background #333
+        background highlight-yellow
     .time
       position absolute
       top 50%

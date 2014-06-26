@@ -184,7 +184,7 @@
             dotWrapper.append('circle')
               .attr({
                 'class': function(d) {
-                  return d.colored ? 'colored' : '';
+                  return d.color ? d.color : '';
                 },
                 r: function (d) {
                   var r = 6;

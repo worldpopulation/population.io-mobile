@@ -275,7 +275,8 @@
               new Date(ProfileService.birthday),
               totalLifeExpectancy
             ), 'yyyy'),
-            title: 'Life expectancy in ' + country
+            title: 'Life expectancy in ' + country,
+            color: 'color-2'
           });
           if (onSuccess) {
             onSuccess(totalLifeExpectancy);
@@ -300,30 +301,21 @@
           ].join(''));
         };
 
-        var _resetColorFlag = function() {
-          for(var i=0; i<$scope.storyLineData.length; i+=1) {
-            $scope.storyLineData[i].colored = false;
-          }
-        };
-
         PopulationIOService.loadWpRankRanked({
           dob: ProfileService.birthday,
           sex: 'unisex',
           country: 'World',
           rank: rank
         }, function(date) {
-          var colored = false;
           if (_isDateGreaterThenToday(date)) {
             if (new Date(date) < $scope.nextYear || !$scope.nextYear) {
               _updateTitleAlive(date, atomicNumber);
-              _resetColorFlag();
-              colored = true;
             }
             $scope.nextYear = new Date(date);
           }
           $scope.storyLineData.push({
             date: date,
-            colored: colored,
+            color: 'color-1',
             year: $filter('date')(date, 'yyyy'),
             title: atomicNumber + ' billion person'
           });

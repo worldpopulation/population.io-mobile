@@ -18,7 +18,8 @@
       ul
         li(ng-repeat="item in storyLineData | orderBy: '-year'",
           data-id="item.year",
-          ng-class="{'colored': item.colored, 'now': item.now, 'past': item.year < year, 'selected': selectedYear === item.year}",
+          class="{{item.color}}",
+          ng-class="{'now': item.now, 'past': item.year < year, 'selected': selectedYear === item.year}",
           ng-click="highlightStoryLine(item.year)"
           )
           span.time
