@@ -1264,6 +1264,7 @@
                 })
 
               var personInGrid = grid.select('.person[data-id="' + d.id + '"]');
+              personInGrid.moveToFront()
               d3.select(this).select('image')
                 .attr({
                   'xlink:href': function (d, i) {
