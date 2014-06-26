@@ -247,7 +247,7 @@
           var _buildNavigator = function () {
 
             var celebs = Celebrities.all();
-            celebs.unshift({
+            celebs.push({
               birthday: ProfileService.birthday,
               name: 'You',
               country: ProfileService.country,
@@ -593,7 +593,7 @@
                 class: 'background-area'
 
               })
-              .style('fill', 'transparent');
+              .style('fill', 'white');
 
             var icon = person.append('g')
               .attr({
