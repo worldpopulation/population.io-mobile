@@ -26,6 +26,7 @@
             celebsBar,
             prevCelebsButton,
             nextCelebsButton,
+            peopleInOneRow,
             personNavPointer,
             celebsRoll,
             rankScale,
@@ -35,6 +36,7 @@
             celebTooltipPointer,
             activeCelebs,
             lens,
+            blockData = [],
             gridRows = 200,
             gridCols = 100,
             celebTooltipImage,
@@ -43,61 +45,64 @@
             blockWidth = 2,
             navWidth = 180,
             navHeight = 400,
-            lensWidth = gridCols * blockWidth,
-            lensHeight = gridRows * (blockHeight + 1) + blockHeight + 1,
+            _populationTopLimit = 8000000000,
+            scaleX = personWidth,
+            scaleY = personHeight / 3,
+            lensWidth = 30,
+            lensHeight = 8 * 3,
+            gridWidth = personWidth * 30,
+            gridHeight = personHeight * 8,
+
             celebWidth,
             firstRun = true,
             currentCeleb = 0,
+            frameX = 0,
+            frameY = 0,
+
+
             formatBillions = d3.format(".1s"),
             formatLeadingZeros = d3.format("03d");
+
+
+          var utils = {
+            translate: function (x, y) {return 'translate(' + [x, y] + ')';},
+            getXYFromTranslate: function (translateString) {
+              var split = translateString.split(",");
+              var x = split[0] ? ~~split[0].split("(")[1] : 0;
+              var y = split[1] ? ~~split[1].split(")")[0] : 0;
+              return [x, y];
+            }
+          };
+
+          var dragFrame = d3.behavior.drag()
+            .on('dragstart', function () {
+              var frameTranslate = utils.getXYFromTranslate(d3.select(this).attr('transform'));
+              frameX = frameTranslate[0];
+              frameY = frameTranslate[1];
+            })
+            .on('drag', function () {
+              var target = d3.select('.grid');
+              d3.event.sourceEvent.stopImmediatePropagation();
+              frameX += d3.event.dx;
+              frameY += d3.event.dy;
+              if (frameX < 0) {frameX = 0}
+              if (frameY < 0) {frameY = 0}
+              if (frameX >= navWidth - lensWidth) {frameX = navWidth - lensWidth}
+              if (frameY >= navHeight - lensHeight) {frameY = navHeight - lensHeight}
+              d3.select(this).attr("transform", utils.translate(frameX, frameY));
+              var translate = [(-frameX * scaleX), (-frameY * scaleY)];
+              target.attr("transform", "translate(" + translate + ")");
+            });
+
 
           var chart = d3.select(element[0])
             .append('svg')
             .attr({width: parentWidth, height: parentHeight})
             .append('g')
             .attr({transform: 'translate(0,0)'});
-          var defs = chart.append("defs");
-          var roundedCornersClip = defs.append("svg:clipPath")
-            .attr("id", "rounded-corners-clip")
-            .append("circle")
-            .attr("id", "clip-circle")
-            .attr("cx", 0)
-            .attr("cy", 0)
-            .attr("r", 20);
-          var celebsRollClip = defs.append("svg:clipPath")
-            .attr("id", "celebs-roll-clip")
-            .append("rect")
-            .attr("id", "clip-rect")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("width", (parentWidth - 200 - 300))
-            .attr("height", 200);
-          var gridClip = defs.append("svg:clipPath")
-            .attr("id", "grid-clip")
-            .append("rect")
-            .attr("id", "clip-rect")
-            .attr("x", 0)
-            .attr("y", 0)
-            .attr("width", parentWidth - 300)
-            .attr("height", 400);
 
-          var ghostsPattern = defs.append('pattern')
-            .attr({id: 'ghostspattern',
-              x: 100,
-              y: 100,
-              width: 20,
-              height: 20,
-              patternUnits: "userSpaceOnUse"
-            });
-          ghostsPattern.append('circle').attr({
-            cx: 10,
-            cy: 10,
-            r: 5,
-            fill: "rgba(255,0,0,0.2)"
-
-          })
-
-          var _updateLocalBar = function (rank, rankTotal) {
+          _initDefs();
+          function _updateLocalBar(rank, rankTotal) {
             var bar = chart.select('.bar.local'),
               width = parseInt((rank / rankTotal) * parentWidth, 0),
               ticks = 5;
@@ -141,7 +146,6 @@
                 }
               });
           };
-
           var _updateGlobalBar = function (rank, rankTotal) {
             var bar = chart.select('.bar.world'),
               width = (rank / rankTotal) * parentWidth,
@@ -243,7 +247,6 @@
           var _buildNavigator = function () {
 
             var celebs = Celebrities.all();
-            console.log(celebs.length)
             celebs.unshift({
               birthday: ProfileService.birthday,
               name: 'You',
@@ -254,9 +257,8 @@
 
             });
 
-            var blockData = [];
+            blockData = [];
             var _worldPopulation = PopulationIOService.getWorldPopulation();
-            var _populationTopLimit = 8000000000;
 
 
             rankScale = d3.time.scale()
@@ -266,18 +268,11 @@
               .domain([0, _worldPopulation])
               .range([new Date('1920-01-01'), new Date()])
             ;
-//            var yScale = d3.scale.linear()
-//              .domain([0, _populationTopLimit])
-//              .range([0, navHeight]);
-
 
             var yScale2 = d3.scale.linear()
               .domain([0, navHeight])
               .range([0, _populationTopLimit]);
 
-
-//            console.log(rankScale(new Date('1920-01-01')))
-//            console.log(parseInt(rankScale(new Date('1983-08-03'))))
             var navigator = chart
               .append('g')
               .attr({
@@ -291,7 +286,7 @@
                 population: yScale2(i * 3)
               })
             }
-            var peopleInOneRow = _worldPopulation / blockData.length;
+            peopleInOneRow = _worldPopulation / blockData.length;
 
             var rows = [];
             _.times(blockData.length, function (i) {rows.push(i * 3)});
@@ -312,21 +307,14 @@
               .ticks(8)
               .tickFormat(function (d) { return formatBillions(d).replace('G', 'b');});
 
-
-//            var xScale = d3.scale.linear()
-//              .domain([0, peopleInOneRow ])
-//              .range([0, navWidth - 2]);
             var xCols = [];
             for (var i = 0; i < navWidth - 3; i++) {
               xCols.push(i)
             }
             var xScale = d3.scale.quantize()
-              .domain([0, peopleInOneRow ])
+              .domain([peopleInOneRow, 0 ])
               .range(xCols);
 
-            var xScale2 = d3.scale.linear()
-              .domain([0, navWidth - 2])
-              .range([peopleInOneRow, 0 ]);
             navigator.append('rect')
               .attr({
                 opacity: 0,
@@ -414,12 +402,14 @@
                   return xScale(d.population - _worldPopulation);
                 }
               });
+
+
             celebsArea.selectAll('rect')
               .data(celebs)
               .enter()
               .append('rect')
               .attr({
-                opacity: 0,
+                opacity: 1,
                 height: 2,
                 width: 2,
                 x: function (d, i) {
@@ -429,17 +419,17 @@
                   return d.y = yScale(rankScale(new Date(d.birthday)))
                 }
               });
-            celebsArea.selectAll('rect')
-              .transition()
-              .delay(function (d, i) {
-                return 4000 + _.random(100, 1000)
-              })
-              .duration(function (d, i) {
-                return  _.random(300, 2000)
-              })
-              .attr({
-                opacity: 1
-              });
+//            celebsArea.selectAll('rect')
+//              .transition()
+//              .delay(function (d, i) {
+//                return 4000 + _.random(100, 1000)
+//              })
+//              .duration(function (d, i) {
+//                return  _.random(300, 2000)
+//              })
+//              .attr({
+//                opacity: 1
+//              });
             personNavPointer =
               celebsArea
                 .append('circle')
@@ -460,102 +450,56 @@
                 r: 3
               });
 
-            var startRank, endRank;
-            var drag = d3.behavior.drag()
-              .on('drag', function () {
-                var x = Math.max(0, Math.min(navWidth - lensWidth, d3.event.x - lensWidth / 2));
-                var y = Math.max(0, Math.min(navHeight, d3.event.y - lensHeight / 2));
-
-                this.x = x;
-                this.y = y;
-//                startRank = parseInt(xScale2(x + lensWidth) + yScale2(y + lensHeight))
-//                startRank = parseInt(xScale2(x + lensWidth) + yScale2(y + lensHeight)) - parseInt(xScale2(x) + yScale2(y));
-//                console.log(x, y)
-//                console.log(x + lensWidth, y + lensHeight)
-                startRank = parseInt(xScale2(x) + yScale2(y));
-                endRank = parseInt(startRank + peopleInOneRow * 2);
-
-                d3.select(this).select('rect').attr({x: x, y: y});
-              })
-              .on('dragstart', function () {
-                _fadeControls();
-
-              })
-              .on('dragend', function () {
-                _initGrid();
-                _populateCelebsBar();
-                _unfadeControls();
-                _loadProfilePerson();
-                _initCelebTooltip();
-              });
+//            var startRank, endRank;
+//            var drag = d3.behavior.drag()
+//              .on('drag', function () {
+//                var x = Math.max(0, Math.min(navWidth - lensWidth, d3.event.x - lensWidth / 2));
+//                var y = Math.max(0, Math.min(navHeight, d3.event.y - lensHeight / 2));
+//
+//                this.x = x;
+//                this.y = y;
+////                startRank = parseInt(xScale2(x + lensWidth) + yScale2(y + lensHeight))
+////                startRank = parseInt(xScale2(x + lensWidth) + yScale2(y + lensHeight)) - parseInt(xScale2(x) + yScale2(y));
+////                console.log(x, y)
+////                console.log(x + lensWidth, y + lensHeight)
+//                startRank = parseInt(xScale2(x) + yScale2(y));
+//                endRank = parseInt(startRank + peopleInOneRow * 2);
+//
+//                d3.select(this).select('rect').attr({x: x, y: y});
+//              })
+//              .on('dragstart', function () {
+//                _fadeControls();
+//
+//              })
+//              .on('dragend', function () {
+//                _initGrid();
+//                _populateCelebsBar();
+//                _unfadeControls();
+//                _loadProfilePerson();
+//                _initCelebTooltip();
+//              });
 
 
             lens = navigator.append('g')
               .attr({
                 class: 'lens',
-                opacity: 0
+                opacity: 0,
+                transform: utils.translate(0, 0)
               })
-              .call(drag);
+              .call(dragFrame);
             lens
               .transition()
               .delay(5000)
               .attr({opacity: 1});
-            lens.append('rect')
-              .attr({
-                width: lensWidth,
-                height: lensHeight,
-                rx: 2,
-                x: function () {
-                  return xScale(peopleInOneRow - rankScale(new Date(ProfileService.birthday)) % peopleInOneRow) - lensWidth / 2
-                },
-                y: function () {
-                  return yScale(rankScale(new Date(ProfileService.birthday))) - lensHeight / 2
-                }
-
-              });
+            lens.append('rect').attr({width: lensWidth, height: 8 * 3});
           };
 
           var _initGrid = function () {
 
-            var startX = parseInt(lens.select('rect').attr('x'));
-            var startY = parseInt(lens.select('rect').attr('y'));
-
-            var endX = parseInt(lens.select('rect').attr('x')) + lensWidth;
-            var endY = parseInt(lens.select('rect').attr('y')) + lensHeight;
-
-
             var celebs = d3.select('.navigator .celebs')
                 .selectAll('rect')
-                .filter(function (d, i) {
-                  return (d.x >= startX && d.x <= endX) && (d.y >= startY && d.y <= endY)
-                })
               ;
             chart.select('.grid').remove();
-
-            var getXYFromTranslate = function (translateString) {
-              var split = translateString.split(",");
-              var x = split[0] ? ~~split[0].split("(")[1] : 0;
-              var y = split[1] ? ~~split[1].split(")")[0] : 0;
-              return [x, y];
-            };
-            var frameX = 0;
-            var frameY = 0
-            var drag = d3.behavior.drag()
-              .on('dragstart', function () {
-
-                var frameTranslate = getXYFromTranslate(d3.select(this).attr('transform'));
-                frameX = frameTranslate[0];
-                frameY = frameTranslate[1];
-              })
-              .on('drag', function () {
-                var scale = 1;
-                d3.event.sourceEvent.stopImmediatePropagation();
-                frameX += d3.event.dx;
-                frameY += d3.event.dy;
-                d3.select(this).attr("transform", "translate(" + frameX + "," + frameY + ")");
-                var translate = [(-frameX * scale), (-frameY * scale)];
-                target.attr("transform", "translate(" + translate + ")scale(" + scale + ")");
-              })
 
             var gridWrapper = chart.append('g').attr({class: 'grid-wrapper'}).attr({ 'clip-path': 'url(#grid-clip)', transform: 'translate(' + personWidth + ', 100)'});
 
@@ -563,66 +507,85 @@
             grid = gridWrapper.append('g')
               .attr({
                 class: 'grid',
-                opacity: 1
+                opacity: 1,
+                transform: utils.translate(0, 0)// + ' scale(0.13)'
               });
 
 
-            grid.append('rect').style({fill: "url(#ghostspattern)"}).attr({width: 180 * 20, height: 400 * 20})
-            grid.call(drag)
-
-            var cols = [];
             var rows = [];
-            _.times(gridCols, function (i) {cols.push(i * personWidth)});
-            _.times(gridRows, function (i) {rows.push(i * personHeight)});
+            _.times(blockData.length, function (i) {rows.push(i * personHeight)});
+
+            var xCols = [];
+            for (var i = 0; i < navWidth - 3; i++) {
+              xCols.push(i * personWidth)
+            }
 
             var xScale = d3.scale.quantize()
-              .domain([0, gridCols])
-              .range(cols);
+              .domain([peopleInOneRow, 0 ])
+              .range(xCols);
+
             var yScale = d3.scale.quantize()
-              .domain([gridRows, 0])
+              .domain([0, _populationTopLimit])
               .range(rows);
 
-            var cells = _.chain(celebs.data())
-              .each(function (d, i) {
-                d.localCellX = Math.floor((endX - d.x) / 2);
-                d.localCellY = Math.floor((endY - d.y) / 3);
-                d.cell = formatLeadingZeros(yScale(d.localCellY)) + formatLeadingZeros(xScale(d.localCellX));
-              })
-              .sortBy(function (celeb) { return celeb.birthday })
-              .uniq(function (celeb) { return celeb.cell })
-              .value()
+            grid.append('rect').style({fill: "url(#ghosts-pattern)"}).attr({width: personWidth * xCols.length, height: blockData.length * personHeight})
 
-            console.log('cells: ' + cells.length)
+
+            console.log({x: xCols.length, y: rows.length})
             person = grid
               .append('g')
               .attr('class', 'persons-area')
               .selectAll('.person')
-              .data(cells)
+              .data(celebs.data())
               .enter()
               .append('g')
               .attr({
-                opacity: 0,
+                opacity: 1,
+                'data-birthday': function (d, i) {return d.birthday},
                 'data-id': function (d, i) {
                   return d.id
                 },
                 class: 'person',
                 transform: function (d, i) {
-                  return 'translate(' + [xScale(d.localCellX), yScale(d.localCellY)] + ')'
+                  var x = xScale(peopleInOneRow - rankScale(new Date(d.birthday)) % peopleInOneRow);
+                  var y = yScale(rankScale(new Date(d.birthday)));
+                  return utils.translate(x, y)
                 }
               })
               .classed('me', function (d, i) {
                 return d.name == 'You'
               });
+//            person = grid
+//              .append('g')
+//              .attr('class', 'persons-area')
+//              .selectAll('.person')
+//              .data(celebs.data())
+//              .enter()
+//              .append('g')
+//              .attr({
+//                opacity: 0,
+//                'data-id': function (d, i) {
+//                  return d.id
+//                },
+//                class: 'person',
+//                transform: function (d, i) {
+//                  console.log(d)
+//                  return utils.translate(xScale(d.x), yScale(d.y))
+//                }
+//              })
+//              .classed('me', function (d, i) {
+//                return d.name == 'You'
+//              });
 
-            person
-              .transition()
-              .delay(function (d, i) {
-                var delay = firstRun ? 2000 : 0;
-                return delay + i * _.random(0, 20)
-              })
-              .attr({
-                opacity: 1
-              });
+//            person
+//              .transition()
+//              .delay(function (d, i) {
+//                var delay = firstRun ? 2000 : 0;
+//                return delay + i * _.random(0, 20)
+//              })
+//              .attr({
+//                opacity: 1
+//              });
             person.append('rect')
               .attr({
                 width: personWidth,
@@ -630,7 +593,7 @@
                 class: 'background-area'
 
               })
-              .style('fill', 'white');
+              .style('fill', 'transparent');
 
             var icon = person.append('g')
               .attr({
@@ -651,9 +614,9 @@
 
               }
             });
-            person.on('mouseenter', _showTooltip);
-            person.on('mouseleave', _hideTooltip);
-            firstRun = false;
+//            person.on('mouseenter', _showTooltip);
+//            person.on('mouseleave', _hideTooltip);
+//            firstRun = false;
 
           };
 
@@ -1011,6 +974,49 @@
               })
           }
 
+          function _initDefs() {
+            var defs = chart.append("defs");
+            var roundedCornersClip = defs.append("clipPath")
+              .attr("id", "rounded-corners-clip")
+              .append("circle")
+              .attr("id", "clip-circle")
+              .attr("cx", 0)
+              .attr("cy", 0)
+              .attr("r", 20);
+            var celebsRollClip = defs.append("clipPath")
+              .attr("id", "celebs-roll-clip")
+              .append("rect")
+              .attr("id", "clip-rect")
+              .attr("x", 0)
+              .attr("y", 0)
+              .attr("width", (parentWidth - 200 - 300))
+              .attr("height", 200);
+            var gridClip = defs.append("clipPath")
+              .attr("id", "grid-clip")
+              .append("rect")
+              .attr({
+                id: "clip-rect",
+                x: 0,
+                y: 0,
+                width: gridWidth,
+                height: gridHeight
+              })
+
+            var ghostsPattern = defs.append('pattern')
+              .attr({id: 'ghosts-pattern',
+                x: 0,
+                y: 0,
+                width: personWidth,
+                height: personHeight,
+                patternUnits: "userSpaceOnUse"
+              });
+
+//            ghostsPattern.append('rect').attr({x: 0, y: 0, width: personWidth - 1, height: personHeight - 1, fill: '#eee'});
+            var ghostsPatternIcon = ghostsPattern.append('g').attr({class: 'icon', transform: utils.translate(7.5, 13)});
+            ghostsPatternIcon.append('path').attr({d: 'M7.5,5.809c-0.869,0-1.576-0.742-1.576-1.654c0-0.912,0.707-1.653,1.576-1.653 c0.87,0,1.577,0.742,1.577,1.653C9.077,5.067,8.369,5.809,7.5,5.809z', fill: '#ccc'});
+            ghostsPatternIcon.append('path').attr({d: 'M11.997,16.187c0,0.522-0.405,0.946-0.903,0.946h-0.453V9.59H9.75v16.96c0,0.522-0.405,0.946-0.903,0.946 c-0.493,0-0.895-0.416-0.903-0.931c0-0.005,0-0.01,0-0.015c0-0.004,0-0.009,0-0.012V16.187H7.054v10.364c0,0.006,0,0.01,0,0.015 c-0.007,0.515-0.41,0.931-0.903,0.931c-0.498,0-0.902-0.424-0.902-0.946V9.59H4.358v7.542H3.905c-0.498,0-0.902-0.424-0.902-0.946 V9.119c0-1.301,1.009-2.36,2.25-2.36h4.493c1.241,0,2.251,1.058,2.251,2.36L11.997,16.187L11.997,16.187z', fill: '#ccc'});
+
+          }
 
           function _initCelebsBar() {
             celebWidth = (parentWidth - 200 - 300) / celebsInCelebsBar;
