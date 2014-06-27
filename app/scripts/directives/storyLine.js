@@ -191,6 +191,9 @@
                   if (_getEventCount(d.year) > 1) {
                     r = 15;
                   }
+                  if (d.now) {
+                    r = 8;
+                  }
                   return r;
                 }
               });
