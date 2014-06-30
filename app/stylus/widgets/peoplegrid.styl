@@ -1,7 +1,7 @@
 people-grid
   position relative
   top -15px
-  .person
+  .grid-celeb
     .icon
       path
         fill rgba(0, 0, 0, 1)
@@ -9,6 +9,7 @@ people-grid
       font-size 8px
       fill black
     rect
+      transition fill 0.2s
       fill rgba(0, 0, 0, 0)
     &.highlight
       rect
@@ -16,9 +17,6 @@ people-grid
       .icon
         path
           fill rgba(0, 0, 0, 1)
-    &.celeb
-      path
-        fill #333
     &.me
       path
         fill red
