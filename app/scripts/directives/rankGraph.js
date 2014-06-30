@@ -161,19 +161,24 @@
                   }
                 });
 
-              group.append('line')
+              group.append('line');
+
+              pointer.select('line')
                 .attr({
                   x1: 0,
                   y1: 0,
                   x2: width - xScale(age),
                   y2: 0
                 });
+
               group.append('circle')
                 .attr({
                   r: 3
                 });
 
               var textBlock = group.append('g');
+
+              textBlock.attr('class', 'text-block');
 
               textBlock.append('text')
                 .attr({
@@ -198,8 +203,7 @@
                   }
                 });
 
-              textBlock.attr({
-                  'class': 'text-block',
+              pointer.select('.text-block').attr({
                   transform: function () {
                     return 'translate(' + [width - xScale(age) - 10, 0] + ')';
                   }

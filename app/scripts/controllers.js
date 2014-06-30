@@ -260,26 +260,26 @@
       $scope.year = $filter('date')(new Date(), 'yyyy');
       $scope.storyLineData = [];
 
-      var _loadLifeExpectancyTotal = function(country, onSuccess) {
-        PopulationIOService.loadLifeExpectancyTotal({
+      var _loadLifeExpectancyRemaining = function(country, onSuccess) {
+        PopulationIOService.loadLifeExpectancyRemaining({
           sex: ProfileService.gender,
           country: country,
-          dob: ProfileService.birthday
-        }, function(totalLifeExpectancy) {
+          date: $filter('date')(new Date(), 'yyyy-MM-dd'),
+          age: ProfileService.getAge()  + 'y'
+        }, function(remainingLife) {
           $scope.storyLineData.push({
             date: $filter('date')(_getDateWithOffset(
-              new Date(ProfileService.birthday),
-              totalLifeExpectancy
+              new Date(),
+              remainingLife
             ), 'yyyy-MM-dd'),
             year: $filter('date')(_getDateWithOffset(
-              new Date(ProfileService.birthday),
-              totalLifeExpectancy
+              new Date(),
+              remainingLife
             ), 'yyyy'),
-            title: 'Life expectancy in ' + country,
-            color: 'color-2'
+            title: 'Life expectancy in ' + country
           });
           if (onSuccess) {
-            onSuccess(totalLifeExpectancy);
+            onSuccess(remainingLife);
           }
         });
       };
@@ -315,7 +315,6 @@
           }
           $scope.storyLineData.push({
             date: date,
-            color: 'color-1',
             year: $filter('date')(date, 'yyyy'),
             title: atomicNumber + ' billion person'
           });
@@ -371,10 +370,10 @@
         _loadWpRankRanked(5000000000, '5th');
         _loadWpRankRanked(4000000000, '4th');
 
-        _loadLifeExpectancyTotal(ProfileService.country, function(totalLifeExpectancy) {
+        _loadLifeExpectancyRemaining(ProfileService.country, function(remainingLife) {
           var date = _getDateWithOffset(
             new Date(ProfileService.birthday),
-            totalLifeExpectancy
+            remainingLife
           );
           $scope.titleDie = $sce.trustAsHtml([
             'You will die on <span>',
@@ -382,7 +381,7 @@
             $filter('date')(date, 'MMM, yyyy') + '</span>'
           ].join(''));
         });
-        _loadLifeExpectancyTotal('World');
+        _loadLifeExpectancyRemaining('World');
 
         $scope.country = ProfileService.country;
         $scope.storyLineData = [
