@@ -150,7 +150,7 @@
       });
 
       $scope.goGoGadget = function() {
-        $rootScope.$emit('go', 'people');
+        $rootScope.$emit('go', 'story');
       };
 
       $scope.$watch(function() {
@@ -367,12 +367,14 @@
         _loadWpRankRanked(1000000000, '1th');
         _loadWpRankRanked(2000000000, '2nd');
         _loadWpRankRanked(3000000000, '3rd');
-        _loadWpRankRanked(5000000000, '5th');
         _loadWpRankRanked(4000000000, '4th');
+        _loadWpRankRanked(5000000000, '5th');
+        _loadWpRankRanked(6000000000, '6th');
+        _loadWpRankRanked(7000000000, '7th');
 
         _loadLifeExpectancyRemaining(ProfileService.country, function(remainingLife) {
           var date = _getDateWithOffset(
-            new Date(ProfileService.birthday),
+            new Date(),
             remainingLife
           );
           $scope.titleDie = $sce.trustAsHtml([

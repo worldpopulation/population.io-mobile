@@ -19,14 +19,15 @@ block content
 
   ul.navigation(ng-show="profile.active")
     li(ng-class="{'active': currentPage == 0}", ng-click="showSection('stats')") <span></span>
-    li(ng-class="{'active': currentPage == 1}", ng-click="showSection('people')") <span></span>
-    li(ng-class="{'active': currentPage == 2}", ng-click="showSection('story')") <span></span>
+    li(ng-class="{'active': currentPage == 1}", ng-click="showSection('story')") <span></span>
+    li(ng-class="{'active': currentPage == 2}", ng-click="showSection('people')") <span></span>
     li(ng-class="{'active': currentPage == 3}", ng-click="showSection('birthdays')") <span></span>
     li(ng-class="{'active': currentPage == 4}", ng-click="showSection('expectancy')") <span></span>
 
-  section#stats(ng-controller='StatsCtrl', du-scrollspy='stats', data-index="0", stats-area)
-  section#people(ng-controller='PeopleCtrl', people-area, du-scrollspy='people', offset='200', data-index="1", ng-class="{'hidden': !profile.active}")
-  section#story(ng-controller='StoryCtrl', story-area, du-scrollspy='story', offset='200', data-index="2", ng-class="{'hidden': !profile.active}")
+  section#stats(ng-controller='StatsCtrl', du-scrollspy='stats', data-index="0")
+    include ../partials/stats-area
+  section#story(ng-controller='StoryCtrl', story-area, du-scrollspy='people', offset='200', data-index="2", ng-class="{'hidden': !profile.active}")
+  section#people(ng-controller='PeopleCtrl', people-area, du-scrollspy='story', offset='200', data-index="1", ng-class="{'hidden': !profile.active}")
   section#birthdays(ng-controller='BirthdaysCtrl', birthdays-area, du-scrollspy='birthdays', data-index="3", offset='200', ng-class="{'hidden': !profile.active}")
   section#expectancy(ng-controller='ExpectancyCtrl', expectancy-area, du-scrollspy='expectancy', data-index="4", offset='200', ng-class="{'hidden': !profile.active}")
 

@@ -60,7 +60,7 @@
               };
 
             var _textTween = function (data, node, label) {
-              var value = Math.round(data * 100) / 100,
+              var value = Math.round(data * 10) / 10,
                 i = d3.interpolate(0, value),
                 prec = (value + '').split('.'),
                 round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;

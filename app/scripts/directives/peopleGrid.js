@@ -195,6 +195,7 @@
 
                 }
               );
+
               celebsBar.append('rect')
                 .attr(
                 {
@@ -202,10 +203,8 @@
                   width: parentWidth - 200,
                   height: 1,
                   transform: canvas.utils.translate(0, 50)
-
                 }
               );
-
 
               var celebsRollWrapper = celebsBar
                 .append('g')

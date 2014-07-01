@@ -27,25 +27,19 @@
             ])
             .range([0, width - (margin*2)]);
 
-          var stepArr = [];
-          var stepWidth = (width - (margin*2))/(data.length-1);
-          for (var j=0; j<data.length; j+=1) {
-            stepArr.push(stepWidth*j);
-          }
-
           var drag = d3.behavior.drag()
             .on('drag', function() {
               if (d3.event.x < 0 || d3.event.x > (width - (margin*2))) {
                 return;
               }
 
-              var bisect = d3.bisector(function(d) { return d; }).left,
-                idx = bisect(stepArr, d3.event.x - handleRadius);
+              var grid = (width - (margin*2))/data.length;
+              var x = Math.round(d3.event.x / grid);
 
               d3.select(this)
-                .attr('transform', 'translate(' + [stepArr[idx], 0] + ')');
+                .attr('transform', 'translate(' + [(x * grid) + 1, 0] + ')');
 
-              this.year = data[idx].year;
+              this.year = data[x].year;
 
               d3.select(this).select('text')[0][0].textContent = this.year;
             })
@@ -104,10 +98,7 @@
 
           var handle = slider.append('g')
             .attr({
-              'class': 'handle',
-              transform: function() {
-                return 'translate(' + [stepArr[stepArr.length-1], 0] + ')';
-              }
+              'class': 'handle'
             })
             .call(drag);
 
@@ -120,7 +111,7 @@
           axis.append('text')
             .text(function(d, i) {
               if (i%4 === 0 || i === data.length-1) {
-                return '\'' + (d.year + '').substring(2,4);
+                return (d.year + '').substring(2,4);
               }
             })
             .attr({
