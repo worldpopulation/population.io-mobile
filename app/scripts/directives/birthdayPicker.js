@@ -13,7 +13,7 @@
           $(element).datepicker({
             changeMonth: true,
             changeYear: true,
-            minDate: '-100Y',
+            yearRange: '-100y:c+nn',
             maxDate: '+0D',
             dateFormat: 'yy-mm-dd'
           });
