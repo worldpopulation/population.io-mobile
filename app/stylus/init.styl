@@ -47,6 +47,7 @@ a
   position relative
   width container-width
   margin 0 auto
+  padding 0
 svg.defs-area
   display none
 text
@@ -60,6 +61,50 @@ text
 .ng-cloak,
 .x-ng-cloak
   display none !important
+
+// datepicker
+.ui-datepicker
+  border 1px solid border-color
+  border-radius 12px
+  margin-top 5px
+  box-shadow 0 1px 1px rgba(0,0,0,0.2)
+  background-color #ffffff
+  padding 15px
+.ui-datepicker-title
+  clearfix()
+  padding 0 0 5px 0
+.ui-datepicker-month
+  float right
+.ui-datepicker-year
+  float left
+.ui-datepicker-prev,
+.ui-datepicker-next
+  display none
+.ui-datepicker-calendar
+  margin 5px 0 0 0
+  border-spacing 0
+  border-collapse collapse
+  th,
+  td
+    font-size 12px
+    padding 6px 4px
+    width 25px
+    text-align right
+    border none
+  th
+    border-bottom 1px solid border-color
+    font-family 'Theinhardt-Medium', 'Helvetica', sans-serif
+  td.ui-datepicker-current-day,
+  td:hover
+    cursor pointer
+    background highlight-yellow
+  td.ui-datepicker-unselectable,
+  td.ui-datepicker-unselectable:hover
+    background none
+    color #ccc
+  a
+    text-decoration none
+    color #666
 
 // wip
 .wip
@@ -240,14 +285,17 @@ section
   > *:last-child
     margin-right 0px
 form
+  input.form-control:focus
+    border 1px solid border-color
+    box-shadow 0 0 6px border-color
   input.form-control
     box-sizing border-box
     font-size 14px
     padding 12px
     background #fff
-    border-radius 12px
     margin-top 0px
     margin-bottom 0px
+    border-radius 5px
     border 1px solid border-color
     outline none
   input.form-control.input-dark
@@ -264,6 +312,7 @@ form
   background-position -228px -730px
   cursor pointer
   outline none
+  padding 0
 .btn.btn-big
   height 120px
   width 120px

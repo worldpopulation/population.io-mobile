@@ -12,7 +12,6 @@ var gulp = require('gulp'),
 
     sources = {
       vendor: [
-
         'bower_components/momentjs/min/moment.min.js',
         'bower_components/jquery/dist/jquery.min.js',
         'bower_components/d3/d3.min.js',
@@ -29,7 +28,8 @@ var gulp = require('gulp'),
         'bower_components/angular-resource/angular-resource.min.js',
         'bower_components/angular-ui-router/release/angular-ui-router.min.js',
         'bower_components/angular-sanitize/angular-sanitize.min.js',
-        'bower_components/lodash/dist/lodash.min.js'
+        'bower_components/lodash/dist/lodash.min.js',
+        'bower_components/jquery-ui/jquery-ui.min.js',
       ],
       scripts: [
         'app/scripts/**/*.*'

@@ -123,6 +123,9 @@
       $scope.$watch('profile.gender', function() {
         ProfileService.active = false;
       });
+      $scope.$watch('profile.birthday', function() {
+        ProfileService.active = false;
+      });
 
       $rootScope.$on('go', function(e, target) {
         $scope.loading = true;
@@ -158,6 +161,14 @@
       }, function(value) {
         $scope.loading = value;
       });
+
+      $scope.isDatepickerVisible = false;
+
+      $scope.showDatepicker = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.isDatepickerVisible = true;
+      };
 
       $scope.countries = [];
       PopulationIOService.loadCountries(function(countries) {

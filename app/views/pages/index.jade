@@ -26,26 +26,13 @@ block content
 
   section#stats(ng-controller='StatsCtrl', du-scrollspy='stats', data-index="0")
     include ../partials/stats-area
-  section#story(ng-controller='StoryCtrl', story-area, du-scrollspy='people', offset='200', data-index="2", ng-class="{'hidden': !profile.active}")
-  section#people(ng-controller='PeopleCtrl', people-area, du-scrollspy='story', offset='200', data-index="1", ng-class="{'hidden': !profile.active}")
-  section#birthdays(ng-controller='BirthdaysCtrl', birthdays-area, du-scrollspy='birthdays', data-index="3", offset='200', ng-class="{'hidden': !profile.active}")
-  section#expectancy(ng-controller='ExpectancyCtrl', expectancy-area, du-scrollspy='expectancy', data-index="4", offset='200', ng-class="{'hidden': !profile.active}")
+  section#story(ng-controller='StoryCtrl', du-scrollspy='story', offset='200', data-index="1", ng-class="{'hidden': !profile.active}")
+    include ../partials/story-area
+  section#people(ng-controller='PeopleCtrl', du-scrollspy='people', offset='200', data-index="2", ng-class="{'hidden': !profile.active}")
+    include ../partials/people-area
+  section#birthdays(ng-controller='BirthdaysCtrl', du-scrollspy='birthdays', data-index="3", offset='200', ng-class="{'hidden': !profile.active}")
+    include ../partials/birthdays-area
+  section#expectancy(ng-controller='ExpectancyCtrl', du-scrollspy='expectancy', data-index="4", offset='200', ng-class="{'hidden': !profile.active}")
+    include ../partials/expectancy-area
 
-  script(type="text/ng-template", id="about.html")
-    .modal-header
-      h3.modal-title About
-    .modal-body
-      p The World Population Project (WPP) aims to make demography - the statistical study of human populations -  accessible to a wider audience. We believe demography and demographic data are key to understanding social and economic phenomena, and that a better appreciation of demographic trends helps individuals see their place in the world.
-      h4 Credits
-      p <a href="http://www.worldbank.org/">The World Bank</a>, <a href="http://benedikt-gross.de/">Benedikt Groß</a> & <a href="http://www.47nord.de/">47 Nord</a>, Other Members
-    .modal-footer
-      button(ng-click="$close()") Got it!
-
-  script(type="text/ng-template", id="developers.html")
-    .modal-header
-      h3.modal-title Developers
-    .modal-body
-      p All of the data you see on this World Population Project (WPP) site is comes from a <a href="http://en.wikipedia.org/wiki/Representational_state_transfer">restful API</a> which is <a href="http://api.population.io" target="_blank">documented</a> with details of methods and data sources used.
-      p The source code behind this site and the API is also available at: <a href="https://github.com/worldpopulation/">github.com/worldpopulation</a> and developers are welcome to build on both the application and API.
-    .modal-footer
-      button(ng-click="$close()") Got it!
+  include ../partials/modals

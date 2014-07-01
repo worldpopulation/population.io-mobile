@@ -8,13 +8,13 @@
       form.form-inline(name="goForm", novalidate)
         .icon.icon-birthday
           input.form-control(
-            popover-placement="top",
-            popover="Birthday (YYYY-MM-DD)",
             type="text",
             name="birthday",
+            ng-value="profile.birthday",
             ng-model="profile.birthday"
-            placeholder="Birthday (1987-11-30)",
+            placeholder="Birthday",
             ng-pattern="/^((19|20)\\d\\d)-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/",
+            birthday-picker,
             required
           )
         .typeahead

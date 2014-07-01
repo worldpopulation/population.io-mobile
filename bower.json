@@ -21,6 +21,7 @@
     "angular-route": "~1.2.16",
     "lodash": "latest",
     "fontawesome": "latest",
+    "jquery-ui": "latest",
     "angular-scroll": "~0.5.7",
     "momentjs": "latest"
   },
