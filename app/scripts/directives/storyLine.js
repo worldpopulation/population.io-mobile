@@ -96,16 +96,6 @@
               return d.year - zero;
             };
 
-            var _getEventCount = function (year) {
-              var count = 0;
-              for (var i = 0; i < data.length; i += 1) {
-                if (data[i].year === year) {
-                  count += 1;
-                }
-              }
-              return count;
-            };
-
             var scale = d3.scale.linear()
               .domain([yearMin, yearMax])
               .range([0, pathNode.getTotalLength()]);
@@ -186,20 +176,7 @@
                 'class': function(d) {
                   return d.color ? d.color : '';
                 },
-                r: function (d) {
-                  return _getEventCount(d.year) > 1 ? 12 : 6;
-                }
-              });
-
-            dotWrapper.append('text')
-              .text(function (d) {
-                var count = _getEventCount(d.year);
-                if (count > 1) {
-                  return count;
-                }
-              })
-              .attr({
-                'text-anchor': 'middle'
+                r: 6
               });
 
             for (var j = 0; j < data.length; j += 1) {
