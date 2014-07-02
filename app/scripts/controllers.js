@@ -286,18 +286,15 @@
           sex: ProfileService.gender,
           country: country,
           date: $filter('date')(new Date(), 'yyyy-MM-dd'),
-          age: ProfileService.getAge()  + 'y'
+          age: ProfileService.getAgeString()
         }, function(remainingLife) {
 
+          var today =new Date();
+          var date = today.setDate(today.getDate() + (remainingLife*365));
+
           $scope.storyLineData.push({
-            date: $filter('date')(_getDateWithOffset(
-              new Date(),
-              remainingLife
-            ), 'yyyy-MM-dd'),
-            year: $filter('date')(_getDateWithOffset(
-              new Date(),
-              remainingLife
-            ), 'yyyy'),
+            date: $filter('date')(date, 'yyyy-MM-dd'),
+            year: $filter('date')(date, 'yyyy'),
             title: 'Life expectancy in ' + country
           });
 
@@ -560,7 +557,7 @@
 
         var _loadCountryBirthdays = function(country) {
           PopulationIOService.loadPopulation({
-            year: $filter('date')(Date.now(), 'yyyy'),
+            year: $filter('date')(new Date(ProfileService.birthday), 'yyyy'),
             country: country
           }, function(data) {
             if (_getCountry(country).countriy_ISO_A2) {
@@ -594,7 +591,7 @@
         $scope.$broadcast('worldDataLoaded');
 
         PopulationIOService.loadPopulation({
-          year: $filter('date')(Date.now(), 'yyyy'),
+          year: $filter('date')(new Date(ProfileService.birthday), 'yyyy'),
           country: 'World'
         }, function(data) {
           var value = ProfileService.gender === 'male' ? data[0].males : data[0].females;
@@ -643,7 +640,7 @@
           sex: ProfileService.gender,
           country: $scope.selectedCountryRef,
           date: date,
-          age: ProfileService.getAge() + 'y'
+          age: ProfileService.getAgeString()
         }, function(remainingLife) {
           $scope.activeCountryRef = {
             country: $scope.selectedCountryRef,
@@ -667,7 +664,7 @@
           sex: ProfileService.gender,
           country: $scope.selectedCountryRel,
           date: date,
-          age: ProfileService.getAge()  + 'y'
+          age: ProfileService.getAgeString()
         }, function(remainingLife) {
           $scope.activeCountryRel = {
             country: $scope.selectedCountryRel,

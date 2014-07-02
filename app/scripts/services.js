@@ -12,6 +12,12 @@
         getAge: function () {
           var ageDate = new Date(Date.now() - (new Date(this.birthday)).getTime());
           return Math.abs(ageDate.getUTCFullYear() - 1970);
+        },
+        getAgeString: function() {
+          var ageDate = new Date(Date.now() - (new Date(this.birthday)).getTime());
+          var year = Math.abs(ageDate.getUTCFullYear() - 1970),
+            months = ageDate.getMonth();
+          return year + 'y' + months + 'm';
         }
       };
     })
