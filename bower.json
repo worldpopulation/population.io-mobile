@@ -23,6 +23,7 @@
     "fontawesome": "latest",
     "jquery-ui": "latest",
     "angular-scroll": "~0.5.7",
+    "ics.js": "git@github.com:nwcell/ics.js.git",
     "momentjs": "latest"
   },
   "description": "The World Population Project",

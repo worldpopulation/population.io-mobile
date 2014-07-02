@@ -4,7 +4,7 @@
   angular.module('populationioApp')
 
     .controller('MainCtrl', function($scope, $timeout, $http, $interval,
-      $modal, $state, $location, $document, $rootScope,
+      $modal, $state, $location, $document, $rootScope, $filter,
       ProfileService, PopulationIOService, BrowserService) {
 
       if (BrowserService.isSupported()) {
@@ -84,7 +84,28 @@
       });
 
       $scope.downloadICal = function() {
-        alert('Feature coming soon!');
+        if (!ProfileService.active) {
+          alert([
+            'Please fill out the form and press ',
+            '"Go" for getting your Date of Death!'
+          ].join(''));
+          return;
+        }
+
+        var cal = ics(),
+          dstart = $filter('date')(ProfileService.dod, 'yyyy-MM-dd'),
+          dend = $filter('date')(ProfileService.dod, 'yyyy-MM-dd'),
+          dob = ProfileService.birthday,
+          dod = $filter('date')(ProfileService.dod, 'yyyy-MM-dd'),
+          dsum = 'Your Date of Death',
+          ddesc = [
+            'According to your birthday ' + dob,
+            ' and the life expectancy in ' + ProfileService.country,
+            ' you will die on ' + dod
+          ].join('');
+
+        cal.addEvent(dsum, ddesc, '', dstart, dend);
+        cal.download();
       };
 
       $scope.showSection = function(id) {
@@ -127,7 +148,6 @@
           templateUrl: 'developers.html'
         });
       };
-
     })
 
     .controller('StatsCtrl', function($scope, $document, $timeout, $filter, $location,
@@ -443,6 +463,8 @@
           var today =new Date();
           var date = today.setDate(today.getDate() + (remainingLife*365));
 
+          ProfileService.dod = date;
+
           $scope.titleDie = $sce.trustAsHtml([
             'You will die on <span>',
             $filter('ordinal')($filter('date')(date, 'd')) + ' ',
@@ -557,15 +579,12 @@
 
         var _loadCountryBirthdays = function(country) {
           PopulationIOService.loadPopulation({
-            year: $filter('date')(new Date(ProfileService.birthday), 'yyyy'),
-            country: country
+            year: $filter('date')(Date.now(), 'yyyy'),
+            country: country,
+            age: ProfileService.getAge()
           }, function(data) {
             if (_getCountry(country).countriy_ISO_A2) {
-              var birthdays = data[0].females;
-              if (ProfileService.gender === 'male') {
-                birthdays = data[0].males;
-              }
-              callback(country, birthdays/365);
+              callback(country, data[0].total/365);
             }
           }, function() {
             callback();
@@ -590,16 +609,16 @@
         $scope.$broadcast('continentsDataLoaded');
         $scope.$broadcast('worldDataLoaded');
 
-        PopulationIOService.loadPopulation({
-          year: $filter('date')(new Date(ProfileService.birthday), 'yyyy'),
-          country: 'World'
+        PopulationIOService.loadPopulationByAge({
+          year: $filter('date')(Date.now(), 'yyyy'),
+          country: 'World',
+          age: ProfileService.getAge()
         }, function(data) {
-          var value = ProfileService.gender === 'male' ? data[0].males : data[0].females;
           $scope.birthdayShare = $sce.trustAsHtml([
-            '<span>' + $filter('number')(parseInt(value / 365, 0), 0) + '</span> ',
-            'people around the world and ',
-            '<span>' + $filter('number')(parseInt(value / 365 / 24, 0), 0) + '</span> ',
-            'people were born in the same hour'
+            '<span>' + $filter('number')(parseInt(data[0].total / 365, 0), 0),
+            '</span> people around the world and ',
+            '<span>' + $filter('number')(parseInt(data[0].total / 365 / 24, 0), 0),
+            '</span> people were born in the same hour'
           ].join(''));
 
           $scope.loading -= 1;

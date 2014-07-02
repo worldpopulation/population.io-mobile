@@ -39,7 +39,7 @@
           return parseInt(p2013 * Math.pow((1 + growthRate), diffSec), 0);
         },
 
-        // GET /api/1.0/countries/
+        // GET /1.0/countries/
         loadCountries: function (onSuccess, onError) {
           $http({
             method: 'get',
@@ -58,7 +58,7 @@
           });
         },
 
-        // GET /api/1.0/wp-rank/{dob}/{sex}/{country}/today/
+        // GET /1.0/wp-rank/{dob}/{sex}/{country}/today/
         loadWpRankToday: function (args, onSuccess, onError) {
           $http({
             method: 'get',
@@ -84,7 +84,7 @@
           });
         },
 
-        // GET /wp-rank/{dob}/{sex}/{country}/on/{date}/
+        // GET /1.0/wp-rank/{dob}/{sex}/{country}/on/{date}/
         loadWpRankOnDate: function (args, onSuccess, onError) {
           $http({
             method: 'get',
@@ -111,7 +111,7 @@
           });
         },
 
-        // GET /api/1.0/wp-rank/{dob}/{sex}/{country}/ranked/{rank}
+        // GET /1.0/wp-rank/{dob}/{sex}/{country}/ranked/{rank}
 
         loadWpRankRanked: function (args, onSuccess, onError) {
           $http({
@@ -139,7 +139,7 @@
           });
         },
 
-        // GET /api/1.0/life-expectancy/remaining/{sex}/{country}/{date}/{age}
+        // GET /1.0/life-expectancy/remaining/{sex}/{country}/{date}/{age}
         loadLifeExpectancyRemaining: function (args, onSuccess, onError) {
           $http({
             method: 'get',
@@ -165,7 +165,7 @@
           });
         },
 
-        // GET /api/1.0/life-expectancy/total/{sex}/{country}/{dob}
+        // GET /1.0/life-expectancy/total/{sex}/{country}/{dob}
         loadLifeExpectancyTotal: function (args, onSuccess, onError) {
           $http({
             method: 'get',
@@ -190,7 +190,7 @@
           });
         },
 
-        // GET /api/1.0/population/{year}/{country}
+        // GET /1.0/population/{year}/{country}
         loadPopulation: function (args, onSuccess, onError) {
           $http({
             method: 'get',
@@ -199,6 +199,31 @@
               'population',
               args.year,
               args.country
+            ].join('/') + '/'
+          })
+          .success(function (data) {
+            if (data) {
+              onSuccess(data);
+            }
+          })
+          .error(function () {
+            if (onError) {
+              onError();
+            }
+            console.info('loadPopulation() error');
+          });
+        },
+
+        // GET /1.0/population/{year}/{country}/{age}/
+        loadPopulationByAge: function (args, onSuccess, onError) {
+          $http({
+            method: 'get',
+            url: [
+              baseUrl,
+              'population',
+              args.year,
+              args.country,
+              args.age
             ].join('/') + '/'
           })
           .success(function (data) {
