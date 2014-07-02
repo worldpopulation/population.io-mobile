@@ -461,7 +461,6 @@
               celebsRoll.attr({transform: 'translate(0,0)'});
               prevCelebsButton.style('display', 'none');
 
-
               nextCelebsButton
                 .on('click', function () {
                   console.log('currentCeleb: ' + currentCeleb)
@@ -568,9 +567,14 @@
                   x: -20,
                   y: -20,
                   'clip-path': 'url(#rounded-corners-clip)',
-                  transform: 'translate(' + [celebWidth / 2, 50] + ')'
+                  transform: 'translate(' + [celebWidth / 2, 50] + ')',
+                  'xlink:href': function (d, i) {
+                    return i < 10 ? d.thumbnail : '';
+                  }
                 }
               );
+
+
               celeb.append('text')
                 .style(
                 {
@@ -700,16 +704,15 @@
               var xy = canvas.utils.getXYFromTranslate(personItem.attr('transform'));
 
               navigatorArea.select('rect[data-id="' + d.id + '"]').classed('active', true);
-              var navigatorX = navigatorArea.select('rect[data-id="' + d.id + '"]').attr('x')
-              var navigatorY = navigatorArea.select('rect[data-id="' + d.id + '"]').attr('y')
-              console.log(navigatorArea.select('rect[data-id="' + d.id + '"]'))
+              var navigatorX = parseInt(navigatorArea.select('rect[data-id="' + d.id + '"]').attr('x'))
+              var navigatorY = parseInt(navigatorArea.select('rect[data-id="' + d.id + '"]').attr('y'))
               grid.select('.grid-celeb[data-id="' + d.id + '"]').classed('highlighted', true);
               celebTooltip.attr({ opacity: 1 });
               var scaleX = 30, scaleY = 50;
               var gridXY = canvas.utils.getXYFromTranslate(grid.attr('transform'));
 
               if (d3.select(this).classed('grid-celeb')) {
-                toggleCelebInCelebsBar(d.id);
+//                toggleCelebInCelebsBar(d.id);
                 celebTooltip.attr({
                   transform: canvas.utils.translate(xy[0] + gridXY[0] - 270 / 2 + 30, xy[1] + gridXY[1] + 170)
                 });
@@ -720,11 +723,19 @@
                   .transition()
                   .duration(600)
                   .attr({transform: canvas.utils.translate(-xy[0] + gridWidth / 2, -xy[1] + gridHeight / 2)});
-                console.log(xy[1] / scaleY)
                 lens
                   .transition()
                   .duration(600)
-                  .attr({transform: canvas.utils.translate(navigatorX - lensWidth / 2 + 2, navigatorY - lensHeight / 2 + 2)});
+                  .attr({transform: function () {
+                    var xPosition, yPosition;
+                    if (lensWidth / 2 > navigatorX) {xPosition = 0;}
+                    else {xPosition = navigatorX + lensWidth / 2 + 2;}
+
+                    if (lensHeight / 2 > navigatorY) {yPosition = 0;}
+                    else {yPosition = navigatorY - lensHeight / 2 + 2;}
+
+                    return canvas.utils.translate(xPosition, yPosition)
+                  }});
                 celebTooltip.attr({
                   transform: canvas.utils.translate(gridWidth / 2 - 270 / 2 + 30, gridHeight / 2 + 170)
                 });
