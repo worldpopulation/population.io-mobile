@@ -578,7 +578,7 @@
       var _loadAllCountryBirthdays = function(countries, callback) {
 
         var _loadCountryBirthdays = function(country) {
-          PopulationIOService.loadPopulation({
+          PopulationIOService.loadPopulationByAge({
             year: $filter('date')(Date.now(), 'yyyy'),
             country: country,
             age: ProfileService.getAge()
