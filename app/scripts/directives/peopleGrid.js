@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('populationioApp')
-    .directive('peopleGrid', function (PeopleGridService, PopulationIOService, Celebrities, ProfileService, $timeout) {
+    .directive('peopleGrid', function (PopulationIOService, Celebrities, ProfileService, $timeout) {
       return {
         restrict: 'E',
         scope: {

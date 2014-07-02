@@ -33,7 +33,7 @@
               var node = d3.select('.dot[data-id="' + year + '"]')[0][0];
               _addHighlight(node);
             }
-          });
+          }, true);
 
           var _addHighlight = function (node) {
             node.parentNode.appendChild(node);
@@ -166,7 +166,9 @@
                 'data-id': function (d) {
                   return d.year;
                 },
-                'class': 'dot',
+                'class': function(d) {
+                  return 'dot' + (d.now ? ' highlight' : '');
+                },
                 transform: function (d) {
                   var pos = pathNode.getPointAtLength(scale(_getYear(d)));
                   return 'translate(' + [ pos.x, pos.y ] + ')';
@@ -174,8 +176,6 @@
               })
               .on('click', function (d) {
                 $rootScope.$broadcast('selectedYearChanged', d.year);
-                _removeAllHighlights();
-                _addHighlight(this);
               });
 
             var dotWrapper = dot.append('g')
@@ -187,14 +187,7 @@
                   return d.color ? d.color : '';
                 },
                 r: function (d) {
-                  var r = 6;
-                  if (_getEventCount(d.year) > 1) {
-                    r = 15;
-                  }
-                  if (d.now) {
-                    r = 8;
-                  }
-                  return r;
+                  return _getEventCount(d.year) > 1 ? 12 : 6;
                 }
               });
 
@@ -208,6 +201,12 @@
               .attr({
                 'text-anchor': 'middle'
               });
+
+            for (var j = 0; j < data.length; j += 1) {
+              if (data[j].now) {
+                $rootScope.$emit('selectedYearChanged', data[j].year);
+              }
+            }
           };
 
           _initGraph();

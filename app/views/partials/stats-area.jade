@@ -1,5 +1,6 @@
 .container
   .stats-area
+    .loader.fa.fa-refresh(ng-class="{'active': loading}")
     world-clock
       h3 <i class="icon icon-world"></i>Current world<br/>population clock
     .question
@@ -32,6 +33,5 @@
           label(class="icon icon-male", ng-model="profile.gender" btn-radio="'male'", required) Male
         button.btn.btn-big(
           ng-click="goGoGadget()",
-          ng-class="{'loading': loading}"
           ng-disabled="goForm.$invalid || loading"
         )

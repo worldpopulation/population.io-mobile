@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('populationioApp')
-    .directive('birthdaysChart', function ($filter) {
+    .directive('birthdaysChart', function ($filter, ProfileService) {
       return {
         restrict: 'E',
         scope: {
@@ -20,47 +20,39 @@
             _buildWorldChart($scope.worldData);
           });
 
-          var chart = d3.select(element[0]).append("svg")
-            .attr("width", parentWidth)
-            .attr("height", parentHeight);
+          var chart = d3.select(element[0]).append('svg')
+            .attr('width', parentWidth)
+            .attr('height', parentHeight);
 
           var worldChart = chart.append('g')
             .attr({
               'class': 'world-chart',
               transform: 'translate(' + [parentWidth - parentWidth / 4, 350] + ') rotate(0)'
             });
-          var human = worldChart.append('g')
-            .attr({
-              class: 'human',
-              'transform': 'translate(' + [-50, -115] + ')'
-            })
-            .attr('opacity', 0);
-
-          human.append('path')
-            .attr('d', 'M50,74.726c-3.808,0-6.906-3.252-6.906-7.248s3.098-7.244,6.906-7.244c3.813,0,6.911,3.252,6.911,7.244 C56.911,71.474,53.808,74.726,50,74.726z');
-          human.append('path')
-            .attr('d', 'M69.707,120.204c0,2.287-1.775,4.145-3.957,4.145h-1.985V91.295H59.86v74.321 c0,2.287-1.775,4.145-3.957,4.145c-2.16,0-3.922-1.823-3.957-4.08c0-0.022,0-0.044,0-0.065c0-0.017,0-0.039,0-0.052v-45.36h-3.9 v45.417c0,0.026,0,0.044,0,0.065c-0.031,2.257-1.797,4.08-3.957,4.08c-2.183,0-3.953-1.858-3.953-4.145V91.295h-3.905v33.05h-1.985 c-2.183,0-3.953-1.858-3.953-4.145V89.231c0-5.701,4.421-10.342,9.86-10.342h19.689c5.438,0,9.864,4.636,9.864,10.342 L69.707,120.204L69.707,120.204z')
-          ;
-
-          human
-            .transition()
-            .delay(3000)
-            .duration(1000)
-            .attr('opacity', 1);
 
           var continentsChart = chart.append('g')
             .attr('class', 'continents-chart');
 
           function _buildContinentsChart(continentsData) {
-            var radius = d3.scale.linear()
-              .domain([0, d3.max(continentsData, function (d, i) {
-                return d.value;
-              })])
-              .range([15, 100]);
+
+            var radius = d3.scale.sqrt()
+              .domain([
+                d3.min(continentsData, function (d, i) {
+                  return d.value;
+                }), d3.max(continentsData, function (d, i) {
+                  return d.value;
+                })
+              ])
+              .range([15, 60]);
+
             var labelSize = d3.scale.linear()
-              .domain([0, d3.max(continentsData, function (d, i) {
-                return d.value;
-              })])
+              .domain([
+                d3.min(continentsData, function (d, i) {
+                  return d.value;
+                }), d3.max(continentsData, function (d, i) {
+                  return d.value;
+                })
+              ])
               .range([8, 20]);
 
             var nodes = continentsData.map(function (d, i) {
@@ -281,11 +273,7 @@
           function _buildWorldChart(worldData) {
 
             worldData = worldData.sort(function (a, b) {
-              if (a.countryTitle > b.countryTitle) {
-                return 1;
-              } else {
-                return -1;
-              }
+              return a.value > b.value ? -1 : 1;
             });
 
             var worldBirthdaysTotal = d3.sum(worldData, function (d, i) {return d.value});
@@ -308,7 +296,31 @@
               .sort(null)
               .value(function (d) { return d.value; });
 
-//            worldChart.selectAll('.arc').remove();
+            worldChart.selectAll('g').remove();
+
+            var human = worldChart.append('g')
+              .attr({
+                'class': 'human',
+                'transform': 'translate(' + [-50, -115] + ')'
+              })
+              .attr('opacity', 0);
+
+            human.append('use')
+              .attr({
+                'class': 'ticks',
+                'xlink:href': function() {
+                  if (ProfileService.gender === 'female') {
+                    return '#female-large';
+                  } else {
+                    return '#male-large';
+                  }
+                }
+              });
+
+            human.transition()
+              .delay(3000)
+              .duration(1000)
+              .attr('opacity', 1);
 
             var pieChart = worldChart.selectAll(".arc")
               .data(pie(worldData))

@@ -2,6 +2,7 @@
   .story-area
     header
       h1 What are the milestones to expect in your life? <i ng-bind-html="titleAlive"></i> <i ng-bind-html="titleDie"></i>
+      .loader.fa.fa-refresh(ng-class="{'active': loading}")
     div.rank
       h2 Rank
       .global-rank
@@ -16,10 +17,10 @@
     div.timeline
       h2 Timeline
       ul
-        li(ng-repeat="item in storyLineData | orderBy: '-year'",
+        li(ng-repeat="item in storyLineData | orderBy:dateOrder:true",
           data-id="item.year",
           class="{{item.color}}",
-          ng-class="{'now': item.now, 'past': item.year < year, 'selected': selectedYear === item.year}",
+          ng-class="{'is-rank': item.rank, 'now': item.now, 'past': item.year < year, 'selected': selectedYear === item.year}",
           ng-click="highlightStoryLine(item.year)"
           )
           span.time

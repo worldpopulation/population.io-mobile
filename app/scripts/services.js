@@ -3,30 +3,9 @@
 
   angular.module('populationioApp')
 
-    .service('PeopleGridService', function (PopulationIOService) {
-      return {
-        worldPopulation: (7168 * 1000000000),
-        getData: function (pos) {
-          var data = [];
-          for (var i = pos; i <= pos + 250; i += 1) {
-            if (i < this.getWorldPopulation()) {
-              data.push({
-                rank: i,
-                sex: 'male'
-              });
-            }
-          }
-          return data;
-        },
-        getWorldPopulation: function () {
-          return this.worldPopulation;
-        }
-      };
-    })
-
     .service('ProfileService', function () {
       return {
-        gender: 'male',
+        gender: 'female',
         birthday: '',
         country: '',
         active: false,
@@ -39,29 +18,9 @@
 
     .service('PopulationIOService', function ($rootScope, $http) {
 
-      var baseUrl = ' http://api.population.io/1.0',
-        countries = [];
+      var baseUrl = ' http://api.population.io/1.0';
 
       return {
-        worldPopulation: (7168 * 1000000000),
-        getCelebrities: function (startRank) {
-          return [
-            {rank: 500000110, name: 'Britney Spears', 'birthday': '1983-04-17', gender: 'female', country: 'USA'},
-            {rank: 500000136, name: 'John Doe', 'birthday': '1984-05-17', gender: 'male', country: 'Austria'},
-            {rank: 500000004, name: 'Max Payne', 'birthday': '1985-03-22', gender: 'male', country: 'USA'},
-            {rank: 5000000152, name: 'Patrick Bateman', 'birthday': '1974-03-22', gender: 'male', country: 'Germany'},
-            {rank: 7000000000, name: 'Jane Doe', 'birthday': '1992-03-22', gender: 'female', country: 'Russia'}
-          ];
-
-          return _.filter(celebs, function (celeb) {return celeb.rank <= endRank && celeb.rank >= startRank})
-        },
-        getRank: function () {
-          return 5040123456789;
-        },
-        setWorldPopulation: function (worldPopulation) {
-          this.worldPopulation = worldPopulation;
-          $rootScope.$emit('populationChanged');
-        },
         getWorldPopulation: function () {
           var p2013 = 7162119000;
           var p2014 = 7243784000;
@@ -75,23 +34,26 @@
         },
 
         // GET /api/1.0/countries/
-        loadCountries: function (onSuccess) {
+        loadCountries: function (onSuccess, onError) {
           $http({
             method: 'get',
             url: baseUrl + '/countries/'
           })
-            .success(function (data) {
-              if (data.countries) {
-                onSuccess(data.countries);
-              }
-            })
-            .error(function () {
-              console.error('getCountries() error');
-            });
+          .success(function (data) {
+            if (data.countries) {
+              onSuccess(data.countries);
+            }
+          })
+          .error(function () {
+            if (onError) {
+              onError();
+            }
+            console.info('getCountries() error');
+          });
         },
 
         // GET /api/1.0/wp-rank/{dob}/{sex}/{country}/today/
-        loadWpRankToday: function (args, onSuccess) {
+        loadWpRankToday: function (args, onSuccess, onError) {
           $http({
             method: 'get',
             url: [
@@ -103,18 +65,21 @@
               'today'
             ].join('/') + '/'
           })
-            .success(function (data) {
-              if (data.rank) {
-                onSuccess(data.rank);
-              }
-            })
-            .error(function () {
-              console.error('loadWpRankToday() error');
-            });
+          .success(function (data) {
+            if (data.rank) {
+              onSuccess(data.rank);
+            }
+          })
+          .error(function () {
+            if (onError) {
+              onError();
+            }
+            console.info('loadWpRankToday() error');
+          });
         },
 
         // GET /wp-rank/{dob}/{sex}/{country}/on/{date}/
-        loadWpRankOnDate: function (args, onSuccess) {
+        loadWpRankOnDate: function (args, onSuccess, onError) {
           $http({
             method: 'get',
             url: [
@@ -127,19 +92,22 @@
               args.date
             ].join('/') + '/'
           })
-            .success(function (data) {
-              if (data.rank) {
-                onSuccess(data.rank);
-              }
-            })
-            .error(function () {
-              console.error('loadWpRankOnDate() error');
-            });
+          .success(function (data) {
+            if (data.rank) {
+              onSuccess(data.rank);
+            }
+          })
+          .error(function () {
+            if (onError) {
+              onError();
+            }
+            console.info('loadWpRankOnDate() error');
+          });
         },
 
         // GET /api/1.0/wp-rank/{dob}/{sex}/{country}/ranked/{rank}
 
-        loadWpRankRanked: function (args, onSuccess) {
+        loadWpRankRanked: function (args, onSuccess, onError) {
           $http({
             method: 'get',
             url: [
@@ -152,18 +120,21 @@
               args.rank
             ].join('/') + '/'
           })
-            .success(function (data) {
-              if (data.date_on_rank) {
-                onSuccess(data.date_on_rank);
-              }
-            })
-            .error(function (error) {
-              console.error('loadWpRankRanked() error: ', error.detail);
-            });
+          .success(function (data) {
+            if (data.date_on_rank) {
+              onSuccess(data.date_on_rank);
+            }
+          })
+          .error(function (error) {
+            if (onError) {
+              onError();
+            }
+            console.info('loadWpRankRanked() error: ', error.detail);
+          });
         },
 
         // GET /api/1.0/life-expectancy/remaining/{sex}/{country}/{date}/{age}
-        loadLifeExpectancyRemaining: function (args, onSuccess) {
+        loadLifeExpectancyRemaining: function (args, onSuccess, onError) {
           $http({
             method: 'get',
             url: [
@@ -175,18 +146,21 @@
               args.age
             ].join('/') + '/'
           })
-            .success(function (data) {
-              if (data.remaining_life_expectancy) {
-                onSuccess(data.remaining_life_expectancy);
-              }
-            })
-            .error(function () {
-              console.error('loadLifeExpectancyRemaining() error');
-            });
+          .success(function (data) {
+            if (data.remaining_life_expectancy) {
+              onSuccess(data.remaining_life_expectancy);
+            }
+          })
+          .error(function () {
+            if (onError) {
+              onError();
+            }
+            console.info('loadLifeExpectancyRemaining() error');
+          });
         },
 
         // GET /api/1.0/life-expectancy/total/{sex}/{country}/{dob}
-        loadLifeExpectancyTotal: function (args, onSuccess) {
+        loadLifeExpectancyTotal: function (args, onSuccess, onError) {
           $http({
             method: 'get',
             url: [
@@ -197,18 +171,21 @@
               args.dob
             ].join('/') + '/'
           })
-            .success(function (data) {
-              if (data.total_life_expectancy) {
-                onSuccess(data.total_life_expectancy);
-              }
-            })
-            .error(function () {
-              console.error('loadLifeExpectancyTotal() error');
-            });
+          .success(function (data) {
+            if (data.total_life_expectancy) {
+              onSuccess(data.total_life_expectancy);
+            }
+          })
+          .error(function () {
+            if (onError) {
+              onError();
+            }
+            console.info('loadLifeExpectancyTotal() error');
+          });
         },
 
         // GET /api/1.0/population/{year}/{country}
-        loadPopulation: function (args, onSuccess) {
+        loadPopulation: function (args, onSuccess, onError) {
           $http({
             method: 'get',
             url: [
@@ -218,14 +195,17 @@
               args.country
             ].join('/') + '/'
           })
-            .success(function (data) {
-              if (data) {
-                onSuccess(data);
-              }
-            })
-            .error(function () {
-              console.error('loadPopulation() error');
-            });
+          .success(function (data) {
+            if (data) {
+              onSuccess(data);
+            }
+          })
+          .error(function () {
+            if (onError) {
+              onError();
+            }
+            console.info('loadPopulation() error');
+          });
         }
       };
     })

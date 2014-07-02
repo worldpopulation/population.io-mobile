@@ -53,6 +53,41 @@ svg.defs-area
 text
   cursor default
 
+// loader
+.loader
+  position absolute
+  text-align right
+  left 0
+  right 20px
+  z-index 2
+  bottom -50px
+  font-size 24px
+  color #666
+  opacity 0
+  transition opacity 300ms ease
+.loader.active
+  opacity 1
+.loader:after
+  content ''
+  position absolute
+  z-index 1
+  right -9px
+  top -9px
+  height 40px
+  width 40px
+  background highlight-yellow
+  border-radius 40px
+.loader:before
+  z-index 2
+  position relative
+  animation loading-animation 1.25s infinite linear
+
+@keyframes loading-animation
+  0%
+    transform rotate(0deg)
+  100%
+    transform rotate(360deg)
+
 // cloak
 [ng\:cloak],
 [ng-cloak],
@@ -233,6 +268,7 @@ section
     padding 40px 0
     border-bottom 1px solid border-color
     border-top 1px solid border-color
+    position relative
   header.divided
     clearfix()
     h1
@@ -317,20 +353,6 @@ form
   height 120px
   width 120px
   background-position -300px -200px
-.btn.loading
-  animation breath-animation 2s infinite ease
-
-@keyframes breath-animation
-  0%
-    transform scale(1.0)
-  50%
-    transform scale(0.8)
-  0%
-    transform scale(1.0)
-  50%
-    transform scale(0.8)
-  0%
-    transform scale(1.0)
 
 *[disabled=disabled]
   opacity 0.5

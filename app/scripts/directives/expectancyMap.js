@@ -26,18 +26,6 @@
             .translate([(width / 2), (height / 2)])
             .scale(width / 2 / Math.PI * 0.75);
 
-          $scope.$watch('countryRef', function(data) {
-            if (data) {
-              _addDescriptionLine('ref', data);
-            }
-          });
-
-          $scope.$watch('countryRel', function(data) {
-            if (data) {
-              _addDescriptionLine('rel', data);
-            }
-          });
-
           var path = d3.geo.path().projection(projection);
 
           var _addDescriptionLine = function (type, data) {
@@ -188,6 +176,18 @@
               .on('click', function(d) {
                 $rootScope.$emit('countryRelChanged', d.properties.name);
               });
+
+            $scope.$watch('countryRef', function(data) {
+              if (data) {
+                _addDescriptionLine('ref', data);
+              }
+            });
+
+            $scope.$watch('countryRel', function(data) {
+              if (data) {
+                _addDescriptionLine('rel', data);
+              }
+            });
           });
         }
       };
