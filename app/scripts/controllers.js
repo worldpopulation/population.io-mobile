@@ -439,10 +439,10 @@
         _loadWpRankRanked(7000000000, '7th');
 
         _loadLifeExpectancyRemaining(ProfileService.country, function(remainingLife) {
-          var date = _getDateWithOffset(
-            new Date(),
-            remainingLife
-          );
+
+          var today =new Date();
+          var date = today.setDate(today.getDate() + (remainingLife*365));
+
           $scope.titleDie = $sce.trustAsHtml([
             'You will die on <span>',
             $filter('ordinal')($filter('date')(date, 'd')) + ' ',
