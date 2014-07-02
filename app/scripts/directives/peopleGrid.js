@@ -66,6 +66,7 @@
               celebs,
               rollScale = d3.scale.linear(),
               celebsRoll,
+              currentCeleb = 0,
               prevCelebsButton,
               nextCelebsButton,
               celebTooltip,
@@ -452,7 +453,6 @@
             }
 
             function populateCelebsBar() {
-              var currentCeleb = 0;
               celebWidth = (parentWidth - 200 - 300) / celebsInCelebsBar;
               rollScale
                 .domain([0, celebs.length])
@@ -464,7 +464,7 @@
 
               nextCelebsButton
                 .on('click', function () {
-
+                  console.log('currentCeleb: ' + currentCeleb)
                   if (currentCeleb >= celebs.length - celebsInCelebsBar * 2) {
                     currentCeleb = celebs.length - celebsInCelebsBar;
                     nextCelebsButton.style('display', 'none')
@@ -700,6 +700,8 @@
               var xy = canvas.utils.getXYFromTranslate(personItem.attr('transform'));
 
               navigatorArea.select('rect[data-id="' + d.id + '"]').classed('active', true);
+              var navigatorX = navigatorArea.select('rect[data-id="' + d.id + '"]').attr('x')
+              var navigatorY = navigatorArea.select('rect[data-id="' + d.id + '"]').attr('y')
               console.log(navigatorArea.select('rect[data-id="' + d.id + '"]'))
               grid.select('.grid-celeb[data-id="' + d.id + '"]').classed('highlighted', true);
               celebTooltip.attr({ opacity: 1 });
@@ -718,10 +720,11 @@
                   .transition()
                   .duration(600)
                   .attr({transform: canvas.utils.translate(-xy[0] + gridWidth / 2, -xy[1] + gridHeight / 2)});
+                console.log(xy[1] / scaleY)
                 lens
                   .transition()
                   .duration(600)
-                  .attr({transform: canvas.utils.translate(xy[0] / scaleX - lensWidth / 2, xy[1] / scaleY - lensHeight / 2)});
+                  .attr({transform: canvas.utils.translate(navigatorX - lensWidth / 2 + 2, navigatorY - lensHeight / 2 + 2)});
                 celebTooltip.attr({
                   transform: canvas.utils.translate(gridWidth / 2 - 270 / 2 + 30, gridHeight / 2 + 170)
                 });
@@ -749,7 +752,6 @@
             }
 
             function toggleCelebInCelebsBar(id) {
-              var currentCeleb;
               var celebsRoll = d3.select('.celebs-roll');
               var celebs = celebsRoll.selectAll('.roll-celeb').data();
 
@@ -1034,7 +1036,8 @@
                   },
                   transform: function (d, i) {return canvas.utils.translate(d.x, d.y)}
 
-                });
+                })
+                .classed('me', function (d, i) {return d.name == 'You'});
               person.append('rect')
                 .attr({
                   width: personWidth,
@@ -1310,374 +1313,6 @@
           }
 
 
-//          function _initCelebsBar() {
-//            chart.select('.celebrities-bar').remove()
-//            celebWidth = (parentWidth - 200 - 300) / celebsInCelebsBar;
-//            celebsBar = chart.append('g')
-//              .attr({
-//                class: 'celebrities-bar',
-//                transform: 'translate(100,550)',
-//                opacity: 1
-//              });
-//            celebsBar.append('rect')
-//              .attr(
-//              {
-//                fill: 'rgba(0,0,0,0.01)',
-//                width: parentWidth - 200,
-//                height: 100,
-//                transform: 'translate(0,0)'
-//
-//              }
-//            );
-//            celebsBar.append('rect')
-//              .attr(
-//              {
-//                fill: '#ccc',
-//                width: parentWidth - 200,
-//                height: 1,
-//                transform: 'translate(0,0)'
-//
-//              }
-//            );
-//            celebsBar.append('rect')
-//              .attr(
-//              {
-//                fill: '#ccc',
-//                width: parentWidth - 200,
-//                height: 1,
-//                transform: 'translate(0,99)'
-//
-//              }
-//            );
-//            celebsBar.append('rect')
-//              .attr(
-//              {
-//                fill: '#eee',
-//                width: parentWidth - 200,
-//                height: 1,
-//                transform: 'translate(0,50)'
-//
-//              }
-//            );
-//
-//            rollScale = d3.scale.linear();
-//
-//            var celebsRollWrapper = celebsBar.append('g').attr('class', 'celebs-roll-wrapper').attr('transform', 'translate(150,0)');
-//            celebsRollWrapper.attr(
-//              {
-//                'clip-path': 'url(#celebs-roll-clip)'
-//              }
-//            );
-//
-//            celebsRoll = celebsRollWrapper.append('g').attr('class', 'celebs-roll');
-//            prevCelebsButton = celebsBar.append('g').attr('class', 'prev-celebs-button').attr('transform', 'translate(' + [70, 50] + ')').style('display', 'none');
-//            nextCelebsButton = celebsBar.append('g').attr('class', 'next-celebs-button').attr('transform', 'translate(' + [parentWidth - 200 - 70, 50] + ')');
-//            nextCelebsButton
-//              .on('mouseenter', function () {
-//                d3.select(this).select('circle').transition().attr('r', 24)
-//              })
-//              .on('mouseleave', function () {
-//                d3.select(this).select('circle').transition().attr('r', 20)
-//              });
-//            prevCelebsButton
-//              .on('mouseenter', function () {
-//                d3.select(this).select('circle').transition().attr('r', 24)
-//              })
-//              .on('mouseleave', function () {
-//                d3.select(this).select('circle').transition().attr('r', 20)
-//              });
-//            celebsRoll.append('rect')
-//              .attr(
-//              {
-//                fill: 'transparent',
-//                width: parentWidth - 200 - 300,
-//                height: 100
-//
-//              });
-//
-//            prevCelebsButton.append('circle')
-//              .attr(
-//              {
-//                fill: '#fff',
-//                'stroke-width': 1,
-//                stroke: '#ccc',
-//                r: 20,
-//                cx: 0,
-//                cy: 0
-//              }
-//            );
-//            prevCelebsButton.append('polygon')
-//              .attr(
-//              {
-//                fill: '#444',
-//                points: '10.002,4.503 1.906,4.503 5.224,1.198 4.519,0.496 -0.002,5 4.519,9.504 5.224,8.802 1.906,5.497 10.002,5.497',
-//                transform: 'translate(-5,-5)'
-//
-//              }
-//            );
-//            nextCelebsButton.append('circle')
-//              .attr(
-//              {
-//                fill: '#fff',
-//                'stroke-width': 1,
-//                stroke: '#ccc',
-//                r: 20,
-//                cx: 0,
-//                cy: 0
-//              }
-//            );
-//            nextCelebsButton.append('polygon')
-//              .attr(
-//              {
-//                fill: '#444',
-//                points: '-0.002,4.503 8.094,4.503 4.776,1.198 5.481,0.496 10.002,5 5.481,9.504 4.776,8.802 8.094,5.497 -0.002,5.497',
-//                transform: 'translate(-5,-5)'
-//
-//              }
-//            )
-//
-//          }
-
-//          function _populateCelebsBar() {
-//            currentCeleb = 0;
-//            var celebs = person.data()
-//
-//
-//            rollScale
-//              .domain([0, celebs.length])
-//              .range([0, -celebWidth * celebs.length]);
-//            celebsRoll.selectAll('.roll-celeb').remove();
-//            celebsRoll.attr({transform: 'translate(0,0)'});
-//            prevCelebsButton.style('display', 'none');
-//
-//
-//            nextCelebsButton
-//              .on('click', function () {
-//
-//                if (currentCeleb >= celebs.length - celebsInCelebsBar * 2) {
-//                  currentCeleb = celebs.length - celebsInCelebsBar;
-//                  nextCelebsButton.style('display', 'none')
-//                } else {
-//                  currentCeleb += celebsInCelebsBar;
-//                  nextCelebsButton.style('display', 'block')
-//                }
-//                if (currentCeleb > 0) {
-//                  prevCelebsButton.style('display', 'block')
-//                } else {
-//                  prevCelebsButton.style('display', 'block')
-//                }
-//                celebsRoll
-//                  .transition()
-//                  .attr({transform: canvas.utils.translate(rollScale(currentCeleb), 0)});
-//                var startRange = currentCeleb - 2;
-//                var celebsInBar = celebsRoll.selectAll('.roll-celeb');
-//                celebsInBar.each(function (d, i) {
-//                  if (i == startRange) {
-//                    console.log(d.id)
-//                  }
-//                  if (i > startRange && i <= startRange + 6) {
-//                    d3.select(this)
-//                      .select('image')
-//                      .attr({
-//                        'xlink:href': function (d, i) {
-//                          return d.thumbnail
-//                        }
-//                      })
-//                  }
-//                })
-//              });
-//
-//            prevCelebsButton
-//              .on('click', function () {
-//                if (currentCeleb < celebsInCelebsBar * 2) {
-//                  currentCeleb = 0;
-//                  prevCelebsButton.style('display', 'none')
-//                }
-//                else {
-//                  currentCeleb -= celebsInCelebsBar;
-//                  prevCelebsButton.style('display', 'block')
-//                }
-//
-//                if (currentCeleb >= celebs.length - celebsInCelebsBar - 1) {
-//                  nextCelebsButton.style('display', 'none')
-//                } else {
-//                  nextCelebsButton.style('display', 'block')
-//                }
-//
-//
-//                celebsRoll
-//                  .transition()
-//                  .attr({transform: 'translate(' + [rollScale(currentCeleb), 0] + ')'})
-//                var startRange = currentCeleb - 2;
-//                var celebsInBar = celebsRoll.selectAll('.roll-celeb');
-//                celebsInBar.each(function (d, i) {
-//                  if (i == startRange) {
-//                    console.log(d.id)
-//                  }
-//                  if (i > startRange && i <= startRange + 6) {
-//                    d3.select(this)
-//                      .select('image')
-//                      .attr({
-//                        'xlink:href': function (d, i) {
-//                          return d.thumbnail
-//                        }
-//                      })
-//                  }
-//                })
-//
-//              });
-//
-//            var celeb = celebsRoll.selectAll('.roll-celeb')
-//              .data(celebs)
-//              .enter()
-//              .append('g')
-//              .attr({
-//                class: 'roll-celeb',
-//                'data-local-id': function (d, i) {return i},
-//                transform: function (d, i) {
-//                  return 'translate(' + [i * celebWidth, 0] + ')'
-//                }
-//              });
-//            celeb.append('circle').attr(
-//              {
-//                fill: 'white',
-//                r: 20,
-//                cx: celebWidth / 2,
-//                cy: 50,
-//                'stroke-width': 1,
-//                stroke: '#ccc'
-//
-//
-//              }
-//            );
-//            celeb.append('image').attr(
-//              {
-//                width: 40,
-//                height: 40,
-//                x: -20,
-//                y: -20,
-//                'clip-path': 'url(#rounded-corners-clip)',
-//                transform: 'translate(' + [celebWidth / 2, 50] + ')'
-//              }
-//            );
-//            celeb.append('text')
-//              .style(
-//              {
-//                fill: '#444',
-//                'font-size': 12,
-//                'text-anchor': 'middle'
-//              }
-//            )
-//              .attr({
-//                transform: 'translate(' + [celebWidth / 2, 0] + ')',
-//                dy: 87
-//              })
-//              .text(function (d, i) {
-//                return d.name
-//              });
-//
-//            celeb.append('rect').attr(
-//              {
-//                width: celebWidth,
-//                height: 100,
-//                x: 0,
-//                y: 0
-//              }
-//            )
-//              .style({
-//                fill: 'transparent'
-//              })
-//            ;
-//            var ghost = celebsRoll.selectAll('.ghost')
-//              .data([0, 1, 2, 3])
-//              .enter()
-//              .append('g')
-//              .attr({
-//                class: 'ghost',
-//                transform: function (d, i) {
-//                  if (i < 2) {
-//                    return 'translate(' + [0 - (i + 1) * celebWidth, 0] + ')'
-//                  }
-//                  else {
-//                    return 'translate(' + [-rollScale(celebs.length - 2 + i), 0] + ')'
-//                  }
-//                }
-//              });
-//            ghost.append('circle').attr(
-//              {
-//                fill: '#eee',
-//                r: 20,
-//                cx: celebWidth / 2,
-//                cy: 50,
-//                'stroke-width': 1,
-//                stroke: '#eee'
-//
-//
-//              }
-//            );
-//            ghost.append('rect').attr(
-//              {
-//                width: celebWidth,
-//                height: 100,
-//                x: 0,
-//                y: 0
-//              }
-//            )
-//              .style({
-//                fill: 'transparent'
-//              })
-//            ;
-//            $timeout(function () {
-//              var me = d3.select('.persons-area').select('.person.me');
-//              var xy = canvas.utils.getXYFromTranslate(me.attr('transform'));
-//              _activateCelebInCelebsBar(me.attr('data-id'));
-//              showTooltip(me.datum(), xy[0], xy[1]);
-//            }, 3000)
-//
-//            celeb.on('mouseenter', function (d, i) {
-//              d3.selectAll('.roll-celeb')
-//                .select('circle')
-//                .transition()
-//                .attr({
-//                  r: 20
-//                })
-//
-//              d3.select(this)
-//                .select('circle')
-//                .transition()
-//                .attr({
-//                  r: 70
-//                })
-//
-//              var personInGrid = grid.select('.person[data-id="' + d.id + '"]');
-//              personInGrid.moveToFront()
-//              d3.select(this).select('image')
-//                .attr({
-//                  'xlink:href': function (d, i) {
-//                    return d.thumbnail
-//                  }
-//                })
-//
-//
-//              var xy = canvas.utils.getXYFromTranslate((personInGrid.attr('transform')));
-//              _showTooltip(d, xy[0], xy[1])
-//
-//              personInGrid.classed('highlighted', true)
-//            });
-//            celeb.on('mouseleave', function (d, i) {
-//              d3.select(this)
-//                .select('circle')
-//                .transition()
-//                .attr({
-//                  r: 20
-//                })
-//
-//              var allPersonsInGrid = grid.selectAll('.person');
-//              allPersonsInGrid.classed('highlighted', false)
-//              _hideTooltip(d, i)
-//            })
-//          }
-
           var canvas = d3.peopleGrid.canvas();
           d3.select(element[0]).call(canvas);
 
@@ -1702,8 +1337,6 @@
 //            }
 //          });
 //
-//          _initBarChart();
-//          _initDefs();
         }
       };
     });
