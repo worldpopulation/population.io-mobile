@@ -842,10 +842,11 @@
               celebTooltip.attr({ opacity: 1 });
               var scaleX = 30, scaleY = 50;
               var gridXY = canvas.utils.getXYFromTranslate(grid.attr('transform'));
+              celebTooltip.classed('me', d.name == 'You')
 
               if (d3.select(this).classed('grid-celeb')) {
 //                toggleCelebInCelebsBar(d.id);
-                celebTooltip.classed('me', d.name == 'You')
+
                 var tooltipX = 0;
                 if (xy[0] + gridXY[0] <= 120) {
                   tooltipX = 20
