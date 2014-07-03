@@ -12,6 +12,7 @@
           rankGlobalTotal: "="
         },
         link: function ($scope, element) {
+          var formatCommas = d3.format("0,000");
           d3.peopleGrid = {
 //            chart,
 //            navigatorArea,
@@ -820,27 +821,12 @@
             function showTooltip(x, y) {
 
 
-//              var grid = d3.select('.grid');
               d3.selectAll('.roll-celeb')
                 .select('circle')
                 .transition()
                 .attr({
                   r: 20
                 });
-//
-//
-//              var personInGrid = grid.select('.grid-celeb[data-id="' + d.id + '"]');
-//              personInGrid.moveToFront()
-//              d3.select(this).select('image')
-//                .attr({
-//                  'xlink:href': function (d, i) {
-//                    return d.thumbnail
-//                  }
-//                })
-//
-//
-//              var xy = canvas.utils.getXYFromTranslate((personInGrid.attr('transform')));
-
 
               var d = d3.select(this).datum();
 
@@ -859,6 +845,7 @@
 
               if (d3.select(this).classed('grid-celeb')) {
 //                toggleCelebInCelebsBar(d.id);
+                celebTooltip.classed('me', d.name == 'You')
                 celebTooltip.attr({
                   transform: canvas.utils.translate(xy[0] + gridXY[0] - 270 / 2 + 30, xy[1] + gridXY[1] + 170)
                 });
@@ -909,7 +896,7 @@
                 country: 'World'
               }, function (rank) {
                 celebTooltip.rank.text(function () {
-                  return rank
+                  return formatCommas(rank)
                 });
 
               });
@@ -1286,10 +1273,12 @@
               canvas.updateLocalBar(rank, $scope.rankLocalTotal);
             }
           });
-
           $scope.$watch('rankGlobal', function (rank) {
             if (rank) {
               canvas.updateGlobalBar(rank, $scope.rankGlobalTotal);
+              if (d3.select('.celeb-tooltip').classed('me')) {
+                d3.select('.celeb-tooltip-rank').text(formatCommas(rank))
+              }
             }
           });
 
