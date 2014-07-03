@@ -2,7 +2,7 @@
 
 ## Setup
 
-* clone the repo
+* Clone the repository
 * Install node.js ([nodejs.org](http://nodejs.org))
 * Install package manager `bower`
 
