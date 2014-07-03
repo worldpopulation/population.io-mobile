@@ -319,7 +319,7 @@
           $scope.storyLineData.push({
             date: $filter('date')(date, 'yyyy-MM-dd'),
             year: $filter('date')(date, 'yyyy'),
-            title: 'Your life expectancy in <br/> ' + (country === 'World' ? 'the World': country)
+            title: 'Your life expectancy in ' + (country === 'World' ? 'the World': country)
           });
 
           if (onSuccess) {
