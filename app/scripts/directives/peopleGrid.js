@@ -195,7 +195,9 @@
               var xAxis = d3.svg.axis()
                 .scale(xScale)
                 .orient('bottom')
-                .ticks(ticks);
+                .ticks(ticks)
+                .tickFormat(function (d) { return formatBillions(d).replace('G', 'b');});
+              ;
 
               bar.select('.x-axis')
                 .call(xAxis)
@@ -240,7 +242,8 @@
               var xAxis = d3.svg.axis()
                 .scale(xScale)
                 .orient('top')
-                .ticks(ticks);
+                .ticks(ticks)
+                .tickFormat(function (d) { return formatBillions(d).replace('G', 'B');});
 
               bar.select('.x-axis')
                 .call(xAxis)
@@ -613,7 +616,7 @@
 
               nextCelebsButton
                 .on('click', function () {
-                  console.log('currentCeleb: ' + currentCeleb)
+//                  console.log('currentCeleb: ' + currentCeleb)
                   if (currentCeleb >= celebs.length - celebsInCelebsBar * 2) {
                     currentCeleb = celebs.length - celebsInCelebsBar;
                     nextCelebsButton.style('display', 'none')
@@ -632,9 +635,6 @@
                   var startRange = currentCeleb - 2;
                   var celebsInBar = celebsRoll.selectAll('.roll-celeb');
                   celebsInBar.each(function (d, i) {
-                    if (i == startRange) {
-                      console.log(d.id)
-                    }
                     if (i > startRange && i <= startRange + 6) {
                       d3.select(this)
                         .select('image')
@@ -671,9 +671,6 @@
                   var startRange = currentCeleb - 2;
                   var celebsInBar = celebsRoll.selectAll('.roll-celeb');
                   celebsInBar.each(function (d, i) {
-                    if (i == startRange) {
-                      console.log(d.id)
-                    }
                     if (i > startRange && i <= startRange + 6) {
                       d3.select(this)
                         .select('image')
@@ -932,7 +929,6 @@
                 currentCeleb = _.findIndex(celebs, function (celeb, index) {
                   return celeb.id == id
                 });
-                console.log(currentCeleb)
                 celebsRoll
                   .transition()
                   .attr({
@@ -958,9 +954,6 @@
                 var startRange = currentCeleb - 4;
                 var celebsInBar = celebsRoll.selectAll('.roll-celeb');
                 celebsInBar.each(function (d, i) {
-                  if (i == startRange) {
-                    console.log(d.id)
-                  }
                   if (i > startRange && i <= startRange + 10) {
                     d3.select(this)
                       .select('image')
@@ -1045,10 +1038,9 @@
                 name: 'You',
                 country: ProfileService.country,
                 gender: ProfileService.gender,
-                thumbnail: 'images/human.png',
+                thumbnail: 'images/user-' + ProfileService.gender + '.png',
                 id: celebs.length
               });
-              console.log(celebs[celebs.length - 1])
               celebs = _.sortBy(celebs, function (item) {return item.birthday});
 
 
@@ -1084,7 +1076,7 @@
                 .scale(yAxisScale)
                 .orient('right')
                 .ticks(8)
-                .tickFormat(function (d) { return formatBillions(d).replace('G', 'b');});
+                .tickFormat(function (d) { return formatBillions(d).replace('G', 'B');});
 
               var xCols = [];
               for (var i = 0; i < navWidth - 3; i++) {
@@ -1093,7 +1085,6 @@
               var xScale = d3.scale.quantize()
                 .domain([peopleInOneRow, 0 ])
                 .range(xCols);
-              console.log(xCols.length);
               d3.select('.y-axis')
                 .call(yAxis)
                 .selectAll('text').attr('dy', '-4px');
@@ -1264,7 +1255,6 @@
 
               var personItem = d3.select('.grid-celeb.me');
               var xy = canvas.utils.getXYFromTranslate(personItem.attr('transform'));
-              console.log(xy)
               gridArea
                 .attr({transform: canvas.utils.translate(-xy[0] + gridWidth / 2, -xy[1] + gridHeight / 2)});
 
