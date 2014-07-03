@@ -26,21 +26,45 @@ body > header
     float right
     line-height 40px
     border 1px solid border-color
-    padding 0 20px 0 45px
+    padding 0 20px 0 105px
     border-radius 5px
     font-size 18px
     margin 0 10px
     color #666666
     position relative
-  .world-population:before
-    content ''
-    position absolute
-    left 20px
-    top 10px
-    height 20px
-    width 20px
-    background-icon()
-    background-position -140px -240px
+    overflow hidden
+    .toggle
+      position absolute
+      left 0
+      top 0
+      bottom 0
+      height auto
+    label
+      position relative
+      border-top none !important
+      border-bottom none !important
+      border-left none !important
+      border-right 1px solid border-color !important
+      border-radius 0 !important
+    label.active
+      background-color highlight-yellow
+    .icon-world
+      background-icon()
+      background-position -130px -230px
+    .icon-gender:before
+      content ''
+      position absolute
+      left 0
+      top 0
+      bottom 0
+      right 0
+      opacity 0.8
+    .icon-male:before
+      background-icon()
+      background-position -130px -330px
+    .icon-female:before
+      background-icon()
+      background-position -30px -330px
   .profile
     float right
     line-height 40px

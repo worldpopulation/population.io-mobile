@@ -13,7 +13,12 @@
         });
       }
 
+      $scope.clockType = 'world';
       $scope.profile = ProfileService;
+
+      $scope.$on('rankGlobalChanged', function(e, rankGlobal) {
+        $scope.rankGlobal = rankGlobal;
+      });
 
       $interval(function() {
         $scope.worldPopulation = PopulationIOService.getWorldPopulation();
