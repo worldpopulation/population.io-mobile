@@ -76,7 +76,8 @@
               onSuccess(data.rank);
             }
           })
-          .error(function () {
+          .error(function (err) {
+              console.log(err)
             if (onError) {
               onError();
             }
