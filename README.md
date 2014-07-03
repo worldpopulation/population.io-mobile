@@ -1,29 +1,43 @@
 # Population.io
 
-##Installation
+## Setup
 
-1. clone the repo
+* clone the repo
+* Install node.js ([nodejs.org](http://nodejs.org))
+* Install package manager `bower`
 
-2. install node.js
+        $ npm install -g bower
 
-3. install dependencies
+* Install build system `gulp`
 
-		npm install -g bower
-		npm install -g gulp
-		
-		npm install
-		bower install
+        $ npm install -g gulp
 
-4. start gulp
+* Install dependencies
 
-		cd your/project/folder
-		gulp
-		open http://localhost:1983
+        $ npm install
+        $ bower install
 
-5. clean dist folder
-    gulp clean
+## Prepare
 
-6. run jshint on app/scripts folder files
-    gulp jshint
-    
-7. For the first run, copy app/assets whole folder into dist folder, so it becomes dist/assets.
+* For the first run, copy *app/assets* whole folder into dist folder, so it becomes *dist/assets*
+
+## Run
+
+* Navigate to *PROJECT_ROOT* and start the server by using `gulp`
+
+        $ gulp
+
+* Open http://localhost:1983
+
+## Deploy
+
+* Add `.ftppass` file to your *PROJECT_ROOT* and enter ftp credentials
+
+        {
+          "keyMain": {
+            "user": USER,
+            "pass": PASS
+          }
+        }
+
+* Run `gulp deploy`
