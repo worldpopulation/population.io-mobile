@@ -667,10 +667,14 @@
           date: date,
           age: ProfileService.getAgeString()
         }, function(remainingLife) {
+
+          var ageDate = new Date(Date.now() - (new Date(ProfileService.birthday)).getTime());
+          var lifeExpectancy = ProfileService.getAge() + remainingLife + (ageDate.getMonth()/11);
+
           $scope.activeCountryRef = {
             country: $scope.selectedCountryRef,
             yearsLeft: remainingLife,
-            lifeExpectancy: ProfileService.getAge() + remainingLife
+            lifeExpectancy: lifeExpectancy
           };
           $scope.loading -= 1;
           if (!$scope.$$phase) {
@@ -691,10 +695,14 @@
           date: date,
           age: ProfileService.getAgeString()
         }, function(remainingLife) {
+
+          var ageDate = new Date(Date.now() - (new Date(ProfileService.birthday)).getTime());
+          var lifeExpectancy = ProfileService.getAge() + remainingLife + (ageDate.getMonth()/11);
+
           $scope.activeCountryRel = {
             country: $scope.selectedCountryRel,
             yearsLeft: remainingLife,
-            lifeExpectancy: ProfileService.getAge() + remainingLife
+            lifeExpectancy: lifeExpectancy
           };
 
           $scope.loading -= 1;
