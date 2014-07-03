@@ -6,13 +6,6 @@
 
       var celebrities = [
         {
-          "name": "Oldest Man",
-          "desc": "Dummy",
-          "birthday": "1920-01-01",
-          "country": "Northern Ireland",
-          "thumbnail": "celebrities\/thumbnails\/january\/colin-morgan.jpg"
-        },
-        {
           "name": "Colin Morgan",
           "desc": "TV Actor",
           "birthday": "1986-01-01",

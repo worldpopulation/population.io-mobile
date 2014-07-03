@@ -70,7 +70,8 @@
               prevCelebsButton,
               nextCelebsButton,
               celebTooltip,
-              celebWidth
+              celebWidth,
+              lens
               ;
 
             function canvas(selection) {
@@ -85,6 +86,7 @@
                 .append('g').attr({class: 'canvas-container'})
                 .attr({transform: canvas.utils.translate(0, 0)})
                 .call(initGrid)
+                .call(initBarChart)
                 .call(initCelebsBar)
                 .call(initNavigator)
                 .call(initCelebTooltip)
@@ -112,6 +114,149 @@
                 .style({fill: "url(#ghosts-pattern)"})
                 .attr({width: personWidth * 170 + personWidth * 60, height: 400 * personHeight + personHeight * 60})
 
+            }
+
+            function initBarChart(selection) {
+              var barHeight = 17;
+
+              var barChart = selection.append('g')
+                .attr('class', 'bar-chart');
+
+              var worldBar = barChart.append('g')
+                .attr('class', 'bar world');
+
+              worldBar.append('rect')
+                .attr({
+                  height: barHeight,
+                  width: parentWidth
+                });
+              worldBar.append('rect')
+                .attr({
+                  'class': 'highlight',
+                  height: barHeight,
+                  width: 0
+                });
+              worldBar.append('text')
+                .text('0%')
+                .attr({
+                  'class': 'percent',
+                  x: 0
+                });
+              worldBar.append('g')
+                .attr('class', 'x-axis');
+
+              var localBar = barChart.append('g')
+                .attr('class', 'bar local');
+
+              localBar.append('rect')
+                .attr({
+                  height: barHeight,
+                  width: parentWidth
+                });
+              localBar.append('rect')
+                .attr({
+                  class: 'highlight',
+                  height: barHeight,
+                  width: 0
+                });
+              localBar.append('text')
+                .text('0%')
+                .attr({
+                  'class': 'percent',
+                  x: 0
+                });
+              localBar.append('g')
+                .attr('class', 'x-axis');
+            }
+
+            canvas.updateLocalBar = function (rank, rankTotal) {
+              var bar = svg.select('.bar.local'),
+                width = parseInt((rank / rankTotal) * parentWidth, 0),
+                ticks = 5;
+
+              bar.select('rect.highlight')
+                .transition()
+                .duration(1000)
+                .attr({
+                  width: width
+                });
+              bar.select('text')
+                .text(parseInt(100 * rank / rankTotal, 0) + '%')
+                .transition()
+                .duration(1000)
+                .attr({
+                  x: width
+                });
+
+              var xScale = d3.scale.linear()
+                .domain([0, rankTotal])
+                .range([0, parentWidth]);
+
+              var xAxis = d3.svg.axis()
+                .scale(xScale)
+                .orient('bottom')
+                .ticks(ticks);
+
+              bar.select('.x-axis')
+                .call(xAxis)
+                .selectAll('.tick')
+                .attr({
+                  'class': function (d, i) {
+                    var className = 'tick';
+                    if (i === 0) {
+                      className += ' first';
+                    }
+                    if (i === ticks - 1) {
+                      className += ' last';
+                    }
+                    return className;
+                  }
+                });
+            }
+
+            canvas.updateGlobalBar = function (rank, rankTotal) {
+              var bar = svg.select('.bar.world'),
+                width = (rank / rankTotal) * parentWidth,
+                ticks = 5;
+
+              bar.select('rect.highlight')
+                .transition()
+                .duration(1000)
+                .attr({
+                  width: width
+                });
+              bar.select('.percent')
+                .text(parseInt(100 * rank / rankTotal, 0) + '%')
+                .transition()
+                .duration(1000)
+                .attr({
+                  x: width
+                });
+
+              var xScale = d3.scale.linear()
+                .domain([0, rankTotal])
+                .range([0, parentWidth]);
+
+              var xAxis = d3.svg.axis()
+                .scale(xScale)
+                .orient('top')
+                .ticks(ticks);
+
+              bar.select('.x-axis')
+                .call(xAxis)
+                .selectAll('.tick')
+                .attr({
+                  'class': function (d, i) {
+                    var className = 'tick';
+                    if (i === 0) {
+                      className += ' first';
+                    }
+                    if (i === ticks - 1) {
+                      className += ' last';
+                    }
+                    return className;
+                  }
+                });
             }
 
             function initDefs(selection) {
@@ -362,7 +507,7 @@
                   target.attr("transform", "translate(" + translate + ")");
                 });
 
-              var lens = navigatorArea.append('g')
+              lens = navigatorArea.append('g')
                 .attr({
                   class: 'lens',
                   opacity: 0,
@@ -438,6 +583,12 @@
                   transform: 'translate(80,60)'
                 })
                 .text('');
+              celebTooltip.rank = celebTooltip.append('text')
+                .attr({
+                  class: 'celeb-tooltip-rank',
+                  transform: 'translate(80,80)'
+                })
+                .text('Loading rank...');
               celebTooltip.image = celebTooltip
                 .append('image').attr(
                 {
@@ -449,7 +600,6 @@
                   transform: 'translate(40,40)'
                 }
               );
-              console.log(celebTooltip)
             }
 
             function populateCelebsBar() {
@@ -543,7 +693,7 @@
                 .append('g')
                 .attr({
                   class: 'roll-celeb',
-                  'data-local-id': function (d, i) {return i},
+                  'data-id': function (d, i) {return i},
                   transform: function (d, i) {
                     return 'translate(' + [i * celebWidth, 0] + ')'
                   }
@@ -702,7 +852,6 @@
               var personItem = d3.select('.grid-celeb[data-id="' + d.id + '"]');
               var lens = d3.select('.lens');
               var xy = canvas.utils.getXYFromTranslate(personItem.attr('transform'));
-
               navigatorArea.select('rect[data-id="' + d.id + '"]').classed('active', true);
               var navigatorX = parseInt(navigatorArea.select('rect[data-id="' + d.id + '"]').attr('x'))
               var navigatorY = parseInt(navigatorArea.select('rect[data-id="' + d.id + '"]').attr('y'))
@@ -729,7 +878,8 @@
                   .attr({transform: function () {
                     var xPosition, yPosition;
                     if (lensWidth / 2 > navigatorX) {xPosition = 0;}
-                    else {xPosition = navigatorX + lensWidth / 2 + 2;}
+                    else if (navigatorX > navWidth - lensWidth) {xPosition = navWidth - lensWidth;}
+                    else {xPosition = navigatorX - lensWidth / 2 + 2;}
 
                     if (lensHeight / 2 > navigatorY) {yPosition = 0;}
                     else {yPosition = navigatorY - lensHeight / 2 + 2;}
@@ -756,6 +906,17 @@
               celebTooltip.title.text(function () {
                 return d.name
               });
+              PopulationIOService.loadWpRankToday({
+                dob: d.birthday,
+                sex: 'unisex',
+                country: 'World'
+              }, function (rank) {
+                celebTooltip.rank.text(function () {
+                  return rank
+                });
+
+              });
+
 
               celebTooltip.details.text(function () {
                 return d.country + ', ' + d.birthday
@@ -771,12 +932,13 @@
                 currentCeleb = _.findIndex(celebs, function (celeb, index) {
                   return celeb.id == id
                 });
+                console.log(currentCeleb)
                 celebsRoll
                   .transition()
                   .attr({
                     transform: 'translate(' + [rollScale(currentCeleb - 2), 0] + ')'
                   });
-                var currentCelebElement = celebsRoll.select('.roll-celeb[data-local-id="' + currentCeleb + '"]');
+                var currentCelebElement = celebsRoll.select('.roll-celeb[data-id="' + currentCeleb + '"]');
                 var currentCelebElementInGrid = celebsRoll.select('.person[data-id="' + id + '"]');
                 currentCelebElement
                   .select('circle')
@@ -853,6 +1015,8 @@
                   opacity: 0,
                   transform: 'translate(-200,-200)'
                 });
+              d3.select('.celeb-tooltip-rank').text('Loading rank...');
+
               d3.select('.navigator').selectAll('rect').classed('active', false);
               d3.select('.grid').selectAll('.grid-celeb').classed('highlighted', false);
               toggleCelebInCelebsBar();
@@ -872,7 +1036,6 @@
             canvas.populate = function () {
               console.log('Populating...');
 
-
               var blockData = [];
               var rows = [];
 
@@ -885,6 +1048,7 @@
                 thumbnail: 'images/human.png',
                 id: celebs.length
               });
+              console.log(celebs[celebs.length - 1])
               celebs = _.sortBy(celebs, function (item) {return item.birthday});
 
 
@@ -936,6 +1100,7 @@
 
               var lastPopulationBlock = true;
               var blocksArea = d3.select('.blocks');
+              blocksArea.selectAll('.block').remove()
               blocksArea.selectAll('.block')
                 .data(blockData)
                 .enter()
@@ -982,8 +1147,8 @@
                     return xScale(d.population - worldPopulation);
                   }
                 });
-
               var celebsArea = d3.select('.celebs');
+              celebsArea.selectAll('rect').remove()
               celebsArea.selectAll('rect')
                 .data(celebs)
                 .enter()
@@ -1011,6 +1176,7 @@
                 .attr({
                   opacity: 1
                 });
+              d3.select('circle.person.me').remove()
               var personNavPointer =
                 celebsArea
                   .append('circle')
@@ -1030,7 +1196,23 @@
                 .attr({
                   r: 3
                 });
+
+              lens.attr(
+                {
+                  transform: function () {
+                    var x = personNavPointer.attr('cx') - lensWidth / 2 + 2
+                    var y = personNavPointer.attr('cy') - lensHeight / 2 + 2
+                    if (x - lensWidth / 2 + 2 < 0) { x = 0 }
+                    else if (x > navWidth - lensWidth) {x = navWidth - lensWidth;}
+                    if (y - lensHeight / 2 + 2 < 0) {
+                      y = 0
+                    }
+
+                    return canvas.utils.translate(x, y)
+                  }}
+              );
               var gridArea = d3.select('.grid');
+              gridArea.selectAll('.grid-celeb').remove()
               var person = gridArea.selectAll('.grid-celeb')
                 .data(celebs)
                 .enter()
@@ -1048,7 +1230,9 @@
                   transform: function (d, i) {return canvas.utils.translate(d.x, d.y)}
 
                 })
-                .classed('me', function (d, i) {return d.name == 'You'});
+                .classed('me', function (d, i) {
+                  return d.name == 'You'
+                });
               person.append('rect')
                 .attr({
                   width: personWidth,
@@ -1075,253 +1259,24 @@
                   iconElement.append('path').attr('d', 'M9.903,20.425v6.123c0,0.522-0.432,0.946-0.964,0.946c-0.526,0-0.955-0.416-0.963-0.931 c0-0.005,0-0.009,0-0.015c0-0.004,0-0.008,0-0.012v-6.111c0-0.001,0-0.002,0-0.004h1.927C9.903,20.422,9.903,20.423,9.903,20.425z');
                   iconElement.append('path').attr('d', 'M11.777,16.874l-1.792-7.39L9.059,9.7l2.374,9.787H3.542L5.916,9.7L4.99,9.484l-1.79,7.384l-0.472-0.111 c-0.517-0.121-0.837-0.631-0.714-1.139l1.711-7.048c0,0,0,0,0.001-0.001c0.259-1.065,1.22-1.808,2.336-1.808h2.878 c1.117,0,2.078,0.744,2.337,1.809l0,0l1.711,7.046c0,0,0,0,0,0.001c0.123,0.508-0.197,1.019-0.714,1.139L11.777,16.874z');
                   iconElement.append('path').attr('d', 'M7.501,5.812c-0.928,0-1.683-0.741-1.683-1.653c0-0.911,0.755-1.653,1.683-1.653 c0.928,0,1.683,0.741,1.683,1.653C9.184,5.071,8.429,5.812,7.501,5.812z')
-
                 }
               });
+
+              var personItem = d3.select('.grid-celeb.me');
+              var xy = canvas.utils.getXYFromTranslate(personItem.attr('transform'));
+              console.log(xy)
+              gridArea
+                .attr({transform: canvas.utils.translate(-xy[0] + gridWidth / 2, -xy[1] + gridHeight / 2)});
+
+
               person.on('mouseenter', showTooltip);
               person.on('mouseleave', hideTooltip);
               populateCelebsBar();
+              toggleCelebInCelebsBar(personItem.datum().id)
 
             };
             return canvas;
           };
-
-
-          function _updateLocalBar(rank, rankTotal) {
-            var bar = chart.select('.bar.local'),
-              width = parseInt((rank / rankTotal) * parentWidth, 0),
-              ticks = 5;
-
-            bar.select('rect.highlight')
-              .transition()
-              .duration(1000)
-              .attr({
-                width: width
-              });
-            bar.select('text')
-              .text(parseInt(100 * rank / rankTotal, 0) + '%')
-              .transition()
-              .duration(1000)
-              .attr({
-                x: width
-              });
-
-            var xScale = d3.scale.linear()
-              .domain([0, rankTotal])
-              .range([0, parentWidth]);
-
-            var xAxis = d3.svg.axis()
-              .scale(xScale)
-              .orient('bottom')
-              .ticks(ticks);
-
-            bar.select('.x-axis')
-              .call(xAxis)
-              .selectAll('.tick')
-              .attr({
-                'class': function (d, i) {
-                  var className = 'tick';
-                  if (i === 0) {
-                    className += ' first';
-                  }
-                  if (i === ticks - 1) {
-                    className += ' last';
-                  }
-                  return className;
-                }
-              });
-          }
-
-          function _updateGlobalBar(rank, rankTotal) {
-            var bar = chart.select('.bar.world'),
-              width = (rank / rankTotal) * parentWidth,
-              ticks = 5;
-
-            bar.select('rect.highlight')
-              .transition()
-              .duration(1000)
-              .attr({
-                width: width
-              });
-            bar.select('.percent')
-              .text(parseInt(100 * rank / rankTotal, 0) + '%')
-              .transition()
-              .duration(1000)
-              .attr({
-                x: width
-              });
-
-            var xScale = d3.scale.linear()
-              .domain([0, rankTotal])
-              .range([0, parentWidth]);
-
-            var xAxis = d3.svg.axis()
-              .scale(xScale)
-              .orient('top')
-              .ticks(ticks);
-
-            bar.select('.x-axis')
-              .call(xAxis)
-              .selectAll('.tick')
-              .attr({
-                'class': function (d, i) {
-                  var className = 'tick';
-                  if (i === 0) {
-                    className += ' first';
-                  }
-                  if (i === ticks - 1) {
-                    className += ' last';
-                  }
-                  return className;
-                }
-              });
-          }
-
-          function _initBarChart() {
-            var barHeight = 17;
-
-            var barChart = chart.append('g')
-              .attr('class', 'bar-chart');
-
-            var worldBar = barChart.append('g')
-              .attr('class', 'bar world');
-
-            worldBar.append('rect')
-              .attr({
-                height: barHeight,
-                width: parentWidth
-              });
-            worldBar.append('rect')
-              .attr({
-                'class': 'highlight',
-                height: barHeight,
-                width: 0
-              });
-            worldBar.append('text')
-              .text('0%')
-              .attr({
-                'class': 'percent',
-                x: 0
-              });
-            worldBar.append('g')
-              .attr('class', 'x-axis');
-
-            var localBar = barChart.append('g')
-              .attr('class', 'bar local');
-
-            localBar.append('rect')
-              .attr({
-                height: barHeight,
-                width: parentWidth
-              });
-            localBar.append('rect')
-              .attr({
-                class: 'highlight',
-                height: barHeight,
-                width: 0
-              });
-            localBar.append('text')
-              .text('0%')
-              .attr({
-                'class': 'percent',
-                x: 0
-              });
-            localBar.append('g')
-              .attr('class', 'x-axis');
-          }
-
-
-          function _initGrid() {
-
-            var celebs = d3.select('.navigator .celebs')
-                .selectAll('rect')
-              ;
-            chart.select('.grid').remove();
-
-
-            var rows = [];
-            _.times(blockData.length, function (i) {rows.push(i * personHeight)});
-
-            var xCols = [];
-            for (var i = 0; i < navWidth - 3; i++) {
-              xCols.push(i * personWidth)
-            }
-
-            var xScale = d3.scale.quantize()
-              .domain([peopleInOneRow, 0 ])
-              .range(xCols);
-
-            var yScale = d3.scale.quantize()
-              .domain([0, populationTopLimit])
-              .range(rows);
-
-
-            console.log({x: xCols.length, y: rows.length});
-            person = grid
-              .append('g')
-              .attr('class', 'persons-area')
-              .selectAll('.person')
-              .data(celebs.data())
-              .enter()
-              .append('g')
-              .attr({
-                opacity: 0,
-                'data-birthday': function (d, i) {return d.birthday},
-                'data-id': function (d, i) {
-                  return d.id
-                },
-                class: 'person',
-                transform: function (d, i) {
-                  var x = xScale(peopleInOneRow - rankScale(new Date(d.birthday)) % peopleInOneRow);
-                  var y = yScale(rankScale(new Date(d.birthday)));
-                  return utils.translate(x, y)
-                }
-              })
-              .classed('me', function (d, i) {
-                return d.name == 'You'
-              });
-            person
-              .transition()
-              .delay(function (d, i) {
-
-                return  _.random(3000, 5000)
-              })
-              .attr({
-                opacity: 1
-              });
-            person.append('rect')
-              .attr({
-                width: personWidth,
-                height: personHeight,
-                class: 'background-area'
-
-              })
-              .style('fill', 'white');
-
-            var icon = person.append('g')
-              .attr({
-                class: 'icon',
-                transform: 'translate(7.5,10)'
-              });
-            icon.each(function (d, x) {
-              var iconElement = d3.select(this);
-              if (!d.gender || d.gender == 'male') {
-                iconElement.append('path').attr('d', 'M7.5,5.809c-0.869,0-1.576-0.742-1.576-1.654c0-0.912,0.707-1.653,1.576-1.653 c0.87,0,1.577,0.742,1.577,1.653C9.077,5.067,8.369,5.809,7.5,5.809z');
-                iconElement.append('path').attr('d', 'M11.997,16.187c0,0.522-0.405,0.946-0.903,0.946h-0.453V9.59H9.75v16.96c0,0.522-0.405,0.946-0.903,0.946 c-0.493,0-0.895-0.416-0.903-0.931c0-0.005,0-0.01,0-0.015c0-0.004,0-0.009,0-0.012V16.187H7.054v10.364c0,0.006,0,0.01,0,0.015 c-0.007,0.515-0.41,0.931-0.903,0.931c-0.498,0-0.902-0.424-0.902-0.946V9.59H4.358v7.542H3.905c-0.498,0-0.902-0.424-0.902-0.946 V9.119c0-1.301,1.009-2.36,2.25-2.36h4.493c1.241,0,2.251,1.058,2.251,2.36L11.997,16.187L11.997,16.187z');
-              }
-              else {
-                iconElement.append('path').attr('d', 'M7.025,20.425v6.123c0,0.005,0,0.01,0,0.015c-0.008,0.515-0.437,0.931-0.964,0.931 c-0.531,0-0.963-0.424-0.963-0.946v-6.123c0-0.001,0-0.002,0-0.004h1.927C7.025,20.422,7.025,20.423,7.025,20.425z');
-                iconElement.append('path').attr('d', 'M9.903,20.425v6.123c0,0.522-0.432,0.946-0.964,0.946c-0.526,0-0.955-0.416-0.963-0.931 c0-0.005,0-0.009,0-0.015c0-0.004,0-0.008,0-0.012v-6.111c0-0.001,0-0.002,0-0.004h1.927C9.903,20.422,9.903,20.423,9.903,20.425z');
-                iconElement.append('path').attr('d', 'M11.777,16.874l-1.792-7.39L9.059,9.7l2.374,9.787H3.542L5.916,9.7L4.99,9.484l-1.79,7.384l-0.472-0.111 c-0.517-0.121-0.837-0.631-0.714-1.139l1.711-7.048c0,0,0,0,0.001-0.001c0.259-1.065,1.22-1.808,2.336-1.808h2.878 c1.117,0,2.078,0.744,2.337,1.809l0,0l1.711,7.046c0,0,0,0,0,0.001c0.123,0.508-0.197,1.019-0.714,1.139L11.777,16.874z');
-                iconElement.append('path').attr('d', 'M7.501,5.812c-0.928,0-1.683-0.741-1.683-1.653c0-0.911,0.755-1.653,1.683-1.653 c0.928,0,1.683,0.741,1.683,1.653C9.184,5.071,8.429,5.812,7.501,5.812z')
-
-              }
-            });
-            person.on('mouseenter', _showTooltip);
-            person.on('mouseleave', _hideTooltip);
-//            firstRun = false;
-
-          }
 
 
           var canvas = d3.peopleGrid.canvas();
@@ -1336,18 +1291,18 @@
 
             }
           });
-//          $scope.$watch('rankLocal', function (rank) {
-//            if (rank) {
-//              _updateLocalBar(rank, $scope.rankLocalTotal);
-//            }
-//          });
-//
-//          $scope.$watch('rankGlobal', function (rank) {
-//            if (rank) {
-//              _updateGlobalBar(rank, $scope.rankGlobalTotal);
-//            }
-//          });
-//
+          $scope.$watch('rankLocal', function (rank) {
+            if (rank) {
+              canvas.updateLocalBar(rank, $scope.rankLocalTotal);
+            }
+          });
+
+          $scope.$watch('rankGlobal', function (rank) {
+            if (rank) {
+              canvas.updateGlobalBar(rank, $scope.rankGlobalTotal);
+            }
+          });
+
         }
       };
     });
