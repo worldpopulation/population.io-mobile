@@ -33,6 +33,7 @@
     "$": true,
     "topojson": true,
     "Bloodhound": true,
-    "ics": true
+    "ics": true,
+    "_": true
   }
 }
