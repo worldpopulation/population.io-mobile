@@ -183,18 +183,18 @@
                 .attr({
                   'class': 'percentage',
                   transform: function () {
-                    return 'translate(' + [0, -55] + ')';
-                  }
-                });
-              textBlock.append('text')
-                .attr({
-                  'class': 'desc country',
-                  transform: function () {
                     return 'translate(' + [0, -30] + ')';
                   }
                 });
+              // textBlock.append('text')
+              //   .attr({
+              //     'class': 'desc country',
+              //     transform: function () {
+              //       return 'translate(' + [0, -30] + ')';
+              //     }
+              //   });
               textBlock.append('text')
-                .text('in your age')
+                .text('your age')
                 .attr({
                   'class': 'desc',
                   transform: function () {
@@ -209,12 +209,13 @@
                 });
               pointer.select('.percentage')
                 .text(function() {
-                  return (Math.round(item.total/peopleTotal * 1000) / 10) + '%';
+                  // return (Math.round(item.total/peopleTotal * 1000) / 10) + '%';
+                  return $scope.age;
                 });
-              pointer.select('.desc.country')
-                .text(function() {
-                  return 'people in ' + $scope.country;
-                });
+              // pointer.select('.desc.country')
+              //   .text(function() {
+              //     return 'people in ' + $scope.country;
+              //   });
             }
           };
 

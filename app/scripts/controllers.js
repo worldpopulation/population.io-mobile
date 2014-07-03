@@ -319,7 +319,7 @@
           $scope.storyLineData.push({
             date: $filter('date')(date, 'yyyy-MM-dd'),
             year: $filter('date')(date, 'yyyy'),
-            title: 'Life expectancy in ' + country
+            title: 'Your life expectancy in <br/> ' + (country === 'World' ? 'the World': country)
           });
 
           if (onSuccess) {
@@ -342,7 +342,7 @@
           $scope.titleAlive = $sce.trustAsHtml([
             'On <span>' + $filter('ordinal')($filter('date')(date, 'd')) + ' ',
             $filter('date')(date, 'MMM, yyyy') + '</span> you’ll be person <span>',
-            atomicNumber + ' Billion</span> to be alive in the <span>world</span>.'
+            atomicNumber + ' Billion</span> to be alive in the world.'
           ].join(''));
         };
 
@@ -472,7 +472,7 @@
           ProfileService.dod = date;
 
           $scope.titleDie = $sce.trustAsHtml([
-            'You will die on <span>',
+            'You are expected to die on <span>',
             $filter('ordinal')($filter('date')(date, 'd')) + ' ',
             $filter('date')(date, 'MMM, yyyy') + '</span>'
           ].join(''));
