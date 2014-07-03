@@ -31,7 +31,7 @@ var gulp = require('gulp'),
       'bower_components/lodash/dist/lodash.min.js',
       'bower_components/jquery-ui/jquery-ui.min.js',
       'bower_components/ics.js/ics.deps.min.js',
-      'bower_components/ics.js/ics.min.js'
+      'bower_components/ics.js/ics.js'
     ],
     scripts: [
       'app/scripts/**/*.*'

@@ -101,13 +101,14 @@
           dob = ProfileService.birthday,
           dod = $filter('date')(ProfileService.dod, 'yyyy-MM-dd'),
           dsum = 'Your Date of Death',
+          url = 'http://population.io',
           ddesc = [
             'According to your birthday ' + dob,
             ' and the life expectancy in ' + ProfileService.country,
             ' you will die on ' + dod
           ].join('');
 
-        cal.addEvent(dsum, ddesc, '', dstart, dend);
+        cal.addEvent(dsum, ddesc, '', dstart, dend, url);
         cal.download();
       };
 
