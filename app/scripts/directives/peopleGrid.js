@@ -558,11 +558,11 @@
                 .style('fill', '#ff6')
                 .attr({
                   class: 'pointer',
-                  width: 40,
-                  height: 40,
-                  rx: 5,
-                  ry: 5,
-                  transform: 'translate(150,-20) rotate(45)'
+                  width: 30,
+                  height: 30,
+                  rx: 4,
+                  ry: 4,
+                  transform: 'translate(150,-15) rotate(45)'
                 });
               celebTooltip.append('line')
                 .style({
@@ -846,8 +846,20 @@
               if (d3.select(this).classed('grid-celeb')) {
 //                toggleCelebInCelebsBar(d.id);
                 celebTooltip.classed('me', d.name == 'You')
+                var tooltipX = 0;
+                if (xy[0] + gridXY[0] <= 120) {
+                  tooltipX = 20
+                  d3.select('.celeb-tooltip').select('.pointer').attr('transform', function () {
+                    return canvas.utils.translate(xy[0] + gridXY[0] + 5, 5) + ' rotate(-45)'
+                  })
+                }
+                else {
+                  tooltipX = xy[0] + gridXY[0] - 270 / 2 + 30
+                  d3.select('.celeb-tooltip').select('.pointer').attr('transform', 'translate(150, -15) rotate(45)')
+
+                }
                 celebTooltip.attr({
-                  transform: canvas.utils.translate(xy[0] + gridXY[0] - 270 / 2 + 30, xy[1] + gridXY[1] + 170)
+                  transform: canvas.utils.translate(tooltipX, xy[1] + gridXY[1] + 170)
                 });
 
               }
