@@ -26,7 +26,8 @@ html(ng-app="populationioApp")
 
 body(ng-controller='MainCtrl')
   include header
-  block content
+  .content-block
+    block content
   include footer
 
   script(src='vendor/jquery.min.js')

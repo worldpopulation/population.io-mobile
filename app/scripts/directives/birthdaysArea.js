@@ -9,7 +9,7 @@
           continentsData: '=',
           worldData: '='
         },
-        link: function ($scope, element, attrs, ngModel) {
+        link: function ($scope, element) {
           var parentWidth = 1200,
             parentHeight = 700;
 
@@ -37,25 +37,22 @@
 
             var radius = d3.scale.sqrt()
               .domain([
-                d3.min(continentsData, function (d, i) {
-                  return d.value;
-                }), d3.max(continentsData, function (d, i) {
-                  return d.value;
-                })
+                d3.min(continentsData, function (d) { return d.value; }),
+                d3.max(continentsData, function (d) { return d.value; })
               ])
               .range([15, 60]);
 
             var labelSize = d3.scale.linear()
               .domain([
-                d3.min(continentsData, function (d, i) {
+                d3.min(continentsData, function (d) {
                   return d.value;
-                }), d3.max(continentsData, function (d, i) {
+                }), d3.max(continentsData, function (d) {
                   return d.value;
                 })
               ])
               .range([8, 20]);
 
-            var nodes = continentsData.map(function (d, i) {
+            var nodes = continentsData.map(function (d) {
                 return {
                   value: d.value,
                   radius: radius(d.value),
@@ -73,7 +70,7 @@
 
             force.start();
 
-            var birthdaysTotal = d3.sum(continentsData, function (d, i) {
+            var birthdaysTotal = d3.sum(continentsData, function (d) {
               return d.value;
             });
 
@@ -122,103 +119,104 @@
               })
               .text('');
 
+            var _highlightCountry = function() {
+              var _tooltip = d3.select(this);
+
+              d3.select(this).select('circle')
+                .transition()
+                .attr({ r: function (d) {return d.radius + 3;} })
+                .style({ fill: 'rgba(0,0,0,0.8)' });
+
+              _tooltip.select('text')
+                .transition()
+                .style({ fill: '#fff' });
+
+              tooltipElement.select('.percentage-label').
+                text(function () {
+                  return Math.round((_tooltip.data()[0].value / birthdaysTotal) * 100) + '%';
+                });
+
+              tooltipElement.select('.value-label').
+                text(function () {
+                  return $filter('number')(_tooltip.data()[0].value, 0);
+                });
+              tooltipElement.select('.country-label').
+                text(function () {
+                  return 'in ' + _tooltip.data()[0].countryTitle;
+                });
+              tooltipElement
+                .transition()
+                .attr({
+                  transform: 'translate(' + [0, _tooltip.data()[0].y] + ')',
+                  opacity: 1
+                })
+                .select('line')
+                .attr({
+                  x2: _tooltip.data()[0].x - radius(_tooltip.data()[0].value) - 4
+                });
+            };
+
             var countryElement = continentsChart
-              .selectAll(".country-element")
+              .selectAll('.country-element')
               .data(nodes)
               .enter()
-              .append("g")
+              .append('g')
               .attr('class', 'country-element')
-              .on('mouseenter', function (d, i) {
-                var _tooltip = d3.select(this);
-
-                d3.select(this).select('circle')
-                  .transition()
-                  .attr({ r: function (d, i) {return d.radius + 3;} })
-                  .style({ fill: 'rgba(0,0,0,0.8)' });
-
-                _tooltip.select('text')
-                  .transition()
-                  .style({ fill: '#fff' });
-
-                tooltipElement.select('.percentage-label').
-                  text(function (d, i) {
-                    return Math.round((_tooltip.data()[0].value / birthdaysTotal) * 100) + '%';
-                  });
-
-                tooltipElement.select('.value-label').
-                  text(function (d, i) {
-                    return $filter('number')(_tooltip.data()[0].value, 0);
-                  });
-                tooltipElement.select('.country-label').
-                  text(function (d, i) {
-                    return 'in ' + _tooltip.data()[0].countryTitle;
-                  });
-                tooltipElement
-                  .transition()
-                  .attr({
-                    transform: 'translate(' + [0, _tooltip.data()[0].y] + ')',
-                    opacity: 1
-                  })
-                  .select('line')
-                  .attr({
-                    x2: _tooltip.data()[0].x - radius(_tooltip.data()[0].value) - 4
-                  })
-                ;
-              })
-              .on('mouseleave', function (d, i) {
+              .on('click', _highlightCountry)
+              .on('mouseenter', _highlightCountry)
+              .on('mouseleave', function () {
                 tooltipElement
                   .transition()
                   .attr('opacity', 0);
-                //                .attr('transform', 'translate(' + [0, d3.select(this).data()[0].y] + ')');
 
                 d3.select(this).select('circle')
                   .transition()
-                  .attr('r', function (d, i) {return d.radius - 5})
+                  .attr('r', function (d) { return d.radius - 5; })
                   .style({ fill: 'rgba(0,0,0,0.05)' });
                 d3.select(this).select('text')
                   .transition()
                   .style({ fill: '#888' });
               });
             countryElement
-              .append("circle")
-              .attr("r", function (d) { return d.radius - 5; })
+              .append('circle')
+              .attr('r', function (d) { return d.radius - 5; })
               .style({
-                fill: function (d, i) { return 'rgba(0,0,0,0.05)'; },
-                stroke: function (d, i) { return 'rgba(0,0,0,0.3)'; },
+                fill: function () { return 'rgba(0,0,0,0.05)'; },
+                stroke: function () { return 'rgba(0,0,0,0.3)'; },
                 'stroke-width': 0.3
               });
-            //            .style("fill", function (d, i) { return color(i % 3); });
+            //            .style('fill', function (d, i) { return color(i % 3); });
 
-            continentsChart.selectAll("circle")
+            continentsChart.selectAll('circle')
               .data(nodes)
-              .enter().append("circle")
-              .attr("r", function (d) { return d.radius - 2; })
-              .style("fill", function (d, i) { return color(i % 3); });
+              .enter().append('circle')
+              .attr('r', function (d) { return d.radius - 2; })
+              .style('fill', function (d, i) { return color(i % 3); });
 
             countryElement
-              .append("text")
-              .text(function (d, i) {
+              .append('text')
+              .text(function (d) {
                 if (d.radius < 50) {
-                  return d.countryAbbr
+                  return d.countryAbbr;
                 }
                 else {
-                  return d.countryTitle
+                  return d.countryTitle;
                 }
               })
               .attr(
               {
                 'class': 'country-title',
                 y: function (d, i) {
-                  return labelSize(d.value) / 2
+                  return labelSize(d.value) / 2;
                 }
               })
               .style('font-size',
               function (d, i) {
-                return labelSize(d.value)
+                return labelSize(d.value);
               }
             );
 
-            force.on("tick", function (e) {
+            force.on('tick', function () {
               var q = d3.geom.quadtree(nodes),
                 i = 0,
                 n = nodes.length;
@@ -229,17 +227,9 @@
 
               countryElement
                 .attr('transform', function (d, i) {
-                  return 'translate(' + [d.x, d.y] + ')'
+                  return 'translate(' + [d.x, d.y] + ')';
                 });
             });
-
-            //          svg.on("mousemove", function () {
-            //            console.log(d3.svg.mouse)
-            //            var p1 = d3.svg.mouse(this);
-            //            root.px = p1[0];
-            //            root.py = p1[1];
-            //            force.resume();
-            //          });
 
             function collide(node) {
               var r = node.radius + 16,
@@ -254,17 +244,14 @@
                     l = Math.sqrt(x * x + y * y),
                     r = node.radius + quad.point.radius;
                   if (l < r) {
-                    l = (l - r) / l * .5;
+                    l = (l - r) / l * 0.5;
                     node.x -= x *= l;
                     node.y -= y *= l;
                     quad.point.x += x;
                     quad.point.y += y;
                   }
                 }
-                return x1 > nx2
-                  || x2 < nx1
-                  || y1 > ny2
-                  || y2 < ny1;
+                return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
               };
             }
 
@@ -322,47 +309,49 @@
               .duration(1000)
               .attr('opacity', 1);
 
-            var pieChart = worldChart.selectAll(".arc")
+            var _highlightCountry = function() {
+              worldChart
+                .transition()
+                .duration(2000)
+                .attr('transform', 'translate(' + [parentWidth - parentWidth / 4, 350] + ') rotate(' + [-2, 2][Math.floor(Math.random() * 2)] + ')');
+
+              var _arc = d3.select(this);
+
+              _arc.select('line')
+                .transition()
+                .attr(
+                {x2: function (d, i) {
+                  return labelArc.centroid(d)[0] > -1 ? 170 : -170;
+                }}
+              );
+              _arc.select('.world-chart-label-total')
+                .transition()
+                .delay(200)
+                .attr('opacity', 1);
+              _arc.select('.world-chart-shared-birthdays-label')
+                .transition()
+                .delay(250)
+                .attr('opacity', 1);
+              _arc.select('.world-chart-label-percentage')
+                .transition()
+                .delay(300)
+                .attr('opacity', 1);
+
+              _arc.select('path.main')
+                .transition()
+                .style('fill', '#21edff');
+              _arc.select('path.border')
+                .transition()
+                .attr('opacity', 0);
+            };
+
+            var pieChart = worldChart.selectAll('.arc')
               .data(pie(worldData))
               .enter()
-              .append("g")
-              .attr("class", "arc")
-              .on('mouseenter', function () {
-
-                worldChart
-                  .transition()
-                  .duration(2000)
-                  .attr('transform', 'translate(' + [parentWidth - parentWidth / 4, 350] + ') rotate(' + [-2, 2][Math.floor(Math.random() * 2)] + ')');
-
-                var _arc = d3.select(this);
-
-                _arc.select('line')
-                  .transition()
-                  .attr(
-                  {x2: function (d, i) {
-                    return labelArc.centroid(d)[0] > -1 ? 170 : -170;
-                  }}
-                );
-                _arc.select('.world-chart-label-total')
-                  .transition()
-                  .delay(200)
-                  .attr('opacity', 1);
-                _arc.select('.world-chart-shared-birthdays-label')
-                  .transition()
-                  .delay(250)
-                  .attr('opacity', 1);
-                _arc.select('.world-chart-label-percentage')
-                  .transition()
-                  .delay(300)
-                  .attr('opacity', 1);
-
-                _arc.select('path.main')
-                  .transition()
-                  .style('fill', '#21edff');
-                _arc.select('path.border')
-                  .transition()
-                  .attr('opacity', 0)
-              })
+              .append('g')
+              .attr('class', 'arc')
+              .on('click', _highlightCountry)
+              .on('mouseenter', _highlightCountry)
               .on('mouseleave', function () {
                 worldChart
                   .transition()
@@ -401,27 +390,27 @@
               .range(['#555', '#fff']);
 
 
-            pieChart.append("path")
-              .attr("d", arc0)
+            pieChart.append('path')
+              .attr('d', arc0)
               .attr('class', 'main')
-              .style("fill", '#eee')
+              .style('fill', '#eee')
               .attr('opacity', 0)
               .transition()
               .delay(function (d, i) {
-                return i * 100
+                return i * 100;
               })
               .duration(400)
               .attr('d', arc)
               .attr('opacity', 1);
 
-            pieChart.append("path")
-              .attr("d", arcBorder0)
+            pieChart.append('path')
+              .attr('d', arcBorder0)
               .attr('class', 'border')
-              .style("fill", function (d, i) { return color(i); })
+              .style('fill', function (d, i) { return color(i); })
               .attr('opacity', 0)
               .transition()
               .delay(function (d, i) {
-                return 1000 + i * 100
+                return 1000 + i * 100;
               })
               .duration(400)
               .attr('d', arcBorder)
@@ -430,64 +419,64 @@
             var labelArea = pieChart.append('g')
               .attr('class', 'label-area')
               .attr('opacity', 0)
-              .attr("transform", function (d) { //set the label's origin to the center of the arc
+              .attr('transform', function (d) { //set the label's origin to the center of the arc
                 //we have to make sure to set these before calling arc.centroid
                 d.outerRadius = 100; // Set Outer Coordinate
                 d.innerRadius = 10; // Set Inner Coordinate
-                return "translate(" + labelArc.centroid(d) + ") rotate(" + angle(d) + ")";
+                return 'translate(' + labelArc.centroid(d) + ') rotate(' + angle(d) + ')';
               });
 
-            labelArea.append("text")
+            labelArea.append('text')
               .attr('class', 'world-chart-label')
-              .attr("dy", ".35em")
+              .attr('dy', '.35em')
               .text(function (d) { return d.data.countryTitle; })
-              .style("text-anchor", function (d, i) {
+              .style('text-anchor', function (d, i) {
                 return labelArc.centroid(d)[0] > -1 ? 'begin' : 'end';
               })
             ;
-            labelArea.append("text")
+            labelArea.append('text')
               .attr('class', 'world-chart-label-total')
               .attr('opacity', 0)
-              .attr("dy", "12px")
-              .attr("dx", function (d, i) {
+              .attr('dy', '12px')
+              .attr('dx', function (d, i) {
                 return labelArc.centroid(d)[0] > -1 ? 135 : -135;
               })
               .text(function (d) {
                 return $filter('number')(d.data.value, 0);
               })
-              .style("text-anchor", function (d, i) {
+              .style('text-anchor', function (d, i) {
                 return labelArc.centroid(d)[0] > -1 ? 'end' : 'begin';
               })
               .style('font-size', 22)
             ;
-            labelArea.append("text")
+            labelArea.append('text')
               .attr('class', 'world-chart-label-percentage')
               .attr('opacity', 0)
               .style('font-size', 10)
-              .attr("dy", ".35em")
-              .attr("dx", function (d, i) {
+              .attr('dy', '.35em')
+              .attr('dx', function (d, i) {
                 return labelArc.centroid(d)[0] > -1 ? 170 : -170;
               })
               .text(function (d) { return Math.round((d.data.value / worldBirthdaysTotal) * 100) + '%' })
-              .style("text-anchor", function (d, i) {
+              .style('text-anchor', function (d, i) {
                 return labelArc.centroid(d)[0] > -1 ? 'end' : 'begin';
               })
             ;
-            labelArea.append("text")
+            labelArea.append('text')
               .attr('class', 'world-chart-shared-birthdays-label')
               .attr('opacity', 0)
-              .attr("dy", "24px")
+              .attr('dy', '24px')
               .attr('font-size', '9px')
-              .attr("dx", function (d, i) {
+              .attr('dx', function (d, i) {
                 return labelArc.centroid(d)[0] > -1 ? 135 : -135;
               })
               .text('shared birthdays')
-              .style("text-anchor", function (d, i) {
+              .style('text-anchor', function (d, i) {
                 return labelArc.centroid(d)[0] > -1 ? 'end' : 'begin';
               })
             ;
 
-            labelArea.append("line")
+            labelArea.append('line')
               .attr('class', 'world-chart-label-line')
               .attr({
                 x1: function (d) {
@@ -501,10 +490,9 @@
             labelArea
               .transition()
               .delay(function (d, i) {
-                return 2000 + i * 100
+                return 2000 + i * 100;
               })
-              .attr('opacity', 1)
-
+              .attr('opacity', 1);
           }
 
           function angle(d) {
@@ -513,6 +501,6 @@
           }
         }
       };
-    })
+    });
 
 }());

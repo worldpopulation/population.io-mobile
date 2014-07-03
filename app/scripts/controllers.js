@@ -7,12 +7,10 @@
       $modal, $state, $location, $document, $rootScope, $filter,
       ProfileService, PopulationIOService, BrowserService) {
 
-      if (BrowserService.isSupported()) {
-        alert('This showcase is optimized for WebKit browsers (Safari, Chrome)!');
-      }
-
-      if (BrowserService.isTouchDevice()) {
-        alert('The alpha version does not support touch devices, yet!');
+      if (!BrowserService.isSupported()) {
+        $modal.open({
+          templateUrl: 'browser-warning.html'
+        });
       }
 
       $scope.profile = ProfileService;

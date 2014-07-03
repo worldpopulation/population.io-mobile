@@ -16,3 +16,28 @@ script(type="text/ng-template", id="developers.html")
     p The source code behind this site and the API is also available at: <a href="https://github.com/worldpopulation/">github.com/worldpopulation</a> and developers are welcome to build on both the application and API.
   .modal-footer
     button(ng-click="$close()") Got it!
+
+script(type="text/ng-template", id="browser-warning.html")
+  .modal-header
+    h3.modal-title Browser Warning
+  .modal-body
+    p Your browser is out-of-date for this showcase. Please download one of these up-to-date, free and excellent browsers.
+    .browser-list
+      a(href="http://www.google.com/chrome", target="_blank")
+        .icon.chome
+        span.title Chrome
+        span.publisher Google
+      a(href="https://www.apple.com/de/safari", target="_blank")
+        .icon.safari
+        span.title Safari
+        span.publisher Apple
+      a(href="http://www.mozilla.com/firefox", target="_blank")
+        .icon.firefox
+        span.title Firefox
+        span.publisher Mozilla Foundation
+      a(href="http://www.opera.com/de/computer", target="_blank")
+        .icon.opera
+        span.title Opera
+        span.publisher Opera Software
+  .modal-footer
+    button(ng-click="$close()") Got it!

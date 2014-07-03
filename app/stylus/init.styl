@@ -1,3 +1,8 @@
+html,
+body
+  min-height 100%
+  height 100%
+  position relative
 body
   color #333
   padding 0
@@ -30,6 +35,7 @@ h1
 strong,
 b
   font-family 'Theinhardt-Medium', 'Helvetica', sans-serif
+  font-weight normal
 h2
   font-size 18px
   font-weight normal
@@ -39,6 +45,10 @@ h2
 a
   text-decoration none
   color #222
+*
+  -webkit-tap-highlight-color rgba(0,0,0,0)
+input
+  -webkit-appearance none
 .hidden
   visibility hidden
   overflow hidden
@@ -53,6 +63,50 @@ svg.defs-area
 text
   cursor default
 
+// browser warning
+.browser-list
+  clearfix()
+  padding 20px 0 20px 0
+  a
+    float left
+    width 25%
+    text-align center
+    text-decoration none !important
+  a:hover
+    text-decoration underline !important
+  span
+    display block
+  span.title
+    margin 20px 0 2px 0
+    font-family 'Theinhardt-Medium', 'Helvetica', sans-serif
+    font-size 18px
+  span.publisher
+    font-size 12px
+  .icon
+    display inline-block
+    height 130px
+    width 125px
+    background url(../images/browsers-sprite.png) no-repeat
+   .icon.chrome
+     background-position left top
+   .icon.safari
+     background-position -380px top
+   .icon.firefox
+     background-position -128px top
+   .icon.opera
+     background-position -250px top
+
+// modals
+div.modal
+  position fixed
+  left 0
+  right 0
+  height 100%
+
+// content block
+.content-block
+  min-height 100%
+
 // loader
 .loader
   position absolute
@@ -60,18 +114,19 @@ text
   left 0
   right 20px
   z-index 2
-  bottom -50px
-  font-size 24px
+  bottom -30px
+  font-size 20px
   color #666
   opacity 0
   transition opacity 300ms ease
 .loader.active
   opacity 1
 .loader:after
+  display block
   content ''
   position absolute
   z-index 1
-  right -9px
+  right -10px
   top -9px
   height 40px
   width 40px
@@ -79,7 +134,9 @@ text
   border-radius 40px
 .loader:before
   z-index 2
-  position relative
+  position absolute
+  right 0
+  top 1px
   animation loading-animation 1.25s infinite linear
 
 @keyframes loading-animation
@@ -97,19 +154,10 @@ text
 .x-ng-cloak
   display none !important
 
-// addthis
-.addthisevent_dropdown
-  .copyx
-    display none
-  span
-    display block
-
-
 // datepicker
 .ui-datepicker
   border 1px solid border-color
   border-radius 12px
-  margin-top 5px
   box-shadow 0 1px 1px rgba(0,0,0,0.2)
   background-color #ffffff
   padding 15px
@@ -304,7 +352,6 @@ section
     z-index 9999
     position absolute
     border-radius 12px
-    margin-top 5px
     left 0px
     right 0px
     box-shadow 0 1px 1px rgba(0,0,0,0.2)

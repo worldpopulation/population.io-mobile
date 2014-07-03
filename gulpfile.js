@@ -53,7 +53,8 @@ var gulp = require('gulp'),
         'assets/sprite-icons.svg',
         'assets/human.png',
         'assets/favicon.png',
-        'assets/wip.svg'
+        'assets/wip.svg',
+        'assets/browsers-sprite.png'
       ],
       celebs: 'assets/celebrities/**'
     },
