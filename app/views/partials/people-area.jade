@@ -4,9 +4,9 @@
       h1 You are person <span>{{ rankGlobal | number:0 }}</span> <span class="dot global"></span> born in the world that’s alive today - that’s person <span>{{ rankLocal | number:0 }}</span> <span class="dot local"></span> that’s alive in <span>{{profile.country}}</span>
       .loader.fa.fa-refresh(ng-class="{'active': loading}")
     people-grid(
-    rank-local="rankLocal",
-    rank-local-total="rankLocalTotal"
-    rank-global="rankGlobal",
-    rank-global-total="rankGlobalTotal"
+      rank-local="rankLocal",
+      rank-local-total="rankLocalTotal"
+      rank-global="rankGlobal",
+      rank-global-total="rankGlobalTotal"
     )
       .wip

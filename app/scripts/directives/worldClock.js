@@ -14,12 +14,30 @@
             parentWidth = 1200,
             parentHeight = 220,
             currentValue = 0;
-          chart = d3.select(element[0])
+          var root = d3.select(element[0])
             .append('svg')
             .attr({
-              width: parentWidth,
               height: parentHeight
             });
+
+          chart = root.append('g')
+            .attr({
+              'class': 'chart-wrapper',
+              height: parentHeight
+            });
+
+          function updateWindow() {
+            var d = document,
+              e = d.documentElement,
+              x = e.clientWidth;
+            root.attr('width', x);
+            chart.attr({
+              transform: 'translate(' + [x/2 - parentWidth/2, 0 ] + ')'
+            });
+            console.log(123)
+          }
+          window.onresize = updateWindow;
+          updateWindow();
 
           setInterval(_updateWorldClock, 1000);
 

@@ -118,7 +118,7 @@
               });
 
             textCnt.append('text')
-              .text(data.yearsLeft)
+              .text(0)
               .attr({
                 'class': 'years-left'
               })

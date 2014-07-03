@@ -7,7 +7,8 @@
         restrict: 'E',
         scope: {
           data: '=',
-          country: '='
+          country: '=',
+          age: '='
         },
         link: function ($scope, element, attr) {
           var width = 300,
@@ -74,7 +75,7 @@
           };
 
           var _updateGraph = function(data) {
-            var age = ProfileService.getAge();
+            var age = $scope.age;
 
             var peopleTotal = d3.sum(data, function (d) { return d.total; });
 
@@ -149,9 +150,7 @@
                 });
               }
 
-              pointer
-                .transition()
-                .duration(1000)
+              pointer.transition().duration(1000)
                 .attr({
                   transform: function () {
                     return 'translate(' + [
@@ -163,7 +162,7 @@
 
               group.append('line');
 
-              pointer.select('line')
+              pointer.select('line').transition().duration(1000)
                 .attr({
                   x1: 0,
                   y1: 0,
@@ -203,7 +202,7 @@
                   }
                 });
 
-              pointer.select('.text-block').attr({
+              pointer.select('.text-block').transition().duration(1000).attr({
                   transform: function () {
                     return 'translate(' + [width - xScale(age) - 10, 0] + ')';
                   }

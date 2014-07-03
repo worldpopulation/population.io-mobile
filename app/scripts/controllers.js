@@ -403,6 +403,7 @@
 
         $scope.selectedYear = year;
         $scope.loading += 2;
+        $scope.age = $scope.selectedYear - parseInt($filter('date')(ProfileService.birthday, 'yyyy'), 0);
 
         PopulationIOService.loadPopulation({
           year: $scope.selectedYear,
@@ -438,6 +439,7 @@
 
       var _update = function() {
 
+        $scope.age = ProfileService.getAge();
         $scope.loading = 0;
         $scope.year = $filter('date')(new Date(), 'yyyy');
         $scope.storyLineData = _getInitialStoryLineData();
