@@ -155,7 +155,7 @@
                   transform: function () {
                     return 'translate(' + [
                       xScale(age),
-                      height - (height - yScale(item.total))/1.5
+                      height - (height - yScale(item.total))
                     ] + ')';
                   }
                 });
@@ -186,13 +186,6 @@
                     return 'translate(' + [0, -30] + ')';
                   }
                 });
-              // textBlock.append('text')
-              //   .attr({
-              //     'class': 'desc country',
-              //     transform: function () {
-              //       return 'translate(' + [0, -30] + ')';
-              //     }
-              //   });
               textBlock.append('text')
                 .text('your age')
                 .attr({
@@ -209,13 +202,10 @@
                 });
               pointer.select('.percentage')
                 .text(function() {
-                  // return (Math.round(item.total/peopleTotal * 1000) / 10) + '%';
-                  return $scope.age;
+                  var ageTxt = ProfileService.getAgeString();
+                  ageTxt = ageTxt.replace('y', 'y ');
+                  return ageTxt;
                 });
-              // pointer.select('.desc.country')
-              //   .text(function() {
-              //     return 'people in ' + $scope.country;
-              //   });
             }
           };
 
