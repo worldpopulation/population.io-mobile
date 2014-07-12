@@ -9,7 +9,8 @@
           rankLocal: "=",
           rankLocalTotal: "=",
           rankGlobal: "=",
-          rankGlobalTotal: "="
+          rankGlobalTotal: "=",
+          isUpdated: "="
         },
         link: function ($scope, element) {
           var formatCommas = d3.format("0,000");
@@ -94,6 +95,8 @@
             }
 
             function initGrid(selection) {
+              selection.selectAll('g').remove();
+
               var gridWrapper = selection
                 .append('g')
                 .attr({
@@ -1272,15 +1275,15 @@
           var canvas = d3.peopleGrid.canvas();
           d3.select(element[0]).call(canvas);
 
-
-          $scope.$watch(function () {
-            return ProfileService.active;
-          }, function (active) {
-            if (active) {
-              canvas.populate()
-
+          $scope.$watch('isUpdated', function(updated) {
+            if (updated) {
+              canvas.populate();
+            } else {
+              d3.select(element[0]).selectAll('svg').remove();
+              d3.select(element[0]).call(canvas);
             }
           });
+
           $scope.$watch('rankLocal', function (rank) {
             if (rank) {
               canvas.updateLocalBar(rank, $scope.rankLocalTotal);

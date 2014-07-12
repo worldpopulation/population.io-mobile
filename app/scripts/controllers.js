@@ -214,6 +214,8 @@
     .controller('PeopleCtrl', function($scope, $rootScope, $interval, $anchorScroll,
       $state, $filter, PopulationIOService, ProfileService) {
 
+      $scope.isUpdated = false;
+
       $rootScope.$on('ready', function() {
         _update();
       });
@@ -223,6 +225,20 @@
         tomorrow.setDate((new Date()).getDate()+1);
         return tomorrow;
       };
+
+      $scope.$watch(function () {
+        return ProfileService.active;
+      }, function (active) {
+        if (active) {
+          $scope.loading = 1;
+          setTimeout(function() {
+            $scope.loading = 0;
+            $scope.isUpdated = true;
+          }, 5000);
+        } else {
+          $scope.isUpdated = false;
+        }
+      });
 
       var _update = function() {
 
