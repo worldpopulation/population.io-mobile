@@ -29,6 +29,7 @@ var gulp = require('gulp'),
       'bower_components/angular-ui-router/release/angular-ui-router.min.js',
       'bower_components/angular-sanitize/angular-sanitize.min.js',
       'bower_components/lodash/dist/lodash.min.js',
+      'bower_components/bowser/bowser.min.js',
       'bower_components/jquery-ui/jquery-ui.min.js',
       'bower_components/ics.js/ics.deps.min.js',
       'bower_components/ics.js/ics.js'

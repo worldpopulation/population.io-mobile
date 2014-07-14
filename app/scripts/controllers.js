@@ -55,8 +55,15 @@
           if (['female', 'male'].indexOf(gender) > -1 &&
               country && year && month && day) {
             ProfileService.gender = gender;
-            ProfileService.birthday = [ year, month, day ].join('-');
             ProfileService.country = country;
+
+            if ((new Date()).getFullYear() - parseInt(year) < 5) {
+              alert('You are too young!');
+              return;
+            }
+
+            ProfileService.birthday = [ year, month, day ].join('-');
+
             $rootScope.target = path;
             $rootScope.$emit('ready');
           }

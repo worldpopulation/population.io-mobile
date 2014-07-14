@@ -14,7 +14,7 @@
             changeMonth: true,
             changeYear: true,
             yearRange: '-100y:c+nn',
-            maxDate: '+0D',
+            maxDate: '-5y',
             dateFormat: 'yy-mm-dd'
           });
 

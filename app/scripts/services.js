@@ -245,9 +245,7 @@
     .service('BrowserService', function () {
       return {
         isSupported: function () {
-          var isWebKit = 'WebkitAppearance' in document.documentElement.style,
-            isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
-          return isWebKit || isFirefox;
+          return bowser.webkit || bowser.gecko;
         },
         isTouchDevice: function () {
           return !!('ontouchstart' in window);
