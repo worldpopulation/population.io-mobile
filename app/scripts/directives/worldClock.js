@@ -34,7 +34,6 @@
             chart.attr({
               transform: 'translate(' + [x/2 - parentWidth/2, 0 ] + ')'
             });
-            console.log(123)
           }
           window.onresize = updateWindow;
           updateWindow();

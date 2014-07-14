@@ -268,7 +268,7 @@
               .outerRadius(120)
               .innerRadius(120);
             var arc = d3.svg.arc()
-              .outerRadius(200)
+              .outerRadius(210)
               .innerRadius(120);
             var labelArc = d3.svg.arc()
               .outerRadius(200)
@@ -321,7 +321,7 @@
                 .transition()
                 .attr(
                 {x2: function (d, i) {
-                  return labelArc.centroid(d)[0] > -1 ? 170 : -170;
+                  return labelArc.centroid(d)[0] > -1 ? 145 : -145;
                 }}
               );
               _arc.select('.world-chart-label-total')
@@ -437,9 +437,9 @@
             labelArea.append('text')
               .attr('class', 'world-chart-label-total')
               .attr('opacity', 0)
-              .attr('dy', '12px')
+              .attr('dy', '17px')
               .attr('dx', function (d, i) {
-                return labelArc.centroid(d)[0] > -1 ? 135 : -135;
+                return labelArc.centroid(d)[0] > -1 ? 145 : -145;
               })
               .text(function (d) {
                 return $filter('number')(d.data.value, 0);
@@ -450,25 +450,12 @@
               .style('font-size', 22)
             ;
             labelArea.append('text')
-              .attr('class', 'world-chart-label-percentage')
-              .attr('opacity', 0)
-              .style('font-size', 10)
-              .attr('dy', '.35em')
-              .attr('dx', function (d, i) {
-                return labelArc.centroid(d)[0] > -1 ? 170 : -170;
-              })
-              .text(function (d) { return Math.round((d.data.value / worldBirthdaysTotal) * 100) + '%' })
-              .style('text-anchor', function (d, i) {
-                return labelArc.centroid(d)[0] > -1 ? 'end' : 'begin';
-              })
-            ;
-            labelArea.append('text')
               .attr('class', 'world-chart-shared-birthdays-label')
               .attr('opacity', 0)
-              .attr('dy', '24px')
+              .attr('dy', '27px')
               .attr('font-size', '9px')
               .attr('dx', function (d, i) {
-                return labelArc.centroid(d)[0] > -1 ? 135 : -135;
+                return labelArc.centroid(d)[0] > -1 ? 145 : -145;
               })
               .text('shared birthdays')
               .style('text-anchor', function (d, i) {
