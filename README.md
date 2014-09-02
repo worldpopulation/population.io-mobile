@@ -19,7 +19,8 @@
 
 ## Prepare
 
-* For the first run, copy the *assets* folder into dist the folder. This should be then the structure *dist/assets*
+1. Create a `dist` folder
+2. Copy the `assets` folder into dist the folder `dist/assets`
 
 ## Run
 
