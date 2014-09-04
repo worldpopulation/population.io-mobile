@@ -17,6 +17,7 @@ var gulp = require('gulp'),
       'bower_components/jquery/dist/jquery.min.map',
       'bower_components/d3/d3.min.js',
       'bower_components/d3/d3.js',
+      'bower_components/d3-geo-projection/index.js',
       'bower_components/d3.slider/d3.slider.js',
       'bower_components/topojson/topojson.js',
       'bower_components/angular/angular.min.js',
@@ -36,7 +37,8 @@ var gulp = require('gulp'),
       'bower_components/bowser/bowser.min.js',
       'bower_components/jquery-ui/jquery-ui.min.js',
       'bower_components/ics.js/ics.deps.min.js',
-      'bower_components/ics.js/ics.js'
+      'bower_components/ics.js/ics.js',
+      'vendor/d3.geo.projection.v0.min.js'
     ],
     scripts: [
       'app/scripts/**/*.*'
