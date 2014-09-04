@@ -1,9 +1,10 @@
 {
   "name": "populationio",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "http://population.io",
   "authors": [
-    "Andi Weiss <info@47nord.de>"
+    "Andi Weiss <info@47nord.de>",
+    "Sergey Basharov <sergey@basharov.net>"
   ],
   "dependencies": {
     "jquery": "2.1.1",

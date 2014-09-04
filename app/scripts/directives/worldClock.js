@@ -146,10 +146,10 @@
               }
             }
 
-            placeholderText.text(function (d, i) { return digits[i] });
+            placeholderText.text(function (d, i) { return digits[i]; });
             digit.each(function (d, i) {
               var _digit, _placeholder;
-              if (digits[i] != d3.select(this).select('text').text()) {
+              if (digits[i] !== d3.select(this).select('text').text()) {
                 _digit = d3.select(this);
                 _placeholder = d3.select('.placeholder[data-id="' + i + '"]');
 
@@ -174,7 +174,7 @@
                 setTimeout(function () {
                   _digit.attr('transform', 'translate(0,0)');
                   _placeholder.attr('transform', 'translate(0,40)');
-                  digitText.text(function (d, i) { return digits[i] });
+                  digitText.text(function (d, i) { return digits[i]; });
                 }, animationDuration * 2 + 100);
               }
 

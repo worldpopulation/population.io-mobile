@@ -63,7 +63,7 @@
               color = d3.scale.category10();
 
             var force = d3.layout.force()
-              .gravity(0.1)
+              .gravity(0.2)
               .charge(function (d, i) { return i ? 0 : -2000; })
               .nodes(nodes)
               .size([parentWidth/2, parentHeight - 100]);
@@ -89,6 +89,7 @@
                 y1: 0,
                 y2: 0
               });
+/*
             tooltipElement.append('text')
               .attr({
                 'class': 'percentage-label',
@@ -96,10 +97,11 @@
                 y: 15
               })
               .text('');
+*/
             tooltipElement.append('text')
               .attr({
                 'class': 'value-label',
-                x: 50,
+                x: 0,
                 y: 21
               })
               .text('');
@@ -107,14 +109,14 @@
             tooltipElement.append('text')
               .attr({
                 'class': 'shared-label',
-                x: 50,
+                x: 0,
                 y: 40
               })
               .text('shared birthdays');
             tooltipElement.append('text')
               .attr({
                 'class': 'country-label',
-                x: 50,
+                x: 0,
                 y: 55
               })
               .text('');
@@ -131,10 +133,12 @@
                 .transition()
                 .style({ fill: '#fff' });
 
+/*
               tooltipElement.select('.percentage-label').
                 text(function () {
                   return Math.round((_tooltip.data()[0].value / birthdaysTotal) * 100) + '%';
                 });
+*/
 
               tooltipElement.select('.value-label').
                 text(function () {

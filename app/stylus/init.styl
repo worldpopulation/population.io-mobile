@@ -2,27 +2,33 @@ html,
 body
   min-height 100%
   height 100%
+
 body
   color #333
   padding 0
   margin 0
   font-family 'Theinhardt-Light', 'Helvetica', sans-serif
   user-select none
+
 ul
 li
   list-style-type none
   margin 0
   padding 0
+
 svg
   display block
   margin 0
   padding 0
   cursor default
+
 h1, h2, h3, h4, h5, h6, p
   margin 0
   padding 0
+
 i
   font-style normal
+
 h1
   color h1-color
   font-size 36px
@@ -31,34 +37,43 @@ h1
   font-weight normal
   span
     color h1-span-color
+
 strong,
 b
   font-family 'Theinhardt-Medium', 'Helvetica', sans-serif
   font-weight normal
+
 h2
   font-size 18px
   font-weight normal
   color #666666
   position relative
   margin 50px 0
+
 a
   text-decoration none
   color #222
+
 *
-  -webkit-tap-highlight-color rgba(0,0,0,0)
+  -webkit-tap-highlight-color rgba(0, 0, 0, 0)
+
 input
   -webkit-appearance none
+
 .hidden
   visibility hidden
   overflow hidden
   height 0
+
 .container
   position relative
   width container-width
   margin 0 auto
   padding 0
+
 svg.defs-area
   display none
+
 text
   cursor default
 
@@ -86,14 +101,14 @@ text
     height 130px
     width 125px
     background url(../images/browsers-sprite.png) no-repeat
-   .icon.chrome
-     background-position left top
-   .icon.safari
-     background-position -380px top
-   .icon.firefox
-     background-position -128px top
-   .icon.opera
-     background-position -250px top
+  .icon.chrome
+    background-position left top
+  .icon.safari
+    background-position -380px top
+  .icon.firefox
+    background-position -128px top
+  .icon.opera
+    background-position -250px top
 
 // modals
 div.modal
@@ -118,8 +133,10 @@ div.modal
   color #666
   opacity 0
   transition opacity 300ms ease
+
 .loader.active
   opacity 1
+
 .loader:after
   display block
   content ''
@@ -131,6 +148,7 @@ div.modal
   width 40px
   background highlight-yellow
   border-radius 40px
+
 .loader:before
   z-index 2
   position absolute
@@ -157,20 +175,25 @@ div.modal
 .ui-datepicker
   border 1px solid border-color
   border-radius 12px
-  box-shadow 0 1px 1px rgba(0,0,0,0.2)
+  box-shadow 0 1px 1px rgba(0, 0, 0, 0.2)
   background-color #ffffff
   padding 15px
   display none
+
 .ui-datepicker-title
   clearfix()
   padding 0 0 5px 0
+
 .ui-datepicker-month
   float right
+
 .ui-datepicker-year
   float left
+
 .ui-datepicker-prev,
 .ui-datepicker-next
   display none
+
 .ui-datepicker-calendar
   margin 5px 0 0 0
   border-spacing 0
@@ -210,15 +233,17 @@ div.modal
 
 // modal
 .modal
-  background rgba(0,0,0,0.5)
+  background rgba(0, 0, 0, 0.5)
   position absolute
   left 0
   top 0
   height 100%
   width 100%
+
 .modal-title
   font-size 42px
   font-family 'PlantinMTStd-Light', sans-serif
+
 .modal-body
   margin 20px 0 40px 0
   h4
@@ -229,6 +254,7 @@ div.modal
     margin 0 0 20px 0
   a
     text-decoration underline
+
 .modal-footer
   button
     background #333
@@ -237,9 +263,10 @@ div.modal
     border none
     border-radius 4px
     padding 10px 50px
+
 .modal-dialog
   background #fff
-  box-shadow 0 0 10px rgba(0,0,0,0.5)
+  box-shadow 0 0 10px rgba(0, 0, 0, 0.5)
   border-radius 4px
   box-sizing border-box
   padding 40px
@@ -296,24 +323,28 @@ div.modal
     font-size 12px
     font-family Helvetica, sans-serif
     font-weight bold
-    color rgba(0,0,0,0.5)
+    color rgba(0, 0, 0, 0.5)
   .links
     opacity 0.5
     margin 5px 0 0 0
     font-size 24px
     a
       margin 0 2px
+
 .share:hover
   right -90px
   bottom -40px
   .links
     opacity 1.0
+
 .share.animate.ng-hide-add,
 .share.animate.ng-hide-remove
   display block !important
+
 .share.animate.ng-hide-add.ng-hide-add-active,
 .share.animate.ng-hide-remove
   transform translate3d(100px, 100px, 0) rotate(-45deg)
+
 .share.animate.ng-hide-add,
 .share.animate.ng-hide-remove.ng-hide-remove-active
   transform translate3d(0, 0, 0) rotate(-45deg)
@@ -353,7 +384,7 @@ section
     border-radius 12px
     left 0px
     right 0px
-    box-shadow 0 1px 1px rgba(0,0,0,0.2)
+    box-shadow 0 1px 1px rgba(0, 0, 0, 0.2)
     background-color #ffffff
   li
     width 100%
@@ -375,6 +406,7 @@ section
     margin-right 10px
   > *:last-child
     margin-right 0px
+
 form
   input.form-control:focus
     border 1px solid border-color
@@ -395,6 +427,7 @@ form
     ::-webkit-input-placeholder
       font-size 14px
       color #fff
+
 .btn
   height 46px
   width 46px
@@ -404,6 +437,27 @@ form
   cursor pointer
   outline none
   padding 0
+  position relative
+  span
+    display none
+  &.loading
+    span
+      font-size 30px
+      color #fff
+      display block
+      left 50%
+      top 50%
+      background #000
+      position absolute
+      width 120px
+      height @width
+      margin-left - (@width / 2)
+      margin-top -( @width / 2)
+      border-radius @width
+      text-align center
+      line-height @height
+      animation loading-animation 1.25s infinite linear
+
 .btn.btn-big
   height 120px
   width 120px
@@ -413,6 +467,7 @@ form
   opacity 0.5
   cursor default
   pointer-events none
+
 .toggle
   overflow hidden
   label

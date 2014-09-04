@@ -179,9 +179,9 @@
                 r: 6
               });
 
-            for (var j = 0; j < data.length; j += 1) {
-              if (data[j].now) {
-                $rootScope.$emit('selectedYearChanged', data[j].year);
+            for (var k = 0; j < data.length; k += 1) {
+              if (data[k].now) {
+                $rootScope.$emit('selectedYearChanged', data[k].year);
               }
             }
           };
