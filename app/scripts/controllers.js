@@ -482,11 +482,17 @@
           $scope.rankLocal = rankLocal;
         });
 
-        _loadWpRankRanked(1000000000, '1st');
-        _loadWpRankRanked(2000000000, '2nd');
         _loadWpRankRanked(3000000000, '3rd');
+        _loadWpRankRanked(4000000000, '4th');
         _loadWpRankRanked(5000000000, '5th');
-        _loadWpRankRanked(7000000000, '7th');
+
+        if (ProfileService.getAge() > 30) {
+          _loadWpRankRanked(6000000000, '6th');
+          _loadWpRankRanked(7000000000, '7th');
+        } else {
+          _loadWpRankRanked(1000000000, '1st');
+          _loadWpRankRanked(2000000000, '2nd');
+        }
 
         _loadLifeExpectancyRemaining(ProfileService.country, function(remainingLife) {
 
