@@ -6,7 +6,7 @@
       return {
         restrict: 'E',
         link: function ($scope, element) {
-          var width = 320,
+          var width = 540,
             height = 80,
             handleRadius = 11,
             range = 40,
@@ -14,43 +14,43 @@
             currentYear = parseInt((new Date()).getFullYear(), 0);
 
           var data = [];
-          for (var i=(currentYear-range); i<=currentYear; i+=1) {
+          for (var i = (currentYear - range); i <= currentYear; i += 1) {
             data.push(new Date(i, 1, 1));
           }
 
-          var grid = width/(data.length - 1);
+          var grid = width / (data.length - 1);
 
           var x = d3.time.scale()
             .domain([
-              d3.min(data, function(d) { return d; }),
-              d3.max(data, function(d) { return d; })
+              d3.min(data, function (d) { return d; }),
+              d3.max(data, function (d) { return d; })
             ])
             .range([0, width]);
 
-          var _selectYear = function(pos) {
+          var _selectYear = function (pos) {
             var handle = root.select('.handle');
 
-            handle.attr('transform', 'translate(' + [(pos * grid)-1, 0] + ')');
+            handle.attr('transform', 'translate(' + [(pos * grid) - 1, 0] + ')');
             handle.select('text')[0][0].textContent = data[pos].getFullYear();
           };
 
           var drag = d3.behavior.drag()
-            .on('drag', function() {
+            .on('drag', function () {
               var pos = Math.round(d3.event.x / grid);
-              if (pos < 0 || pos > data.length-1) {
+              if (pos < 0 || pos > data.length - 1) {
                 return;
               }
               this.year = data[pos].getFullYear();
               _selectYear(pos);
             })
-            .on('dragend', function() {
+            .on('dragend', function () {
               $scope.$emit('timesliderChanged', this.year);
             });
 
           var root = d3.select(element[0])
             .append('svg')
             .attr({
-              width: width + (margin*2),
+              width: width + (margin * 2),
               height: height
             })
             .append('g')
@@ -70,7 +70,7 @@
           axis.call(d3.svg.axis()
             .scale(x)
             .orient('bottom')
-            .ticks(range/2)
+            .ticks(range / 2)
             .tickFormat(d3.time.format('%y')));
 
           axis.append('g')
@@ -84,11 +84,11 @@
 
           axis.selectAll('line')
             .attr({
-              y2: function(d, i) {
-                if (i === (range/2) - 1) {
+              y2: function (d, i) {
+                if (i === (range / 2) - 1) {
                   return 0;
                 }
-                if (d.getYear()%10 === 0) {
+                if (d.getYear() % 10 === 0) {
                   return 16;
                 } else {
                   return 8;
@@ -105,7 +105,7 @@
           handle.append('circle').attr('r', handleRadius);
           handle.append('text');
 
-          _selectYear(data.length-1);
+          _selectYear(data.length - 1);
         }
       };
     });

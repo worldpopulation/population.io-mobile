@@ -19,7 +19,8 @@
 
 ## Prepare
 
-* For the first run, copy *app/assets* whole folder into dist folder, so it becomes *dist/assets*
+1. Create a `dist` folder
+2. Copy the `assets` folder into dist the folder `dist/assets`
 
 ## Run
 

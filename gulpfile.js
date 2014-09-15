@@ -14,25 +14,31 @@ var gulp = require('gulp'),
     vendor: [
       'bower_components/momentjs/min/moment.min.js',
       'bower_components/jquery/dist/jquery.min.js',
+      'bower_components/jquery/dist/jquery.min.map',
       'bower_components/d3/d3.min.js',
       'bower_components/d3/d3.js',
+      'bower_components/d3-geo-projection/index.js',
       'bower_components/d3.slider/d3.slider.js',
       'bower_components/topojson/topojson.js',
       'bower_components/angular/angular.min.js',
+      'bower_components/angular/angular.min.js.map',
       'bower_components/restangular/dist/restangular.min.js',
       'bower_components/angular-scroll/angular-scroll.min.js',
       'bower_components/angular-animate/angular-animate.min.js',
+      'bower_components/angular-animate/angular-animate.min.js.map',
       'bower_components/angular-easy-social-share/easy-social-share.js',
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
       'bower_components/angular-cookies/angular-cookies.min.js',
       'bower_components/angular-resource/angular-resource.min.js',
+      'bower_components/angular-resource/angular-resource.min.js.map',
       'bower_components/angular-ui-router/release/angular-ui-router.min.js',
       'bower_components/angular-sanitize/angular-sanitize.min.js',
       'bower_components/lodash/dist/lodash.min.js',
       'bower_components/bowser/bowser.min.js',
       'bower_components/jquery-ui/jquery-ui.min.js',
       'bower_components/ics.js/ics.deps.min.js',
-      'bower_components/ics.js/ics.js'
+      'bower_components/ics.js/ics.js',
+      'vendor/d3.geo.projection.v0.min.js'
     ],
     scripts: [
       'app/scripts/**/*.*'
@@ -48,7 +54,8 @@ var gulp = require('gulp'),
     fonts: 'fonts/**',
     overwatch: [
       'dist/**/*.*',
-      '!dist/celebrities/**'
+      '!dist/celebrities/**',
+      '!dist/assets/**'
     ],
     images: [
       'assets/sprite-icons.svg',

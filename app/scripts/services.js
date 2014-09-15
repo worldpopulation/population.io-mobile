@@ -87,6 +87,7 @@
 
         // GET /1.0/wp-rank/{dob}/{sex}/{country}/on/{date}/
         loadWpRankOnDate: function (args, onSuccess, onError) {
+          console.log('loadWpRankOnDate')
           $http({
             method: 'get',
             url: [

@@ -267,16 +267,16 @@
             }
 
             function initDefs(selection) {
-              var defs = selection.append("defs");
-              var roundedCornersClip = defs.append("clipPath")
+              var defs = selection.append('defs');
+              var roundedCornersClip = defs.append('clipPath')
                 .attr("id", "rounded-corners-clip")
-                .append("circle")
-                .attr("id", "clip-circle")
+                .append('circle')
+                .attr("id", 'clip-circle')
                 .attr("cx", 0)
                 .attr("cy", 0)
                 .attr("r", 20);
-              var celebsRollClip = defs.append("clipPath")
-                .attr("id", "celebs-roll-clip")
+              var celebsRollClip = defs.append('clipPath')
+                .attr("id", 'celebs-roll-clip')
                 .append("rect")
                 .attr("id", "clip-rect")
                 .attr("x", 0)

@@ -22,7 +22,7 @@
             .append('g')
             .attr({transform: 'translate(0,0)'});
 
-          var projection = d3.geo.mercator()
+          var projection = d3.geo.robinson()
             .translate([(width / 2), (height / 2)])
             .scale(width / 2 / Math.PI * 0.75);
 

@@ -1,0 +1,17 @@
+world-clock
+  h3 <i class="icon icon-world"></i>Current world<br/>population clock
+.container
+  .stats-area
+    .loader.fa.fa-refresh(ng-class="{'active': loading}")
+    .question
+      h1 What's your place in the world population?
+      p The Journey of your life in numbers and dates!<br/>Please enter your date of birth, country of birth and sex at birth:
+      form.form-inline(name="goForm", novalidate)
+        .icon.icon-birthday
+          input.form-control(type="text", name="birthday", ng-value="profile.birthday", ng-model = "profile.birthday", placeholder = "Birthday", required)
+        .typeahead
+          input.form-control( type="text", placeholder="Country", ng-model="profile.country", typeahead="country for country in countries | filter: $viewValue", typeahead-wait-ms="100", typeahead-editable="false", required )
+        .toggle
+          label(class="icon icon-female", ng-model="profile.gender" btn-radio="'female'", required) Female
+          label(class="icon icon-male", ng-model="profile.gender" btn-radio="'male'", required) Male
+        a.btn.btn-big(ng-click="goGoGadget()", ng-disabled="goForm.$invalid || loading" ng-class='{loading:loading}') <span class="fa fa-refresh"></span>

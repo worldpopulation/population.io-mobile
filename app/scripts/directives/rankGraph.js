@@ -10,7 +10,7 @@
           country: '=',
           age: '='
         },
-        link: function ($scope, element, attr) {
+        link: function ($scope, element) {
           var width = 300,
             height = 150;
 
@@ -77,7 +77,7 @@
           var _updateGraph = function(data) {
             var age = $scope.age;
 
-            var peopleTotal = d3.sum(data, function (d) { return d.total; });
+//            var peopleTotal = d3.sum(data, function (d) { return d.total; });
 
             var xScale = d3.scale.linear()
               .domain([

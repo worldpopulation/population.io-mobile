@@ -19,21 +19,24 @@ block content
       a.fa.fa-linkedin-square(target="_blank", share="linkedin", share-title="population.io")
 
   ul.navigation(ng-show="profile.active")
-    li(ng-class="{'active': currentPage == 0}", ng-click="showSection('stats')") <span></span>
-    li(ng-class="{'active': currentPage == 1}", ng-click="showSection('story')") <span></span>
-    li(ng-class="{'active': currentPage == 2}", ng-click="showSection('people')") <span></span>
+    li(ng-class="{'active': currentPage == 0}", ng-click="showSection('home')") <span></span>
+    li(ng-class="{'active': currentPage == 1}", ng-click="showSection('summary')") <span></span>
+    li(ng-class="{'active': currentPage == 2}", ng-click="showSection('milestones')") <span></span>
     li(ng-class="{'active': currentPage == 3}", ng-click="showSection('birthdays')") <span></span>
-    li(ng-class="{'active': currentPage == 4}", ng-click="showSection('expectancy')") <span></span>
+    li(ng-class="{'active': currentPage == 4}", ng-click="showSection('death')") <span></span>
+    li(ng-class="{'active': currentPage == 5}", ng-click="showSection('expectancy')") <span></span>
 
-  section#stats(ng-controller='StatsCtrl', du-scrollspy='stats', data-index="0")
-    include ../partials/stats-area
-  section#story(ng-controller='StoryCtrl', du-scrollspy='story', offset='200', data-index="1", ng-class="{'hidden': !profile.active}")
-    include ../partials/story-area
-  section#people(ng-controller='PeopleCtrl', du-scrollspy='people', offset='200', data-index="2", ng-class="{'hidden': !profile.active}")
-    include ../partials/people-area
+  section#home(ng-controller='HomeCtrl', du-scrollspy='home', data-index="0")
+    include ../partials/home-area
+  section#summary(ng-controller='SummaryCtrl', du-scrollspy='summary', data-index="1", offset='200', ng-class="{'hidden': !profile.active}")
+    include ../partials/summary-area
+  section#milestones(ng-controller='MilestonesCtrl', du-scrollspy='milestones', offset='200', data-index="2", ng-class="{'hidden': !profile.active}")
+    include ../partials/milestones-area
   section#birthdays(ng-controller='BirthdaysCtrl', du-scrollspy='birthdays', data-index="3", offset='200', ng-class="{'hidden': !profile.active}")
     include ../partials/birthdays-area
-  section#expectancy(ng-controller='ExpectancyCtrl', du-scrollspy='expectancy', data-index="4", offset='200', ng-class="{'hidden': !profile.active}")
+  section#death(ng-controller='DeathCtrl', du-scrollspy='death', data-index="4", offset='200', ng-class="{'hidden': !profile.active}")
+    include ../partials/death-area
+  section#expectancy(ng-controller='ExpectancyCtrl', du-scrollspy='expectancy', data-index="5", offset='200', ng-class="{'hidden': !profile.active}")
     include ../partials/expectancy-area
 
   include ../partials/modals
