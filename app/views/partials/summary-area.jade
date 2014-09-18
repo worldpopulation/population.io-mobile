@@ -1,4 +1,36 @@
 .container
-  .summary-area
-    h1 Summary
-    h3 Do you think you belong to the young or old? You are the XXX,XXX,XX person alive on the planet. This means that you are the XX% [youngest] in the world / XX% [oldest] in [Germany].
+    .summary-area
+        h3
+            | Do you think you belong to the young or old? You are the <span>XXX,XXX,XX</span> person alive on the planet.
+            | This means that you are <span>older than 10%</span> of the world's population and <span>older than 5%</span> of all people in Germany.
+        .region-switcher
+            a(href='#') World
+            a.active(href='#') Germany
+        .younger-you-older-section
+            .younger-column
+                .number 2632324608
+                .label People younger than you (5%)
+            .you-column
+                .icon(ng-hide="profile.gender!='female'")
+                    | <svg x="0px" y="0px" width="45px" height="90px" viewBox="0 0 15 30" enable-background="new 0 0 15 30" xml:space="preserve">
+                    | <g>
+                    | <path fill="#111" d="M7.025,20.425v6.123c0,0.005,0,0.01,0,0.015c-0.008,0.515-0.437,0.931-0.964,0.931 c-0.531,0-0.963-0.424-0.963-0.946v-6.123c0-0.001,0-0.002,0-0.004h1.927C7.025,20.422,7.025,20.423,7.025,20.425z"/>
+                    | <path fill="#111" d="M9.903,20.425v6.123c0,0.522-0.432,0.946-0.964,0.946c-0.526,0-0.955-0.416-0.963-0.931 c0-0.005,0-0.009,0-0.015c0-0.004,0-0.008,0-0.012v-6.111c0-0.001,0-0.002,0-0.004h1.927C9.903,20.422,9.903,20.423,9.903,20.425z" />
+                    | <path fill="#111" d="M11.777,16.874l-1.792-7.39L9.059,9.7l2.374,9.787H3.542L5.916,9.7L4.99,9.484l-1.79,7.384l-0.472-0.111 c-0.517-0.121-0.837-0.631-0.714-1.139l1.711-7.048c0,0,0,0,0.001-0.001c0.259-1.065,1.22-1.808,2.336-1.808h2.878 c1.117,0,2.078,0.744,2.337,1.809l0,0l1.711,7.046c0,0,0,0,0,0.001c0.123,0.508-0.197,1.019-0.714,1.139L11.777,16.874z"/>
+                    | <path fill="#111" d="M7.501,5.812c-0.928,0-1.683-0.741-1.683-1.653c0-0.911,0.755-1.653,1.683-1.653 c0.928,0,1.683,0.741,1.683,1.653C9.184,5.071,8.429,5.812,7.501,5.812z"/>
+                    | </g>
+                    | </svg>
+                .icon(ng-hide="profile.gender!='male'")
+                    | <svg x="0px" y="0px" width="45px" height="90px" viewBox="0 0 15 30" enable-background="new 0 0 15 30" xml:space="preserve">
+                    | <g>
+                    | <path fill="#111" d="M7.5,5.809c-0.869,0-1.576-0.742-1.576-1.654c0-0.912,0.707-1.653,1.576-1.653 c0.87,0,1.577,0.742,1.577,1.653C9.077,5.067,8.369,5.809,7.5,5.809z"/>
+                    | <path fill="#111" d="M11.997,16.187c0,0.522-0.405,0.946-0.903,0.946h-0.453V9.59H9.75v16.96c0,0.522-0.405,0.946-0.903,0.946 c-0.493,0-0.895-0.416-0.903-0.931c0-0.005,0-0.01,0-0.015c0-0.004,0-0.009,0-0.012V16.187H7.054v10.364c0,0.006,0,0.01,0,0.015 c-0.007,0.515-0.41,0.931-0.903,0.931c-0.498,0-0.902-0.424-0.902-0.946V9.59H4.358v7.542H3.905c-0.498,0-0.902-0.424-0.902-0.946 V9.119c0-1.301,1.009-2.36,2.25-2.36h4.493c1.241,0,2.251,1.058,2.251,2.36L11.997,16.187L11.997,16.187z"/>
+                    | </g>
+                    | </svg>
+
+
+                .label You as a citizen <br>from <span>Germany</span>
+            .older-column
+                .number 2632324608
+                .label People older than you (95%)
+        younger-older-chart
