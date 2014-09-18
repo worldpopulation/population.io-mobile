@@ -6,8 +6,10 @@
     div.rank
       h2 Rank
       .global-rank
+        .title Age Distribution World
         rank-graph(country="'the World'", data="globalRankData", age="age")
       .local-rank
+        .title Age Distribution {{profile.country}}
         rank-graph(country="country", data="localRankData", age="age")
 
     div.timeline

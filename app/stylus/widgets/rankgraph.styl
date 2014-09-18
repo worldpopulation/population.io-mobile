@@ -1,23 +1,47 @@
 rank-graph
-  path
-    fill highlight-blue
-  .coord
-    stroke border-color
-    stroke-width 1
-  text
-    font-size 12px
-  text.age
-    text-anchor end
-  .pointer
-    line
-      stroke border-color
-      stroke-width 1
-    circle
-      fill #000
+    display block
+    margin-bottom 40px
+    path
+        stroke highlight-blue
+        fill #fff
+
+    .coord
+        stroke border-color
+        stroke-width 1
     text
-      text-anchor end
-      font-size 18px
-      fill #333333
-    text.desc
-      fill #999999
-      font-size 12px
+        font-size 12px
+    text.age
+        text-anchor end
+    .pointer
+        line
+            stroke border-color
+            stroke-width 1
+        circle
+            fill #000
+        text
+            text-anchor begin
+            font-size 18px
+            fill #333333
+        text.desc
+            fill #999
+            font-size 12px
+    .x.axis
+        path
+            stroke #999
+            fill transparent
+        text
+            font-size 9px
+            fill #999
+        .tick
+            line
+                stroke #aaa
+    .y.axis
+        path
+            stroke #999
+            fill transparent
+        text
+            font-size 9px
+            fill #999
+        .tick
+            line
+                stroke #aaa

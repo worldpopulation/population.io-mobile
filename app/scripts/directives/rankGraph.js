@@ -10,55 +10,43 @@
           country: '=',
           age: '='
         },
-        link: function ($scope, element) {
+        link: function ($scope, element, attr) {
           var width = 300,
-            height = 150;
+            height = 200,
+            xAxis, xAxisElement,
+            yAxis, yAxisElement,
+            yAxisFormat = d3.format('s');
+          ;
 
           var root = d3.select(element[0])
             .append('svg')
             .attr({
               width: width,
-              height: height
+              height: height + 20
             })
             .append('g')
             .attr({
               transform: 'translate(' + [ 10, -10 ] + ')'
             });
 
-          $scope.$watch('data', function(data) {
+          $scope.$watch('data', function (data) {
             if (data) {
               _updateGraph(data);
             }
           });
 
-          var _initGraph = function() {
+          var _initGraph = function () {
             var frame = root.append('g')
               .attr({
                 'class': 'frame'
               });
 
-            frame.append('line')
-              .attr({
-                'class': 'coord',
-                x1: 0,
-                x2: width - 50,
-                y1: height,
-                y2: height
-              });
-            frame.append('line')
-              .attr({
-                'class': 'coord',
-                x1: 0,
-                x2: 0,
-                y1: 70,
-                y2: height
-              });
             frame.append('text')
               .text('People')
               .attr({
                 'class': 'people',
                 transform: function () {
-                  return 'translate(' + [ 3, 50 ] + ') rotate(-90)';
+                  return 'translate(' + [ 40, 70 ] + ') rotate(-90)';
                 }
               });
             frame.append('text')
@@ -72,25 +60,45 @@
 
             root.append('g').attr('class', 'chart');
             root.append('g').attr('class', 'pointer');
+            xAxisElement = root.append("g")
+              .attr("class", "x axis")
+              .attr({
+                transform: 'translate(' + [0, height] + ')'
+              });
+            yAxisElement = root.append("g")
+              .attr("class", "y axis")
+              .attr({
+                transform: 'translate(' + [40, 0] + ')'
+              });
+            yAxis = d3.svg.axis()
+              .orient('left')
+              .tickFormat(function (d) {return yAxisFormat(d).replace('M', ' M')})
+              .ticks(5,7);
+
+
           };
 
-          var _updateGraph = function(data) {
+          var _updateGraph = function (data) {
             var age = $scope.age;
 
-//            var peopleTotal = d3.sum(data, function (d) { return d.total; });
+            var peopleTotal = d3.sum(data, function (d) { return d.total; });
 
             var xScale = d3.scale.linear()
               .domain([
                 d3.min(data, function (d) { return d.age; }),
                 d3.max(data, function (d) { return d.age; })
               ])
-              .range([0, width - 90]);
-
+              .range([40, width - 50]);
             var yScale = d3.scale.linear()
-              .domain([
-                0, d3.max(data, function (d) { return d.total; })
-              ])
+              .domain([ 0, d3.max(data, function (d) { return d.total; }) ])
               .range([height, 90]);
+
+            var xAxis = d3.svg.axis()
+              .scale(xScale)
+              .tickFormat(function (d, i) {return d + 'y'});
+
+            yAxis.scale(yScale)
+
 
             var area = d3.svg.area()
               .x(function (d) { return xScale(d.age); })
@@ -106,27 +114,32 @@
 
             var chart = root.select('.chart');
 
-            var path = chart.selectAll('path')
+
+            var path = chart
+              .selectAll('.age-line')
               .data([data]);
 
             path.transition()
               .duration(1000)
-              .attr('d', function() {
+              .attr('d', function () {
                 return area(data);
               });
 
             path.enter()
               .append('path')
-              .attr('d', function() {
-                return areaNull(data);
+              .attr({
+                d: function () {
+                  return areaNull(data);
+                },
+                class: 'age-line'
               })
               .transition()
               .duration(1000)
-              .attr('d', function() {
+              .attr('d', function () {
                 return area(data);
               });
 
-            var bisect = d3.bisector(function(d) { return d.age; }).right;
+            var bisect = d3.bisector(function (d) { return d.age; }).right;
             var item = data[bisect(data, age)];
 
             if (item) {
@@ -142,71 +155,85 @@
               if (pointer.select('.percentage').empty()) {
                 pointer.attr({
                   transform: function () {
-                    return 'translate(' + [
-                      xScale(age),
-                      height
-                    ] + ')';
+                    return 'translate(' + [ xScale(age), 0 ] + ')';
                   }
                 });
               }
 
-              pointer.transition().duration(1000)
+              pointer
+                .transition()
+                .duration(1000)
                 .attr({
-                  transform: function () {
-                    return 'translate(' + [
-                      xScale(age),
-                      height - (height - yScale(item.total))
-                    ] + ')';
-                  }
+                  transform: 'translate(' + [ xScale(age), 0 ] + ')'
                 });
 
               group.append('line');
 
-              pointer.select('line').transition().duration(1000)
+              pointer.select('line')
+                .transition()
+                .duration(1000)
                 .attr({
                   x1: 0,
-                  y1: 0,
-                  x2: width - xScale(age),
-                  y2: 0
+                  y1: 20,
+                  x2: 0,
+                  y2: (yScale(item.total))
                 });
-
               group.append('circle')
                 .attr({
-                  r: 3
+                  r: 3,
+                  cx: 0,
+                  cy: yScale(item.total) - 1
                 });
 
-              var textBlock = group.append('g');
+              var textBlock = group
+                  .append('g')
+                  .attr({
+                    class: 'text-block',
+                    transform: function () {
+                      return 'translate(' + [15, 35] + ')';
+                    }
 
-              textBlock.attr('class', 'text-block');
+                  })
+                ;
 
               textBlock.append('text')
                 .attr({
-                  'class': 'percentage',
-                  transform: function () {
-                    return 'translate(' + [0, -30] + ')';
-                  }
+                  'class': 'percentage'
                 });
               textBlock.append('text')
                 .text('your age')
                 .attr({
                   'class': 'desc',
                   transform: function () {
-                    return 'translate(' + [0, -15] + ')';
+                    return 'translate(' + [0, 15] + ')';
                   }
                 });
 
-              pointer.select('.text-block').transition().duration(1000).attr({
-                  transform: function () {
-                    return 'translate(' + [width - xScale(age) - 10, 0] + ')';
-                  }
-                });
-              pointer.select('.percentage')
-                .text(function() {
-                  var ageTxt = ProfileService.getAgeString();
-                  ageTxt = ageTxt.replace('y', 'y ');
-                  return ageTxt;
+              root.select('.percentage')
+                .transition()
+                .delay(1000)
+                .text(function () {
+//                  var ageTxt = ProfileService.getAgeString();
+//                  ageTxt = ageTxt.replace('y', 'y ');
+                  return age + 'y';
                 });
             }
+            yAxisElement
+              .transition()
+              .call(yAxis);
+
+            xAxisElement
+              .transition()
+              .call(xAxis);
+
+
+            root.select('circle')
+              .transition()
+              .duration(1000)
+              .attr({
+                cy: yScale(item.total) - 1
+              });
+
           };
 
           _initGraph();
