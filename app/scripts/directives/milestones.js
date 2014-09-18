@@ -2,12 +2,14 @@
   'use strict';
 
   angular.module('populationioApp')
-    .directive('storyLine', function ($rootScope) {
+    .directive('milestones', function ($rootScope) {
       return {
         restrict: 'E',
         scope: {
           data: '=',
-          selectedYear: '='
+          selectedYear: '=',
+          rankGlobal: "=",
+          rankGlobalTotal: "="
         },
         link: function ($scope, element) {
           var width = 460,
@@ -21,13 +23,13 @@
             .append('g')
             .attr({transform: 'translate(-20,0)'});
 
-          $scope.$watch('data', function(data) {
+          $scope.$watch('data', function (data) {
             if (data) {
               _updateGraph(data);
             }
           }, true);
 
-          $scope.$watch('selectedYear', function(year) {
+          $scope.$watch('selectedYear', function (year) {
             if (year) {
               _removeAllHighlights();
               var node = d3.select('.dot[data-id="' + year + '"]')[0][0];
@@ -49,7 +51,7 @@
             }
           };
 
-          var _initGraph = function() {
+          var _initGraph = function () {
             var bezierCurve = [
               'M428.75,559c0-22.092-17.658-40-39.75-40H89c-22.092,',
               '0-40-17.908-40-40s17.908-40,40-40h300c22.092,0,40-17.908,',
@@ -82,7 +84,7 @@
               });
           };
 
-          var _updateGraph = function(data) {
+          var _updateGraph = function (data) {
             var path = root.select('.line');
             var pathNode = path.node();
 
@@ -156,7 +158,7 @@
                 'data-id': function (d) {
                   return d.year;
                 },
-                'class': function(d) {
+                'class': function (d) {
                   return 'dot' + (d.now ? ' highlight' : '');
                 },
                 transform: function (d) {
@@ -165,7 +167,7 @@
                 }
               })
               .on('click', function (d) {
-                $rootScope.$broadcast('selectedYearChanged', d.year);
+                $rootScope.$emit('selectedYearChanged', d.year);
               });
 
             var dotWrapper = dot.append('g')
@@ -173,13 +175,13 @@
 
             dotWrapper.append('circle')
               .attr({
-                'class': function(d) {
+                'class': function (d) {
                   return d.color ? d.color : '';
                 },
                 r: 6
               });
 
-            for (var k = 0; j < data.length; k += 1) {
+            for (var k = 0; k < data.length; k += 1) {
               if (data[k].now) {
                 $rootScope.$emit('selectedYearChanged', data[k].year);
               }

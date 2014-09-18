@@ -201,7 +201,7 @@ gulp.task('fonts', function () {
 
 // jshint task
 gulp.task('lint', function () {
-  return gulp.src('app/scripts/**/*.js')
+  return gulp.src(['app/scripts/**/*.js', '!app/scripts/libs/**/*.js'])
     .pipe(jshint())
     .pipe(jshint.reporter('default'));
 });

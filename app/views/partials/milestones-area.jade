@@ -3,7 +3,7 @@
     header
       h1 What are the big milestones to expect in your life? <i ng-bind-html="titleAlive"></i>
       .loader.fa.fa-refresh(ng-class="{'active': loading}")
-    div.rank
+    .rank
       h2 Rank
       .global-rank
         .title Age Distribution World
@@ -12,13 +12,13 @@
         .title Age Distribution {{profile.country}}
         rank-graph(country="country", data="localRankData", age="age")
 
-    div.timeline
+    .timeline
       h2 Timeline
       ul
-        li(ng-repeat="item in storyLineData | orderBy:dateOrder:true", data-id="item.year", class="{{item.color}}", ng-class="{'is-rank': item.rank, 'now': item.now, 'past': item.year < year, 'selected': selectedYear === item.year}", ng-click="highlightStoryLine(item.year)" )
+        li(ng-repeat="item in milestonesData | orderBy:dateOrder:true", data-id="item.year", class="{{item.color}}", ng-class="{'is-rank': item.rank, 'now': item.now, 'past': item.year < year, 'selected': selectedYear === item.year}", ng-click="highlightMilestone(item.year)" )
           span.time
             span.date {{item.date | date: 'dd MMM' }}
             span.year {{item.date | date: 'yyyy' }}
           span.title {{item.title}}
-      story-line(data="storyLineData", selected-year="selectedYear")
+      milestones(data="milestonesData", selected-year="selectedYear")
 

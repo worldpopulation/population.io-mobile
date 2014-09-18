@@ -13,7 +13,7 @@
           var ageDate = new Date(Date.now() - (new Date(this.birthday)).getTime());
           return Math.abs(ageDate.getUTCFullYear() - 1970);
         },
-        getAgeString: function() {
+        getAgeString: function () {
           var ageDate = new Date(Date.now() - (new Date(this.birthday)).getTime());
           var year = Math.abs(ageDate.getUTCFullYear() - 1970),
             months = ageDate.getMonth();
@@ -45,17 +45,17 @@
             method: 'get',
             url: baseUrl + '/countries/'
           })
-          .success(function (data) {
-            if (data.countries) {
-              onSuccess(data.countries);
-            }
-          })
-          .error(function () {
-            if (onError) {
-              onError();
-            }
-            console.info('getCountries() error');
-          });
+            .success(function (data) {
+              if (data.countries) {
+                onSuccess(data.countries);
+              }
+            })
+            .error(function () {
+              if (onError) {
+                onError();
+              }
+              console.info('getCountries() error');
+            });
         },
 
         // GET /1.0/wp-rank/{dob}/{sex}/{country}/today/
@@ -71,18 +71,18 @@
               'today'
             ].join('/') + '/'
           })
-          .success(function (data) {
-            if (data.rank) {
-              onSuccess(data.rank);
-            }
-          })
-          .error(function (err) {
+            .success(function (data) {
+              if (data.rank) {
+                onSuccess(data.rank);
+              }
+            })
+            .error(function (err) {
               console.log(err)
-            if (onError) {
-              onError();
-            }
-            console.info('loadWpRankToday() error');
-          });
+              if (onError) {
+                onError();
+              }
+              console.info('loadWpRankToday() error');
+            });
         },
 
         // GET /1.0/wp-rank/{dob}/{sex}/{country}/on/{date}/
@@ -100,17 +100,17 @@
               args.date
             ].join('/') + '/'
           })
-          .success(function (data) {
-            if (data.rank) {
-              onSuccess(data.rank);
-            }
-          })
-          .error(function () {
-            if (onError) {
-              onError();
-            }
-            console.info('loadWpRankOnDate() error');
-          });
+            .success(function (data) {
+              if (data.rank) {
+                onSuccess(data.rank);
+              }
+            })
+            .error(function () {
+              if (onError) {
+                onError();
+              }
+              console.info('loadWpRankOnDate() error');
+            });
         },
 
         // GET /1.0/wp-rank/{dob}/{sex}/{country}/ranked/{rank}
@@ -128,17 +128,17 @@
               args.rank
             ].join('/') + '/'
           })
-          .success(function (data) {
-            if (data.date_on_rank) {
-              onSuccess(data.date_on_rank);
-            }
-          })
-          .error(function (error) {
-            if (onError) {
-              onError();
-            }
-            console.info('loadWpRankRanked() error: ', error.detail);
-          });
+            .success(function (data) {
+              if (data.date_on_rank) {
+                onSuccess(data.date_on_rank);
+              }
+            })
+            .error(function (error) {
+              if (onError) {
+                onError();
+              }
+              console.info('loadWpRankRanked() error: ', error.detail);
+            });
         },
 
         // GET /1.0/life-expectancy/remaining/{sex}/{country}/{date}/{age}
@@ -154,17 +154,17 @@
               args.age
             ].join('/') + '/'
           })
-          .success(function (data) {
-            if (data.remaining_life_expectancy) {
-              onSuccess(data.remaining_life_expectancy);
-            }
-          })
-          .error(function () {
-            if (onError) {
-              onError();
-            }
-            console.info('loadLifeExpectancyRemaining() error');
-          });
+            .success(function (data) {
+              if (data.remaining_life_expectancy) {
+                onSuccess(data.remaining_life_expectancy);
+              }
+            })
+            .error(function () {
+              if (onError) {
+                onError();
+              }
+              console.info('loadLifeExpectancyRemaining() error');
+            });
         },
 
         // GET /1.0/life-expectancy/total/{sex}/{country}/{dob}
@@ -179,17 +179,17 @@
               args.dob
             ].join('/') + '/'
           })
-          .success(function (data) {
-            if (data.total_life_expectancy) {
-              onSuccess(data.total_life_expectancy);
-            }
-          })
-          .error(function () {
-            if (onError) {
-              onError();
-            }
-            console.info('loadLifeExpectancyTotal() error');
-          });
+            .success(function (data) {
+              if (data.total_life_expectancy) {
+                onSuccess(data.total_life_expectancy);
+              }
+            })
+            .error(function () {
+              if (onError) {
+                onError();
+              }
+              console.info('loadLifeExpectancyTotal() error');
+            });
         },
 
         // GET /1.0/population/{year}/{country}
@@ -203,17 +203,17 @@
               args.country
             ].join('/') + '/'
           })
-          .success(function (data) {
-            if (data) {
-              onSuccess(data);
-            }
-          })
-          .error(function () {
-            if (onError) {
-              onError();
-            }
-            console.info('loadPopulation() error');
-          });
+            .success(function (data) {
+              if (data) {
+                onSuccess(data);
+              }
+            })
+            .error(function () {
+              if (onError) {
+                onError();
+              }
+              console.info('loadPopulation() error');
+            });
         },
 
         // GET /1.0/population/{year}/{country}/{age}/
@@ -228,17 +228,17 @@
               args.age
             ].join('/') + '/'
           })
-          .success(function (data) {
-            if (data) {
-              onSuccess(data);
-            }
-          })
-          .error(function () {
-            if (onError) {
-              onError();
-            }
-            console.info('loadPopulation() error');
-          });
+            .success(function (data) {
+              if (data) {
+                onSuccess(data);
+              }
+            })
+            .error(function () {
+              if (onError) {
+                onError();
+              }
+              console.info('loadPopulation() error');
+            });
         }
       };
     })
