@@ -5,22 +5,15 @@ header
         span.title Population.io
         span.subtitle The World Population Project
         span.icon-alpha
+    .loader.fa.fa-refresh(ng-class="{'active': loading}")
     ul.link-list
       li
         a(ng-click="showAbout()") About
         a(ng-click="showDevelopers()") Developers
-    .profile.animate(
-      ng-show="currentPage > 0",
-      ng-click="showHomepage()",
-      ng-cloak
-    ) {{profile.birthday | date:'dd MMM yyyy' }}, {{profile.country}}
+    .profile.animate( ng-show="currentPage > 0", ng-click="showHomepage()", ng-cloak ) {{profile.birthday | date:'dd MMM yyyy' }}, {{profile.country}}
     .world-population.animate(ng-show="currentPage > 0", ng-cloak)
       span(ng-show="clockType === 'personal'") {{rankGlobal | number:0}}
       span(ng-show="clockType === 'world'") {{worldPopulation | number:0}}
       .toggle
-        label(
-          ng-class="{'icon-gender icon-female': profile.gender === 'female', 'icon-male icon-gender': profile.gender === 'male'}",
-          ng-model="clockType",
-          btn-radio="'personal'"
-        )
+        label( ng-class="{'icon-gender icon-female': profile.gender === 'female', 'icon-male icon-gender': profile.gender === 'male'}", ng-model="clockType", btn-radio="'personal'" )
         label(class="icon-world", ng-model="clockType", btn-radio="'world'")

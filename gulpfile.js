@@ -189,7 +189,6 @@ gulp.task('images:watch', function () {
   });
 
 
-
 });
 
 gulp.task('celebs', function () {

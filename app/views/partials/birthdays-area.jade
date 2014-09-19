@@ -2,7 +2,6 @@
   .birthdays-area
     header
       h1 Did you know that you share a birthday with <i ng-bind-html="birthdayShare"></i>
-      .loader.fa.fa-refresh(ng-class="{'active': loading}")
     h2.continental Continental<br/>statistics
     h2.world Top birthday<br/>countries
     birthdays-chart(continents-data="continentsData", world-data="worldData")

@@ -9,7 +9,7 @@
           templateUrl: 'browser-warning.html'
         });
       }
-      $scope.clockType = 'world';
+        $scope.clockType = 'world';
       $scope.profile = ProfileService;
 
       $scope.$on('rankGlobalChanged', function (e, rankGlobal) {
@@ -24,6 +24,7 @@
         return ProfileService.active;
       }, function (active) {
         if (active) {
+
           $timeout(function () {
             $scope.showSection($rootScope.target);
           }, 700);
@@ -70,8 +71,16 @@
 
       $rootScope.$on('ready', function () {
         $scope.showSection('home');
+        $scope.loading = 1;
       });
-
+        $rootScope.$on('loadingOn', function () {
+          console.log('loadingOn')
+          $scope.loading = 1
+        });
+        $rootScope.$on('loadingOff', function () {
+          console.log('loadingOff')
+          $scope.loading = 0
+        });
       $rootScope.$on('duScrollspy:becameActive', function ($event, $element) {
         var section = $element.prop('id');
         if (section) {
@@ -160,9 +169,7 @@
 //      console.log(ProfileService)
 //      console.log(parseInt($filter('date')(ProfileService.birthday, 'yyyy'), 0))
       $scope.age = new Date().getFullYear() - parseInt($filter('date')(ProfileService.birthday, 'yyyy'), 0);
-      console.log('###' + $scope.age)
       $rootScope.$on('ready', function () {
-
         _update();
       });
 
@@ -654,7 +661,7 @@
       });
 
       var _updateContinentalCountries = function () {
-
+        $rootScope.$broadcast('loadingOn')
         $scope.continentsData = [];
 
         var continentalCountries = _getCountriesByContinent($scope.selectedContinental),
@@ -676,6 +683,7 @@
 
           if (continentalCountries.length === responseCounter) {
             $scope.$broadcast('continentsDataLoaded');
+            $rootScope.$broadcast('loadingOff')
           }
         });
       };

@@ -120,47 +120,6 @@ div.modal
 .content-block
   min-height 100%
 
-// loader
-.loader
-  position absolute
-  text-align right
-  left 0
-  right 20px
-  z-index 2
-  bottom -30px
-  font-size 20px
-  color #666
-  opacity 0
-  transition opacity 300ms ease
-
-.loader.active
-  opacity 1
-
-.loader:after
-  display block
-  content ''
-  position absolute
-  z-index 1
-  right -10px
-  top -9px
-  height 40px
-  width 40px
-  background highlight-yellow
-  border-radius 40px
-
-.loader:before
-  z-index 2
-  position absolute
-  right 1px
-  top 1px
-  animation loading-animation 1.25s infinite linear
-
-@keyframes loading-animation
-  0%
-    transform rotate(0deg)
-  100%
-    transform rotate(360deg)
-
 // cloak
 [ng\:cloak],
 [ng-cloak],

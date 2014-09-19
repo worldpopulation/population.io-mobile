@@ -24,7 +24,7 @@
     "fontawesome": "4.1.0",
     "bowser": "0.7.1",
     "jquery-ui": "1.11.0",
-    "angular-scroll": "~0.5.7",
+    "angular-scroll": "~0.6.2",
     "ics.js": "git@github.com:nwcell/ics.js.git",
     "momentjs": "2.7.0"
   },
