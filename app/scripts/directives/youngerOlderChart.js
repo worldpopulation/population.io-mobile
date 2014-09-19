@@ -76,16 +76,16 @@
             var younger = data.slice(0, age);
             chart.append('path')
               .attr('d', area(data))
-              .attr('fill', '#f7f7f7')
+              .attr('fill', '#F3F3F3')
 
             chart.append('path')
               .attr('d', area(younger))
-              .attr('fill', '#98ec79')
+              .attr('fill', '#A5EC87')
 
             chart.append('path')
               .attr('d', line(data))
-              .attr('stroke', '#555')
-              .attr('stroke-width', 3)
+              //.attr('stroke', '#66666F')
+              //.attr('stroke-width', 3)
               .attr('fill', 'none');
             chart.append('g')
               .attr('class', 'x axis')
@@ -97,10 +97,12 @@
               .attr('transform', 'translate(120,0)')
               .call(yAxis);
             pointer = chart.append('circle').attr({
-              r: 6
+              r: 7
             })
+              .attr('stroke-width', 3)
               .style({
-                fill: 'black'
+                fill: 'black',
+                stroke: 'white'
               });
 
             pointer.attr({
