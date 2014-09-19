@@ -15,7 +15,6 @@
       $scope.$on('rankGlobalChanged', function (e, rankGlobal) {
         $rootScope.rankGlobal = rankGlobal;
       });
-
       $interval(function () {
         $scope.worldPopulation = PopulationIOService.getWorldPopulation();
       }, 1000);
@@ -32,6 +31,7 @@
       });
 
       $rootScope.$on('$locationChangeSuccess', function () {
+        console.log('$locationChangeSuccess')
         var path = $location.$$path.replace(/.+[/](.*)$/g, '$1');
         if ($location.preventReload) {
           $location.preventReload = false;
@@ -280,7 +280,10 @@
           ProfileService.active = false;
         }
       });
-      $scope.$watch('profile.birthday', function (newVal, oldVal) {
+        $scope.birthdays = function (newVal) {
+          return [moment(newVal).format('YYYY-MM-DD')]
+        }
+      $scope.$watch('profile.birthday', function (newVal) {
         ProfileService.active = false;
       });
       $scope.$watch('profile.gender', function () {

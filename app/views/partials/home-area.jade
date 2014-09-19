@@ -6,10 +6,10 @@ world-clock
       h1 What's your place in the world population?
       p The Journey of your life in numbers and dates!<br/>Please enter your date of birth, country of birth and sex at birth:
       form.form-inline(name="goForm", novalidate)
-        .icon.icon-birthday
-          input.form-control(type="text", name="birthday", ng-value="profile.birthday", ng-model = "profile.birthday", placeholder = "Birthday", required)
+        .icon.icon-birthday.typeahead
+          input.form-control(type="text", name="birthday", ng-value="profile.birthday", ng-model = "profile.birthday", placeholder = "Birthday", typeahead="birthday for birthday in birthdays($viewValue)", typeahead-wait-ms="100", typeahead-editable="false", required )
         .typeahead
-          input.form-control( type="text", placeholder="Country", ng-model="profile.country", typeahead="country for country in countries | filter: $viewValue", typeahead-wait-ms="100", typeahead-editable="false", required )
+          input.form-control(type="text", placeholder="Country", ng-model="profile.country", typeahead="country for country in countries | filter: $viewValue", typeahead-wait-ms="100", typeahead-editable="false", required )
         .toggle
           label(class="icon icon-female", ng-model="profile.gender" btn-radio="'female'", required) Female
           label(class="icon icon-male", ng-model="profile.gender" btn-radio="'male'", required) Male
