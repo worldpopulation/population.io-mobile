@@ -5,10 +5,13 @@
             | This means that you are <span>older than {{(rankGlobal/(worldPopulation/100) | number : 0)}}%</span> of the world's population
             | and <span>older than {{(rankLocal/(countryPopulation/100) | number : 0)}}%</span> of all people in {{profile.country}}.
         .region-switcher
-            a(href='#') World
-            a.active(href='#') {{profile.country}}
+            span(ng-class='{active:region=="World"}', ng-click='region="World"') World
+            span(ng-class='{active:region!="World"}', ng-click='region=profile.country') {{profile.country}}
         .younger-you-older-section
-            .younger-column
+            .younger-column.country(ng-hide="region=='World'")
+                .number {{ rankLocal | number : 0}}
+                .label People younger than you ({{(rankLocal/(countryPopulation/100) | number : 0)}}%)
+            .younger-column.world(ng-hide="region!='World'")
                 .number {{ rankGlobal | number : 0}}
                 .label People younger than you ({{(rankGlobal/(worldPopulation/100) | number : 0)}}%)
             .you-column
@@ -30,8 +33,11 @@
                     | </svg>
 
 
-                .label You as a citizen <br>from <span>{{profile.country}}</span>
-            .older-column
+                .label You as a citizen <br>from <span>{{region || profile.country}}</span>
+            .older-column.country(ng-hide="region=='World'")
+                .number {{countryPopulation - rankLocal | number : 0}}
+                .label People older than you ({{(100-rankLocal/(countryPopulation/100) | number : 0)}}%)
+            .older-column.world(ng-hide="region!='World'")
                 .number {{worldPopulation - rankGlobal | number : 0}}
                 .label People older than you ({{(100-rankGlobal/(worldPopulation/100) | number : 0)}}%)
         younger-older-chart
