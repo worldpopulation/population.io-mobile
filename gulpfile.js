@@ -182,9 +182,14 @@ gulp.task('jade:watch', function (event) {
   });
 });
 
-gulp.task('images', function () {
-  return gulp.src(sources.images)
-    .pipe(gulp.dest(destinations.images));
+gulp.task('images:watch', function () {
+  watch({glob: sources.images}, function (files) {
+    gulp.src(sources.images)
+      .pipe(gulp.dest(destinations.images));
+  });
+
+
+
 });
 
 gulp.task('celebs', function () {
@@ -234,7 +239,7 @@ gulp.task('upload', function () {
 gulp.task('default', [
   'serve',
   'fonts',
-  'images',
+  'images:watch',
   'jade:watch',
   'scripts:watch',
   'lint:watch',
