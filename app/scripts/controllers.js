@@ -234,17 +234,28 @@
         }, function (rank) {
           $scope.rankLocalTomorrow = rank;
         });
+
         PopulationIOService.loadPopulation({
           year: new Date().getFullYear(),
           country: ProfileService.country
         }, function (data) {
           $scope.loading -= 1;
 
-          $scope.countryPopulation = _(data).reduce(function (sum, num) {
+          $scope.countryPopulation = data;
+          $scope.countryPopulationTotal = _(data).reduce(function (sum, num) {
             sum = sum | 0;
             return sum + num.total;
           });
-          $scope.$broadcast('populationDataChanged', data)
+          $scope.$broadcast('countryPopulationDataChanged', data)
+        });
+        PopulationIOService.loadPopulation({
+          year: new Date().getFullYear(),
+          country: 'World'
+        }, function (data) {
+          $scope.loading -= 1;
+
+          $scope.worldPopulation = data;
+          $scope.$broadcast('worldPopulationDataChanged', data)
         });
 
       };
