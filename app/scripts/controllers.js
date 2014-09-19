@@ -31,7 +31,6 @@
       });
 
       $rootScope.$on('$locationChangeSuccess', function () {
-        console.log('$locationChangeSuccess')
         var path = $location.$$path.replace(/.+[/](.*)$/g, '$1');
         if ($location.preventReload) {
           $location.preventReload = false;
@@ -74,11 +73,9 @@
         $scope.loading = 1;
       });
         $rootScope.$on('loadingOn', function () {
-          console.log('loadingOn')
           $scope.loading = 1
         });
         $rootScope.$on('loadingOff', function () {
-          console.log('loadingOff')
           $scope.loading = 0
         });
       $rootScope.$on('duScrollspy:becameActive', function ($event, $element) {

@@ -124,14 +124,24 @@
             var _highlightCountry = function() {
               var _tooltip = d3.select(this);
 
+              d3.select(this).moveToFront();
               d3.select(this).select('circle')
                 .transition()
-                .attr({ r: function (d) {return d.radius + 3;} })
-                .style({ fill: 'rgba(0,0,0,0.8)' });
+                .attr({ r: function (d) {return d.radius + 40;} })
+                .style({ fill: 'rgba(0,0,0,0.8)' })
+                  ;
 
               _tooltip.select('text')
-                .transition()
-                .style({ fill: '#fff' });
+                  .transition()
+                  .style({
+                    fill: '#fff',
+                  })
+                  .attr({
+                    transform: 'scale(2)'
+                  })
+                  .text(function (d) {
+                    return d.countryTitle
+                  });
 
 /*
               tooltipElement.select('.percentage-label').
@@ -177,9 +187,23 @@
                   .transition()
                   .attr('r', function (d) { return d.radius - 5; })
                   .style({ fill: 'rgba(0,0,0,0.05)' });
-                d3.select(this).select('text')
-                  .transition()
-                  .style({ fill: '#888' });
+                  d3.select(this).select('text')
+                      .transition()
+                      .style({ fill: '#888'
+                      })
+                      .attr({
+                        transform: 'scale(1)'
+                      })
+
+                      .text(function (d) {
+                        if (d.radius < 50) {
+                          return d.countryAbbr;
+                        }
+                        else {
+                          return d.countryTitle;
+                        }
+
+                      });
               });
             countryElement
               .append('circle')
