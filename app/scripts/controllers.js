@@ -313,8 +313,10 @@
             }
             break;
           case 'y':
-            console.log(years)
-            return years;
+            return _.filter(years, function (v) {
+              return v.toString().indexOf(parseInt(newVal).toString()) > -1
+            });
+
             break;
 
         }
@@ -326,7 +328,7 @@
 
          }
          */
-      });
+      },true);
       $scope.$watch('profile.gender', function () {
         ProfileService.active = false;
       });
