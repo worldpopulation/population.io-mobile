@@ -103,7 +103,7 @@
               areaYounger
                   .transition()
                   .attr('d', area(younger))
-                  .attr('fill', '#6581F1');
+                  .attr('fill', '#6581F1'); /* highlight-blue */
 
               areaLine
                   .transition()
