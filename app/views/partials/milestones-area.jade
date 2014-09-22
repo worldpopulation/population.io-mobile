@@ -3,12 +3,12 @@
     header
       h1 What are the big milestones to expect in your life? <i ng-bind-html="titleAlive"></i>
     .rank
-      h2 Rank
+      h2 Age Distribution
       .global-rank
-        .title Age Distribution World
+        .title World
         rank-graph(country="'the World'", data="globalRankData", age="age")
       .local-rank
-        .title Age Distribution {{profile.country}}
+        .title {{profile.country}}
         rank-graph(country="country", data="localRankData", age="age")
 
     .timeline
