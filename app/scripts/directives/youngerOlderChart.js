@@ -104,7 +104,7 @@
               areaYounger
                   .transition()
                   .attr('d', area(younger))
-                  .attr('fill', '#A5EC87');
+                  .attr('fill', '#6581F1');
 
               areaLine
                   .transition()

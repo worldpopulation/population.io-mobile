@@ -367,7 +367,7 @@
 
               _arc.select('path.main')
                 .transition()
-                .style('fill', '#21edff');
+                .style('fill', '#6581F1');
               _arc.select('path.border')
                 .transition()
                 .attr('opacity', 0);
