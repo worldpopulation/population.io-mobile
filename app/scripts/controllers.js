@@ -289,7 +289,6 @@
 
 
       $scope.$watch('goForm.$invalid', function (invalid) {
-        console.log($scope.goForm.$error)
         if (invalid) {
           ProfileService.active = false;
         }
@@ -324,7 +323,6 @@
         }
       };
       $scope.$watch('profile.birthday', function (newVal) {
-        console.log($scope.profile.birthday)
         ProfileService.active = false;
         /*
          if ($scope.profile.birthday.day && $scope.profile.birthday.month && $scope.profile.birthday.year) {

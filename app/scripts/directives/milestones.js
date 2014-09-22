@@ -25,7 +25,6 @@
 
           $scope.$watch('data', function (data) {
             if (data) {
-              console.log(data)
               _updateGraph(data);
             }
           }, true);
