@@ -23,8 +23,8 @@
                 .attr({transform: 'translate(0,0)'});
 
             var projection = d3.geo.robinson()
-                .translate([(width / 2), (height / 1.4)])
-                .scale(width / 1.9 / Math.PI * 0.75);
+                .scale(181)
+                .translate([width / 2, height / 1.80]);
 
             var path = d3.geo.path().projection(projection);
 
@@ -34,8 +34,7 @@
 
               if (!node) {
                 alert([
-                      'Whoops "' + data.country + '"',
-                  ' is not existing on this map!'
+                  'Whoops, "' + data.country + '"',' is not part of this map!'
                 ].join(''));
               }
 
