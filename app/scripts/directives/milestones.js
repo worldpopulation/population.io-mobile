@@ -25,6 +25,7 @@
 
           $scope.$watch('data', function (data) {
             if (data) {
+              console.log(data)
               _updateGraph(data);
             }
           }, true);
@@ -97,7 +98,6 @@
               }
               return d.year - zero;
             };
-
             var scale = d3.scale.linear()
               .domain([yearMin, yearMax])
               .range([0, pathNode.getTotalLength()]);
@@ -149,7 +149,6 @@
                     years.push(data[i].year);
                   }
                 }
-
                 return filteredData;
               })
               .enter()

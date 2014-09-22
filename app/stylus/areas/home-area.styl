@@ -1,70 +1,81 @@
 world-clock
-  position absolute
-  top 40px
-  pointer-events none
-  z-index 10
+    position absolute
+    top 40px
+    pointer-events none
+    z-index 10
+
 world-clock:before
-  content ''
-  background #fff
-  position absolute
-  left 0
-  bottom -10px
-  width 100%
-  height 130px
-  z-index -1
-.stats-area
-  height 1000px
-  .question
-    position relative
-    top 300px
-    h1
-      margin 0
-      padding 0
-      color #000
-      font-size 72px
-      font-family 'PlantinMTStd-Light', sans-serif
-    p
-      font-size 24px
-      margin 20px 0 40px 0
-      color #666666
-      font-family 'Theinhardt-Light', 'Helvetica', sans-serif
-  form
-    button
-      position relative
-      top -35px
-      left 10px
-    input
-      background highlight-yellow
-      border 1px solid highlight-yellow
-      width 240px
-      height 50px
-      padding 0 20px
-      margin 0
-      border-radius 12px
-    ::-webkit-input-placeholder
-      color #666
-    .typeahead
-      margin 0 20px
-    .toggle
-      label
-        padding-right 60px
-    .icon
-      position relative
-      margin 0
-      input
-        padding-right 40px
-    .icon:after
-      content ''
-      height 40px
-      width 40px
-      position absolute
-      z-index 9
-      right 5px
-      top 4px
-      background-icon()
-    .icon.icon-birthday:after
-      background-position -35px -230px
-    .icon.icon-male:after
-      background-position -130px -330px
-    .icon.icon-female:after
-      background-position -30px -330px
+    content ''
+    background #fff
+    position absolute
+    left 0
+    bottom -10px
+    width 100%
+    height 130px
+    z-index -1
+
+.home-area
+    height 1000px
+    .question
+        position relative
+        top 300px
+        h1
+            margin 0
+            padding 0
+            color #000
+            font-size 72px
+            font-family 'PlantinMTStd-Light', sans-serif
+        p
+            font-size 24px
+            margin 20px 0 40px 0
+            color #666666
+            font-family 'Theinhardt-Light', 'Helvetica', sans-serif
+    form
+        button
+            position relative
+            top -35px
+            left 10px
+        input
+            background highlight-yellow
+            border 1px solid highlight-yellow
+            width 240px
+            height 50px
+            padding 0 20px
+            margin 0
+            border-radius 12px
+            &.day-field
+                width 90px
+                margin-right 20px
+            &.month-field
+                width 140px
+                margin-right 20px
+            &.year-field
+                width 100px
+                margin-right 20px
+        ::-webkit-input-placeholder
+            color #666
+        .typeahead
+            margin 0 20px
+        .toggle
+            label
+                padding-right 60px
+        .icon
+            position relative
+            margin 0
+            input
+                padding-right 40px
+        .icon:after
+            content ''
+            height 40px
+            width 40px
+            position absolute
+            z-index 9
+            right 5px
+            top 4px
+            background-icon()
+        .icon.icon-birthday:after
+            background-position -35px -230px
+        .icon.icon-male:after
+            background-position -130px -330px
+        .icon.icon-female:after
+            background-position -30px -330px

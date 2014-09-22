@@ -25,11 +25,11 @@
 
             _initChart();
             $scope.$watch('region', function (newVal) {
-              if (newVal == 'World' && $scope.worldPopulation) {
-                _updateChart($scope.worldPopulation)
+              if (newVal == 'World' && $scope.worldPopulationData) {
+                _updateChart($scope.worldPopulationData)
               }
-              else if (newVal != 'World' && $scope.countryPopulation) {
-                _updateChart($scope.countryPopulation)
+              else if (newVal != 'World' && $scope.countryPopulationData) {
+                _updateChart($scope.countryPopulationData)
               }
             });
             $scope.$on('countryPopulationDataChanged', function (e, population) {
@@ -75,7 +75,6 @@
             }
 
             function _updateChart(data) {
-
               xAxis.tickFormat(function (d) {return d + 'y'});
               yAxis.tickFormat(function (d) {return yAxisFormat(d).replace('M', ' M').replace('k', ' K')});
               xRange.range([120, parentWidth - 80]).domain([0, d3.max(data, function (d) { return d.age; })]);

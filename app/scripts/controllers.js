@@ -9,7 +9,7 @@
           templateUrl: 'browser-warning.html'
         });
       }
-        $scope.clockType = 'world';
+      $scope.clockType = 'world';
       $scope.profile = ProfileService;
 
       $scope.$on('rankGlobalChanged', function (e, rankGlobal) {
@@ -56,7 +56,7 @@
               return;
             }
 
-            ProfileService.birthday = [ year, month, day ].join('-');
+            ProfileService.birthday = {year: year, month: month, day: day, formatted: [year, month, day].join('-')};
 
             $rootScope.target = path;
             $rootScope.$emit('ready');
@@ -72,12 +72,12 @@
         $scope.showSection('home');
         $scope.loading = 1;
       });
-        $rootScope.$on('loadingOn', function () {
-          $scope.loading = 1
-        });
-        $rootScope.$on('loadingOff', function () {
-          $scope.loading = 0
-        });
+      $rootScope.$on('loadingOn', function () {
+        $scope.loading = 1
+      });
+      $rootScope.$on('loadingOff', function () {
+        $scope.loading = 0
+      });
       $rootScope.$on('duScrollspy:becameActive', function ($event, $element) {
         var section = $element.prop('id');
         if (section) {
@@ -105,7 +105,7 @@
         var cal = ics(),
           dstart = $filter('date')(ProfileService.dod, 'yyyy-MM-dd'),
           dend = $filter('date')(ProfileService.dod, 'yyyy-MM-dd'),
-          dob = ProfileService.birthday,
+          dob = ProfileService.birthday.formatted,
           dod = $filter('date')(ProfileService.dod, 'yyyy-MM-dd'),
           dsum = 'Your Date of Death',
           url = 'http://population.io',
@@ -162,10 +162,10 @@
       };
     })
     .controller('SummaryCtrl', function ($scope, $rootScope, $interval, $filter, PopulationIOService, ProfileService, $timeout) {
-//      console.log(new Date().getFullYear())
+//      selectedYearconsole.log(new Date().getFullYear())
 //      console.log(ProfileService)
 //      console.log(parseInt($filter('date')(ProfileService.birthday, 'yyyy'), 0))
-      $scope.age = new Date().getFullYear() - parseInt($filter('date')(ProfileService.birthday, 'yyyy'), 0);
+      $scope.age = new Date().getFullYear() - ProfileService.birthday.year;
       $rootScope.$on('ready', function () {
         _update();
       });
@@ -197,7 +197,7 @@
           sex: 'unisex',
           country: ProfileService.country
         }, function (rank) {
-          $scope.rankLocalTotal = rank;
+          $scope.rankLocal = rank;
         });
 
         PopulationIOService.loadWpRankToday({
@@ -205,11 +205,11 @@
           sex: 'unisex',
           country: 'World'
         }, function (rank) {
-          $scope.rankGlobalTotal = rank;
+          $scope.rankGlobal = rank;
         });
 
         PopulationIOService.loadWpRankToday({
-          dob: ProfileService.birthday,
+          dob: ProfileService.birthday.formatted,
           sex: 'unisex',
           country: ProfileService.country
         }, function (rank) {
@@ -218,7 +218,7 @@
         });
 
         PopulationIOService.loadWpRankToday({
-          dob: ProfileService.birthday,
+          dob: ProfileService.birthday.formatted,
           sex: 'unisex',
           country: 'World'
         }, function (rank) {
@@ -227,7 +227,7 @@
         });
 
         PopulationIOService.loadWpRankOnDate({
-          dob: ProfileService.birthday,
+          dob: ProfileService.birthday.formatted,
           sex: 'unisex',
           country: ProfileService.country,
           date: $filter('date')(_getNextDay(), 'yyyy-MM-dd')
@@ -241,8 +241,8 @@
         }, function (data) {
           $scope.loading -= 1;
 
-          $scope.countryPopulation = data;
-          $scope.countryPopulationTotal = _(data).reduce(function (sum, num) {
+          $scope.countryPopulationData = data;
+          $scope.countryPopulation = _(data).reduce(function (sum, num) {
             sum = sum | 0;
             return sum + num.total;
           });
@@ -254,7 +254,7 @@
         }, function (data) {
           $scope.loading -= 1;
 
-          $scope.worldPopulation = data;
+          $scope.worldPopulationData = data;
           $scope.$broadcast('worldPopulationDataChanged', data)
         });
 
@@ -283,25 +283,58 @@
     })
 
     .controller('HomeCtrl', function ($scope, $document, $timeout, $filter, $location, $rootScope, ProfileService, PopulationIOService) {
+      var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      var years = [];
+      for (var i = 1920; i < new Date().getFullYear() + 1; i++) { years.push(i) }
+
       $scope.$watch('goForm.$invalid', function (invalid) {
         if (invalid) {
           ProfileService.active = false;
         }
       });
-        $scope.birthdays = function (newVal) {
-          return [moment(newVal).format('YYYY-MM-DD')]
+      $scope.birthdays = function (newVal, type) {
+        switch (type) {
+          case 'd':
+            return _.filter([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31], function (v) {
+              return v.toString().indexOf(parseInt(newVal).toString()) > -1
+            });
+            break;
+          case 'm':
+            if (isNaN(parseInt(newVal))) {
+              return _.filter(months, function (v) {
+                return v.toLowerCase().indexOf(newVal.toLowerCase()) > -1
+              })
+            }
+            else {
+              var monthIndex = parseInt(newVal) - 1;
+              if (monthIndex < 1) {monthIndex = 0}
+              if (monthIndex > 11) {monthIndex = 11}
+              return [months[monthIndex]];
+            }
+            break;
+          case 'y':
+            console.log(years)
+            return years;
+            break;
+
         }
+      };
       $scope.$watch('profile.birthday', function (newVal) {
         ProfileService.active = false;
+        /*
+         if ($scope.profile.birthday.day && $scope.profile.birthday.month && $scope.profile.birthday.year) {
+
+         }
+         */
       });
       $scope.$watch('profile.gender', function () {
         ProfileService.active = false;
       });
 
       $scope.goGoGadget = function () {
-        var year = $filter('date')(ProfileService.birthday, 'yyyy'),
-          month = $filter('date')(ProfileService.birthday, 'MM'),
-          day = $filter('date')(ProfileService.birthday, 'dd');
+        var year = moment().year(ProfileService.birthday.year).format('YYYY'),
+          month = moment().month(ProfileService.birthday.month).format('MM'),
+          day = moment().date(ProfileService.birthday.day).format('DD');
 
         $location.path([
           year,
@@ -382,11 +415,11 @@
           sex: 'unisex',
           country: 'World'
         }, function (rank) {
-          $scope.rankGlobalTotal = rank;
+          $scope.rankGlobal = rank;
         });
 
         PopulationIOService.loadWpRankToday({
-          dob: ProfileService.birthday,
+          dob: ProfileService.birthday.formatted,
           sex: 'unisex',
           country: ProfileService.country
         }, function (rank) {
@@ -395,7 +428,7 @@
         });
 
         PopulationIOService.loadWpRankToday({
-          dob: ProfileService.birthday,
+          dob: ProfileService.birthday.formatted,
           sex: 'unisex',
           country: 'World'
         }, function (rank) {
@@ -404,7 +437,7 @@
         });
 
         PopulationIOService.loadWpRankOnDate({
-          dob: ProfileService.birthday,
+          dob: ProfileService.birthday.formatted,
           sex: 'unisex',
           country: ProfileService.country,
           date: $filter('date')(_getNextDay(), 'yyyy-MM-dd')
@@ -493,7 +526,7 @@
         $scope.loading += 1;
 
         PopulationIOService.loadWpRankRanked({
-          dob: ProfileService.birthday,
+          dob: ProfileService.birthday.formatted,
           sex: 'unisex',
           country: 'World',
           rank: rank
@@ -528,15 +561,15 @@
             now: true
           },
           {
-            date: ProfileService.birthday,
-            year: $filter('date')(new Date(ProfileService.birthday), 'yyyy'),
+            date: ProfileService.birthday.formatted,
+            year: ProfileService.birthday.year,
             title: 'Born',
             born: true
           },
           {
-            date: _getDateWithOffset(new Date(ProfileService.birthday), 18),
+            date: _getDateWithOffset(new Date(ProfileService.birthday.formatted), 18),
             year: $filter('date')(_getDateWithOffset(
-              new Date(ProfileService.birthday),
+              new Date(ProfileService.birthday.formatted),
               18
             ), 'yyyy'),
             title: 'You turned 18!'
@@ -548,7 +581,12 @@
 
         $scope.selectedYear = year;
         $scope.loading += 2;
-        $scope.age = $scope.selectedYear - parseInt($filter('date')(ProfileService.birthday, 'yyyy'), 0);
+        $scope.age = $scope.selectedYear - ProfileService.birthday.year;
+        console.log('@@@@@@@@@@@@@@@@')
+        console.log(ProfileService.birthday.year)
+        console.log('@@@@@@@@@@@@@@@@')
+        console.log($scope.age)
+        console.log('@@@@@@@@@@@@@@@@')
 
         PopulationIOService.loadPopulation({
           year: $scope.selectedYear,
@@ -817,7 +855,7 @@
           age: ProfileService.getAgeString()
         }, function (remainingLife) {
 
-          var ageDate = new Date(Date.now() - (new Date(ProfileService.birthday)).getTime());
+          var ageDate = new Date(Date.now() - (new Date(ProfileService.birthday.formatted)).getTime());
           var lifeExpectancy = ProfileService.getAge() + remainingLife + (ageDate.getMonth() / 11);
 
           $scope.activeCountryRef = {
@@ -845,7 +883,7 @@
           age: ProfileService.getAgeString()
         }, function (remainingLife) {
 
-          var ageDate = new Date(Date.now() - (new Date(ProfileService.birthday)).getTime());
+          var ageDate = new Date(Date.now() - (new Date(ProfileService.birthday.formatted)).getTime());
           var lifeExpectancy = ProfileService.getAge() + remainingLife + (ageDate.getMonth() / 11);
 
           $scope.activeCountryRel = {

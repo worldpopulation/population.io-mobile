@@ -10,7 +10,7 @@ header
       li
         a(ng-click="showAbout()") About
         a(ng-click="showDevelopers()") Developers
-    .profile.animate( ng-show="currentPage > 0", ng-click="showHomepage()", ng-cloak ) {{profile.birthday | date:'dd MMM yyyy' }}, {{profile.country}}
+    .profile.animate( ng-show="currentPage > 0", ng-click="showHomepage()", ng-cloak ) {{profile.birthday.formatted | date:'dd MMM yyyy' }}, {{profile.country}}
     .world-population.animate(ng-show="currentPage > 0", ng-cloak)
       span(ng-show="clockType === 'personal'") {{rankGlobal | number:0}}
       span(ng-show="clockType === 'world'") {{worldPopulation | number:0}}
