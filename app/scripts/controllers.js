@@ -287,7 +287,9 @@
       var years = [];
       for (var i = 1920; i < new Date().getFullYear() + 1; i++) { years.push(i) }
 
+
       $scope.$watch('goForm.$invalid', function (invalid) {
+        console.log($scope.goForm.$error)
         if (invalid) {
           ProfileService.active = false;
         }
