@@ -64,9 +64,9 @@
               xAxisElement = chart.append('g')
               yAxisElement = chart.append('g')
               pointer = chart.append('circle').attr({
-                r: 7
+                r: 6
               })
-                  .attr('stroke-width', 3)
+                  .attr('stroke-width', 2)
                   .style({
                     fill: 'black',
                     stroke: 'white'
