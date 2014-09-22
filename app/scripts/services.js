@@ -6,7 +6,7 @@
     .service('ProfileService', function () {
       return {
         gender: 'female',
-        birthday: '',
+        birthday: {year: null, month: null, day: null,formatted:''},
         country: '',
         active: false,
         getAge: function () {
@@ -246,7 +246,7 @@
     .service('BrowserService', function () {
       return {
         isSupported: function () {
-          return bowser.webkit || bowser.gecko ||(bowser.msie && bowser.version > 10);
+          return bowser.webkit || bowser.gecko || (bowser.msie && bowser.version > 10);
         },
         isTouchDevice: function () {
           return !!('ontouchstart' in window);

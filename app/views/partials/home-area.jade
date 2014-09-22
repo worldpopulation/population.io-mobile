@@ -7,9 +7,9 @@ world-clock
             p The Journey of your life in numbers and dates!<br/>Please enter your date of birth, country of birth and sex at birth:
             form.form-inline(name="goForm", novalidate)
                 .icon.typeahead
-                    input.day-field.form-control(type="text", name="birthdayDay", ng-value="profile.birthday.day", ng-model = "profile.birthday.day", placeholder = "Day", typeahead="birthday for birthday in birthdays($viewValue,'d')", typeahead-wait-ms="100", typeahead-editable="false", required )
-                    input.month-field.form-control(type="text", name="birthdayMonth", ng-value="profile.birthday.month", ng-model = "profile.birthday.month", placeholder = "Month", typeahead="birthday for birthday in birthdays($viewValue,'m')", typeahead-wait-ms="100", typeahead-editable="false", required )
-                    input.year-field.form-control(type="text", name="birthdayYear", ng-value="profile.birthday.year", ng-model = "profile.birthday.year", placeholder = "Year", typeahead="birthday for birthday in birthdays($viewValue,'y')", typeahead-wait-ms="100", typeahead-editable="false", required )
+                    input.day-field.form-control(type="text", name="birthdayDay", ng-value="profile.birthday.day", ng-model = "profile.birthday.day", placeholder = "Day", typeahead="birthdayDay for birthdayDay in birthdays($viewValue,'d')", typeahead-wait-ms="100", typeahead-editable="false", required )
+                    input.month-field.form-control(type="text", name="birthdayMonth", ng-value="profile.birthday.month", ng-model = "profile.birthday.month", placeholder = "Month", typeahead="birthdayMonth for birthdayMonth in birthdays($viewValue,'m')", typeahead-wait-ms="100", typeahead-editable="false", required )
+                    input.year-field.form-control(type="text", name="birthdayYear", ng-value="profile.birthday.year", ng-model = "profile.birthday.year", placeholder = "Year", typeahead="birthdayYear for birthdayYear in birthdays($viewValue,'y')", typeahead-wait-ms="100", typeahead-editable="false", required )
                 .typeahead
                     input.form-control(type="text",name='country', placeholder="Country", ng-model="profile.country", typeahead="country for country in countries | filter: $viewValue", typeahead-wait-ms="100", typeahead-editable="false", required )
                 .toggle

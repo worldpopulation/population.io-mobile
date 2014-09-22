@@ -285,7 +285,7 @@
     .controller('HomeCtrl', function ($scope, $document, $timeout, $filter, $location, $rootScope, ProfileService, PopulationIOService) {
       var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
       var years = [];
-      for (var i = 1920; i < new Date().getFullYear() + 1; i++) { years.push(i) }
+      for (var i = 1920; i < new Date().getFullYear() + 1; i++) { years.push(i.toString()) }
 
 
       $scope.$watch('goForm.$invalid', function (invalid) {
@@ -297,8 +297,8 @@
       $scope.birthdays = function (newVal, type) {
         switch (type) {
           case 'd':
-            return _.filter([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31], function (v) {
-              return v.toString().indexOf(parseInt(newVal).toString()) > -1
+            return _.filter(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'], function (v) {
+              return v.indexOf(parseInt(newVal)) > -1
             });
             break;
           case 'm':
@@ -316,7 +316,7 @@
             break;
           case 'y':
             return _.filter(years, function (v) {
-              return v.toString().indexOf(parseInt(newVal).toString()) > -1
+              return v.indexOf(parseInt(newVal)) > -1
             });
 
             break;
@@ -324,13 +324,14 @@
         }
       };
       $scope.$watch('profile.birthday', function (newVal) {
+        console.log($scope.profile.birthday)
         ProfileService.active = false;
         /*
          if ($scope.profile.birthday.day && $scope.profile.birthday.month && $scope.profile.birthday.year) {
 
          }
          */
-      },true);
+      }, true);
       $scope.$watch('profile.gender', function () {
         ProfileService.active = false;
       });
@@ -586,12 +587,6 @@
         $scope.selectedYear = year;
         $scope.loading += 2;
         $scope.age = $scope.selectedYear - ProfileService.birthday.year;
-        console.log('@@@@@@@@@@@@@@@@')
-        console.log(ProfileService.birthday.year)
-        console.log('@@@@@@@@@@@@@@@@')
-        console.log($scope.age)
-        console.log('@@@@@@@@@@@@@@@@')
-
         PopulationIOService.loadPopulation({
           year: $scope.selectedYear,
           country: ProfileService.country
