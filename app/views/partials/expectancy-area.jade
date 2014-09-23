@@ -2,7 +2,6 @@
   .expectancy-area
     header
       h1 Imagine you lived in a different country and at a different time - what’s the life expectancy there, and how long could you expect to live?
-      .loader.fa.fa-refresh(ng-class="{'active': loading}")
     .country-selection
       .typeahead.ref
         input( type="text", placeholder="Country", ng-model="selectedCountryRef", typeahead="country for country in countries | filter: $viewValue", typeahead-wait-ms="100", typeahead-editable="false" )

@@ -12,8 +12,10 @@
       $scope.clockType = 'world';
       $scope.profile = ProfileService;
 
+
       $scope.$on('rankGlobalChanged', function (e, rankGlobal) {
         $rootScope.rankGlobal = rankGlobal;
+        console.log(123)
       });
       $interval(function () {
         $scope.worldPopulation = PopulationIOService.getWorldPopulation();
@@ -23,6 +25,14 @@
         return ProfileService.active;
       }, function (active) {
         if (active) {
+          PopulationIOService.loadWpRankToday({
+            dob: ProfileService.birthday.formatted,
+            sex: 'unisex',
+            country: 'World'
+          }, function (rank) {
+            $scope.rankGlobal = rank;
+            $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
+          });
 
           $timeout(function () {
             $scope.showSection($rootScope.target);
@@ -206,6 +216,7 @@
           country: 'World'
         }, function (rank) {
           $scope.rankGlobal = rank;
+          $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
         });
 
         PopulationIOService.loadWpRankToday({
@@ -324,11 +335,6 @@
       };
       $scope.$watch('profile.birthday', function (newVal) {
         ProfileService.active = false;
-        /*
-         if ($scope.profile.birthday.day && $scope.profile.birthday.month && $scope.profile.birthday.year) {
-
-         }
-         */
       }, true);
       $scope.$watch('profile.gender', function () {
         ProfileService.active = false;
@@ -419,6 +425,7 @@
           country: 'World'
         }, function (rank) {
           $scope.rankGlobal = rank;
+          $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
         });
 
         PopulationIOService.loadWpRankToday({
@@ -454,7 +461,6 @@
         return PopulationIOService.getWorldPopulation();
       }, function (newValue, oldValue) {
         $scope.rankGlobal += (newValue - oldValue);
-
         $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
       });
 
@@ -858,7 +864,8 @@
           $scope.activeCountryRef = {
             country: $scope.selectedCountryRef,
             yearsLeft: remainingLife,
-            lifeExpectancy: lifeExpectancy
+            lifeExpectancy: lifeExpectancy,
+            dod: ProfileService.dod
           };
           $scope.loading -= 1;
           if (!$scope.$$phase) {

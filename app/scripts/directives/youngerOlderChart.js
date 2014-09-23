@@ -10,7 +10,7 @@
             xAxis, yAxis,
             parentWidth = element[0].clientWidth,
             data, pointer,
-            parentHeight = 200,
+            parentHeight = 240,
             yAxisFormat = d3.format('s'),
             xRange = d3.scale.linear(),
             yRange = d3.scale.linear().nice(),
@@ -19,7 +19,9 @@
             age,
             areaTotal, areaLine,
             areaYounger,
-            xAxisElement, yAxisElement
+            xAxisElement, yAxisElement,
+            xLabel, yLabel,
+            xLabelLine, yLabelLine
             ;
 
           _initChart();
@@ -39,11 +41,11 @@
           function _initChart() {
             chart = d3.select(element[0])
               .append('svg')
-              .attr({width: parentWidth, height: parentHeight + 60})
+              .attr({width: parentWidth, height: parentHeight + 100})
               .append('g')
               .attr({
                 class: 'younger-older-chart',
-                transform: 'translate(0,20)'
+                transform: 'translate(0,80)'
               })
             ;
 
@@ -59,6 +61,57 @@
             areaTotal = chart.append('path')
             areaYounger = chart.append('path')
             areaLine = chart.append('path')
+            chart.select('.x-label').remove()
+            chart.select('.y-label').remove()
+            chart.select('.label-line').remove()
+            xLabel = chart.append('text')
+              .text('Age')
+              .attr(
+              {
+                class: 'x-label',
+                transform: 'translate(' + [parentWidth - 100, parentHeight - 100 + 16] + ')'
+              })
+              .style(
+              {
+                'text-anchor': 'end'
+              });
+            xLabelLine = chart.append('line')
+              .attr({
+                class: 'label-line',
+                x1: parentWidth - 200,
+                y1: parentHeight - 100,
+                x2: parentWidth - 70,
+                y2: parentHeight - 100
+              })
+              .style({
+                stroke: '#d9d9d9',
+                'stroke-width': 1
+              })
+            yLabel = chart.append('text')
+              .text('People')
+              .attr(
+              {
+                class: 'y-label',
+                transform: 'translate(' + [110, -20] + ')'
+              })
+              .style(
+              {
+                'text-anchor': 'end'
+              });
+
+            yLabelLine = chart.append('line')
+              .attr({
+                class: 'label-line',
+                x1: 120,
+                y1: -40,
+                x2: 120,
+                y2: 0
+              })
+              .style({
+                stroke: '#d9d9d9',
+                'stroke-width': 1
+              })
+
             xAxisElement = chart.append('g')
             yAxisElement = chart.append('g')
             pointer = chart.append('g').attr({class: 'pointer'});
@@ -104,8 +157,8 @@
             xAxis.tickFormat(function (d) {return d + 'y'})
             yAxis.tickFormat(function (d) {return yAxisFormat(d).replace('k', 'K')})
               .tickValues(ticks);
-            xRange.range([120, parentWidth - 80]).domain([0, d3.max(data, function (d) { return d.age; })]);
-            yRange.range([parentHeight, 0]).domain([0, ticks[ticks.length - 1]]);
+            xRange.range([120, parentWidth - 160]).domain([0, d3.max(data, function (d) { return d.age; })]);
+            yRange.range([parentHeight - 100, 0]).domain([0, ticks[ticks.length - 1]]);
 
 
             line
@@ -118,7 +171,7 @@
               .interpolate('linear');
             area
               .x(function (d) { return xRange(d.age); })
-              .y0(parentHeight)
+              .y0(parentHeight - 100)
               .y1(function (d) { return yRange(d.total); });
             var younger = data.slice(0, age);
 
@@ -142,7 +195,7 @@
             xAxisElement
               .transition()
               .attr('class', 'x axis')
-              .attr('transform', 'translate(0,' + (parentHeight) + ')')
+              .attr('transform', 'translate(0,' + (parentHeight - 100) + ')')
               .call(xAxis)
 
             yAxisElement
