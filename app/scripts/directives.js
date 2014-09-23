@@ -5,30 +5,40 @@
     .directive('share', function ($location) {
       return {
         link: function ($scope, elem, attrs) {
-          $scope.$watch(function() {
+          $scope.$watch(function () {
             return $location.absUrl();
-          }, function(url) {
+          }, function (url) {
             _update(encodeURIComponent(url));
           });
 
-          var _update = function(url) {
+          var _update = function (url) {
             var link = '#';
             switch (attrs.share) {
               case 'twitter':
                 link = 'http://twitter.com/intent/tweet?text=' + attrs.shareTitle + '%20' + url;
-              break;
+                break;
               case 'facebook':
                 link = 'http://facebook.com/sharer.php?u=' + url;
-              break;
+                break;
               case 'linkedin':
                 link = 'http://www.linkedin.com/shareArticle?mini=true&url=' + url + '&title=' + attrs.shareTitle;
-              break;
+                break;
             }
             attrs.$set('href', link);
           }
         }
       };
     })
-    ;
+    .directive('stoptab', function ($location) {
+      return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+          if (event.which === 9) {
+            element.blur()
+            event.preventDefault();
+          }
+        });
+      };
+    })
+  ;
 }());
 

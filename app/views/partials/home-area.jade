@@ -11,7 +11,7 @@ world-clock
                     input.month-field.form-control(type="text", name="birthdayMonth", ng-value="profile.birthday.month", ng-model = "profile.birthday.month", placeholder = "Month", typeahead="birthdayMonth for birthdayMonth in birthdays($viewValue,'m')", typeahead-wait-ms="100", typeahead-editable="false", required )
                     input.year-field.form-control(type="text", name="birthdayYear", ng-value="profile.birthday.year", ng-model = "profile.birthday.year", placeholder = "Year", typeahead="birthdayYear for birthdayYear in birthdays($viewValue,'y')", typeahead-wait-ms="100", typeahead-editable="false", required )
                 .typeahead
-                    input.form-control(type="text",name='country', placeholder="Country", ng-model="profile.country", typeahead="country for country in countries | filter: $viewValue", typeahead-wait-ms="100", typeahead-editable="false", required )
+                    input.form-control(type="text",name='country', placeholder="Country", ng-model="profile.country", typeahead="country for country in countries | filter: $viewValue", typeahead-wait-ms="100", typeahead-editable="false", required, stoptab)
                 .toggle
                     label(class="icon icon-female", ng-model="profile.gender" btn-radio="'female'", required) Female
                     label(class="icon icon-male", ng-model="profile.gender" btn-radio="'male'", required) Male
