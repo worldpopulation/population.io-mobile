@@ -66,7 +66,7 @@
               .gravity(0.2)
               .charge(function (d, i) { return i ? 0 : -2000; })
               .nodes(nodes)
-              .size([parentWidth/2, parentHeight - 100]);
+              .size([parentWidth / 2, parentHeight - 100]);
 
             force.start();
 
@@ -89,15 +89,6 @@
                 y1: 0,
                 y2: 0
               });
-/*
-            tooltipElement.append('text')
-              .attr({
-                'class': 'percentage-label',
-                x: 0,
-                y: 15
-              })
-              .text('');
-*/
             tooltipElement.append('text')
               .attr({
                 'class': 'value-label',
@@ -121,34 +112,26 @@
               })
               .text('');
 
-            var _highlightCountry = function() {
+            var _highlightCountry = function () {
               var _tooltip = d3.select(this);
-
               d3.select(this).moveToFront();
-              d3.select(this).select('circle')
+              d3.select(this).selectAll('.visual')
                 .transition()
                 .attr({ r: function (d) {return d.radius + 40;} })
-                .style({ fill: 'rgba(0,0,0,0.8)' })
-                  ;
+                .style({ fill: 'rgba(0,0,0,0.9)' })
+              ;
 
               _tooltip.select('text')
-                  .transition()
-                  .style({
-                    fill: '#fff',
-                  })
-                  .attr({
-                    transform: 'scale(2)'
-                  })
-                  .text(function (d) {
-                    return d.countryTitle
-                  });
-
-/*
-              tooltipElement.select('.percentage-label').
-                text(function () {
-                  return Math.round((_tooltip.data()[0].value / birthdaysTotal) * 100) + '%';
+                .transition()
+                .style({
+                  fill: '#fff'
+                })
+                .attr({
+                  transform: 'scale(2)'
+                })
+                .text(function (d) {
+                  return d.countryTitle
                 });
-*/
 
               tooltipElement.select('.value-label').
                 text(function () {
@@ -176,38 +159,27 @@
               .enter()
               .append('g')
               .attr('class', 'country-element')
-              .on('click', _highlightCountry)
-              .on('mouseenter', _highlightCountry)
-              .on('mouseleave', function () {
-                tooltipElement
-                  .transition()
-                  .attr('opacity', 0);
+              .on('mouseenter', _highlightCountry);
 
-                d3.select(this).select('circle')
-                  .transition()
-                  .attr('r', function (d) { return d.radius - 5; })
-                  .style({ fill: 'rgba(0,0,0,0.05)' });
-                  d3.select(this).select('text')
-                      .transition()
-                      .style({ fill: '#888'
-                      })
-                      .attr({
-                        transform: 'scale(1)'
-                      })
-
-                      .text(function (d) {
-                        if (d.radius < 50) {
-                          return d.countryAbbr;
-                        }
-                        else {
-                          return d.countryTitle;
-                        }
-
-                      });
-              });
             countryElement
               .append('circle')
-              .attr('r', function (d) { return d.radius - 5; })
+              .attr({
+                r: 0,
+                class: 'visual'
+
+              })
+              .style({
+                fill: 'yellow'
+              });
+
+            var control = countryElement
+              .append('g')
+              .attr({class: 'control'})
+            control.append('circle')
+              .attr({
+                r: function (d) { return d.radius - 5; }
+
+              })
               .style({
                 fill: function () { return 'rgba(0,0,0,0.05)'; },
                 stroke: function () { return 'rgba(0,0,0,0.3)'; },
@@ -215,13 +187,8 @@
               });
             //            .style('fill', function (d, i) { return color(i % 3); });
 
-            continentsChart.selectAll('circle')
-              .data(nodes)
-              .enter().append('circle')
-              .attr('r', function (d) { return d.radius - 2; })
-              .style('fill', function (d, i) { return color(i % 3); });
 
-            countryElement
+            control
               .append('text')
               .text(function (d) {
                 if (d.radius < 50) {
@@ -256,6 +223,36 @@
               countryElement
                 .attr('transform', function (d, i) {
                   return 'translate(' + [d.x, d.y] + ')';
+                });
+            });
+
+            control.on('mouseleave', function (e) {
+              console.log(d3.event.target)
+              tooltipElement
+                .transition()
+                .attr('opacity', 0);
+
+              d3.select(this.parentNode).select('.visual')
+                .transition()
+                .attr('r', function (d) { return d.radius - 5; })
+                .style({ fill: 'rgba(0,0,0,0)' });
+
+              d3.select(this.parentNode).select('text')
+                .transition()
+                .style({ fill: '#888'
+                })
+                .attr({
+                  transform: 'scale(1)'
+                })
+
+                .text(function (d) {
+                  if (d.radius < 50) {
+                    return d.countryAbbr;
+                  }
+                  else {
+                    return d.countryTitle;
+                  }
+
                 });
             });
 
@@ -323,7 +320,7 @@
             human.append('use')
               .attr({
                 'class': 'ticks',
-                'xlink:href': function() {
+                'xlink:href': function () {
                   if (ProfileService.gender === 'female') {
                     return '#female-large';
                   } else {
@@ -337,7 +334,7 @@
               .duration(1000)
               .attr('opacity', 1);
 
-            var _highlightCountry = function() {
+            var _highlightCountry = function () {
               worldChart
                 .transition()
                 .duration(2000)
@@ -367,7 +364,8 @@
 
               _arc.select('path.main')
                 .transition()
-                .style('fill', '#6581F1'); /* highlight-blue */
+                .style('fill', '#6581F1');
+              /* highlight-blue */
               _arc.select('path.border')
                 .transition()
                 .attr('opacity', 0);
