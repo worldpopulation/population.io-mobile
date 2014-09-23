@@ -72,8 +72,7 @@
               });
             yAxis = d3.svg.axis()
               .orient('left')
-              .tickFormat(function (d) {return yAxisFormat(d).replace('M', ' M')})
-              .ticks(5,7);
+              .tickFormat(function (d) {return yAxisFormat(d)})
 
 
           };
@@ -81,8 +80,10 @@
           var _updateGraph = function (data) {
             var age = $scope.age;
 
-            var peopleTotal = d3.sum(data, function (d) { return d.total; });
-
+            var ticks = [], step = $scope.country != 'World' ? 500000 : 50000000;
+            for (var i = 0; i < d3.max(data, function (d) { return d.total; }) + step; i = i + step) {
+              ticks.push(i)
+            }
             var xScale = d3.scale.linear()
               .domain([
                 d3.min(data, function (d) { return d.age; }),
@@ -90,14 +91,17 @@
               ])
               .range([40, width - 50]);
             var yScale = d3.scale.linear()
-              .domain([ 0, d3.max(data, function (d) { return d.total; }) ])
-              .range([height, 90]);
+                .domain([ 0, ticks[ticks.length - 1] ])
+                .range([height, 90])
+              ;
 
             var xAxis = d3.svg.axis()
               .scale(xScale)
-              .tickFormat(function (d, i) {return d + 'y'});
+              .tickFormat(function (d, i) {return d + 'y'})
+              .tickValues([0, 25, 50, 75, 100, 125, 150]);
 
             yAxis.scale(yScale)
+              .tickValues(ticks);
 
 
             var area = d3.svg.area()

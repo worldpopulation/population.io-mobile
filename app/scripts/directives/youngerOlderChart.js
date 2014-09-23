@@ -6,7 +6,6 @@
       return {
         restrict: 'E',
         link: function ($scope, element) {
-
           var chart,
             xAxis, yAxis,
             parentWidth = element[0].clientWidth,
@@ -51,7 +50,7 @@
             xAxis = d3.svg.axis()
               .scale(xRange)
               .tickSize(5)
-              .tickSubdivide(true)
+              .tickValues([0, 25, 50, 75, 100, 125, 150]);
             yAxis = d3.svg.axis()
               .scale(yRange)
               .tickSize(5)
@@ -95,10 +94,18 @@
           }
 
           function _updateChart(data) {
+
+            var ticks = [], step;
+            step = $scope.region != 'World' ? 500000 : 50000000;
+            for (var i = 0; i < d3.max(data, function (d) { return d.total; }) + step; i = i + step) {
+              ticks.push(i)
+            }
+            console.log(ticks[ticks.length - 1])
             xAxis.tickFormat(function (d) {return d + 'y'})
-            yAxis.tickFormat(function (d) {return yAxisFormat(d).replace('M', ' M').replace('k', ' K')});
+            yAxis.tickFormat(function (d) {return yAxisFormat(d).replace('k', 'K')})
+              .tickValues(ticks);
             xRange.range([120, parentWidth - 80]).domain([0, d3.max(data, function (d) { return d.age; })]);
-            yRange.range([parentHeight, 0]).domain([0, d3.max(data, function (d) { return d.total; })]);
+            yRange.range([parentHeight, 0]).domain([0, ticks[ticks.length - 1]]);
 
 
             line
@@ -144,26 +151,6 @@
               .attr('transform', 'translate(120,0)')
               .call(yAxis)
 
-            setTimeout(function () {
-              yAxisElement
-                .selectAll('.tick')
-                .transition()
-                .style({
-                  opacity: function (d, i) {
-                    return d % 500000 ? 0 : 1;
-                  }
-                })
-              /*
-               xAxisElement
-               .selectAll('.tick')
-               .transition()
-               .style({
-               opacity: function (d, i) {
-               return d % 20 ? 0 : 1;                  }
-               })
-               */
-
-            }, 500);
 
             pointer
               .transition()
