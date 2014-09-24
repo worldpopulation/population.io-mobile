@@ -228,7 +228,7 @@
 
             chart.append('rect')
               .attr({'class': 'country-title-background',
-                transform: 'translate(' + [410, 180] + ')',
+                transform: 'translate(' + [510, 180] + ')',
                 fill: '#fff',
                 width: 400,
                 height: 60

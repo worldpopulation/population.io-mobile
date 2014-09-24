@@ -132,7 +132,7 @@
 
       $scope.showSection = function (id) {
         var section = angular.element(document.getElementById(id));
-        $document.scrollToElement(section, 79, 1000);
+        $document.scrollToElement(section, 100, 1000);
       };
 
       $scope.showHomepage = function () {
