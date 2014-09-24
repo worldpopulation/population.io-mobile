@@ -38,6 +38,7 @@
           }, true);
 
           var _addHighlight = function (node) {
+            console.log(node)
             node.parentNode.appendChild(node);
             d3.select(node)
               .classed('highlight', true);

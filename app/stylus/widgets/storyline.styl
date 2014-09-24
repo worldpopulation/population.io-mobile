@@ -15,18 +15,17 @@ milestones
     transition all 500ms ease
     transform scale(1.0)
     cursor pointer
-  .dot-wrapper:hover,
-  .highlight .dot-wrapper
-    transform scale(2.0)
+  .dot-wrapper:hover
+    transform scale(2)
   .dot
     circle
       stroke #fff
       stroke-width 2
       fill #000
-    circle.color-1
-      fill highlight-color1
-    circle.color-2
-      fill highlight-color2
+      &.color-1
+        fill highlight-color1
+      &.color-2
+        fill highlight-color2
     text
       cursor pointer
       fill #fff

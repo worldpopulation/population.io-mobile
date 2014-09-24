@@ -100,7 +100,8 @@
               textCnt.append('text')
                   .text(0)
                   .attr({
-                    'class': 'years-left'
+                    'class': 'years-left',
+                    transform: 'translate(0,45)'
                   })
                   .transition()
                   .duration(1000)
@@ -110,7 +111,8 @@
 
               var textBlock1 = textCnt.append('g')
                   .attr({
-                    'class': 'text-block'
+                    'class': 'text-block',
+                    transform: 'translate(0,70)'
                   });
 
               var deathDate = moment(data.dod).format('DD MMM, YYYY');
@@ -124,15 +126,16 @@
 
               var textBlock2 = textCnt.append('g')
                   .attr({
-                    'class': 'text-block'
+                    'class': 'text-block',
+                    transform: 'translate(0,120)'
                   });
 
               textBlock2.append('line')
                   .attr({
                     x1: 0,
-                    y1: 0,
+                    y1: -20,
                     x2: 100 * (type === 'ref' ? 1 : -1),
-                    y2: 0
+                    y2: -20
                   });
 
               textBlock2.append('text').attr('y', 0).text('You will be');
