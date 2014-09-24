@@ -3,7 +3,7 @@
         h3
             | Do you think you belong to the young or old? You are the <span>{{rankGlobal | number : 0}}</span> person alive on the planet.
             | This means that you are <span>older than {{(rankGlobal/(worldPopulation/100) | number : 0)}}%</span> of the world's population
-            | and <span>older than {{(rankLocal/(countryPopulation/100) | number : 0)}}%</span> of all people in {{profile.country}}.
+            | and <span>older than {{(rankLocal/(countryPopulation/100) | number : 0)}}%</span> of all people in <span>{{profile.country}}</span>.
         .region-switcher
             span(ng-class='{active:region=="World"}', ng-click='region="World"') World
             span(ng-class='{active:region!="World"}', ng-click='region=profile.country') {{profile.country}}

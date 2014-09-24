@@ -169,7 +169,7 @@
 
               })
               .style({
-                fill: 'yellow'
+                fill: 'rgba(0,0,0,0)'
               });
 
             var control = countryElement

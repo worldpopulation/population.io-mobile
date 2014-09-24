@@ -814,7 +814,7 @@
           $scope.birthdayShare = $sce.trustAsHtml([
               '<span>' + $filter('number')(parseInt(data[0].total / 365, 0), 0),
             '</span> people around the world and that',
-              '<span>' + $filter('number')(parseInt(data[0].total / 365 / 24, 0), 0),
+              '<span> ' + $filter('number')(parseInt(data[0].total / 365 / 24, 0), 0),
             '</span> people were born in the same hour?'
           ].join(''));
 
