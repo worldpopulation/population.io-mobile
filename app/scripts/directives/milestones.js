@@ -42,9 +42,11 @@
               node.parentNode.appendChild(node);
               d3.select(node)
                 .classed('highlight', true);
+              d3.select(node).select('circle').transition().attr({r: 10})
             };
 
             var _removeAllHighlights = function () {
+              d3.selectAll('.dot').select('circle').transition().attr({r: 6})
               var node = d3.select('.dot.highlight')[0][0];
               if (node) {
                 d3.select(node)
@@ -167,8 +169,16 @@
                 })
                 .on('click', function (d) {
                   $rootScope.$emit('selectedYearChanged', d.year);
-                });
+                })
+                .on('mouseenter', function (d) {
+                  d3.select(this).select('circle').transition().attr({r: 10})
+                })
+                .on('mouseleave', function (d) {
+                  if (!d3.select(this).classed('highlight')) {
+                    d3.select(this).select('circle').transition().attr({r: 6})
+                  }
 
+                });
               var dotWrapper = dot.append('g')
                 .attr('class', 'dot-wrapper');
 
@@ -177,7 +187,7 @@
                   'class': function (d) {
                     return d.color ? d.color : '';
                   },
-                  r: 6
+                  r: function (d, i) {return d.now ? 10 : 6}
                 });
 
               for (var k = 0; k < data.length; k += 1) {
