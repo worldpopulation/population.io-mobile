@@ -7,42 +7,46 @@ var gulp = require('gulp'),
   watch = require('gulp-watch'),
   stylus = require('gulp-stylus'),
   concat = require('gulp-concat'),
+  sourcemaps = require('gulp-sourcemaps'),
+  uglify = require('gulp-uglify'),
   nib = require('gulp-stylus/node_modules/nib'),
   sftp = require('gulp-sftp'),
 
   sources = {
-    vendor: [
+    scripts: [
       'bower_components/momentjs/min/moment.min.js',
       'bower_components/jquery/dist/jquery.min.js',
-      'bower_components/jquery/dist/jquery.min.map',
+      'bower_components/jquery-ui/jquery-ui.min.js',
       'bower_components/d3/d3.min.js',
-      'bower_components/d3/d3.js',
       'bower_components/d3-geo-projection/index.js',
       'bower_components/d3.slider/d3.slider.js',
       'bower_components/topojson/topojson.js',
+      'bower_components/lodash/dist/lodash.min.js',
+      'bower_components/bowser/bowser.min.js',
+      'bower_components/ics.js/ics.deps.min.js',
+      'bower_components/ics.js/ics.js',
+      'vendor/d3.geo.projection.v0.min.js',
+      'app/scripts/ga.js',
+
       'bower_components/angular/angular.min.js',
-      'bower_components/angular/angular.min.js.map',
-      'bower_components/restangular/dist/restangular.min.js',
+      'bower_components/angular-route/angular-route.min.js',
       'bower_components/angular-scroll/angular-scroll.min.js',
-      'bower_components/angular-scroll/angular-scroll.min.js.map',
       'bower_components/angular-animate/angular-animate.min.js',
-      'bower_components/angular-animate/angular-animate.min.js.map',
       'bower_components/angular-easy-social-share/easy-social-share.js',
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
       'bower_components/angular-cookies/angular-cookies.min.js',
       'bower_components/angular-resource/angular-resource.min.js',
-      'bower_components/angular-resource/angular-resource.min.js.map',
       'bower_components/angular-ui-router/release/angular-ui-router.min.js',
       'bower_components/angular-sanitize/angular-sanitize.min.js',
-      'bower_components/lodash/dist/lodash.min.js',
-      'bower_components/bowser/bowser.min.js',
-      'bower_components/jquery-ui/jquery-ui.min.js',
-      'bower_components/ics.js/ics.deps.min.js',
-      'bower_components/ics.js/ics.js',
-      'vendor/d3.geo.projection.v0.min.js'
-    ],
-    scripts: [
-      'app/scripts/**/*.*'
+
+      'app/scripts/app.js',
+      'app/scripts/controllers.js',
+      'app/scripts/directives.js',
+      'app/scripts/directives/*.js',
+      'app/scripts/filters.js',
+      'app/scripts/services.js',
+      'app/scripts/services/*.js',
+      'app/scripts/libs/*.js',
     ],
     templates: 'app/views/layouts/*.jade',
     docs: 'app/views/pages/*.jade',
@@ -69,7 +73,6 @@ var gulp = require('gulp'),
     celebs: 'assets/celebrities/**'
   },
   destinations = {
-    vendor: 'dist/vendor/',
     scripts: 'dist/scripts/',
     docs: 'dist/',
     partials: 'dist/partials',
@@ -88,6 +91,13 @@ gulp.task('serve', function (event) {
   // sets up a livereload that watches for any changes in the root
   watch({glob: sources.overwatch})
     .pipe(connect.reload());
+});
+
+// data files task
+gulp.task('data', function (event) {
+  return gulp.src('app/scripts/data/country_continent.csv')
+    .pipe(plumber())
+    .pipe(gulp.dest('dist/data'));
 });
 
 // stylus task
@@ -112,26 +122,26 @@ gulp.task('stylus:watch', function (event) {
 
 // scripts tasks
 gulp.task('scripts', function (event) {
-  gulp.src(sources.vendor)
-    .pipe(plumber())
-    .pipe(gulp.dest(destinations.vendor));
-  return gulp.src(sources.scripts)
-    .pipe(plumber())
+  gulp.src(sources.scripts)
+    .pipe(sourcemaps.init())
+    .pipe(concat('main.js'))
+    .pipe(uglify({mangle: false}))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest(destinations.scripts));
 });
 
-// scripts watch task for development
-gulp.task('scripts:watch', function (event) {
-  gulp.src(sources.vendor)
-    .pipe(plumber())
-    .pipe(gulp.dest(destinations.vendor));
-
-  watch({glob: sources.scripts}, function (files) {
-    gulp.src(sources.scripts)
-      .pipe(plumber())
-      .pipe(gulp.dest(destinations.scripts));
-  });
-});
+//// scripts watch task for development
+//gulp.task('scripts:watch', function (event) {
+//  gulp.src(sources.vendor)
+//    .pipe(plumber())
+//    .pipe(gulp.dest(destinations.vendor));
+//
+//  watch({glob: sources.scripts}, function (files) {
+//    gulp.src(sources.scripts)
+//      .pipe(plumber())
+//      .pipe(gulp.dest(destinations.scripts));
+//  });
+//});
 
 // jade tasks
 gulp.task('jade', function (event) {
@@ -239,9 +249,10 @@ gulp.task('upload', function () {
 gulp.task('default', [
   'serve',
   'fonts',
+  'data',
   'images:watch',
   'jade:watch',
-  'scripts:watch',
+  'scripts',
   'lint:watch',
   'stylus:watch'
 ]);

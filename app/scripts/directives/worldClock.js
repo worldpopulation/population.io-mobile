@@ -2,7 +2,8 @@
   'use strict';
 
   angular.module('populationioApp')
-    .directive('worldClock', function ($filter, PopulationIOService, HelloWords) {
+    .directive('worldClock', ['$filter', 'PopulationIOService', 'HelloWords',
+      function ($filter, PopulationIOService, HelloWords) {
       return {
         restrict: 'E',
         link: function ($scope, element) {
@@ -32,9 +33,10 @@
               x = e.clientWidth;
             root.attr('width', x);
             chart.attr({
-              transform: 'translate(' + [x/2 - parentWidth/2, 0 ] + ')'
+              transform: 'translate(' + [x / 2 - parentWidth / 2, 0 ] + ')'
             });
           }
+
           window.onresize = updateWindow;
           updateWindow();
 
@@ -134,15 +136,15 @@
             );
             var digits = ('' + filteredNumber).split('');
 
-            for(var i=0; i<timeDelta; i+=1) {
+            for (var i = 0; i < timeDelta; i += 1) {
               if (i === 0) {
-                setTimeout(function() {
+                setTimeout(function () {
                   _addNewBaby(true);
-                }, i*200);
+                }, i * 200);
               } else {
-                setTimeout(function() {
+                setTimeout(function () {
                   _addNewBaby();
-                }, i*200);
+                }, i * 200);
               }
             }
 
@@ -181,7 +183,7 @@
             });
           }
 
-          var _addHelloBubble = function(baby) {
+          var _addHelloBubble = function (baby) {
             var helloBubble = baby
               .append('g')
               .attr({
@@ -204,18 +206,18 @@
               var randomItem = _.random(0, HelloWords.length - 1);
               return HelloWords[randomItem].greeting;
             })
-            .each(function() {
-              var bbox = this.getBBox(),
-                scale = Math.min(60/bbox.width, 40/bbox.height);
-              this.scale = scale;
-            })
-            .style('font-size', function() { return (14*this.scale) + 'px'; });
+              .each(function () {
+                var bbox = this.getBBox(),
+                  scale = Math.min(60 / bbox.width, 40 / bbox.height);
+                this.scale = scale;
+              })
+              .style('font-size', function () { return (14 * this.scale) + 'px'; });
           };
 
           function _initBabiesFlood() {
             babiesList = [];
 
-            for(var i=0; i<15; i+=1) {
+            for (var i = 0; i < 15; i += 1) {
               babiesList.push({});
             }
 
@@ -257,7 +259,7 @@
               .append('g')
               .attr({
                 'class': 'baby',
-                opacity: function(d, i) {
+                opacity: function (d, i) {
                   this.idx = i;
                   return 1;
                 }
@@ -273,7 +275,7 @@
             _addHelloBubble(baby);
 
             babiesArea.attr('transform', function () {
-              return 'translate(' + [135 + parentWidth/2, 100] + ')';
+              return 'translate(' + [135 + parentWidth / 2, 100] + ')';
             });
 
             _addNewBaby();
@@ -294,7 +296,7 @@
                 },
                 opacity: 1,
                 transform: function () {
-                  var translate =  'translate(' + [this.idx * 30, 0] + ')';
+                  var translate = 'translate(' + [this.idx * 30, 0] + ')';
                   this.idx += 1;
                   return translate;
                 }
@@ -308,7 +310,7 @@
             var newBaby = babiesArea
               .append('g')
               .attr({
-                'class': function() {
+                'class': function () {
                   this.idx = 1;
                   this.helloWord = hello;
                   return 'baby';
@@ -359,6 +361,6 @@
           _initBabiesFlood();
         }
       };
-    });
+    }]);
 
 }());
