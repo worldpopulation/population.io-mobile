@@ -223,11 +223,11 @@
                 })
                 .text(function () {
                   if ($scope.region != 'World') {
-                    return Math.floor($scope.rankLocal / ($scope.countryPopulation / 100)) + '%'
+
+                      return $filter('number')($scope.rankLocal / ($scope.countryPopulation / 100), '0') + '%'
                   }
                   else {
-
-                    return Math.floor($scope.rankGlobal / ($scope.worldPopulation / 100)) + '%'
+                      return $filter('number')($scope.rankGlobal / ($scope.worldPopulation / 100), '0') + '%'
                   }
                 })
 
