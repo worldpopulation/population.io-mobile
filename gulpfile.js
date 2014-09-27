@@ -125,7 +125,7 @@ gulp.task('scripts', function (event) {
   gulp.src(sources.scripts)
     .pipe(sourcemaps.init())
     .pipe(concat('main.js'))
-    .pipe(uglify({mangle: false}))
+//    .pipe(uglify({mangle: false}))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(destinations.scripts));
 });

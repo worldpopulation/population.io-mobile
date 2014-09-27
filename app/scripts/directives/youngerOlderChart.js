@@ -26,6 +26,11 @@
               ;
 
             _initChart();
+            $scope.$watch('worldPopulationData', function (newVal, oldVal) {
+              if (newVal && newVal != oldVal && $scope.region == 'World') {
+                _updateChart($scope.worldPopulationData)
+              }
+            });
             $scope.$watch('region', function (newVal) {
               if (newVal == 'World' && $scope.worldPopulationData) {
                 _updateChart($scope.worldPopulationData)
@@ -224,10 +229,10 @@
                 .text(function () {
                   if ($scope.region != 'World') {
 
-                      return $filter('number')($scope.rankLocal / ($scope.countryPopulation / 100), '0') + '%'
+                    return $filter('number')($scope.rankLocal / ($scope.countryPopulation / 100), '0') + '%'
                   }
                   else {
-                      return $filter('number')($scope.rankGlobal / ($scope.worldPopulation / 100), '0') + '%'
+                    return $filter('number')($scope.rankGlobal / ($scope.worldPopulation / 100), '0') + '%'
                   }
                 })
 

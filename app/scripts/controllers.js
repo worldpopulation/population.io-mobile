@@ -174,9 +174,7 @@
       }])
     .controller('SummaryCtrl', ['$scope', '$rootScope', '$interval', '$filter', 'PopulationIOService', 'ProfileService', '$timeout',
       function ($scope, $rootScope, $interval, $filter, PopulationIOService, ProfileService, $timeout) {
-//      selectedYearconsole.log(new Date().getFullYear())
-//      console.log(ProfileService)
-//      console.log(parseInt($filter('date')(ProfileService.birthday, 'yyyy'), 0))
+        $scope.region = 'World';
         $scope.age = new Date().getFullYear() - ProfileService.birthday.year;
         $rootScope.$on('ready', function () {
           _update();
@@ -268,7 +266,6 @@
             $scope.loading -= 1;
 
             $scope.worldPopulationData = data;
-            $scope.$broadcast('worldPopulationDataChanged', data)
           });
 
         };
