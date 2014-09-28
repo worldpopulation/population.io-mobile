@@ -17,7 +17,6 @@
           return PopulationIOService.getWorldPopulation();
         }, function (newValue, oldValue) {
           $scope.rankGlobal += (newValue - oldValue);
-          console.log($scope.rankGlobal)
           $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
         });
 
@@ -384,102 +383,102 @@
         });
       }])
 
-/*
-    .controller('PeopleCtrl', ['$scope', '$rootScope', '$interval', '$anchorScroll', '$state', '$filter', 'PopulationIOService', 'ProfileService',
-      function ($scope, $rootScope, $interval, $anchorScroll, $state, $filter, PopulationIOService, ProfileService) {
+    /*
+     .controller('PeopleCtrl', ['$scope', '$rootScope', '$interval', '$anchorScroll', '$state', '$filter', 'PopulationIOService', 'ProfileService',
+     function ($scope, $rootScope, $interval, $anchorScroll, $state, $filter, PopulationIOService, ProfileService) {
 
-        $scope.isUpdated = false;
+     $scope.isUpdated = false;
 
-        $rootScope.$on('ready', function () {
-          _update();
-        });
+     $rootScope.$on('ready', function () {
+     _update();
+     });
 
-        var _getNextDay = function () {
-          var tomorrow = new Date();
-          tomorrow.setDate((new Date()).getDate() + 1);
-          return tomorrow;
-        };
+     var _getNextDay = function () {
+     var tomorrow = new Date();
+     tomorrow.setDate((new Date()).getDate() + 1);
+     return tomorrow;
+     };
 
-        $scope.$watch(function () {
-          return ProfileService.active;
-        }, function (active) {
-          if (active) {
-            $scope.loading = 1;
-            setTimeout(function () {
-              $scope.loading = 0;
-              $scope.isUpdated = true;
-            }, 5000);
-          } else {
-            $scope.isUpdated = false;
-          }
-        });
+     $scope.$watch(function () {
+     return ProfileService.active;
+     }, function (active) {
+     if (active) {
+     $scope.loading = 1;
+     setTimeout(function () {
+     $scope.loading = 0;
+     $scope.isUpdated = true;
+     }, 5000);
+     } else {
+     $scope.isUpdated = false;
+     }
+     });
 
-        var _update = function () {
+     var _update = function () {
 
-          PopulationIOService.loadWpRankToday({
-            dob: '1920-01-01',
-            sex: 'unisex',
-            country: ProfileService.country
-          }, function (rank) {
-            $scope.rankLocalTotal = rank;
-          });
+     PopulationIOService.loadWpRankToday({
+     dob: '1920-01-01',
+     sex: 'unisex',
+     country: ProfileService.country
+     }, function (rank) {
+     $scope.rankLocalTotal = rank;
+     });
 
-          PopulationIOService.loadWpRankToday({
-            dob: '1920-01-01',
-            sex: 'unisex',
-            country: 'World'
-          }, function (rank) {
-            $scope.rankGlobal = rank;
-            $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
-          });
+     PopulationIOService.loadWpRankToday({
+     dob: '1920-01-01',
+     sex: 'unisex',
+     country: 'World'
+     }, function (rank) {
+     $scope.rankGlobal = rank;
+     $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
+     });
 
-          PopulationIOService.loadWpRankToday({
-            dob: ProfileService.birthday.formatted,
-            sex: 'unisex',
-            country: ProfileService.country
-          }, function (rank) {
-            $scope.rankLocal = rank;
-            $rootScope.$emit('rankLocalChanged', $scope.rankLocal);
-          });
+     PopulationIOService.loadWpRankToday({
+     dob: ProfileService.birthday.formatted,
+     sex: 'unisex',
+     country: ProfileService.country
+     }, function (rank) {
+     $scope.rankLocal = rank;
+     $rootScope.$emit('rankLocalChanged', $scope.rankLocal);
+     });
 
-          PopulationIOService.loadWpRankToday({
-            dob: ProfileService.birthday.formatted,
-            sex: 'unisex',
-            country: 'World'
-          }, function (rank) {
-            $scope.rankGlobal = rank;
-            $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
-          });
+     PopulationIOService.loadWpRankToday({
+     dob: ProfileService.birthday.formatted,
+     sex: 'unisex',
+     country: 'World'
+     }, function (rank) {
+     $scope.rankGlobal = rank;
+     $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
+     });
 
-          PopulationIOService.loadWpRankOnDate({
-            dob: ProfileService.birthday.formatted,
-            sex: 'unisex',
-            country: ProfileService.country,
-            date: $filter('date')(_getNextDay(), 'yyyy-MM-dd')
-          }, function (rank) {
-            $scope.rankLocalTomorrow = rank;
-          });
+     PopulationIOService.loadWpRankOnDate({
+     dob: ProfileService.birthday.formatted,
+     sex: 'unisex',
+     country: ProfileService.country,
+     date: $filter('date')(_getNextDay(), 'yyyy-MM-dd')
+     }, function (rank) {
+     $scope.rankLocalTomorrow = rank;
+     });
 
-        };
+     };
 
-        $scope.$watch(function () {
-          return PopulationIOService.getWorldPopulation();
-        }, function (newValue, oldValue) {
-          $scope.rankGlobal += (newValue - oldValue);
-          $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
-        });
+     $scope.$watch(function () {
+     return PopulationIOService.getWorldPopulation();
+     }, function (newValue, oldValue) {
+     $scope.rankGlobal += (newValue - oldValue);
+     $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
+     });
 
-//        $interval(function () {
-//          var diff = ($scope.rankLocalTomorrow - $scope.rankLocal) / 24 / 60 / 60;
-//          if (diff) {
-//            $scope.rankLocal += diff;
-//            console.log($scope.rankLocal)
-//            $rootScope.$emit('rankLocalChanged', $scope.rankLocal);
-//          }
-//        }, 1000);
+     //        $interval(function () {
+     //          var diff = ($scope.rankLocalTomorrow - $scope.rankLocal) / 24 / 60 / 60;
+     //          if (diff) {
+     //            $scope.rankLocal += diff;
+     //            console.log($scope.rankLocal)
+     //            $rootScope.$emit('rankLocalChanged', $scope.rankLocal);
+     //          }
+     //        }, 1000);
 
-      }])
-*/
+     }])
+     */
 
     .controller('MilestonesCtrl', ['$scope', '$rootScope', '$state', '$filter', '$sce', 'ProfileService', 'PopulationIOService',
       function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationIOService) {
@@ -861,6 +860,7 @@
 
           $scope.loading += 1;
 
+
           PopulationIOService.loadLifeExpectancyRemaining({
             sex: ProfileService.gender,
             country: $scope.selectedCountryRef,
@@ -875,7 +875,10 @@
               country: $scope.selectedCountryRef,
               yearsLeft: remainingLife,
               lifeExpectancy: lifeExpectancy,
-              dod: ProfileService.dod
+              dod: function () {
+                var today = new Date();
+                return today.setDate(today.getDate() + (remainingLife * 365));
+              }()
             };
             $scope.loading -= 1;
             if (!$scope.$$phase) {
@@ -903,7 +906,12 @@
             $scope.activeCountryRel = {
               country: $scope.selectedCountryRel,
               yearsLeft: remainingLife,
-              lifeExpectancy: lifeExpectancy
+              lifeExpectancy: lifeExpectancy,
+              dod: function () {
+                var today = new Date();
+                return today.setDate(today.getDate() + (remainingLife * 365));
+              }()
+
             };
 
             $scope.loading -= 1;
