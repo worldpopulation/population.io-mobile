@@ -6,14 +6,14 @@ world-clock
             h1 What's your place in the world population?
             p The Journey of your life in numbers and dates!<br/>Please enter your date of birth, country of birth and sex at birth:
             form.form-inline(name="goForm", novalidate)
-                .icon.typeahead
+                .typeahead
                     input.day-field.form-control(type="text", name="birthdayDay", ng-value="profile.birthday.day", ng-model = "profile.birthday.day", placeholder = "Day", typeahead="birthdayDay for birthdayDay in birthdays($viewValue,'d')", typeahead-wait-ms="100", typeahead-editable="true", required, ng-blur="parseInput(this)")
                     input.month-field.form-control(type="text", name="birthdayMonth", ng-value="profile.birthday.month", ng-model = "profile.birthday.month", placeholder = "Month", typeahead="birthdayMonth for birthdayMonth in birthdays($viewValue,'m')", typeahead-wait-ms="100", typeahead-editable="true", required )
                     input.year-field.form-control(type="text", name="birthdayYear", ng-value="profile.birthday.year", ng-model = "profile.birthday.year", placeholder = "Year", typeahead="birthdayYear for birthdayYear in birthdays($viewValue,'y')", typeahead-wait-ms="100", typeahead-editable="true", required )
-                .typeahead
+                .typeahead.icon-country
                     input.form-control(type="text",name='country', placeholder="Country", ng-model="profile.country", typeahead="country for country in countries | filter: $viewValue", typeahead-wait-ms="100", typeahead-editable="true", required, stoptab)
                 .toggle
-                    label(class="icon icon-female", ng-model="profile.gender" btn-radio="'female'", required) Female
-                    label(class="icon icon-male", ng-model="profile.gender" btn-radio="'male'", required) Male
+                    label.icon.icon-female(ng-model="profile.gender" btn-radio="'female'", required) Female
+                    label.icon.icon-male(ng-model="profile.gender" btn-radio="'male'", required) Male
                 a.btn.btn-big(ng-click="goGoGadget()", ng-disabled="goForm.$invalid || loading" ng-class='{loading:loading}') <span class="fa fa-refresh"></span>
             //div.debug {{profile.birthday.day}}-{{profile.birthday.month}}-{{profile.birthday.year}}

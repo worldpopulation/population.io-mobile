@@ -48,6 +48,20 @@
             color #666
         .typeahead
             margin 0 20px
+            &.icon-country:after
+                content ''
+                height 40px
+                width 40px
+                position absolute
+                z-index 9
+                right 5px
+                top 6px
+                background-icon()
+                background-position -30px -830px
+
+
+
+
         .toggle
             label
                 padding-right 60px
@@ -56,18 +70,18 @@
             margin 0
             input
                 padding-right 40px
-        .icon:after
-            content ''
-            height 40px
-            width 40px
-            position absolute
-            z-index 9
-            right 5px
-            top 4px
-            background-icon()
-        .icon.icon-birthday:after
-            background-position -35px -230px
-        .icon.icon-male:after
-            background-position -130px -330px
-        .icon.icon-female:after
-            background-position -30px -330px
+            &:after
+                content ''
+                height 40px
+                width 40px
+                position absolute
+                z-index 9
+                right 5px
+                top 4px
+                background-icon()
+            &.icon-birthday:after
+                background-position -35px -230px
+            &.icon-male:after
+                background-position -130px -330px
+            &.icon-female:after
+                background-position -30px -330px
