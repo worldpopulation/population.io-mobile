@@ -13,10 +13,19 @@
         $scope.clockType = 'world';
         $scope.profile = ProfileService;
 
+        $scope.$watch(function () {
+          return PopulationIOService.getWorldPopulation();
+        }, function (newValue, oldValue) {
+          $scope.rankGlobal += (newValue - oldValue);
+          console.log($scope.rankGlobal)
+          $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
+        });
+
 
         $scope.$on('rankGlobalChanged', function (e, rankGlobal) {
-          $rootScope.rankGlobal = rankGlobal;
-          console.log(123)
+          console.log('@@@@@@@')
+          console.log(rankGlobal)
+          $scope.rankGlobal = rankGlobal;
         });
         $interval(function () {
           $scope.worldPopulation = PopulationIOService.getWorldPopulation();
@@ -270,16 +279,9 @@
 
         };
 
-        $scope.$watch(function () {
-          return PopulationIOService.getWorldPopulation();
-        }, function (newValue, oldValue) {
-          $scope.rankGlobal += (newValue - oldValue);
-
-          $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
-        });
-
         $interval(function () {
           var diff = ($scope.rankLocalTomorrow - $scope.rankLocal) / 24 / 60 / 60;
+//          console.log($scope.rankLocalTomorrow, $scope.rankLocal)
           if (diff) {
             $scope.rankLocal += diff;
             $rootScope.$emit('rankLocalChanged', $scope.rankLocal);
@@ -382,6 +384,7 @@
         });
       }])
 
+/*
     .controller('PeopleCtrl', ['$scope', '$rootScope', '$interval', '$anchorScroll', '$state', '$filter', 'PopulationIOService', 'ProfileService',
       function ($scope, $rootScope, $interval, $anchorScroll, $state, $filter, PopulationIOService, ProfileService) {
 
@@ -466,15 +469,17 @@
           $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
         });
 
-        $interval(function () {
-          var diff = ($scope.rankLocalTomorrow - $scope.rankLocal) / 24 / 60 / 60;
-          if (diff) {
-            $scope.rankLocal += diff;
-            $rootScope.$emit('rankLocalChanged', $scope.rankLocal);
-          }
-        }, 1000);
+//        $interval(function () {
+//          var diff = ($scope.rankLocalTomorrow - $scope.rankLocal) / 24 / 60 / 60;
+//          if (diff) {
+//            $scope.rankLocal += diff;
+//            console.log($scope.rankLocal)
+//            $rootScope.$emit('rankLocalChanged', $scope.rankLocal);
+//          }
+//        }, 1000);
 
       }])
+*/
 
     .controller('MilestonesCtrl', ['$scope', '$rootScope', '$state', '$filter', '$sce', 'ProfileService', 'PopulationIOService',
       function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationIOService) {

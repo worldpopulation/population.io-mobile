@@ -159,7 +159,6 @@
               for (var i = 0; i < d3.max(data, function (d) { return d.total; }) + step; i = i + step) {
                 ticks.push(i)
               }
-              console.log(ticks[ticks.length - 1])
               xAxis.tickFormat(function (d) {return d + 'y'})
               yAxis.tickFormat(function (d) {return yAxisFormat(d).replace('k', 'K')})
                 .tickValues(ticks);
