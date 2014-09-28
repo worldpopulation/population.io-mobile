@@ -20,12 +20,6 @@
           $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
         });
 
-
-        $scope.$on('rankGlobalChanged', function (e, rankGlobal) {
-          console.log('@@@@@@@')
-          console.log(rankGlobal)
-          $scope.rankGlobal = rankGlobal;
-        });
         $interval(function () {
           $scope.worldPopulation = PopulationIOService.getWorldPopulation();
         }, 1000);
@@ -33,6 +27,7 @@
         $scope.$watch(function () {
           return ProfileService.active;
         }, function (active) {
+          console.log(active)
           if (active) {
             PopulationIOService.loadWpRankToday({
               dob: ProfileService.birthday.formatted,
@@ -207,25 +202,37 @@
             $scope.isUpdated = false;
           }
         });
+        $scope.calcWorldOlderNumber = function () {
+          return $filter('number')(Math.max(0, $scope.worldPopulation - $scope.rankGlobal), 0);
+        };
+        $scope.calcWorldOlderPercentage = function () {
+          var value = $filter('number')(Math.max(0, 100 - $scope.rankGlobal / ($scope.worldPopulation / 100)), 0);
+          return 'People older than you (' + value + '%)';
+        };
+
+        $scope.calcCountryOlderNumber = function () {
+          return $filter('number')(Math.max(0, $scope.countryPopulation - $scope.rankLocal), 0);
+        };
+        $scope.calcCountryOlderPercentage = function () {
+
+          var value = $filter('number')(Math.max(0, 100 - $scope.rankLocal / ($scope.countryPopulation / 100)), 0);
+          return 'People older than you (' + value + '%)';
+        };
+
+        $scope.calcCountryYoungerPercentage = function () {
+          var value = $filter('number')(Math.min(100, $scope.rankLocal / ($scope.countryPopulation / 100)), 0);
+          return 'People younger than you (' + value + '%)';
+        };
+
+        $scope.calcWorldYoungerPercentage = function () {
+          var value = $filter('number')(Math.min(100, $scope.rankGlobal / ($scope.worldPopulation / 100)), 0);
+          return 'People younger than you (' + value + '%)';
+        };
+        $scope.calcWorldYoungerPercentageSimple = function () {
+          return $filter('number')(Math.min(100, $scope.rankGlobal / ($scope.worldPopulation / 100)), 0);
+        };
 
         var _update = function () {
-
-          PopulationIOService.loadWpRankToday({
-            dob: '1920-01-01',
-            sex: 'unisex',
-            country: ProfileService.country
-          }, function (rank) {
-            $scope.rankLocal = rank;
-          });
-
-          PopulationIOService.loadWpRankToday({
-            dob: '1920-01-01',
-            sex: 'unisex',
-            country: 'World'
-          }, function (rank) {
-            $scope.rankGlobal = rank;
-            $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
-          });
 
           PopulationIOService.loadWpRankToday({
             dob: ProfileService.birthday.formatted,

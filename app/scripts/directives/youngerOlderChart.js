@@ -228,10 +228,10 @@
                 .text(function () {
                   if ($scope.region != 'World') {
 
-                    return $filter('number')($scope.rankLocal / ($scope.countryPopulation / 100), '0') + '%'
+                    return $filter('number')(Math.min(100, $scope.rankLocal / ($scope.countryPopulation / 100)), '0') + '%'
                   }
                   else {
-                    return $filter('number')($scope.rankGlobal / ($scope.worldPopulation / 100), '0') + '%'
+                    return $filter('number')(Math.min(100, $scope.rankGlobal / ($scope.worldPopulation / 100)), '0') + '%'
                   }
                 })
 
