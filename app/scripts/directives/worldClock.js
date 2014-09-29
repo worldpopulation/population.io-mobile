@@ -207,9 +207,8 @@
                 return HelloWords[randomItem].greeting;
               })
                 .each(function () {
-                  var bbox = this.getBBox(),
-                    scale = Math.min(60 / bbox.width, 40 / bbox.height);
-                  this.scale = scale;
+                  var bbox = this.getBBox();
+                      this.scale = Math.min(60 / bbox.width, 40 / bbox.height);
                 })
                 .style('font-size', function () { return (14 * this.scale) + 'px'; });
             };

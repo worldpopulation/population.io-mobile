@@ -17,7 +17,7 @@
                     return PopulationIOService.getWorldPopulation();
                 }, function (newValue, oldValue) {
                     $scope.rankGlobal += (newValue - oldValue);
-                    $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
+                    $rootScope.$broadcast('rankGlobalChanged', $scope.rankGlobal);
                 });
 
                 $interval(function () {
@@ -35,7 +35,7 @@
                             country: 'World'
                         }, function (rank) {
                             $scope.rankGlobal = rank;
-                            $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
+                            $rootScope.$broadcast('rankGlobalChanged', $scope.rankGlobal);
                         });
 
                         $timeout(function () {
@@ -73,7 +73,7 @@
                             ProfileService.birthday = {year: year, month: month, day: day, formatted: [year, month, day].join('-')};
 
                             $rootScope.target = path;
-                            $rootScope.$emit('ready');
+                            $rootScope.$broadcast('ready');
                         }
                     }
 
@@ -240,7 +240,7 @@
                         country: ProfileService.country
                     }, function (rank) {
                         $scope.rankLocal = rank;
-                        $rootScope.$emit('rankLocalChanged', $scope.rankLocal);
+                        $rootScope.$broadcast('rankLocalChanged', $scope.rankLocal);
                     });
 
                     PopulationIOService.loadWpRankToday({
@@ -249,7 +249,7 @@
                         country: 'World'
                     }, function (rank) {
                         $scope.rankGlobal = rank;
-                        $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
+                        $rootScope.$broadcast('rankGlobalChanged', $scope.rankGlobal);
                     });
 
                     PopulationIOService.loadWpRankOnDate({
@@ -272,17 +272,20 @@
                             sum = sum | 0;
                             return sum + num.total;
                         });
-                        $scope.$broadcast('countryPopulationDataChanged', data)
+                        if (data) {
+                            $scope.$broadcast('countryPopulationDataChanged', data)
+                        }
                     });
                     PopulationIOService.loadPopulation({
                         year: new Date().getFullYear(),
                         country: 'World'
                     }, function (data) {
                         $scope.loading -= 1;
-
                         $scope.worldPopulationData = data;
+                        if (data) {
+                            $scope.$broadcast('worldPopulationDataChanged', data)
+                        }
                     });
-
                 };
 
                 $interval(function () {
@@ -290,7 +293,7 @@
 //          console.log($scope.rankLocalTomorrow, $scope.rankLocal)
                     if (diff) {
                         $scope.rankLocal += diff;
-                        $rootScope.$emit('rankLocalChanged', $scope.rankLocal);
+                        $rootScope.$broadcast('rankLocalChanged', $scope.rankLocal);
                     }
                 }, 1000);
 
