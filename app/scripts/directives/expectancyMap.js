@@ -155,9 +155,6 @@
               });
             var descBoxHeight = desc[0][0].getBBox().height;
             var shift = 0;
-              console.log(height - descBoxHeight)
-              console.log(height)
-              console.log(descBoxHeight)
               if (height - descBoxHeight < 100) {
                   shift = -descBoxHeight
               }

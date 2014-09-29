@@ -86,7 +86,8 @@ gulp.task('serve', function (event) {
     connect.server({
         root: destinations.docs,
         port: 1983,
-        livereload: true
+        livereload: true,
+        host: '0.0.0.0'
     });
     // sets up a livereload that watches for any changes in the root
     watch({glob: sources.overwatch})

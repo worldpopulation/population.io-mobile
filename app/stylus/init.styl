@@ -1,124 +1,127 @@
 html,
 body
-  min-height 100%
-  height 100%
+    min-height 100%
+    height 100%
+
+input::-ms-clear
+    display none
 
 body
-  color #333
-  padding 0
-  margin 0
-  font-family 'Theinhardt-Light', 'Helvetica', sans-serif
+    color #333
+    padding 0
+    margin 0
+    font-family 'Theinhardt-Light', 'Helvetica', sans-serif
 
 ul
 li
-  list-style-type none
-  margin 0
-  padding 0
+    list-style-type none
+    margin 0
+    padding 0
 
 svg
-  display block
-  margin 0
-  padding 0
-  cursor default
+    display block
+    margin 0
+    padding 0
+    cursor default
 
 h1, h2, h3, h4, h5, h6, p
-  margin 0
-  padding 0
+    margin 0
+    padding 0
 
 i
-  font-style normal
+    font-style normal
 
 h1
-  color h1-color
-  font-size 36px
-  line-height 1.2em
-  font-family 'PlantinMTStd-Light', sans-serif
-  font-weight normal
-  span
-    color h1-span-color
+    color h1-color
+    font-size 36px
+    line-height 1.2em
+    font-family 'PlantinMTStd-Light', sans-serif
+    font-weight normal
+    span
+        color h1-span-color
 
 strong,
 b
-  font-family 'Theinhardt-Medium', 'Helvetica', sans-serif
-  font-weight normal
+    font-family 'Theinhardt-Medium', 'Helvetica', sans-serif
+    font-weight normal
 
 h2
-  font-size 18px
-  font-weight normal
-  color #666666
-  position relative
-  margin 50px 0 20px 0
+    font-size 18px
+    font-weight normal
+    color #666666
+    position relative
+    margin 50px 0 20px 0
 
 a
-  text-decoration none
-  color #222
+    text-decoration none
+    color #222
 
 *
-  -webkit-tap-highlight-color rgba(0, 0, 0, 0)
+    -webkit-tap-highlight-color rgba(0, 0, 0, 0)
 
 input
-  -webkit-appearance none
+    -webkit-appearance none
 
 .hidden
-  visibility hidden
-  overflow hidden
-  height 0
+    visibility hidden
+    overflow hidden
+    height 0
 
 .container
-  position relative
-  width container-width
-  margin 0 auto
-  padding 0
+    position relative
+    width container-width
+    margin 0 auto
+    padding 0
 
 svg.defs-area
-  display none
+    display none
 
 text
-  cursor default
+    cursor default
 
 // browser warning
 .browser-list
-  clearfix()
-  padding 20px 0 20px 0
-  a
-    float left
-    width 33.33%
-    text-align center
-    text-decoration none !important
-  a:hover
-    text-decoration underline !important
-  span
-    display block
-  span.title
-    margin 20px 0 2px 0
-    font-family 'Theinhardt-Medium', 'Helvetica', sans-serif
-    font-size 18px
-  span.publisher
-    font-size 12px
-  .icon
-    display inline-block
-    height 130px
-    width 125px
-    background url(../images/browsers-sprite.png) no-repeat
-  .icon.chrome
-    background-position left top
-  .icon.safari
-    background-position -380px top
-  .icon.firefox
-    background-position -128px top
-  .icon.opera
-    background-position -250px top
+    clearfix()
+    padding 20px 0 20px 0
+    a
+        float left
+        width 33.33%
+        text-align center
+        text-decoration none !important
+    a:hover
+        text-decoration underline !important
+    span
+        display block
+    span.title
+        margin 20px 0 2px 0
+        font-family 'Theinhardt-Medium', 'Helvetica', sans-serif
+        font-size 18px
+    span.publisher
+        font-size 12px
+    .icon
+        display inline-block
+        height 130px
+        width 125px
+        background url(../images/browsers-sprite.png) no-repeat
+    .icon.chrome
+        background-position left top
+    .icon.safari
+        background-position -380px top
+    .icon.firefox
+        background-position -128px top
+    .icon.opera
+        background-position -250px top
 
 // modals
 div.modal
-  position fixed
-  left 0
-  right 0
-  height 100%
+    position fixed
+    left 0
+    right 0
+    height 100%
 
 // content block
 .content-block
-  min-height 100%
+    min-height 100%
 
 // cloak
 [ng\:cloak],
@@ -127,324 +130,324 @@ div.modal
 [x-ng-cloak],
 .ng-cloak,
 .x-ng-cloak
-  display none !important
+    display none !important
 
 // datepicker
 .ui-datepicker
-  border 1px solid border-color
-  border-radius 12px
-  box-shadow 0 1px 1px rgba(0, 0, 0, 0.2)
-  background-color #ffffff
-  padding 15px
-  display none
+    border 1px solid border-color
+    border-radius 12px
+    box-shadow 0 1px 1px rgba(0, 0, 0, 0.2)
+    background-color #ffffff
+    padding 15px
+    display none
 
 .ui-datepicker-title
-  clearfix()
-  padding 0 0 5px 0
+    clearfix()
+    padding 0 0 5px 0
 
 .ui-datepicker-month
-  float right
+    float right
 
 .ui-datepicker-year
-  float left
+    float left
 
 .ui-datepicker-prev,
 .ui-datepicker-next
-  display none
+    display none
 
 .ui-datepicker-calendar
-  margin 5px 0 0 0
-  border-spacing 0
-  border-collapse collapse
-  th,
-  td
-    font-size 12px
-    padding 6px 4px
-    width 25px
-    text-align right
-    border none
-  th
-    border-bottom 1px solid border-color
-    font-family 'Theinhardt-Medium', 'Helvetica', sans-serif
-  td.ui-datepicker-current-day,
-  td:hover
-    cursor pointer
-    background highlight-yellow
-  td.ui-datepicker-unselectable,
-  td.ui-datepicker-unselectable:hover
-    background none
-    color #ccc
-  a
-    text-decoration none
-    color #666
+    margin 5px 0 0 0
+    border-spacing 0
+    border-collapse collapse
+    th,
+    td
+        font-size 12px
+        padding 6px 4px
+        width 25px
+        text-align right
+        border none
+    th
+        border-bottom 1px solid border-color
+        font-family 'Theinhardt-Medium', 'Helvetica', sans-serif
+    td.ui-datepicker-current-day,
+    td:hover
+        cursor pointer
+        background highlight-yellow
+    td.ui-datepicker-unselectable,
+    td.ui-datepicker-unselectable:hover
+        background none
+        color #ccc
+    a
+        text-decoration none
+        color #666
 
 // wip
 .wip
-  display none
-  background url(../images/wip.svg)
-  position absolute
-  left 0
-  top 100px
-  width 100px
-  z-index 4
-  height 100px
+    display none
+    background url(../images/wip.svg)
+    position absolute
+    left 0
+    top 100px
+    width 100px
+    z-index 4
+    height 100px
 
 // modal
 .modal
-  background rgba(0, 0, 0, 0.5)
-  position absolute
-  left 0
-  top 0
-  height 100%
-  width 100%
+    background rgba(0, 0, 0, 0.5)
+    position absolute
+    left 0
+    top 0
+    height 100%
+    width 100%
 
 .modal-title
-  font-size 42px
-  font-family 'PlantinMTStd-Light', sans-serif
+    font-size 42px
+    font-family 'PlantinMTStd-Light', sans-serif
 
 .modal-body
-  margin 20px 0 40px 0
-  h4
-    font-family 'PlantinMTStd-Light', sans-serif
-    margin 0 0 10px 0
-    font-size 24px
-  p
-    margin 0 0 20px 0
-  a
-    text-decoration underline
+    margin 20px 0 40px 0
+    h4
+        font-family 'PlantinMTStd-Light', sans-serif
+        margin 0 0 10px 0
+        font-size 24px
+    p
+        margin 0 0 20px 0
+    a
+        text-decoration underline
 
 .modal-footer
-  button
-    background #333
-    color #fff
-    cursor pointer
-    border none
-    border-radius 4px
-    padding 10px 50px
+    button
+        background #333
+        color #fff
+        cursor pointer
+        border none
+        border-radius 4px
+        padding 10px 50px
 
 .modal-dialog
-  background #fff
-  box-shadow 0 0 10px rgba(0, 0, 0, 0.5)
-  border-radius 4px
-  box-sizing border-box
-  padding 40px
-  width 800px
-  position absolute
-  top 50px
-  left 50%
-  margin-left -400px
+    background #fff
+    box-shadow 0 0 10px rgba(0, 0, 0, 0.5)
+    border-radius 4px
+    box-sizing border-box
+    padding 40px
+    width 800px
+    position absolute
+    top 50px
+    left 50%
+    margin-left -400px
 
 // navigation
 .navigation
-  position fixed
-  right 20px
-  top 50%
-  li
-    cursor pointer
-    position relative
-    width 20px
-    height 20px
-  span
-    left 8px
-    top 4px
-    position absolute
-    display block
-    width 5px
-    height 5px
-    background #999999
-    border-radius 5px
-  li.active
+    position fixed
+    right 20px
+    top 50%
+    li
+        cursor pointer
+        position relative
+        width 20px
+        height 20px
     span
-      border-radius 10px
-      top 1px
-      left 5px
-      width 10px
-      height 10px
-      background #fff
-      border 1px solid #999999
+        left 8px
+        top 4px
+        position absolute
+        display block
+        width 5px
+        height 5px
+        background #999999
+        border-radius 5px
+    li.active
+        span
+            border-radius 10px
+            top 1px
+            left 5px
+            width 10px
+            height 10px
+            background #fff
+            border 1px solid #999999
 
 // share
 .share
-  background highlight-yellow
-  position fixed
-  bottom -60px
-  font-size 14px
-  right -110px
-  z-index 10
-  padding-top 15px
-  height 120px
-  width 240px
-  text-align center
-  transform rotate(-45deg)
-  transition all ease 250ms
-  span
-    font-size 12px
-    font-family Helvetica, sans-serif
-    font-weight bold
-    color rgba(0, 0, 0, 0.5)
-  .links
-    opacity 0.5
-    margin 5px 0 0 0
-    font-size 24px
-    a
-      margin 0 2px
+    background highlight-yellow
+    position fixed
+    bottom -60px
+    font-size 14px
+    right -110px
+    z-index 10
+    padding-top 15px
+    height 120px
+    width 240px
+    text-align center
+    transform rotate(-45deg)
+    transition all ease 250ms
+    span
+        font-size 12px
+        font-family Helvetica, sans-serif
+        font-weight bold
+        color rgba(0, 0, 0, 0.5)
+    .links
+        opacity 0.5
+        margin 5px 0 0 0
+        font-size 24px
+        a
+            margin 0 2px
 
 .share:hover
-  right -90px
-  bottom -40px
-  .links
-    opacity 1.0
+    right -90px
+    bottom -40px
+    .links
+        opacity 1.0
 
 .share.animate.ng-hide-add,
 .share.animate.ng-hide-remove
-  display block !important
+    display block !important
 
 .share.animate.ng-hide-add.ng-hide-add-active,
 .share.animate.ng-hide-remove
-  transform translate3d(100px, 100px, 0) rotate(-45deg)
+    transform translate3d(100px, 100px, 0) rotate(-45deg)
 
 .share.animate.ng-hide-add,
 .share.animate.ng-hide-remove.ng-hide-remove-active
-  transform translate3d(0, 0, 0) rotate(-45deg)
+    transform translate3d(0, 0, 0) rotate(-45deg)
 
 // section
 section
-  header
-    padding 40px 0
-    border-bottom 1px solid border-color
-    border-top 1px solid border-color
-    position relative
-  header.divided
-    clearfix()
-    h1
-      width 50%
-      float left
-    h1:last-child
-      text-align right
+    header
+        padding 40px 0
+        border-bottom 1px solid border-color
+        border-top 1px solid border-color
+        position relative
+    header.divided
+        clearfix()
+        h1
+            width 50%
+            float left
+        h1:last-child
+            text-align right
 
 // typeahead
 .typeahead
-  position relative
-  input
-    outline 0
-    border 1px solid border-color
-    background-color #ffffff
-    padding 10px 12px
-    border-radius 12px
-    font-size 14px
-    width 200px
-  .dropdown-menu
-    overflow hidden
-    border 1px solid border-color
-    cursor pointer
-    z-index 9999
-    position absolute
-    border-radius 12px
-    left 0px
-    right 0px
-    box-shadow 0 1px 1px rgba(0, 0, 0, 0.2)
-    background-color #ffffff
-  li
-    width 100%
-    box-sizing border-box
-    padding 10px 12px
-    color p-color
-    font-size 14px
-  li.active,
-  li:hover
-    background-color highlight-yellow
-  &.rel li.active,
-  &.rel li:hover
-    background-color highlight-blue
+    position relative
+    input
+        outline 0
+        border 1px solid border-color
+        background-color #ffffff
+        padding 10px 12px
+        border-radius 12px
+        font-size 14px
+        width 200px
+    .dropdown-menu
+        overflow hidden
+        border 1px solid border-color
+        cursor pointer
+        z-index 9999
+        position absolute
+        border-radius 12px
+        left 0px
+        right 0px
+        box-shadow 0 1px 1px rgba(0, 0, 0, 0.2)
+        background-color #ffffff
+    li
+        width 100%
+        box-sizing border-box
+        padding 10px 12px
+        color p-color
+        font-size 14px
+    li.active,
+    li:hover
+        background-color highlight-yellow
+    &.rel li.active,
+    &.rel li:hover
+        background-color highlight-blue
 
 // form input fields
 .form-inline
-  > *
-    float left
-    margin-right 10px
-  > *:last-child
-    margin-right 0px
+    > *
+        float left
+        margin-right 10px
+    > *:last-child
+        margin-right 0px
 
 form
-  input.form-control:focus
-    border 1px solid border-color
-    box-shadow 0 0 6px border-color
-  input.form-control
-    box-sizing border-box
-    font-size 14px
-    padding 12px
-    background #fff
-    margin-top 0px
-    margin-bottom 0px
-    border-radius 5px
-    border 1px solid border-color
-    outline none
-  input.form-control.input-dark
-    color #fff
-    background #666666
-    ::-webkit-input-placeholder
-      font-size 14px
-      color #fff
+    input.form-control:focus
+        border 1px solid border-color
+        box-shadow 0 0 6px border-color
+    input.form-control
+        box-sizing border-box
+        font-size 14px
+        padding 12px
+        background #fff
+        margin-top 0px
+        margin-bottom 0px
+        border-radius 5px
+        border 1px solid border-color
+        outline none
+    input.form-control.input-dark
+        color #fff
+        background #666666
+        ::-webkit-input-placeholder
+            font-size 14px
+            color #fff
 
 .btn
-  height 46px
-  width 46px
-  border none
-  background-icon()
-  background-position -228px -730px
-  cursor pointer
-  outline none
-  padding 0
-  position relative
-  span
-    display none
-  &.loading
+    height 46px
+    width 46px
+    border none
+    background-icon()
+    background-position -228px -730px
+    cursor pointer
+    outline none
+    padding 0
+    position relative
     span
-      font-size 30px
-      color #fff
-      display block
-      left 50%
-      top 50%
-      background #000
-      position absolute
-      width 120px
-      height @width
-      margin-left - (@width / 2)
-      margin-top -( @width / 2)
-      border-radius @width
-      text-align center
-      line-height @height
-      animation loading-animation 1.25s infinite linear
+        display none
+    &.loading
+        span
+            font-size 30px
+            color #fff
+            display block
+            left 50%
+            top 50%
+            background #000
+            position absolute
+            width 120px
+            height @width
+            margin-left - (@width / 2)
+            margin-top -( @width / 2)
+            border-radius @width
+            text-align center
+            line-height @height
+            animation loading-animation 1.25s infinite linear
 
 .btn.btn-big
-  height 120px
-  width 120px
-  background-position -300px -200px
-  margin-top -35px
+    height 120px
+    width 120px
+    background-position -300px -200px
+    margin-top -35px
 
 *[disabled=disabled]
-  opacity 0.5
-  cursor default
-  pointer-events none
+    opacity 0.5
+    cursor default
+    pointer-events none
 
 .toggle
-  overflow hidden
-  label
-    border 1px solid border-color
-    float left
-    margin 0
-    font-size 14px
-    padding 0 20px
-    line-height 48px
-    height 48px
-    background #fff
-    cursor pointer
-  label:first-child
-    border-top-left-radius 12px
-    border-bottom-left-radius 12px
-  label:last-child
-    border-top-right-radius 12px
-    border-bottom-right-radius 12px
-  label.active
-    border 1px solid highlight-yellow
-    background highlight-yellow
+    overflow hidden
+    label
+        border 1px solid border-color
+        float left
+        margin 0
+        font-size 14px
+        padding 0 20px
+        line-height 48px
+        height 48px
+        background #fff
+        cursor pointer
+    label:first-child
+        border-top-left-radius 12px
+        border-bottom-left-radius 12px
+    label:last-child
+        border-top-right-radius 12px
+        border-bottom-right-radius 12px
+    label.active
+        border 1px solid highlight-yellow
+        background highlight-yellow
