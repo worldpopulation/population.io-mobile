@@ -155,47 +155,27 @@
 
 
                             var _highlightCountry = function () {
-//                var _tooltip = d3.select(this);
-//                d3.select(this).moveToFront();
-//                d3.select(this).selectAll('.visual')
-//                  .transition()
-//                  .attr({ r: function (d) {return d.radius + 40;} })
-//                  .style({ fill: 'rgba(0,0,0,0.9)' })
-//                ;
-
-//                _tooltip.select('text')
-//                  .transition()
-//                  .style({
-//                    fill: '#fff'
-//                  })
-//                  .attr({
-//                    transform: 'scale(2)'
-//                  })
-//                  .text(function (d) {
-//                    return d.countryTitle
-//                  });
-
-//                tooltipElement.select('.value-label').
-//                  text(function () {
-//                    return $filter('number')(_tooltip.data()[0].value, 0);
-//                  });
-//                tooltipElement.select('.country-label').
-//                  text(function () {
-//                    return 'in ' + _tooltip.data()[0].countryTitle;
-//                  });
-//                tooltipElement
-//                  .transition()
-//                  .attr({
-//                    transform: 'translate(' + [0, _tooltip.data()[0].y] + ')',
-//                    opacity: 1
-//                  })
-//                  .select('line')
-//                  .attr({
-//                    x2: _tooltip.data()[0].x - radius(_tooltip.data()[0].value) - 4
-//                  });
+                                var datum = d3.select(this).datum();
+                                tooltipElement.select('.value-label')
+                                    .text(function () {
+                                        return $filter('number')(datum.value, 0);
+                                    });
+                                tooltipElement.select('.country-label')
+                                    .text(function () {
+                                        return 'in ' + datum.countryTitle;
+                                    });
+                                tooltipElement
+                                    .transition()
+                                    .attr({
+                                        transform: 'translate(' + [0, datum.y] + ')',
+                                        opacity: 1
+                                    })
+                                    .select('line')
+                                    .attr({
+                                        x2: datum.x - radius(datum.value) - 4
+                                    });
                                 var x = d3.select(this)[0][0].getCTM().e;
                                 var y = d3.select(this)[0][0].getCTM().f;
-                                var countryTitle = d3.select(this).datum().countryTitle;
                                 var itemRadius = parseInt(d3.select(this).select('circle').attr('r'), 0);
                                 countryTooltip
                                     .attr({
@@ -215,7 +195,7 @@
                                 );
                                 countryTooltip
                                     .select('text')
-                                    .text(countryTitle);
+                                    .text(datum.countryTitle);
                                 countryTooltip
                                     .select('.control circle')
                                     .attr(
