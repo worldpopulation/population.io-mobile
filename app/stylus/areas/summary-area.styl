@@ -34,17 +34,21 @@
     .region-switcher
         border 1px solid rgba(0, 0, 0, 0.2)
         clearfix()
-        width 400px
+        width 300px
         margin 0 auto
         border-radius 4px
         span
             cursor pointer
             box-sizing border-box
-            width 200px
+            width 150px
             display block
             float left
             text-align center
-            line-height 40px
+            white-space: nowrap;
+            overflow: hidden;
+            line-height: 40px;
+            text-overflow: ellipsis;
+            padding: 0 15px;
             &:nth-child(2)
                 border-left 1px solid rgba(0, 0, 0, 0.2)
             &.active
