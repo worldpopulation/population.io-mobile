@@ -6,7 +6,7 @@
             | and <span>older than {{calcCountryYoungerPercentageSimple()}}%</span> of all people in <span>{{profile.country}}</span>.
         .region-switcher
             span(ng-class='{active:region=="World"}', ng-click='region="World"') World
-            span(ng-class='{active:region!="World"}', ng-click='region=profile.country') {{profile.country}}
+            span(ng-class='{active:region!="World"}', ng-click='region=profile.country',title='{{profile.country}}') {{profile.country}}
         .younger-you-older-section
             .younger-column.country(ng-hide="region=='World'")
                 .number {{ rankLocal | number : 0}}

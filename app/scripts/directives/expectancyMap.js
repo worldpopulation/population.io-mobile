@@ -41,7 +41,7 @@
             var d3Node = d3.select(node),
               bbox = d3Node[0][0].getBBox(),
               width = 1200,
-              textCntHeight = 170,
+              textCntHeight = 200,
               center = {
                 x: bbox.x + bbox.width / 2,
                 y: bbox.y + bbox.height / 2
@@ -155,25 +155,25 @@
               });
             var descBoxHeight = desc[0][0].getBBox().height;
             var shift = 0;
+              console.log(height - descBoxHeight)
+              console.log(height)
+              console.log(descBoxHeight)
+              if (height - descBoxHeight < 100) {
+                  shift = -descBoxHeight
+              }
 
-            if (height - (center.y + descBoxHeight) < 0) {
-              shift = descBoxHeight / 4
-            }
             desc.attr({
               transform: function () {
-                console.log(center.y - shift)
-                return 'translate(' + [ center.x, center.y - shift ] + ')'
+                  return 'translate(' + [ center.x, center.y + shift ] + ')'
               }
             });
 
-            var lineShift = 0;
-            if (shift) {lineShift = descBoxHeight}
             var descPointerLine = desc.append('line')
               .attr({
                 x1: 0,
-                y1: lineShift / 4,
+                y1: 0,
                 x2: 0,
-                y2: lineShift / 4
+                y2: 0
               })
               .transition()
               .duration(1000)
@@ -185,7 +185,7 @@
                   } else {
                     return width - center.x;
                   }
-                },
+                }
               });
           };
 

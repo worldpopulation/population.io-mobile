@@ -36,14 +36,25 @@
                                 _updateChart($scope.countryPopulationData)
                             }
                         });
+
                         $scope.$on('worldPopulationDataChanged', function (e, population) {
-                            console.log(12345678)
-//                            console.log(population)
-                            age = $scope.profile.getAge();
-                            $timeout(function () {_updateChart(population)}, 2000);
+                            $timeout(function () {
+                                age = $scope.profile.getAge();
+                                _updateChart(population)
+                            }, 2000);
                         });
                         $scope.$on('rankGlobalChanged', function (e, rank) {
                             $scope.rankGlobal = rank
+
+                            if ($scope.region == 'World' && $scope.worldPopulationData) {
+                                console.log(4)
+                                _updateChart($scope.worldPopulationData)
+                            }
+                            else if ($scope.region != 'World' && $scope.countryPopulationData) {
+                                console.log(5)
+                                _updateChart($scope.countryPopulationData)
+                            }
+
                         });
                         $scope.$on('countryPopulationDataChanged', function (e, population) {
                             age = $scope.profile.getAge();
@@ -163,6 +174,9 @@
                             step = $scope.region != 'World' ? 500000 : 50000000;
                             if ($scope.region != 'World' && d3.max(data, function (d) { return d.total; }) <= 500000) {
                                 step = Math.ceil(d3.max(data, function (d) { return d.total; }) / 100000) * 100000
+                            }
+                            if ($scope.region != 'World' && d3.max(data, function (d) { return d.total; }) <= 2000) {
+                                step = Math.ceil(d3.max(data, function (d) { return d.total; }) / 200) * 200
                             }
                             for (var i = 0; i < d3.max(data, function (d) { return d.total; }) + step; i = i + step) {
                                 ticks.push(i)

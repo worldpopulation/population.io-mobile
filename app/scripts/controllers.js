@@ -290,7 +290,6 @@
 
                 $interval(function () {
                     var diff = ($scope.rankLocalTomorrow - $scope.rankLocal) / 24 / 60 / 60;
-//          console.log($scope.rankLocalTomorrow, $scope.rankLocal)
                     if (diff) {
                         $scope.rankLocal += diff;
                         $rootScope.$broadcast('rankLocalChanged', $scope.rankLocal);

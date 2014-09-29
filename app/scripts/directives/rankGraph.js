@@ -86,6 +86,9 @@
                             if ($scope.country != 'World' && d3.max(data, function (d) { return d.total; }) <= 500000) {
                                 step = Math.ceil(d3.max(data, function (d) { return d.total; }) / 100000) * 100000
                             }
+                            if ($scope.region != 'World' && d3.max(data, function (d) { return d.total; }) <= 2000) {
+                                step = Math.ceil(d3.max(data, function (d) { return d.total; }) / 200) * 200
+                            }
 
 
                             for (var i = 0; i < d3.max(data, function (d) { return d.total; }) + step; i = i + step) {
