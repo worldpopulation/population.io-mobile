@@ -19,11 +19,17 @@
             color #666666
             font-family 'Theinhardt-Light', 'Helvetica', sans-serif
     form
+        clearfix()
+        &.highlight
+            input
+                &.ng-dirty.ng-invalid
+                    box-shadow 0 0 5px rgba(red, 0.9)
         button
             position relative
             top -35px
             left 10px
         input
+            transition all 0.2s
             background highlight-yellow
             border 1px solid highlight-yellow
             width 240px
@@ -58,9 +64,6 @@
                 top 6px
                 background-icon()
                 background-position -30px -830px
-
-
-
 
         .toggle
             label

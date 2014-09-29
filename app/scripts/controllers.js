@@ -306,9 +306,9 @@
         .controller('HomeCtrl', ['$scope', '$document', '$timeout', '$filter', '$location', '$rootScope', 'ProfileService', 'PopulationIOService',
             function ($scope, $document, $timeout, $filter, $location, $rootScope, ProfileService, PopulationIOService) {
                 var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+                var days = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
                 var years = [];
                 for (var i = 1920; i < new Date().getFullYear() + 1; i++) { years.push(i.toString()) }
-
 
                 $scope.$watch('goForm.$invalid', function (invalid) {
                     if (invalid) {
@@ -318,7 +318,7 @@
                 $scope.birthdays = function (newVal, type) {
                     switch (type) {
                         case 'd':
-                            return _.filter(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'], function (v) {
+                            return _.filter(days, function (v) {
                                 return v.indexOf(parseInt(newVal)) > -1
                             });
                             break;
@@ -350,12 +350,18 @@
                 $scope.$watch('profile.gender', function () {
                     ProfileService.active = false;
                 });
-
                 $scope.goGoGadget = function () {
+                    if ($scope.goForm.$invalid) {
+                        console.log($scope.goForm)
+                        $scope.highlightErrors = true;
+//                        $timeout(function () { $scope.highlightErrors = false}, 2000)
+                        return;
+                    }
+
                     var year = moment().year(ProfileService.birthday.year).format('YYYY'),
                         month = moment().month(ProfileService.birthday.month).format('MM'),
                         day = moment().date(ProfileService.birthday.day).format('DD');
-
+                    ProfileService.country = ProfileService.country.capitalize();
                     $location.path([
                         year,
                         month,
