@@ -350,6 +350,9 @@
                 $scope.$watch('profile.gender', function () {
                     ProfileService.active = false;
                 });
+                $scope.typeAheadCallback = function () {
+                    console.log(123)
+                }
                 $scope.goGoGadget = function () {
                     if ($scope.goForm.$invalid) {
                         console.log($scope.goForm)
