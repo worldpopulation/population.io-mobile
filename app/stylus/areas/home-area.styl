@@ -19,11 +19,15 @@
             color #666666
             font-family 'Theinhardt-Light', 'Helvetica', sans-serif
     form
-        clearfix()
+        /*clearfix()*/
         &.highlight
             input
                 &.ng-invalid
                     box-shadow 0 0 5px rgba(red, 0.9)
+        &.highlight-extra
+            input
+                &.ng-invalid
+                    box-shadow 0 0 8px rgba(red, 1)
         button
             position relative
             top -35px
@@ -54,7 +58,7 @@
         ::-webkit-input-placeholder
             color #666
         .typeahead
-            margin 0
+            margin 0 0 0 0
             &.icon-country
                 margin 0 10px 0 0
                 &:after
@@ -69,6 +73,7 @@
                     background-position -30px -830px
 
         .toggle
+            margin-top 0px
             label
                 padding-right 60px
         .icon

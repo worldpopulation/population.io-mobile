@@ -6,7 +6,6 @@ angular.module('populationioApp')
         return {
             require: 'ngModel',
             link: function (scope, elm, attrs, ctrl) {
-                console.log(123)
                 ctrl.$parsers.unshift(function (viewValue) {
                     console.log(viewValue)
                     if (MONTH_REGEXP.test(viewValue)) {
