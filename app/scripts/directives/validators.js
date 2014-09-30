@@ -31,6 +31,8 @@ angular.module('populationioApp')
             require: 'ngModel',
             link: function (scope, elm, attrs, ctrl) {
                 ctrl.$parsers.unshift(function (viewValue) {
+                    console.log('Validating...')
+                    console.log(viewValue)
                     if (_.filter(COUNTRIES_LIST, function (v) {
                         return v.toLowerCase() == viewValue.toLowerCase()
                     }).length) {

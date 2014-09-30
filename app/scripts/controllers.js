@@ -12,7 +12,6 @@
                 }
                 $scope.clockType = 'world';
                 $scope.profile = ProfileService;
-
                 $scope.$watch(function () {
                     return PopulationIOService.getWorldPopulation();
                 }, function (newValue, oldValue) {
@@ -310,6 +309,20 @@
                 var years = [];
                 for (var i = 1920; i < new Date().getFullYear() + 1; i++) { years.push(i.toString()) }
 
+                $scope.setDay = function ($item, $model, $label) {
+                    $scope.goForm.birthdayDay.$setValidity('validateDay', true);
+                }
+                $scope.setMonth = function ($item, $model, $label) {
+                    $scope.goForm.birthdayMonth.$setValidity('validateMonth', true);
+                }
+                $scope.setYear = function ($item, $model, $label) {
+                    $scope.goForm.birthdayYear.$setValidity('validateYear', true);
+                }
+                $scope.setCountry = function ($item, $model, $label) {
+                    $scope.goForm.country.$setValidity('validateCountry', true);
+                }
+
+
                 $scope.$watch('goForm.$invalid', function (invalid) {
                     if (invalid) {
                         ProfileService.active = false;
@@ -350,9 +363,6 @@
                 $scope.$watch('profile.gender', function () {
                     ProfileService.active = false;
                 });
-//                $scope.typeAheadCallback = function () {
-//                    console.log(123)
-//                }
                 $scope.goGoGadget = function () {
                     if ($scope.goForm.$invalid) {
                         console.log($scope.goForm)
