@@ -28,11 +28,9 @@
                         _initChart();
                         $scope.$watch('region', function (newVal) {
                             if (newVal == 'World' && $scope.worldPopulationData) {
-                                console.log(2)
                                 _updateChart($scope.worldPopulationData)
                             }
                             else if (newVal != 'World' && $scope.countryPopulationData) {
-                                console.log(3)
                                 _updateChart($scope.countryPopulationData)
                             }
                         });
@@ -47,11 +45,9 @@
                             $scope.rankGlobal = rank
 
                             if ($scope.region == 'World' && $scope.worldPopulationData) {
-                                console.log(4)
                                 _updateChart($scope.worldPopulationData)
                             }
                             else if ($scope.region != 'World' && $scope.countryPopulationData) {
-                                console.log(5)
                                 _updateChart($scope.countryPopulationData)
                             }
 

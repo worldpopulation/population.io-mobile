@@ -209,9 +209,13 @@
             });
 
             $scope.$watch('countryRel', function (data) {
-              if (data) {
-                _addDescriptionLine('rel', data);
-              }
+                if (data) {
+                    _addDescriptionLine('rel', data);
+                }
+                else {
+                    d3.selectAll('.desc-rel').remove();
+                    d3.select('.country-rel').classed('country-active', false);
+                }
             });
 
 

@@ -871,6 +871,9 @@
                 var date = $filter('date')(new Date(), 'yyyy-MM-dd');
 
                 $rootScope.$on('ready', function () {
+                    $scope.selectedCountryRel = null;
+                    $scope.countryRel = null;
+                    $scope.activeCountryRel = null;
                     _update();
                 });
 
