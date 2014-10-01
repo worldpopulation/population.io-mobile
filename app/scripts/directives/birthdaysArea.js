@@ -156,6 +156,26 @@
 
                             var _highlightCountry = function () {
                                 var datum = d3.select(this).datum();
+                                var itemRadius = parseInt(d3.select(this).select('circle').attr('r'), 0);
+
+
+                                console.log(datum.x, datum.y)
+                                console.log(parentHeight)
+                                var yShift = 0;
+                                var lineShift = 0;
+                                if (datum.x < 300) {
+                                    if (datum.y < parentHeight / 2) {
+                                        yShift = 40 + itemRadius + 10;
+                                        lineShift = -20;
+                                    }
+                                    if (datum.y > parentHeight / 2) {
+                                        yShift = -40 - itemRadius - 70;
+                                        lineShift = 80;
+                                    }
+                                }
+                                else {
+                                    lineShift = 0;
+                                }
                                 tooltipElement.select('.value-label')
                                     .text(function () {
                                         return $filter('number')(datum.value, 0);
@@ -167,16 +187,17 @@
                                 tooltipElement
                                     .transition()
                                     .attr({
-                                        transform: 'translate(' + [0, datum.y] + ')',
+                                        transform: 'translate(' + [0, datum.y + yShift] + ')',
                                         opacity: 1
                                     })
-                                    .select('line')
+                                    .select('.tooltip-line')
                                     .attr({
-                                        x2: datum.x - radius(datum.value) - 4
+                                        x2: datum.x,
+                                        y1: lineShift,
+                                        y2: lineShift
                                     });
                                 var x = d3.select(this)[0][0].getCTM().e;
                                 var y = d3.select(this)[0][0].getCTM().f;
-                                var itemRadius = parseInt(d3.select(this).select('circle').attr('r'), 0);
                                 countryTooltip
                                     .attr({
                                         transform: 'translate(' + [x, y] + ')'
@@ -540,7 +561,7 @@
                                 .attr('class', 'world-chart-label-line')
                                 .attr({
                                     x1: function (d) {
-                                        return labelArc.centroid(d)[0] >=0 ? 0 : 0;
+                                        return labelArc.centroid(d)[0] >= 0 ? 0 : 0;
                                     },
                                     y1: -10,
                                     x2: 0,
