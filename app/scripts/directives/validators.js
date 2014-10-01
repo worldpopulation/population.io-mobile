@@ -7,7 +7,6 @@ angular.module('populationioApp')
             require: 'ngModel',
             link: function (scope, elm, attrs, ctrl) {
                 ctrl.$parsers.unshift(function (viewValue) {
-                    console.log(viewValue)
                     if (MONTH_REGEXP.test(viewValue)) {
                         // it is valid
                         ctrl.$setValidity('validateMonth', true);
@@ -31,22 +30,20 @@ angular.module('populationioApp')
             require: 'ngModel',
             link: function (scope, elm, attrs, ctrl) {
                 ctrl.$parsers.unshift(function (viewValue) {
-                    console.log('Validating...')
-                    console.log(viewValue)
+                    if (!viewValue) {
+                        ctrl.$setValidity('validateCountry', false);
+                        return undefined;
+                    }
                     if (_.filter(COUNTRIES_LIST, function (v) {
                         return v.toLowerCase() == viewValue.toLowerCase()
                     }).length) {
-                        // it is valid
                         ctrl.$setValidity('validateCountry', true);
                         ctrl.$modelValue = viewValue.capitalize();
-                        console.log(ctrl.$modelValue)
                         ctrl.$viewValue = viewValue.capitalize();
                         ctrl.$render();
                         return viewValue;
                     } else {
-                        // it is invalid, return undefined (no model update)
                         ctrl.$setValidity('validateCountry', false);
-//                        ctrl.$render();
                         return viewValue;
                     }
                 });
