@@ -26,7 +26,7 @@
                 $scope.$watch(function () {
                     return ProfileService.active;
                 }, function (active) {
-                    console.log(active)
+                    console.log(active);
                     if (active) {
                         PopulationIOService.loadWpRankToday({
                             dob: ProfileService.birthday.formatted,
@@ -311,16 +311,16 @@
 
                 $scope.setDay = function ($item, $model, $label) {
                     $scope.goForm.birthdayDay.$setValidity('validateDay', true);
-                }
+                };
                 $scope.setMonth = function ($item, $model, $label) {
                     $scope.goForm.birthdayMonth.$setValidity('validateMonth', true);
-                }
+                };
                 $scope.setYear = function ($item, $model, $label) {
                     $scope.goForm.birthdayYear.$setValidity('validateYear', true);
-                }
+                };
                 $scope.setCountry = function ($item, $model, $label) {
                     $scope.goForm.country.$setValidity('validateCountry', true);
-                }
+                };
 
 
                 $scope.$watch('goForm.$invalid', function (invalid) {
@@ -365,10 +365,10 @@
                 });
                 $scope.goGoGadget = function () {
                     if ($scope.goForm.$invalid) {
-                        console.log($scope.goForm)
+                        console.log($scope.goForm);
                         $scope.highlightErrors = true;
                         $scope.highlightExtra = true;
-                        $timeout(function () { $scope.highlightExtra = false}, 2000)
+                        $timeout(function () { $scope.highlightExtra = false}, 2000);
                         return;
                     }
 
@@ -750,7 +750,7 @@
                 });
 
                 var _updateContinentalCountries = function () {
-                    $rootScope.$broadcast('loadingOn')
+                    $rootScope.$broadcast('loadingOn');
                     $scope.continentsData = [];
 
                     var continentalCountries = _getCountriesByContinent($scope.selectedContinental),

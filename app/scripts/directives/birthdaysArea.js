@@ -71,10 +71,6 @@
 
                             force.start();
 
-                            var birthdaysTotal = d3.sum(continentsData, function (d) {
-                                return d.value;
-                            });
-
                             continentsChart.selectAll('g').remove();
 
                             var tooltipElement = continentsChart.append('g')
@@ -155,26 +151,16 @@
 
 
                             var _highlightCountry = function () {
+                                var nameWidth = 0;
                                 var datum = d3.select(this).datum();
                                 var itemRadius = parseInt(d3.select(this).select('circle').attr('r'), 0);
-
-
-                                console.log(datum.x, datum.y)
-                                console.log(parentHeight)
                                 var yShift = 0;
                                 var lineShift = 0;
-                                if (datum.x < 300) {
-                                    if (datum.y < parentHeight / 2) {
-                                        yShift = 40 + itemRadius + 10;
-                                        lineShift = -20;
-                                    }
-                                    if (datum.y > parentHeight / 2) {
-                                        yShift = -40 - itemRadius - 70;
-                                        lineShift = 80;
-                                    }
+                                if (datum.y < parentHeight / 2) {
+                                    yShift = 0
                                 }
-                                else {
-                                    lineShift = 0;
+                                if (datum.y > parentHeight / 2) {
+                                    yShift = -70
                                 }
                                 tooltipElement.select('.value-label')
                                     .text(function () {
@@ -183,18 +169,6 @@
                                 tooltipElement.select('.country-label')
                                     .text(function () {
                                         return 'in ' + datum.countryTitle;
-                                    });
-                                tooltipElement
-                                    .transition()
-                                    .attr({
-                                        transform: 'translate(' + [0, datum.y + yShift] + ')',
-                                        opacity: 1
-                                    })
-                                    .select('.tooltip-line')
-                                    .attr({
-                                        x2: datum.x,
-                                        y1: lineShift,
-                                        y2: lineShift
                                     });
                                 var x = d3.select(this)[0][0].getCTM().e;
                                 var y = d3.select(this)[0][0].getCTM().f;
@@ -207,16 +181,39 @@
                                         opacity: 1
                                     });
                                 countryTooltip
+                                    .select('text')
+                                    .text(datum.countryTitle);
+
+                                countryTooltip
                                     .select('.visual')
                                     .transition()
                                     .attr(
                                     {
-                                        r: itemRadius + 40
+                                        r: function () {
+                                            nameWidth = countryTooltip.select('text').node().getComputedTextLength();
+                                            return itemRadius < nameWidth / 2 ? nameWidth / 2 + 40 : itemRadius + 40;
+                                        }
                                     }
                                 );
-                                countryTooltip
-                                    .select('text')
-                                    .text(datum.countryTitle);
+
+                                tooltipElement
+                                    .transition()
+                                    .attr({
+                                        transform: 'translate(' + [0, datum.y] + ')',
+                                        opacity: 1
+                                    })
+                                    .select('.tooltip-line')
+                                    .attr({
+                                        x2: datum.x - nameWidth / 2 - 20,
+                                        y1: lineShift,
+                                        y2: lineShift
+                                    });
+                                tooltipElement.selectAll('text')
+                                    .transition()
+                                    .attr({
+                                        dy: yShift
+                                    })
+
                                 countryTooltip
                                     .select('.control circle')
                                     .attr(
@@ -247,6 +244,7 @@
                                 });
                             //            .style('fill', function (d, i) { return color(i % 3); });
                             countryTooltip.moveToFront();
+                            tooltipElement.moveToFront();
 
                             countryElement
                                 .append('text')
