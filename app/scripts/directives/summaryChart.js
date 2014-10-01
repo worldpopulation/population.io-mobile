@@ -230,8 +230,6 @@
                                 .attr('class', 'y axis')
                                 .attr('transform', 'translate(120,0)')
                                 .call(yAxis);
-
-
                             pointer
                                 .transition()
                                 .attr({

@@ -283,8 +283,8 @@
             function _addNewBaby(sayHello) {
 
               if (d3.selectAll('.baby').size() > 30) {
-                var babyToRemove = d3.selectAll('.baby')[0][0]
-                d3.select(babyToRemove).remove()
+                var babyToRemove = d3.selectAll('.baby')[0][0];
+                d3.select(babyToRemove).remove();
               }
 
               var babies = d3.selectAll('.baby');

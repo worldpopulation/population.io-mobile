@@ -336,7 +336,6 @@
                                 return a.value > b.value ? -1 : 1;
                             });
 
-                            var worldBirthdaysTotal = d3.sum(worldData, function (d, i) {return d.value});
                             var arc0 = d3.svg.arc()
                                 .outerRadius(120)
                                 .innerRadius(120);
@@ -393,8 +392,8 @@
                                 _arc.select('line')
                                     .transition()
                                     .attr(
-                                    {x2: function (d, i) {
-                                        return labelArc.centroid(d)[0] > -1 ? 145 : -145;
+                                    {x2: function (d) {
+                                        return labelArc.centroid(d)[0] >= 0 ? 145 : -145;
                                     }}
                                 );
                                 _arc.select('.world-chart-label-total')
@@ -504,22 +503,22 @@
                                 .attr('class', 'world-chart-label')
                                 .attr('dy', '.35em')
                                 .text(function (d) { return d.data.countryTitle; })
-                                .style('text-anchor', function (d, i) {
-                                    return labelArc.centroid(d)[0] > -1 ? 'begin' : 'end';
+                                .style('text-anchor', function (d) {
+                                    return labelArc.centroid(d)[0] >= 0 ? 'begin' : 'end';
                                 })
                             ;
                             labelArea.append('text')
                                 .attr('class', 'world-chart-label-total')
                                 .attr('opacity', 0)
                                 .attr('dy', '17px')
-                                .attr('dx', function (d, i) {
-                                    return labelArc.centroid(d)[0] > -1 ? 145 : -145;
+                                .attr('dx', function (d) {
+                                    return labelArc.centroid(d)[0] >= 0 ? 145 : -145;
                                 })
                                 .text(function (d) {
                                     return $filter('number')(d.data.value, 0);
                                 })
-                                .style('text-anchor', function (d, i) {
-                                    return labelArc.centroid(d)[0] > -1 ? 'end' : 'begin';
+                                .style('text-anchor', function (d) {
+                                    return labelArc.centroid(d)[0] >= 0 ? 'end' : 'begin';
                                 })
                                 .style('font-size', 22)
                             ;
@@ -528,12 +527,12 @@
                                 .attr('opacity', 0)
                                 .attr('dy', '27px')
                                 .attr('font-size', '9px')
-                                .attr('dx', function (d, i) {
-                                    return labelArc.centroid(d)[0] > -1 ? 145 : -145;
+                                .attr('dx', function (d) {
+                                    return labelArc.centroid(d)[0] >= 0 ? 145 : -145;
                                 })
                                 .text('shared birthdays')
-                                .style('text-anchor', function (d, i) {
-                                    return labelArc.centroid(d)[0] > -1 ? 'end' : 'begin';
+                                .style('text-anchor', function (d) {
+                                    return labelArc.centroid(d)[0] >= 0 ? 'end' : 'begin';
                                 })
                             ;
 
@@ -541,7 +540,7 @@
                                 .attr('class', 'world-chart-label-line')
                                 .attr({
                                     x1: function (d) {
-                                        return labelArc.centroid(d)[0] > -1 ? 0 : 0;
+                                        return labelArc.centroid(d)[0] >=0 ? 0 : 0;
                                     },
                                     y1: -10,
                                     x2: 0,
