@@ -127,7 +127,7 @@
 
                                 })
                                 .style({
-                                    fill: 'rgba(0,0,0,0.9)'
+                                    fill: 'rgba(101,129,241,0.95)'
                                 });
                             var control = countryTooltip
                                 .append('g')
