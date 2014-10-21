@@ -9,6 +9,7 @@ header
         ul.link-list
             li
                 a(ng-click="showAbout()") About
+                a(ng-click="showMethodology()") Methodology
                 a(ng-click="showDevelopers()") Developers
         .profile.animate( ng-show="currentPage > 0", ng-click="showHomepage()", ng-cloak ) {{profile.birthday.formatted | date:'dd MMM yyyy' }}, {{profile.country}}
         .world-population.animate(ng-show="currentPage > 0", ng-cloak)

@@ -167,6 +167,11 @@
                         templateUrl: 'about.html'
                     });
                 };
+                $scope.showMethodology = function () {
+                    $modal.open({
+                        templateUrl: 'methodology.html'
+                    });
+                };
 
                 $scope.showDevelopers = function () {
                     $modal.open({
