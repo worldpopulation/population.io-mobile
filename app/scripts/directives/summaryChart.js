@@ -168,6 +168,9 @@
                         function _updateChart(data) {
                             var ticks = [], step;
                             step = $scope.region != 'World' ? 500000 : 50000000;
+                            if ($scope.country != 'World' && d3.max(data, function (d) { return d.total; }) <= 500000000) {
+                                step = Math.ceil(d3.max(data, function (d) { return d.total; }) / 1000000) * 1000000
+                            }
                             if ($scope.region != 'World' && d3.max(data, function (d) { return d.total; }) <= 500000) {
                                 step = Math.ceil(d3.max(data, function (d) { return d.total; }) / 100000) * 100000
                             }
@@ -231,6 +234,7 @@
                                 .attr({
                                     transform: 'translate(' + [xRange(age - 1), yRange(data[age].total) - 3] + ')'
                                 });
+                            console.log('@@@')
                             pointer.select('line')
                                 .transition()
                                 .attr({
