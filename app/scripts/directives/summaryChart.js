@@ -234,7 +234,6 @@
                                 .attr({
                                     transform: 'translate(' + [xRange(age - 1), yRange(data[age].total) - 3] + ')'
                                 });
-                            console.log('@@@')
                             pointer.select('line')
                                 .transition()
                                 .attr({
