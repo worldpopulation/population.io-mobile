@@ -21,7 +21,7 @@ Botswana,BW,Africa,23.798987,-22.185772
 Brazil,BR,South America,-53.093972,-10.782781
 Belize,BZ,North America,-88.704835,17.200815
 Solomon Islands,SB,Oceania,159.616703,-8.901954
-Brunei,BN,Asia,114.727354,4.516338
+Brunei Darussalam,BN,Asia,114.727354,4.516338
 Bulgaria,BG,Europe,25.217739,42.768540
 Myanmar,MM,Asia,96.489186,21.169415
 Burundi,BI,Africa,29.875083,-3.357425
@@ -77,12 +77,12 @@ Guinea,GN,Africa,-10.942917,10.434669
 Guyana,GY,South America,-58.979905,4.795142
 Haiti,HT,North America,-72.690703,18.938140
 Honduras,HN,North America,-86.618416,14.824166
-Hong Kong,HK,Asia,,
+Hong Kong SAR-China,HK,Asia,,
 Hungary,HU,Europe,19.396759,47.163244
 Iceland,IS,Europe,-18.595807,64.998012
 India,IN,Asia,79.612214,22.887366
 Indonesia,ID,Asia,117.272105,-2.220831
-Iran,IR,Asia,54.276286,32.572027
+Islamic Republic of Iran,IR,Asia,54.276286,32.572027
 Iraq,IQ,Asia,43.744986,33.039797
 Ireland,IE,Europe,-8.144426,53.177874
 Israel,IL,Africa,34.996100,31.443548
@@ -93,11 +93,11 @@ Japan,JP,Asia,137.992535,37.555901
 Kazakhstan,KZ,Asia,63.384062,45.978305
 Jordan,JO,Asia,36.770946,31.245598
 Kenya,KE,Africa,37.796226,0.598081
-North Korea,KP,Asia,127.187670,40.170376
-South Korea,KR,Asia,127.832194,36.350473
+Dem Peoples Rep of Korea,KP,Asia,127.187670,40.170376
+Rep of Korea,KR,Asia,127.832194,36.350473
 Kuwait,KW,Asia,47.590580,29.338788
-Kyrgyzstan,KG,Asia,74.541669,41.461919
-Laos,LA,Asia,103.737873,18.502298
+Kyrgyz Republic,KG,Asia,74.541669,41.461919
+Lao PDR,LA,Asia,103.737873,18.502298
 Lebanon,LB,Asia,35.880272,33.920398
 Lesotho,LS,Africa,28.228623,-29.579730
 Latvia,LV,Europe,24.909128,56.851761
@@ -105,7 +105,7 @@ Liberia,LR,Africa,-9.319781,6.452318
 Libya,LY,Africa,18.009583,27.030206
 Lithuania,LT,Europe,23.888369,55.327008
 Luxembourg,LU,Europe,6.071764,49.766824
-Macao,Mo,Asia,,
+Macao SAR China,Mo,Asia,,
 Madagascar,MG,Africa,46.706458,-19.373254
 Malawi,MW,Africa,34.289908,-13.217226
 Malaysia,MY,Asia,109.697702,3.792397
@@ -149,7 +149,7 @@ Puerto Rico,PR,North America,,
 Qatar,QA,Asia,51.187565,25.312777
 Reunion,RE,Africa,,
 Romania,RO,Europe,24.973099,45.853413
-Russia,RU,Asia,96.688981,61.983471
+Russian Federation,RU,Asia,96.688981,61.983471
 Rwanda,RW,Africa,29.919061,-1.992750
 Saint Lucia,LC,North America,-60.969577,13.902485
 Saint Vincent and the Grenadines,VC,North America,-61.202642,13.216083
@@ -174,13 +174,13 @@ Suriname,SR,South America,-55.912136,4.128481
 Swaziland,SZ,Africa,31.480024,-26.561914
 Sweden,SE,Europe,16.752894,62.789174
 Switzerland,CH,Europe,8.215383,46.799023
-Syria,SY,Asia,38.504649,35.022993
+Syrian Arab Rep,SY,Asia,38.504649,35.022993
 Tajikistan,TJ,Asia,71.015822,38.529890
 Thailand,TH,Asia,101.003318,15.114082
 Togo,TG,Africa,0.962284,8.526721
 Tonga,TO,Oceania,-174.840713,-19.968806
 Trinidad and Tobago,TT,North America,-61.257718,10.468660
-UAE,AE,Asia,,
+United Arab Emirates,AE,Asia,,
 Tunisia,TN,Africa,9.551856,34.115909
 Turkey,TR,Asia,35.167313,39.060958
 Turkmenistan,TM,Asia,59.376143,39.115934
@@ -191,14 +191,14 @@ Egypt,EG,Africa,29.861284,26.492376
 UK,UK,Europe,,
 Channel Islands,UK,Europe,,
 Tanzania,TZ,Africa,,
-USA,US,North America,,
+United States,US,North America,,
 US Virgin Islands,VI,North America,,
 Burkina Faso,BF,Africa,-1.755591,12.269560
 Uruguay,UY,South America,-56.017560,-32.800173
 Uzbekistan,UZ,Asia,63.139909,41.756036
 Venezuela,VE,South America,-66.176722,7.125003
 Samoa,WS,Oceania,-172.160278,-13.754676
-Yemen,YE,Asia,47.590931,15.905155
+Rep of Yemen,YE,Asia,47.590931,15.905155
 Zambia,ZM,Africa,27.774212,-13.460110
 World,,,,
 More developed regions,,,,

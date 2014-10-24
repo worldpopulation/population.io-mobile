@@ -146,7 +146,7 @@
         },
         {
           'abbreviation': 'BN',
-          'language': 'Brunei Darussalam',
+          'language': 'Brunei Darussalam Darussalam',
           'greeting': 'Selamat'
         },
         {
@@ -496,7 +496,7 @@
         },
         {
           'abbreviation': 'IR',
-          'language': 'Iran  Islamic Republic of',
+          'language': 'Islamic Republic of Iran  Islamic Republic of',
           'greeting': 'Salâm'
         },
         {
@@ -531,7 +531,7 @@
         },
         {
           'abbreviation': 'KG',
-          'language': 'Kyrgyzstan',
+          'language': 'Kyrgyz Republic',
           'greeting': 'Kandisiz'
         },
         {
@@ -1116,7 +1116,7 @@
         },
         {
           'abbreviation': 'YE',
-          'language': 'Yemen',
+          'language': 'Rep of Yemen',
           'greeting': 'Marhaba'
         },
         {

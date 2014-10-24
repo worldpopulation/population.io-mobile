@@ -787,8 +787,8 @@
                     $scope.worldData = [];
 
                     var countriesAroundTheWorld = [
-                            'China', 'India', 'USA', 'Indonesia', 'Brazil',
-                            'Pakistan', 'Russia', 'Japan', 'Nigeria',
+                            'China', 'India', 'United States', 'Indonesia', 'Brazil',
+                            'Pakistan', 'Russian Federation', 'Japan', 'Nigeria',
                             'Bangladesh', 'Mexico'
                         ],
                         responseCounter = 0;
