@@ -42,7 +42,7 @@
                             }, 2000);
                         });
                         $scope.$on('rankGlobalChanged', function (e, rank) {
-                            $scope.rankGlobal = rank
+                            $scope.rankGlobal = rank;
 
                             if ($scope.region == 'World' && $scope.worldPopulationData) {
                                 _updateChart($scope.worldPopulationData)

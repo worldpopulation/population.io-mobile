@@ -1,5 +1,13 @@
 .death-area
-    height 900px
+    height 1000px
+    h1
+        span
+            color #333
+    h3
+        font-family sans-serif
+        margin 0 0 20px 0
+        font-weight 400
+        color #888
     death-chart
         display block
         .domain
@@ -19,3 +27,33 @@
         .y-label
             fill #333
             font-size 12px
+    .death-stats
+        margin 20px 0
+        clearfix()
+        .column
+            width 33.33%
+            float left
+            border-right 1px solid #eee
+            box-sizing border-box
+            height 160px
+
+            .content
+                margin 0 60px
+                .title
+                    text-align center
+                    line-height 2
+                    font-size 20pt
+                    font-family 'PlantinMTStd-Light', sans-serif
+                    &.world
+                        color #98ec79
+                    &.country
+                        color #6581f1
+                .copy
+                    font-size 14pt
+                    text-align center
+                    color #888
+                    line-height 1.5
+                    span
+                        color #333
+            &:last-of-type
+                border none
