@@ -230,7 +230,8 @@
                             .x(function (d) { return xRange(d.age); })
                             .y0(parentHeight - 50)
                             .y1(function (d) { return yRange(d.mortality_percent); })
-                            .interpolate('step-after');
+                            // .interpolate('step-after')
+                            ;
 
                           //var younger = data.slice(0, age);
 
