@@ -150,7 +150,7 @@
             textBlock2.append('text').attr('y', 40).text('on your day of death');
             textBlock2.append('text').attr('y', 65).text(deathDate)
               .style({
-                'font-size': 16,
+                'font-size': 20,
                 fill: '#444'
               });
             var descBoxHeight = desc[0][0].getBBox().height;
