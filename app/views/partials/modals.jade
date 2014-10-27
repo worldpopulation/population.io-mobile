@@ -16,13 +16,16 @@ script(type="text/ng-template", id="methodology.html")
   .modal-header
     h3.modal-title Methodology
   .modal-body
-    p The World Population Project (WPP) aims to make demography - the statistical study of human populations -  accessible to a wider audience. We believe demography and demographic data are key to understanding social and economic phenomena, and that a better appreciation of demographic trends helps individuals see their place in the world.
-    h4 Credits
-    p The World Population Project has been developed by Wolfgang Fengler, together with K.C. Samir, <a href="http://benedikt-gross.de/">Benedikt Groß</a>, Emi Suzuki, Tariq Khokar and <a href="http://www.47nord.de/">47 Nord</a>.
-    p The project is supported by the <a href="http://www.worldbank.org/">The World Bank</a>, the <a href="http://www.iiasa.ac.at/">International Institute for Applied Systems Analysis</a> (IIASA), and generous volunteer contributions by <a href="http://jk-lee.com//">Joey Lee</a> and others.
-    h4 Explanation on calculations / Disclaimer
-    p The projections in the application have been developed by the team of population.io. They reflect the most up to date estimates for each country of the world as well as for the world as a whole. There remain data quality issues, especially for developing countries. It is also important to note that, especially for the projection of life expectancy, the system is calculating the mid-points of probability functions. Life expectancy, however, is determined by many more factors than age, gender and country of birth/residence and will also be shaped by many future developments, some of which will be unforeseen.
-    p Population.io does not take any responsibility for the accuracy of the data and will invest in upgrading the system as more information and results of additional modelling becomes available.
+    p Population.io uses official demographic data (see data sources) most of which is available in annual or 5-year cycles. Population.io then projects the distribution across every day globally and for every country and uses the UN’s life tables for projection individual life expectancy. Specifically, the following modelling techniques were used:
+    ul
+      li Annual population by age in single year and sex in 1st July of each year was interpolated to single day by fitting spline function. For example, e.g. interpolated between 1 year old in 1st July 2010 and 1 year old in 1st July 2011 to get 1 year olds in 2nd July 2010 to 30th June 2011.
+      li The daily population by age in single year and sex were interpolated for ages in days by fitting spline function. For e.g. interpolated between 1 year old and 2 years old, assigning the 1 year old to 365+183 days of exact age and 2 years old to 365*2 + 183 days and so on. 
+      li Remaining life expectancy at specific age (in days) was obtained by interpolating (spline) the 5 yearly/duration age-specific period life expectancies.
+    h4 Source data
+    ul
+      li <a href="http://esa.un.org/wpp/">World Population Prospects (2012 Revision)</a>, United Nations Population Division (released in 2013)
+      li <a href="https://github.com/worldpopulation/population.io-api/blob/master/data/WPP2012_INT_F3_Population_By_Sex_Annual_Single_100_Medium.zip">WPP2012_INT_F3_Population_By_Sex_Annual_Single_100_Medium.csv</a>: Annual population distribution by single age and sex: for the period 1950-2010 (estimates) and 2011-2100 (Medium projection) for 196 countries with population size greater than 100,000 (in 2010) as well as for several UN World regions.
+      li Age specific period life expectancy by sex - 5 yearly interval for age and duration - for the period 1950-2010 (estimates) and 2010-2100 (projections). Data were extracted from a file obtained from the UN on request.
   .modal-footer
     button(ng-click="$close()") Got it!
 
