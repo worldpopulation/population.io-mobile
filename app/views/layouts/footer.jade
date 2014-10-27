@@ -1,36 +1,36 @@
 footer
-  .container
-    .block
-      h2.icon.icon-mail Keep me posted
-      p Send me every year on my<br/>birthday an update!
-      form.form-inline(name="emailForm", novalidate)
-        input.form-control.input-dark(
-          type="email",
-          ng-model="email",
-          placeholder="your@email.com",
-          required
-        )
-        button.btn(
-          type="button",
-          ng-click="registerMail()",
-          ng-disabled="emailForm.$invalid || sending"
-        )
-    .block
-      h2.icon.icon-calendar Add your Date of Death<br/>to your calendar
-      ul
-        li
-          a(ng-click="downloadICal()", data-ref="1") iCalendar
+    .container
+        .block
+            h2.icon.icon-mail Keep me posted
+            p Send me every year on my<br/>birthday an update!
+            form.form-inline(name="emailForm", novalidate)
+                input.form-control.input-dark(
+                type="email",
+                ng-model="email",
+                placeholder="your@email.com",
+                required
+                )
+                button.btn(
+                type="button",
+                ng-click="registerMail()",
+                ng-disabled="emailForm.$invalid || sending"
+                )
+        .block
+            h2.icon.icon-calendar Add your Date of Death<br/>to your calendar
+            ul
+                li
+                    a(ng-click="downloadICal()", data-ref="1") iCalendar
 
-    .block.small
-      h2 Share
-      a(target="_blank", share="facebook", share-title="population.io") Facebook
-        span.fa.fa-facebook-square
-      a(target="_blank", share="twitter", share-title="population.io") Twitter
-        span.fa.fa-twitter-square
-      a(target="_blank", share="linkedin", share-title="population.io") LinkedIn
-        span.fa.fa-linkedin-square
+        .block.small
+            h2 Share
+            a(target="_blank", share="facebook", share-title="population.io") Facebook
+                span.fa.fa-facebook-square
+            a(target="_blank", share="twitter", share-title="population.io") Twitter
+                span.fa.fa-twitter-square
+            a(target="_blank", share="linkedin", share-title="population.io") LinkedIn
+                span.fa.fa-linkedin-square
 
-    .block.small
-      h2 Want to know more?
-      a(href="mailto:worldpopulationproject@gmail.com") Contact
-      a(href="http://api.population.io", target="_blank") API
+        .block.small
+            h2 Want to know more?
+            a(href="mailto:worldpopulationproject@gmail.com") Contact
+            a(href="http://api.population.io", target="_blank") API

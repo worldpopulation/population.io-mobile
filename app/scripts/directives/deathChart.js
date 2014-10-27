@@ -209,13 +209,13 @@
 
                           var worldMaxMortality = _.max(data.world, function (item) {return item.mortality_percent});
                           var countryMaxMortality = _.max(data.country, function (item) {return item.mortality_percent});
-
+                          var yTickStep = d3.max([worldMax, countryMax]) / 3; // To have 4 ticks total for y axis
                           xAxis.tickFormat(function (d) {return d + 'y'});
                           yAxis.tickFormat(function (d) {return yAxisFormat(d / 100)})
-                            .tickValues([0, d3.max([worldMax, countryMax])])
+                            .tickValues([0, yTickStep, yTickStep * 2, d3.max([worldMax, countryMax])])
 
                           xRange.range([120, parentWidth - 160]).domain([5, d3.max(data.country, function (d) { return d.age; })]);
-                          yRange.range([parentHeight -50, 0]).domain([0, d3.max([worldMax, countryMax])]);
+                          yRange.range([parentHeight - 50, 0]).domain([0, d3.max([worldMax, countryMax])]);
 
 
                           line
@@ -297,18 +297,18 @@
                           pointerCountry.select('line')
                             .transition()
                             .attr({
-                                y2: -yRange(countryMaxMortality.mortality_percent) - 90
+                                y2: -yRange(countryMaxMortality.mortality_percent) - 40
                             });
                           pointerCountry.select('.region')
                             .transition()
                             .attr({
-                                dy: -yRange(countryMaxMortality.mortality_percent) - 80
+                                dy: -yRange(countryMaxMortality.mortality_percent) - 30
                             });
 
                           pointerCountry.select('.age')
                             .transition()
                             .attr({
-                                dy: -yRange(countryMaxMortality.mortality_percent) - 65
+                                dy: -yRange(countryMaxMortality.mortality_percent) - 15
                             })
                             .text(function () {
                                 return countryMaxMortality.age + ' years'
