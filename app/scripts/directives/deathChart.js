@@ -126,11 +126,11 @@
                           pointerWorld.append('text')
                             .style({
                                 fill: '#333',
-                                'text-anchor': 'end'
+                                'text-anchor': 'start'
                             })
                             .attr({
                                 class: 'region',
-                                dx: -10
+                                dx: 10
                             })
                             .text('World')
                           ;
@@ -138,11 +138,11 @@
                             .style({
                                 'font-size': '9pt',
                                 fill: '#666',
-                                'text-anchor': 'end'
+                                'text-anchor': 'start'
                             })
                             .attr({
                                 class: 'age',
-                                dx: -10,
+                                dx: 10,
                                 dy: 10
                             })
                             .text('World')
@@ -230,8 +230,8 @@
                             .x(function (d) { return xRange(d.age); })
                             .y0(parentHeight - 50)
                             .y1(function (d) { return yRange(d.mortality_percent); })
-                            // .interpolate('step-after')
-                            ;
+                              // .interpolate('step-after')
+                          ;
 
                           //var younger = data.slice(0, age);
 
