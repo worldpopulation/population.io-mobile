@@ -138,7 +138,7 @@
                           pointer.append('line')
                             .attr({
                                 x1: 0,
-                                y1: -20,
+                                y1: 10,
                                 x2: 0,
                                 y2: 0
                             })
@@ -146,14 +146,13 @@
                                 stroke: '#333',
                                 'stroke-width': '1px'
 
-                            });
+                            })
+                          ;
                           pointer.append('text')
                             .style({
                                 fill: '#333',
                                 'text-anchor': 'middle'
-
                             })
-                            .text('99%')
                           ;
                           pointer.append('circle').attr({
                               r: 6
@@ -275,18 +274,19 @@
                           pointer
                             .transition()
                             .attr({
-                                transform: 'translate(' + [xRange(age - 1), yRange(data[age].total) - 3] + ')'
+                                transform: 'translate(' + [xRange(age - 1), -40] + ')'
                             });
                           pointer.select('line')
                             .transition()
                             .attr({
-                                y2: -yRange(data[age].total) + 10
+                                y2: yRange(data[age].total) + 40
                             });
-                          pointer.select('text')
+                          pointer.select('circle')
                             .transition()
                             .attr({
-                                dy: -yRange(data[age].total)
-                            })
+                                cy: yRange(data[age].total) + 40
+                            });
+                          pointer.select('text')
                             .text(function () {
                                 if ($scope.region != 'World') {
 

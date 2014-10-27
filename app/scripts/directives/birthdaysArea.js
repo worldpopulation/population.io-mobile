@@ -411,9 +411,11 @@
                               _arc.select('line')
                                 .transition()
                                 .attr(
-                                {x2: function (d) {
-                                    return labelArc.centroid(d)[0] >= 0 ? 145 : -145;
-                                }}
+                                {
+                                    x2: function (d) {
+                                        return labelArc.centroid(d)[0] >= 0 ? 145 : -145;
+                                    }
+                                }
                               );
                               _arc.select('.world-chart-label-total')
                                 .transition()
@@ -521,7 +523,13 @@
                           labelArea.append('text')
                             .attr('class', 'world-chart-label')
                             .attr('dy', '.35em')
-                            .text(function (d) { return d.data.countryTitle; })
+                            .text(function (d) {
+                                var countryFittableTitle = d.data.countryTitle;
+                                if (d.data.countryTitle === 'Russian Federation') {
+                                    countryFittableTitle = 'Russia'
+                                }
+                                return countryFittableTitle;
+                            })
                             .style('text-anchor', function (d) {
                                 return labelArc.centroid(d)[0] >= 0 ? 'begin' : 'end';
                             })
