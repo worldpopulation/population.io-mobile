@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('populationioApp')
-      .directive('deathChart', ['$filter', 'PopulationIOService', 'HelloWords', '$timeout',
-          function ($filter, PopulationIOService, HelloWords, $timeout) {
+      .directive('deathChart', ['$filter', 'PopulationIOService', 'HelloWords', '$timeout', 'ProfileService',
+          function ($filter, PopulationIOService, HelloWords, $timeout, ProfileService) {
               return {
                   restrict: 'E',
                   link: function ($scope, element) {
@@ -177,7 +177,6 @@
                                 class: 'region',
                                 dx: 10
                             })
-                            .text('Country')
                           ;
                           pointerCountry.append('text')
                             .style({
@@ -300,7 +299,9 @@
                             .attr({
                                 y2: -yRange(countryMaxMortality.mortality_percent) - 40
                             });
+
                           pointerCountry.select('.region')
+                            .text(ProfileService.country)
                             .transition()
                             .attr({
                                 dy: -yRange(countryMaxMortality.mortality_percent) - 30
