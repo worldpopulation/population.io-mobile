@@ -28,12 +28,10 @@
                       _initChart();
 
                       $scope.$on('mortalityDistributionDataChanged', function (e, mortality) {
-                          console.log('CHART BUILD')
-                          console.log(mortality)
                           $timeout(function () {
                               age = $scope.profile.getAge();
                               _updateChart(mortality)
-                          }, 2000);
+                          }, 0);
                       });
 
                       function _initChart() {
@@ -50,7 +48,7 @@
                           xAxis = d3.svg.axis()
                             .scale(xRange)
                             .tickSize(5)
-                            .tickValues([0, 25, 50, 75, 100, 125, 150]);
+                            .tickValues([5, 25, 50, 75, 100, 125, 150]);
                           yAxis = d3.svg.axis()
                             .scale(yRange)
                             .tickSize(5)
@@ -206,7 +204,6 @@
                       }
 
                       function _updateChart(data) {
-                          console.log(data)
                           var worldMax = d3.max(data.world, function (d) { return d.mortality_percent; });
                           var countryMax = d3.max(data.country, function (d) { return d.mortality_percent; });
 
@@ -215,7 +212,7 @@
 
                           xAxis.tickFormat(function (d) {return d + 'y'});
                           yAxis.tickFormat(function (d) {return yAxisFormat(d / 100)});
-                          xRange.range([120, parentWidth - 160]).domain([0, d3.max(data.country, function (d) { return d.age; })]);
+                          xRange.range([120, parentWidth - 160]).domain([5, d3.max(data.country, function (d) { return d.age; })]);
                           yRange.range([parentHeight - 100, 0]).domain([0, d3.max([worldMax, countryMax])]);
 
 

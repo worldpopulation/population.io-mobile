@@ -2,22 +2,22 @@
     .death-area
         header
             h1
-                | Don’t be scared! But you are expected to die on <span>{{dod}}</span>
+                | Don’t be scared! But you are expected to die on <span>{{dodWorld}}</span>
                 | if you were a world citizen. Whereas in your home country <span>{{profile.country}}</span>
-                | it would be on <span>?nd ???, ????</span>.
+                | it would be on <span>{{dodCountry}}</span>.
         h3(style="margin: 40px 0 20px 0;") Relative Number of Deaths by Age
         death-chart
         h3 Expected Date of Death
         .death-stats
             .column
                 .content
-                    .title.world ??th ???, ????
-                    .copy After <span>? years</span> your life as a citizen of the <span>World</span> ends.
+                    .title.world {{dodWorld}}
+                    .copy After <span>{{remainingLifeWorldInYears}} years</span> your life as a citizen of the <span>World</span> ends.
             .column
                 .content
-                    .title + 17,654 days
-                    .copy Your life will be approximately <span>???</span> than the world's average for about <span>?? years</span>.
+                    .title {{differenceInDays}}
+                    .copy Your life will be approximately <span>{{soMuchToDo}}</span> than the world's average for about <span>{{differenceInYears}}</span>.
             .column
                 .content
-                    .title.country {{dod}}
-                    .copy After <span>?? years</span> your life as a citizen of the <span>{{profile.country}}</span> ends.
+                    .title.country {{dodCountry}}
+                    .copy After <span>{{remainingLifeCountryInYears}} years</span> your life as a citizen of the <span>{{profile.country}}</span> ends.

@@ -30,8 +30,8 @@
 
                   var _addDescriptionLine = function (type, data) {
                       var deathYear = Math.ceil(new Date().getFullYear() + data.yearsLeft);
+                      console.log(data.country.GMI_CNTRY)
                       var node = d3.select('.country[data-id="' + data.country.GMI_CNTRY + '"]')[0][0];
-
                       if (!node) {
                           alert([
                               'Whoops, "' + data.country.POPIO_NAME + '"', ' is not part of this map!'

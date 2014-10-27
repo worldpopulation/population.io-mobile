@@ -310,8 +310,8 @@
           function ($scope, $timeout, $http, $interval, $modal, $state, $location, $document, $rootScope, $filter, ProfileService, PopulationIOService, BrowserService) {
 
               $scope.$watch(function () {return ProfileService.active}, function (newVal, oldVal) {
-                  $scope.dod = $filter('date')(ProfileService.dod, 'd MMM, yyyy');
                   if (newVal && newVal !== oldVal) {
+
                       PopulationIOService.loadMortalityDistribution({
                           country: ProfileService.country,
                           gender: ProfileService.gender
@@ -322,6 +322,41 @@
                               $scope.$broadcast('mortalityDistributionDataChanged', data)
                           }
                       });
+
+                      PopulationIOService.loadLifeExpectancyRemaining({
+                          sex: ProfileService.gender,
+                          country: 'World',
+                          date: $filter('date')(new Date(), 'yyyy-MM-dd'),
+                          age: ProfileService.getAgeString()
+                      }, function (remainingLife) {
+                          var today = new Date();
+                          $scope.dodWorld = $filter('date')(today.setDate(today.getDate() + (remainingLife * 365)), 'd MMM, yyyy');
+
+                          $scope.remainingLifeWorldInYears = parseInt(remainingLife, 10);
+                      });
+                      PopulationIOService.loadLifeExpectancyRemaining({
+                          sex: ProfileService.gender,
+                          country: ProfileService.country,
+                          date: $filter('date')(new Date(), 'yyyy-MM-dd'),
+                          age: ProfileService.getAgeString()
+                      }, function (remainingLife) {
+                          var today = new Date();
+                          $scope.dodCountry = $filter('date')(today.setDate(today.getDate() + (remainingLife * 365)), 'd MMM, yyyy');
+                          $scope.remainingLifeCountryInYears = parseInt(remainingLife, 10);
+                      });
+                      $scope.$watchGroup(['remainingLifeCountryInYears', 'remainingLifeWorldInYears'],
+                        function (newVals, oldVals) {
+                            if ((newVals[0] && newVals[1]) && (newVals[0] !== oldVals[0] && newVals[1] !== oldVals[0])) {
+                                $scope.differenceInDays = function () {
+                                    var val = (newVals[0] - newVals[1]) * 365;
+                                    val = val < 0 ? '- ' + (-1 * val) : '+ ' + val;
+                                    return val + ' days';
+                                }();
+                                $scope.differenceInYears = newVals[0] - newVals[1] + ' years';
+                                $scope.soMuchToDo = $scope.differenceInDays < 0 ? 'shorter' : 'longer';
+
+                            }
+                        })
                   }
               })
           }])
