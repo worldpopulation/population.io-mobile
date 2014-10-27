@@ -164,7 +164,7 @@
                               }
                               tooltipElement.select('.value-label')
                                 .text(function () {
-                                    return $filter('number')(datum.value, 0);
+                                    return 'ca. ' + $filter('number')(datum.value, 0);
                                 });
                               tooltipElement.select('.country-label')
                                 .text(function () {
