@@ -561,7 +561,7 @@
                       $scope.milestonesData.push({
                           date: $filter('date')(date, 'yyyy-MM-dd'),
                           year: $filter('date')(date, 'yyyy'),
-                          title: 'Your anticipated life expectancy in ' + (country === 'World' ? 'the World' : country)
+                          title: 'Your projected life expectancy in ' + (country === 'World' ? 'the World' : country)
                       });
 
                       if (onSuccess) {
