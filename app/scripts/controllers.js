@@ -17,14 +17,10 @@
                   $scope.worldPopulation = data.total_population[1].population;
                   $scope.peoplBornPerSecond = Math.ceil((data.total_population[1].population - data.total_population[0].population) / (24 * 60 * 60));
               });
-              /*
-               $scope.$watch(function () {
-               return PopulationIOService.getWorldPopulation();
-               }, function (newValue, oldValue) {
-               $scope.rankGlobal += (newValue - oldValue);
-               $rootScope.$broadcast('rankGlobalChanged', $scope.rankGlobal);
-               });
-               */
+              $scope.$watch('worldPopulation', function (newValue, oldValue) {
+                  $scope.rankGlobal += (newValue - oldValue);
+                  $rootScope.$broadcast('rankGlobalChanged', $scope.rankGlobal);
+              });
               $interval(function () {
                   $scope.worldPopulation += $scope.peoplBornPerSecond;
               }, 1000);
