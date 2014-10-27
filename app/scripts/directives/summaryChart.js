@@ -15,8 +15,6 @@
                         yAxisFormat = d3.format('s'),
                         xRange = d3.scale.linear(),
                         yRange = d3.scale.linear().nice(),
-                        xMouseRange = d3.scale.linear(),
-                        yMouseRange = d3.scale.linear().nice(),
                         line = d3.svg.line(),
                         area = d3.svg.area(),
                         age,
@@ -182,8 +180,8 @@
                             .on('mousemove', function (d) {
                                 var mouse = d3.mouse(this);
                                 tooltip.html(function (d, i) {
-                                      return "<p><span class='tooltip-label'>Age:</span><span class='tooltip-value'>" + parseInt(xMouseRange(mouse[0]), 10) + "</span></p>"
-                                        + "<p><span class='tooltip-label'>Population:</span><span class='tooltip-value'>" + parseInt(yMouseRange(mouse[1]), 10) + "</span></p>";
+                                      return "<p><span class='tooltip-label'>Age:</span><span class='tooltip-value'>" + parseInt(xRange.invert(mouse[0]), 10) + "</span></p>"
+                                        + "<p><span class='tooltip-label'>Population:</span><span class='tooltip-value'>" + parseInt(yRange.invert(mouse[1]), 10) + "</span></p>";
                                   }
                                 );
 
@@ -230,10 +228,6 @@
 
                           xRange.range([120, parentWidth - 160]).domain([0, d3.max(data, function (d) { return d.age; })]);
                           yRange.range([parentHeight - 100, 0]).domain([0, ticks[ticks.length - 1]]);
-
-                          xMouseRange.range([0, d3.max(data, function (d) { return d.age; })]).domain([120, parentWidth - 160]);
-                          yMouseRange.range([0, ticks[ticks.length - 1]]).domain([parentHeight - 100, 0]);
-
 
                           line
                             .x(function (d) {
