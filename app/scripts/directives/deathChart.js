@@ -65,7 +65,7 @@
                             .attr(
                             {
                                 class: 'x-label',
-                                transform: 'translate(' + [parentWidth - 100, parentHeight - 100 + 16] + ')'
+                                transform: 'translate(' + [parentWidth - 100, parentHeight - 50 + 16] + ')'
                             })
                             .style(
                             {
@@ -75,9 +75,9 @@
                             .attr({
                                 class: 'label-line',
                                 x1: parentWidth - 200,
-                                y1: parentHeight - 100,
+                                y1: parentHeight - 50,
                                 x2: parentWidth - 70,
-                                y2: parentHeight - 100
+                                y2: parentHeight - 50
                             })
                             .style({
                                 stroke: '#d9d9d9',
@@ -211,9 +211,11 @@
                           var countryMaxMortality = _.max(data.country, function (item) {return item.mortality_percent});
 
                           xAxis.tickFormat(function (d) {return d + 'y'});
-                          yAxis.tickFormat(function (d) {return yAxisFormat(d / 100)});
+                          yAxis.tickFormat(function (d) {return yAxisFormat(d / 100)})
+                            .tickValues([0, d3.max([worldMax, countryMax])])
+
                           xRange.range([120, parentWidth - 160]).domain([5, d3.max(data.country, function (d) { return d.age; })]);
-                          yRange.range([parentHeight - 100, 0]).domain([0, d3.max([worldMax, countryMax])]);
+                          yRange.range([parentHeight -50, 0]).domain([0, d3.max([worldMax, countryMax])]);
 
 
                           line
@@ -226,8 +228,9 @@
                             .interpolate('linear');
                           area
                             .x(function (d) { return xRange(d.age); })
-                            .y0(parentHeight - 100)
-                            .y1(function (d) { return yRange(d.mortality_percent); });
+                            .y0(parentHeight - 50)
+                            .y1(function (d) { return yRange(d.mortality_percent); })
+                            .interpolate('step-after');
 
                           //var younger = data.slice(0, age);
 
@@ -252,7 +255,7 @@
                           xAxisElement
                             .transition()
                             .attr('class', 'x axis')
-                            .attr('transform', 'translate(0,' + (parentHeight - 100) + ')')
+                            .attr('transform', 'translate(0,' + (parentHeight - 50) + ')')
                             .call(xAxis);
 
                           yAxisElement
