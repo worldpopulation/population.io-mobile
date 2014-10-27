@@ -5,10 +5,10 @@
     .toolbar
         .country-selection
           .typeahead.ref
-            input( type="text", placeholder="Country", ng-model="selectedCountryRef", typeahead="country for country in countries | filter: $viewValue", typeahead-wait-ms="100", typeahead-editable="false" )
+            input( type="text", placeholder="Country", ng-model="selectedCountryRef", typeahead="country.POPIO_NAME for country in countries | filter: $viewValue", typeahead-wait-ms="100", typeahead-editable="false" )
           .icon.icon-vs
           .typeahead.rel
-            input( type="text", placeholder="Country", ng-model="selectedCountryRel", typeahead="country for country in countries | filter: $viewValue", typeahead-wait-ms="100", typeahead-editable="false" )
+            input( type="text", placeholder="Country", ng-model="selectedCountryRel", typeahead="country.POPIO_NAME for country in countries | filter: $viewValue", typeahead-wait-ms="100", typeahead-editable="false" )
         .time-slider
           time-slider
 

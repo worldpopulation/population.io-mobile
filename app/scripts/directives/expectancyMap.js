@@ -30,11 +30,11 @@
 
                   var _addDescriptionLine = function (type, data) {
                       var deathYear = Math.ceil(new Date().getFullYear() + data.yearsLeft);
-                      var node = d3.select('.country[data-id="' + data.country + '"]')[0][0];
+                      var node = d3.select('.country[data-id="' + data.country.GMI_CNTRY + '"]')[0][0];
 
                       if (!node) {
                           alert([
-                              'Whoops, "' + data.country + '"', ' is not part of this map!'
+                              'Whoops, "' + data.country.POPIO_NAME + '"', ' is not part of this map!'
                           ].join(''));
                       }
 
@@ -122,7 +122,7 @@
                         .attr({y: 20})
                         .text('in ')
                         .append('tspan')
-                        .text(data.country);
+                        .text(data.country.POPIO_NAME);
 
                       var textBlock2 = textCnt.append('g')
                         .attr({
@@ -190,7 +190,8 @@
                   var countries = topojson.feature(WorldTopo, WorldTopo.objects.populationio_countries).features;
                   var country = root.select('.countries').selectAll('.country').data(countries);
 
-                  country.enter().insert('path')
+                  country.enter()
+                    .insert('path')
                     .attr({
                         'class': 'country',
                         d: path,

@@ -885,9 +885,10 @@
               };
           }])
 
-      .controller('ExpectancyCtrl', ['$scope', '$rootScope', '$filter', 'ProfileService', 'PopulationIOService',
-          function ($scope, $rootScope, $filter, ProfileService, PopulationIOService) {
+      .controller('ExpectancyCtrl', ['$scope', '$rootScope', '$filter', 'ProfileService', 'PopulationIOService', 'Countries',
+          function ($scope, $rootScope, $filter, ProfileService, PopulationIOService, Countries) {
 
+              $scope.countries = Countries;
               var date = $filter('date')(new Date(), 'yyyy-MM-dd');
 
               $rootScope.$on('ready', function () {
@@ -896,26 +897,23 @@
                   $scope.activeCountryRel = null;
                   _update();
               });
-
               $scope.loading = 0;
-              $scope.countries = [];
 
               var _update = function () {
-                  PopulationIOService.loadCountries(function (countries) {
-                      $scope.countries = countries;
-                      $scope.selectedCountryRef = ProfileService.country;
-                      _updateCountryRef(date);
-                  });
+                  $scope.selectedCountryRef = _getCountryObjectByFullName(ProfileService.country);
+                  _updateCountryRef(date);
               };
 
               var _updateCountryRef = function (date) {
-
                   $scope.loading += 1;
-
-
+                  console.log('_updateCountryRef')
+                  console.log($scope.selectedCountryRef)
+                  console.log('/_updateCountryRef')
+                  var countryName;
+                  countryName = typeof $scope.selectedCountryRef !== 'string' ? $scope.selectedCountryRef.POPIO_NAME : $scope.selectedCountryRef;
                   PopulationIOService.loadLifeExpectancyRemaining({
                       sex: ProfileService.gender,
-                      country: $scope.selectedCountryRef,
+                      country: countryName,
                       date: date,
                       age: ProfileService.getAgeString()
                   }, function (remainingLife) {
@@ -942,12 +940,10 @@
               };
 
               var _updateCountryRel = function (date) {
-
                   $scope.loading += 1;
-
                   PopulationIOService.loadLifeExpectancyRemaining({
                       sex: ProfileService.gender,
-                      country: $scope.selectedCountryRel,
+                      country: $scope.selectedCountryRel.POPIO_NAME,
                       date: date,
                       age: ProfileService.getAgeString()
                   }, function (remainingLife) {
@@ -963,7 +959,6 @@
                               var today = new Date();
                               return today.setDate(today.getDate() + (remainingLife * 365));
                           }()
-
                       };
 
                       $scope.loading -= 1;
@@ -976,14 +971,11 @@
                   });
               };
 
-              var _isCountryAvailable = function (country) {
-                  for (var i = 0; i < $scope.countries.length; i += 1) {
-                      if ($scope.countries[i] === country) {
-                          return true;
-                      }
-                  }
-
-                  return false;
+              var _getCountryObject = function (country) {
+                  return _.find($scope.countries, function (item) {return item.GMI_CNTRY == country});
+              };
+              var _getCountryObjectByFullName = function (country) {
+                  return _.find($scope.countries, function (item) {return item.POPIO_NAME == country});
               };
 
               $scope.$on('timesliderChanged', function (e, year) {
@@ -996,28 +988,33 @@
                   }
               });
 
-              $scope.$watch('selectedCountryRef', function (country) {
-                  if (ProfileService.active && country) {
+              $scope.$watch('selectedCountryRef', function (newVal, oldVal) {
+                  console.log(4)
+                  console.log(newVal)
+                  console.log(5)
+                  if (ProfileService.active && newVal && _getCountryObjectByFullName(newVal)) {
                       _updateCountryRef(date);
                   }
-              });
+              }, true);
 
-              $scope.$watch('selectedCountryRel', function (country) {
-                  if (ProfileService.active && country) {
+              $scope.$watch('selectedCountryRel', function (newVal, oldVal) {
+                  if (ProfileService.active && newVal && (_getCountryObjectByFullName(newVal) || typeof newVal !== 'string')) {
                       _updateCountryRel(date);
                   }
-              });
+              }, true);
 
               $rootScope.$on('countryRelChanged', function (e, country) {
                   if (ProfileService.active && country) {
-                      if (_isCountryAvailable(country)) {
-                          $scope.selectedCountryRel = country;
+                      var foundCountry = _getCountryObject(country);
+                      if (foundCountry) {
+                          $scope.selectedCountryRel = foundCountry;
                       } else {
                           alert(country + ' not available!');
                       }
+                      if (!$scope.$$phase) {
+                          $scope.$apply();
+                      }
                   }
               });
-
-          }])
-    ;
+          }]);
 }());
