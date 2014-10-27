@@ -2,260 +2,310 @@
     'use strict';
 
     angular.module('populationioApp')
-        .directive('summaryChart', ['$filter', 'PopulationIOService', 'HelloWords', '$timeout',
-            function ($filter, PopulationIOService, HelloWords, $timeout) {
-                return {
-                    restrict: 'E',
-                    link: function ($scope, element) {
-                        var chart,
-                            xAxis, yAxis,
-                            parentWidth = element[0].clientWidth,
-                            data, pointer,
-                            parentHeight = 240,
-                            yAxisFormat = d3.format('s'),
-                            xRange = d3.scale.linear(),
-                            yRange = d3.scale.linear().nice(),
-                            line = d3.svg.line(),
-                            area = d3.svg.area(),
-                            age,
-                            areaTotal, areaLine,
-                            areaYounger,
-                            xAxisElement, yAxisElement,
-                            xLabel, yLabel,
-                            xLabelLine, yLabelLine
-                            ;
+      .directive('summaryChart', ['$filter', 'PopulationIOService', 'HelloWords', '$timeout',
+          function ($filter, PopulationIOService, HelloWords, $timeout) {
+              return {
+                  restrict: 'E',
+                  link: function ($scope, element) {
+                      var chart,
+                        xAxis, yAxis,
+                        parentWidth = element[0].clientWidth,
+                        data, pointer,
+                        parentHeight = 240,
+                        yAxisFormat = d3.format('s'),
+                        xRange = d3.scale.linear(),
+                        yRange = d3.scale.linear().nice(),
+                        xMouseRange = d3.scale.linear(),
+                        yMouseRange = d3.scale.linear().nice(),
+                        line = d3.svg.line(),
+                        area = d3.svg.area(),
+                        age,
+                        areaTotal, areaLine,
+                        areaYounger,
+                        xAxisElement, yAxisElement,
+                        xLabel, yLabel,
+                        xLabelLine, yLabelLine,
+                        tooltip = d3.select('.chart-tooltip')
+                        ;
 
-                        _initChart();
-                        $scope.$watch('region', function (newVal) {
-                            if (newVal == 'World' && $scope.worldPopulationData) {
-                                _updateChart($scope.worldPopulationData)
-                            }
-                            else if (newVal != 'World' && $scope.countryPopulationData) {
-                                _updateChart($scope.countryPopulationData)
-                            }
-                        });
+                      _initChart();
+                      $scope.$watch('region', function (newVal) {
+                          if (newVal == 'World' && $scope.worldPopulationData) {
+                              _updateChart($scope.worldPopulationData)
+                          }
+                          else if (newVal != 'World' && $scope.countryPopulationData) {
+                              _updateChart($scope.countryPopulationData)
+                          }
+                      });
 
-                        $scope.$on('worldPopulationDataChanged', function (e, population) {
-                            $timeout(function () {
-                                age = $scope.profile.getAge();
-                                _updateChart(population)
-                            }, 2000);
-                        });
-                        $scope.$on('rankGlobalChanged', function (e, rank) {
-                            $scope.rankGlobal = rank;
+                      $scope.$on('worldPopulationDataChanged', function (e, population) {
+                          $timeout(function () {
+                              age = $scope.profile.getAge();
+                              _updateChart(population)
+                          }, 2000);
+                      });
+                      $scope.$on('rankGlobalChanged', function (e, rank) {
+                          $scope.rankGlobal = rank;
 
-                            if ($scope.region == 'World' && $scope.worldPopulationData) {
-                                _updateChart($scope.worldPopulationData)
-                            }
-                            else if ($scope.region != 'World' && $scope.countryPopulationData) {
-                                _updateChart($scope.countryPopulationData)
-                            }
+                          if ($scope.region == 'World' && $scope.worldPopulationData) {
+                              _updateChart($scope.worldPopulationData)
+                          }
+                          else if ($scope.region != 'World' && $scope.countryPopulationData) {
+                              _updateChart($scope.countryPopulationData)
+                          }
 
-                        });
-                        $scope.$on('countryPopulationDataChanged', function (e, population) {
-                            age = $scope.profile.getAge();
-                            _updateChart(population)
-                        });
+                      });
+                      $scope.$on('countryPopulationDataChanged', function (e, population) {
+                          age = $scope.profile.getAge();
+                          _updateChart(population)
+                      });
 
-                        function _initChart() {
-                            chart = d3.select(element[0])
-                                .append('svg')
-                                .attr({width: parentWidth, height: parentHeight + 100})
-                                .append('g')
-                                .attr({
-                                    class: 'summary-chart',
-                                    transform: 'translate(0,80)'
-                                })
-                            ;
-
-                            xAxis = d3.svg.axis()
-                                .scale(xRange)
-                                .tickSize(5)
-                                .tickValues([0, 25, 50, 75, 100, 125, 150]);
-                            yAxis = d3.svg.axis()
-                                .scale(yRange)
-                                .tickSize(5)
-                                .orient('left')
-                            ;
-                            areaTotal = chart.append('path');
-                            areaYounger = chart.append('path');
-                            areaLine = chart.append('path');
-                            chart.select('.x-label').remove();
-                            chart.select('.y-label').remove();
-                            chart.select('.label-line').remove();
-                            xLabel = chart.append('text')
-                                .text('Age')
-                                .attr(
-                                {
-                                    class: 'x-label',
-                                    transform: 'translate(' + [parentWidth - 100, parentHeight - 100 + 16] + ')'
-                                })
-                                .style(
-                                {
-                                    'text-anchor': 'end'
-                                });
-                            xLabelLine = chart.append('line')
-                                .attr({
-                                    class: 'label-line',
-                                    x1: parentWidth - 200,
-                                    y1: parentHeight - 100,
-                                    x2: parentWidth - 70,
-                                    y2: parentHeight - 100
-                                })
-                                .style({
-                                    stroke: '#d9d9d9',
-                                    'stroke-width': 1
-                                });
-                            yLabel = chart.append('text')
-                                .text('People')
-                                .attr(
-                                {
-                                    class: 'y-label',
-                                    transform: 'translate(' + [110, -20] + ')'
-                                })
-                                .style(
-                                {
-                                    'text-anchor': 'end'
-                                });
-
-                            yLabelLine = chart.append('line')
-                                .attr({
-                                    class: 'label-line',
-                                    x1: 120,
-                                    y1: -40,
-                                    x2: 120,
-                                    y2: 0
-                                })
-                                .style({
-                                    stroke: '#d9d9d9',
-                                    'stroke-width': 1
-                                });
-
-                            xAxisElement = chart.append('g');
-                            yAxisElement = chart.append('g');
-                            pointer = chart.append('g').attr({class: 'pointer'});
-                            pointer.append('line')
-                                .attr({
-                                    x1: 0,
-                                    y1: -20,
-                                    x2: 0,
-                                    y2: 0
-                                })
-                                .style({
-                                    stroke: '#333',
-                                    'stroke-width': '1px'
-
-                                });
-                            pointer.append('text')
-                                .style({
-                                    fill: '#333',
-                                    'text-anchor': 'middle'
-
-                                })
-                                .text('99%')
-                            ;
-                            pointer.append('circle').attr({
-                                r: 6
+                      function _initChart() {
+                          chart = d3.select(element[0])
+                            .append('svg')
+                            .attr({width: parentWidth, height: parentHeight + 100})
+                            .append('g')
+                            .attr({
+                                class: 'summary-chart',
+                                transform: 'translate(0,80)'
                             })
-                                .attr('stroke-width', 2)
-                                .style({
-                                    fill: 'black',
-                                    stroke: 'white'
-                                });
+                          ;
 
-                        }
+                          xAxis = d3.svg.axis()
+                            .scale(xRange)
+                            .tickSize(5)
+                            .tickValues([0, 25, 50, 75, 100, 125, 150]);
+                          yAxis = d3.svg.axis()
+                            .scale(yRange)
+                            .tickSize(5)
+                            .orient('left')
+                          ;
+                          areaTotal = chart.append('path');
+                          areaYounger = chart.append('path');
+                          areaLine = chart.append('path');
+                          chart.select('.x-label').remove();
+                          chart.select('.y-label').remove();
+                          chart.select('.label-line').remove();
+                          xLabel = chart.append('text')
+                            .text('Age')
+                            .attr(
+                            {
+                                class: 'x-label',
+                                transform: 'translate(' + [parentWidth - 100, parentHeight - 100 + 16] + ')'
+                            })
+                            .style(
+                            {
+                                'text-anchor': 'end'
+                            });
+                          xLabelLine = chart.append('line')
+                            .attr({
+                                class: 'label-line',
+                                x1: parentWidth - 200,
+                                y1: parentHeight - 100,
+                                x2: parentWidth - 70,
+                                y2: parentHeight - 100
+                            })
+                            .style({
+                                stroke: '#d9d9d9',
+                                'stroke-width': 1
+                            });
+                          yLabel = chart.append('text')
+                            .text('People')
+                            .attr(
+                            {
+                                class: 'y-label',
+                                transform: 'translate(' + [110, -20] + ')'
+                            })
+                            .style(
+                            {
+                                'text-anchor': 'end'
+                            });
 
-                        function _updateChart(data) {
-                            var ticks = [], step;
-                            step = $scope.region != 'World' ? 500000 : 50000000;
-                            if ($scope.country != 'World' && d3.max(data, function (d) { return d.total; }) <= 500000000) {
-                                step = Math.ceil(d3.max(data, function (d) { return d.total; }) / 1000000) * 1000000
-                            }
-                            if ($scope.region != 'World' && d3.max(data, function (d) { return d.total; }) <= 500000) {
-                                step = Math.ceil(d3.max(data, function (d) { return d.total; }) / 100000) * 100000
-                            }
-                            if ($scope.region != 'World' && d3.max(data, function (d) { return d.total; }) <= 2000) {
-                                step = Math.ceil(d3.max(data, function (d) { return d.total; }) / 200) * 200
-                            }
-                            for (var i = 0; i < d3.max(data, function (d) { return d.total; }) + step; i = i + step) {
-                                ticks.push(i)
-                            }
-                            xAxis.tickFormat(function (d) {return d + 'y'});
-                            yAxis.tickFormat(function (d) {return yAxisFormat(d).replace('k', 'K')})
-                                .tickValues(ticks);
-                            xRange.range([120, parentWidth - 160]).domain([0, d3.max(data, function (d) { return d.age; })]);
-                            yRange.range([parentHeight - 100, 0]).domain([0, ticks[ticks.length - 1]]);
+                          yLabelLine = chart.append('line')
+                            .attr({
+                                class: 'label-line',
+                                x1: 120,
+                                y1: -40,
+                                x2: 120,
+                                y2: 0
+                            })
+                            .style({
+                                stroke: '#d9d9d9',
+                                'stroke-width': 1
+                            });
+
+                          xAxisElement = chart.append('g');
+                          yAxisElement = chart.append('g');
+                          pointer = chart.append('g').attr({class: 'pointer'});
+                          pointer.append('line')
+                            .attr({
+                                x1: 0,
+                                y1: -20,
+                                x2: 0,
+                                y2: 0
+                            })
+                            .style({
+                                stroke: '#333',
+                                'stroke-width': '1px'
+
+                            });
+                          pointer.append('text')
+                            .style({
+                                fill: '#333',
+                                'text-anchor': 'middle'
+
+                            })
+                            .text('99%')
+                          ;
+                          pointer.append('circle').attr({
+                              r: 6
+                          })
+                            .attr('stroke-width', 2)
+                            .style({
+                                fill: 'black',
+                                stroke: 'white'
+                            });
 
 
-                            line
-                                .x(function (d) {
-                                    return xRange(d.age);
-                                })
-                                .y(function (d) {
-                                    return yRange(d.total);
-                                })
-                                .interpolate('linear');
-                            area
-                                .x(function (d) { return xRange(d.age); })
-                                .y0(parentHeight - 100)
-                                .y1(function (d) { return yRange(d.total); });
-                            var younger = data.slice(0, age);
+                          areaTotal
+                            .on('mouseenter', function () {
+                                tooltip
+                                  .transition()
+                                  .duration(200)
+                                  .style({
+                                      display: 'block',
+                                      opacity: 0.9
+                                  });
 
-                            areaTotal
-                                .transition()
-                                .attr('d', area(data))
-                                .attr('fill', '#F3F3F3');
 
-                            areaYounger
-                                .transition()
-                                .attr('d', area(younger))
-                                .attr('fill', '#6581F1');
-                            /* highlight-blue */
+                            })
+                            .on('mousemove', function (d) {
+                                var mouse = d3.mouse(this);
+                                tooltip.html(function (d, i) {
+                                      return "<p><span class='tooltip-label'>Age:</span><span class='tooltip-value'>" + parseInt(xMouseRange(mouse[0]), 10) + "</span></p>"
+                                        + "<p><span class='tooltip-label'>Population:</span><span class='tooltip-value'>" + parseInt(yMouseRange(mouse[1]), 10) + "</span></p>";
+                                  }
+                                );
 
-                            areaLine
-                                .transition()
-                                .attr('d', line(data))
-                                //.attr('stroke', '#66666F')
-                                //.attr('stroke-width', 3)
-                                .attr('fill', 'none');
-                            xAxisElement
-                                .transition()
-                                .attr('class', 'x axis')
-                                .attr('transform', 'translate(0,' + (parentHeight - 100) + ')')
-                                .call(xAxis);
+                                tooltip
+                                  .style("left", (d3.event.pageX - 120) + "px")
+                                  .style("top", (d3.event.pageY + 40) + "px");
 
-                            yAxisElement
-                                .transition()
-                                .attr('class', 'y axis')
-                                .attr('transform', 'translate(120,0)')
-                                .call(yAxis);
-                            pointer
-                                .transition()
-                                .attr({
-                                    transform: 'translate(' + [xRange(age - 1), yRange(data[age].total) - 3] + ')'
-                                });
-                            pointer.select('line')
-                                .transition()
-                                .attr({
-                                    y2: -yRange(data[age].total) + 10
-                                });
-                            pointer.select('text')
-                                .transition()
-                                .attr({
-                                    dy: -yRange(data[age].total)
-                                })
-                                .text(function () {
-                                    if ($scope.region != 'World') {
+                            })
+                            .on('mouseleave', function () {
+                                tooltip
+                                  .transition()
+                                  .duration(200)
+                                  .style("opacity", 0)
+                                  .each('end', function () {
+                                      d3.select(this).style({display: 'none'})
+                                  })
+                                ;
 
-                                        return $filter('number')(Math.min(100, $scope.rankLocal / ($scope.countryPopulation / 100)), '0') + '%'
-                                    }
-                                    else {
-                                        return $filter('number')(Math.min(100, $scope.rankGlobal / ($scope.worldPopulation / 100)), '0') + '%'
-                                    }
-                                })
+                            })
 
-                        }
-                    }
-                };
-            }]);
+                          ;
+
+
+                      }
+
+                      function _updateChart(data) {
+                          var ticks = [], step;
+                          step = $scope.region != 'World' ? 500000 : 50000000;
+                          if ($scope.country != 'World' && d3.max(data, function (d) { return d.total; }) <= 500000000) {
+                              step = Math.ceil(d3.max(data, function (d) { return d.total; }) / 1000000) * 1000000
+                          }
+                          if ($scope.region != 'World' && d3.max(data, function (d) { return d.total; }) <= 500000) {
+                              step = Math.ceil(d3.max(data, function (d) { return d.total; }) / 100000) * 100000
+                          }
+                          if ($scope.region != 'World' && d3.max(data, function (d) { return d.total; }) <= 2000) {
+                              step = Math.ceil(d3.max(data, function (d) { return d.total; }) / 200) * 200
+                          }
+                          for (var i = 0; i < d3.max(data, function (d) { return d.total; }) + step; i = i + step) {
+                              ticks.push(i)
+                          }
+                          xAxis.tickFormat(function (d) {return d + 'y'});
+                          yAxis.tickFormat(function (d) {return yAxisFormat(d).replace('k', 'K')})
+                            .tickValues(ticks);
+
+                          xRange.range([120, parentWidth - 160]).domain([0, d3.max(data, function (d) { return d.age; })]);
+                          yRange.range([parentHeight - 100, 0]).domain([0, ticks[ticks.length - 1]]);
+
+                          xMouseRange.range([0, d3.max(data, function (d) { return d.age; })]).domain([120, parentWidth - 160]);
+                          yMouseRange.range([0, ticks[ticks.length - 1]]).domain([parentHeight - 100, 0]);
+
+
+                          line
+                            .x(function (d) {
+                                return xRange(d.age);
+                            })
+                            .y(function (d) {
+                                return yRange(d.total);
+                            })
+                            .interpolate('linear');
+                          area
+                            .x(function (d) { return xRange(d.age); })
+                            .y0(parentHeight - 100)
+                            .y1(function (d) { return yRange(d.total); });
+                          var younger = data.slice(0, age);
+
+                          areaTotal
+                            .datum(data)
+                            .transition()
+                            .attr('d', area(data))
+                            .attr('fill', '#F3F3F3');
+
+                          areaYounger
+                            .transition()
+                            .attr('d', area(younger))
+                            .attr('fill', '#6581F1');
+                          /* highlight-blue */
+
+                          areaLine
+                            .transition()
+                            .attr('d', line(data))
+                              //.attr('stroke', '#66666F')
+                              //.attr('stroke-width', 3)
+                            .attr('fill', 'none');
+                          xAxisElement
+                            .transition()
+                            .attr('class', 'x axis')
+                            .attr('transform', 'translate(0,' + (parentHeight - 100) + ')')
+                            .call(xAxis);
+
+                          yAxisElement
+                            .transition()
+                            .attr('class', 'y axis')
+                            .attr('transform', 'translate(120,0)')
+                            .call(yAxis);
+                          pointer
+                            .transition()
+                            .attr({
+                                transform: 'translate(' + [xRange(age - 1), yRange(data[age].total) - 3] + ')'
+                            });
+                          pointer.select('line')
+                            .transition()
+                            .attr({
+                                y2: -yRange(data[age].total) + 10
+                            });
+                          pointer.select('text')
+                            .transition()
+                            .attr({
+                                dy: -yRange(data[age].total)
+                            })
+                            .text(function () {
+                                if ($scope.region != 'World') {
+
+                                    return $filter('number')(Math.min(100, $scope.rankLocal / ($scope.countryPopulation / 100)), '0') + '%'
+                                }
+                                else {
+                                    return $filter('number')(Math.min(100, $scope.rankGlobal / ($scope.worldPopulation / 100)), '0') + '%'
+                                }
+                            })
+
+                      }
+
+                  }
+              };
+          }]);
 }());

@@ -1,0 +1,41 @@
+.chart-tooltip
+    background: #fff;
+    border-radius: 0;
+    padding: 20px;
+    height: auto;
+    width: 220px;
+    position: absolute;
+    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1)
+    left 0
+    top 0
+    z-index 2000
+    display none
+    &:before
+        content: '';
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 10px 10px 10px;
+        border-color: transparent transparent #fff transparent;
+        position: absolute;
+        left: 50%;
+        top: -10px;
+        margin-left: -10px;
+
+    p
+        overflow: hidden
+        &.tooltip-title
+            font-weight: bold;
+            margin: 0 0 20px;
+            text-align: center;
+            font-size: 14px;
+
+        span.tooltip-label
+            font-weight: normal;
+            float: left;
+
+        span.tooltip-value
+            font-weight: bold;
+            float: right;
+        &:last-child
+            margin: 0;
