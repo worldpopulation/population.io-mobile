@@ -70,6 +70,9 @@ var gulp = require('gulp'),
           'assets/wip.svg',
           'assets/browsers-sprite.png'
       ],
+      maps: [
+          'bower_components/angular-sanitize/angular-sanitize.min.js.map'
+      ],
       celebs: 'assets/celebrities/**'
   },
   destinations = {
@@ -215,6 +218,11 @@ gulp.task('fonts', function () {
       .pipe(gulp.dest('dist/fonts/'));
 });
 
+gulp.task('maps', function () {
+    return gulp.src(sources.maps)
+      .pipe(gulp.dest(destinations.scripts));
+});
+
 // jshint task
 gulp.task('lint', function () {
     return gulp.src(['app/scripts/**/*.js', '!app/scripts/libs/**/*.js'])
@@ -250,6 +258,7 @@ gulp.task('upload', function () {
 gulp.task('default', [
     'serve',
     'fonts',
+    'maps',
     'data',
     'images:watch',
     'jade:watch',

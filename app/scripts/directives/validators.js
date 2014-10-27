@@ -1,7 +1,7 @@
 var MONTH_REGEXP = /(January|February|March|April|May|June|July|August|September|October|November|December)/i;
 
 angular.module('populationioApp')
-  .directive('validateMonth', function (Countries) {
+  .directive('validateMonth', function () {
       return {
           require: 'ngModel',
           link: function (scope, elm, attrs, ctrl) {
@@ -24,7 +24,7 @@ angular.module('populationioApp')
   });
 
 angular.module('populationioApp')
-  .directive('validateCountry', function () {
+  .directive('validateCountry', function (Countries) {
       return {
           require: 'ngModel',
           link: function (scope, elm, attrs, ctrl) {
