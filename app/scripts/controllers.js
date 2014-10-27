@@ -561,7 +561,7 @@
                       $scope.milestonesData.push({
                           date: $filter('date')(date, 'yyyy-MM-dd'),
                           year: $filter('date')(date, 'yyyy'),
-                          title: 'Your life expectancy in ' + (country === 'World' ? 'the World' : country)
+                          title: 'Your anticipated life expectancy in ' + (country === 'World' ? 'the World' : country)
                       });
 
                       if (onSuccess) {
@@ -583,8 +583,8 @@
                   var _updateTitleAlive = function (date, atomicNumber) {
                       $scope.titleAlive = $sce.trustAsHtml([
                           'Your next milestone is <span>' + $filter('ordinal')($filter('date')(date, 'd')) + ' ',
-                          $filter('date')(date, 'MMM, yyyy') + '</span>, then you’ll be person <span>',
-                          atomicNumber + ' Billion</span> to be alive in the world.'
+                          $filter('date')(date, 'MMM, yyyy') + '</span>, then you’ll be <span>',
+                          atomicNumber + ' billionth</span> person to be alive in the world.'
                       ].join(''));
                   };
 
@@ -870,7 +870,7 @@
                   }, function (data) {
                       $scope.birthdayShare = $sce.trustAsHtml([
                           '<span>' + $filter('number')(parseInt(data[0].total / 365, 0), 0),
-                          '</span> people around the world and that ',
+                          '</span> people around the world and that approximately ',
                           '<span>' + $filter('number')(parseInt(data[0].total / 365 / 24, 0), 0),
                           '</span> people were born in the same hour?'
                       ].join(''));
