@@ -583,8 +583,8 @@
                   var _updateTitleAlive = function (date, atomicNumber) {
                       $scope.titleAlive = $sce.trustAsHtml([
                           'Your next milestone is <span>' + $filter('ordinal')($filter('date')(date, 'd')) + ' ',
-                          $filter('date')(date, 'MMM, yyyy') + '</span>, then you’ll be person <span>',
-                          atomicNumber + ' Billion</span> to be alive in the world.'
+                          $filter('date')(date, 'MMM, yyyy') + '</span>, then you’ll be <span>',
+                          atomicNumber + ' billionth</span> person to be alive in the world.'
                       ].join(''));
                   };
 
