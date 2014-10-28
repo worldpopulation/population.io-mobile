@@ -595,22 +595,8 @@
               {
                   'GMI_CNTRY': 'ISR',
                   'POPIO_NAME': 'Israel',
-                  'POINT_X': 34.30222030270,
-                  'POINT_Y': 31.31848435180,
-                  'CONTINENT': 'Asia'
-              },
-              {
-                  'GMI_CNTRY': 'ISR',
-                  'POPIO_NAME': 'Israel',
                   'POINT_X': 34.62096396480,
                   'POINT_Y': 31.06846816670,
-                  'CONTINENT': 'Asia'
-              },
-              {
-                  'GMI_CNTRY': 'ISR',
-                  'POPIO_NAME': 'Israel',
-                  'POINT_X': 35.25641697280,
-                  'POINT_Y': 31.94655276280,
                   'CONTINENT': 'Asia'
               },
               {
@@ -1011,20 +997,6 @@
                   'POINT_X': 45.28860244300,
                   'POINT_Y': 15.21531360780,
                   'CONTINENT': 'Asia'
-              },
-              {
-                  'GMI_CNTRY': 'REU',
-                  'POPIO_NAME': 'Reunion',
-                  'POINT_X': 42.74374761090,
-                  'POINT_Y': -17.06449193630,
-                  'CONTINENT': 'Africa'
-              },
-              {
-                  'GMI_CNTRY': 'REU',
-                  'POPIO_NAME': 'Reunion',
-                  'POINT_X': 47.29094808150,
-                  'POINT_Y': -11.56622487160,
-                  'CONTINENT': 'Africa'
               },
               {
                   'GMI_CNTRY': 'REU',
