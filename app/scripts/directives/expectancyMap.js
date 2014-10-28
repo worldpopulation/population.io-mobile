@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('populationioApp')
-      .directive('expectancyMap', function ($rootScope, ProfileService) {
+      .directive('expectancyMap', function ($rootScope, ProfileService, Countries) {
           return {
               restrict: 'E',
               scope: {
@@ -28,12 +28,25 @@
 
                   var path = d3.geo.path().projection(projection);
 
+                  var _getCountryObjectByFullName = function (country) {
+                      return _.find(Countries, function (item) {return item.POPIO_NAME == country});
+                  };
+
                   var _addDescriptionLine = function (type, data) {
+                      console.log(data)
+                      var countryId;
+                      if (typeof data.country === 'string') {
+                          countryId = _getCountryObjectByFullName(data.country).GMI_CNTRY
+                      }
+                      else {
+                          countryId = data.country.GMI_CNTRY
+                      }
+
                       var deathYear = Math.ceil(new Date().getFullYear() + data.yearsLeft);
-                      var node = d3.select('.country[data-id="' + data.country.GMI_CNTRY + '"]')[0][0];
+                      var node = d3.select('.country[data-id="' + countryId + '"]')[0][0];
                       if (!node) {
                           alert([
-                              'Whoops, "' + data.country.POPIO_NAME + '"', ' is not part of this map!'
+                              'Whoops, "' + data.country + '"', ' is not part of this map!'
                           ].join(''));
                       }
 
@@ -121,7 +134,17 @@
                         .attr({y: 20})
                         .text('in ')
                         .append('tspan')
-                        .text(data.country.POPIO_NAME);
+                        .text(function () {
+                            var countryName;
+                            if (typeof data.country === 'string') {
+                                countryName = _getCountryObjectByFullName(data.country).POPIO_NAME;
+                            }
+                            else {
+                                countryName = data.country.POPIO_NAME;
+                            }
+
+                            return countryName;
+                        });
 
                       var textBlock2 = textCnt.append('g')
                         .attr({
@@ -209,6 +232,7 @@
 
 
                   $scope.$watch('countryRef', function (data) {
+                      console.log(data)
                       if (data) {
                           _addDescriptionLine('ref', data);
                       }

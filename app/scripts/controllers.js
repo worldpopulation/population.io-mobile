@@ -972,7 +972,7 @@
                   $scope.loading += 1;
                   PopulationIOService.loadLifeExpectancyRemaining({
                       sex: ProfileService.gender,
-                      country: $scope.selectedCountryRel.POPIO_NAME,
+                      country: _getCountryObjectByFullName($scope.selectedCountryRel).POPIO_NAME,
                       date: date,
                       age: ProfileService.getAgeString()
                   }, function (remainingLife) {
@@ -1030,6 +1030,7 @@
               }, true);
 
               $rootScope.$on('countryRelChanged', function (e, country) {
+                  console.log(country)
                   if (ProfileService.active && country) {
                       var foundCountry = _getCountryObject(country);
                       if (foundCountry) {
