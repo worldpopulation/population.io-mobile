@@ -344,13 +344,24 @@
                       $scope.$watchGroup(['remainingLifeCountryInYears', 'remainingLifeWorldInYears'],
                         function (newVals, oldVals) {
                             if ((newVals[0] && newVals[1]) && (newVals[0] !== oldVals[0] && newVals[1] !== oldVals[0])) {
+                                var negative = false;
                                 $scope.differenceInDays = function () {
                                     var val = (newVals[0] - newVals[1]) * 365;
-                                    val = val < 0 ? '- ' + (-1 * val) : '+ ' + val;
+
+                                    if (val < 0) {
+                                        val = '- ' + (-1 * val);
+                                        negative = true;
+                                        $scope.differenceInYears = -1 * (newVals[0] - newVals[1]) + ' years';
+                                    }
+                                    else {
+                                        val = '+ ' + val;
+                                        negative = false;
+                                        $scope.differenceInYears = newVals[0] - newVals[1] + ' years';
+                                    }
                                     return val + ' days';
                                 }();
-                                $scope.differenceInYears = newVals[0] - newVals[1] + ' years';
-                                $scope.soMuchToDo = $scope.differenceInDays < 0 ? 'shorter' : 'longer';
+
+                                $scope.soMuchToDo = negative ? 'shorter' : 'longer';
 
                             }
                         })
