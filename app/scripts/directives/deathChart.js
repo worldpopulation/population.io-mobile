@@ -22,7 +22,8 @@
                         areaLine,
                         xAxisElement, yAxisElement,
                         xLabel, yLabel,
-                        xLabelLine, yLabelLine
+                        xLabelLine, yLabelLine,
+                        tooltip = d3.select('.chart-tooltip')
                         ;
 
                       _initChart();
@@ -199,6 +200,67 @@
                             .style({
                                 fill: '#333'
                             });
+                          areaWorld
+                            .on('mouseenter', _showTooltip)
+                            .on('mousemove', function (d) {
+                                var mouse = d3.mouse(this);
+
+                                var ageFormatted = $filter('number')(parseInt(xRange.invert(mouse[0]), 10), 0);
+                                var deathRate = $filter('number')(yRange.invert(mouse[1]), 2);
+                                tooltip.html(function (d, i) {
+                                      return "<p><span class='tooltip-label'>Age:</span><span class='tooltip-value'>" + ageFormatted + " years</span></p>"
+                                        + "<p><span class='tooltip-label'>Relative Death Rate:</span><span class='tooltip-value'>" + deathRate + "%</span></p>";
+                                  }
+                                );
+
+                                tooltip
+                                  .style("left", (d3.event.pageX - 100) + "px")
+                                  .style("top", (d3.event.pageY - 120) + "px");
+
+                            }
+                          )
+                            .on('mouseleave', _hideTooltip);
+                          areaCountry
+                            .on('mouseenter', _showTooltip)
+                            .on('mousemove', function (d) {
+                                var mouse = d3.mouse(this);
+
+                                var ageFormatted = $filter('number')(parseInt(xRange.invert(mouse[0]), 10), 0);
+                                var deathRate = $filter('number')(yRange.invert(mouse[1]), 2);
+                                tooltip.html(function (d, i) {
+                                      return "<p><span class='tooltip-label'>Age:</span><span class='tooltip-value'>" + ageFormatted + " years</span></p>"
+                                        + "<p><span class='tooltip-label'>Relative Death Rate:</span><span class='tooltip-value'>" + deathRate + "%</span></p>";
+                                  }
+                                );
+
+                                tooltip
+                                  .style("left", (d3.event.pageX - 100) + "px")
+                                  .style("top", (d3.event.pageY - 120) + "px");
+
+                            }
+                          )
+                            .on('mouseleave', _hideTooltip);
+
+                          function _showTooltip() {
+                              tooltip
+                                .transition()
+                                .duration(200)
+                                .style({
+                                    display: 'block',
+                                    opacity: 0.9
+                                });
+                          }
+
+                          function _hideTooltip() {
+                              tooltip
+                                .transition()
+                                .duration(200)
+                                .style("opacity", 0)
+                                .each('end', function () {
+                                    d3.select(this).style({display: 'none'})
+                                })
+                              ;
+                          }
 
                       }
 

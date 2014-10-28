@@ -165,43 +165,66 @@
 
 
                           areaTotal
-                            .on('mouseenter', function () {
-                                tooltip
-                                  .transition()
-                                  .duration(200)
-                                  .style({
-                                      display: 'block',
-                                      opacity: 0.9
-                                  });
-
-
-                            })
+                            .on('mouseenter', _showTooltip)
                             .on('mousemove', function (d) {
                                 var mouse = d3.mouse(this);
+
+                                var ageFormatted = $filter('number')(parseInt(xRange.invert(mouse[0]), 10), 0);
+                                var populationFormatted = $filter('number')(parseInt(yRange.invert(mouse[1]), 10), 0);
                                 tooltip.html(function (d, i) {
-                                      return "<p><span class='tooltip-label'>Age:</span><span class='tooltip-value'>" + parseInt(xRange.invert(mouse[0]), 10) + "</span></p>"
-                                        + "<p><span class='tooltip-label'>Population:</span><span class='tooltip-value'>" + parseInt(yRange.invert(mouse[1]), 10) + "</span></p>";
+                                      return "<p><span class='tooltip-label'>Age:</span><span class='tooltip-value'>" + ageFormatted + "</span></p>"
+                                        + "<p><span class='tooltip-label'>Population:</span><span class='tooltip-value'>" + populationFormatted + "</span></p>";
                                   }
                                 );
 
                                 tooltip
-                                  .style("left", (d3.event.pageX - 80) + "px")
-                                  .style("top", (d3.event.pageY - 130) + "px");
+                                  .style("left", (d3.event.pageX - 100) + "px")
+                                  .style("top", (d3.event.pageY - 120) + "px");
 
-                            })
-                            .on('mouseleave', function () {
+                            }
+                          )
+                            .on('mouseleave', _hideTooltip);
+                          areaYounger
+                            .on('mouseenter', _showTooltip)
+                            .on('mousemove', function (d) {
+                                var mouse = d3.mouse(this);
+
+                                var ageFormatted = $filter('number')(parseInt(xRange.invert(mouse[0]), 10), 0);
+                                var populationFormatted = $filter('number')(parseInt(yRange.invert(mouse[1]), 10), 0);
+                                tooltip.html(function (d, i) {
+                                      return "<p><span class='tooltip-label'>Age:</span><span class='tooltip-value'>" + ageFormatted + "</span></p>"
+                                        + "<p><span class='tooltip-label'>Population:</span><span class='tooltip-value'>" + populationFormatted + "</span></p>";
+                                  }
+                                );
+
                                 tooltip
-                                  .transition()
-                                  .duration(200)
-                                  .style("opacity", 0)
-                                  .each('end', function () {
-                                      d3.select(this).style({display: 'none'})
-                                  })
-                                ;
+                                  .style("left", (d3.event.pageX - 100) + "px")
+                                  .style("top", (d3.event.pageY - 120) + "px");
 
-                            })
+                            }
+                          )
+                            .on('mouseleave', _hideTooltip);
 
-                          ;
+                          function _showTooltip() {
+                              tooltip
+                                .transition()
+                                .duration(200)
+                                .style({
+                                    display: 'block',
+                                    opacity: 0.9
+                                });
+                          }
+
+                          function _hideTooltip() {
+                              tooltip
+                                .transition()
+                                .duration(200)
+                                .style("opacity", 0)
+                                .each('end', function () {
+                                    d3.select(this).style({display: 'none'})
+                                })
+                              ;
+                          }
 
 
                       }
