@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('populationioApp')
-      .directive('expectancyMap', function ($rootScope, ProfileService, CountriesTopo) {
+      .directive('expectancyMap', function ($rootScope, ProfileService) {
           return {
               restrict: 'E',
               scope: {
@@ -30,7 +30,6 @@
 
                   var _addDescriptionLine = function (type, data) {
                       var deathYear = Math.ceil(new Date().getFullYear() + data.yearsLeft);
-                      console.log(data.country.GMI_CNTRY)
                       var node = d3.select('.country[data-id="' + data.country.GMI_CNTRY + '"]')[0][0];
                       if (!node) {
                           alert([
@@ -186,21 +185,28 @@
                         });
                   };
 
-                  var WorldTopo = CountriesTopo;
-                  var countries = topojson.feature(WorldTopo, WorldTopo.objects.populationio_countries).features;
-                  var country = root.select('.countries').selectAll('.country').data(countries);
+                  d3.json("/data/countries_topo.json", function (error, countriestopo) {
+                        if (error) return console.error(error);
+                        var countries = topojson.feature(countriestopo, countriestopo.objects.populationio_countries).features;
+                        var country = root.select('.countries').selectAll('.country').data(countries);
+                        country.enter()
+                          .insert('path')
+                          .attr({
+                              'class': 'country',
+                              d: path,
+                              'data-id': function (d) { return d.properties.GMI_CNTRY; }
 
-                  country.enter()
-                    .insert('path')
-                    .attr({
-                        'class': 'country',
-                        d: path,
-                        'data-id': function (d) { return d.properties.GMI_CNTRY; },
-                        title: function (d) { return d.properties.GMI_CNTRY; }
-                    })
-                    .on('click', function (d) {
-                        $rootScope.$emit('countryRelChanged', d.properties.GMI_CNTRY);
-                    });
+                              ,
+                              title: function (d) { return d.properties.GMI_CNTRY; }
+                          })
+                          .on('click', function (d) {
+                              $rootScope.$emit('countryRelChanged', d.properties.GMI_CNTRY);
+                          });
+
+                    }
+                  )
+                  ;
+
 
                   $scope.$watch('countryRef', function (data) {
                       if (data) {

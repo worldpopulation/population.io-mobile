@@ -208,6 +208,7 @@
                   }
               });
               $scope.calcWorldOlderNumber = function () {
+                  if (!$scope.rankGlobal || !$scope.worldPopulation) {return 0}
                   return $filter('number')(Math.max(0, $scope.worldPopulation - $scope.rankGlobal), 0);
               };
               $scope.calcWorldOlderPercentage = function () {
@@ -767,7 +768,7 @@
               var countries = [];
 
               $rootScope.$on('ready', function () {
-                  d3.csv('data/country_continent.csv', function (data) {
+                  d3.csv('data/countries.csv', function (data) {
                       countries = data;
                       _update();
                   });
@@ -776,7 +777,7 @@
               var _getCountry = function (name) {
                   for (var i = 0; i < countries.length; i += 1) {
                       var country = countries[i];
-                      if (country.country === name) {
+                      if (country.POPIO_NAME === name) {
                           return country;
                       }
                   }
@@ -787,7 +788,7 @@
                   var res = [];
                   for (var i = 0; i < countries.length; i += 1) {
                       var country = countries[i];
-                      if (country.continent === continent) {
+                      if (country.CONTINENT === continent) {
                           res.push(country);
                       }
                   }
@@ -812,7 +813,7 @@
                   _loadAllCountryBirthdays(continentalCountries, function (country, birthdays) {
                       if (country && birthdays && parseInt(birthdays, 0) > 0) {
                           $scope.continentsData.push({
-                              countryAbbr: _getCountry(country).countriy_ISO_A2,
+                              countryAbbr: _getCountry(country).GMI_CNTRY,
                               countryTitle: country,
                               value: birthdays
                           });
@@ -845,7 +846,7 @@
 
                       if (country && birthdays) {
                           $scope.worldData.push({
-                              countryAbbr: _getCountry(country).countriy_ISO_A2,
+                              countryAbbr: _getCountry(country).GMI_CNTRY,
                               countryTitle: country,
                               value: birthdays
                           });
@@ -868,7 +869,7 @@
                           country: country,
                           age: ProfileService.getAge()
                       }, function (data) {
-                          if (_getCountry(country).countriy_ISO_A2) {
+                          if (_getCountry(country).GMI_CNTRY) {
                               callback(country, data[0].total / 365);
                           }
                       }, function () {
@@ -878,7 +879,7 @@
                   };
 
                   for (var j = 0; j < countries.length; j += 1) {
-                      _loadCountryBirthdays(countries[j].country || countries[j]);
+                      _loadCountryBirthdays(countries[j].POPIO_NAME || countries[j]);
                   }
               };
 
@@ -937,9 +938,6 @@
 
               var _updateCountryRef = function (date) {
                   $scope.loading += 1;
-                  console.log('_updateCountryRef')
-                  console.log($scope.selectedCountryRef)
-                  console.log('/_updateCountryRef')
                   var countryName;
                   countryName = typeof $scope.selectedCountryRef !== 'string' ? $scope.selectedCountryRef.POPIO_NAME : $scope.selectedCountryRef;
                   PopulationIOService.loadLifeExpectancyRemaining({
@@ -1020,9 +1018,6 @@
               });
 
               $scope.$watch('selectedCountryRef', function (newVal, oldVal) {
-                  console.log(4)
-                  console.log(newVal)
-                  console.log(5)
                   if (ProfileService.active && newVal && _getCountryObjectByFullName(newVal)) {
                       _updateCountryRef(date);
                   }

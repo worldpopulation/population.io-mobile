@@ -185,8 +185,8 @@
                                 );
 
                                 tooltip
-                                  .style("left", (d3.event.pageX - 120) + "px")
-                                  .style("top", (d3.event.pageY + 40) + "px");
+                                  .style("left", (d3.event.pageX - 80) + "px")
+                                  .style("top", (d3.event.pageY - 130) + "px");
 
                             })
                             .on('mouseleave', function () {

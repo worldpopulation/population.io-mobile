@@ -72,8 +72,7 @@
                             .attr({
                                 'class': 'count-element',
                                 transform: function (d, i) {
-                                    var translate = 'translate(' + [(i * digitCellWidth), 0] + ')';
-                                    return translate;
+                                    return 'translate(' + [(i * digitCellWidth), 0] + ')';
                                 }
                             });
 
@@ -126,21 +125,22 @@
                       }
 
                       function _updateWorldClock(newVal, oldVal) {
-                          var timeDelta = newVal - oldVal;
+                          //var timeDelta = newVal - oldVal;
+                          var timeDelta = 3;
+
                           currentValue = newVal;
+                          function _addNewBabyHelper(sayHello, i) {
+                              setTimeout(function () { _addNewBaby(sayHello); }, i * 200);
+                          }
 
                           var filteredNumber = $filter('number')(newVal, 0);
                           var digits = ('' + filteredNumber).split('');
 
-                          for (var i = 0; i < timeDelta; i += 1) {
+                          for (var i = 0; i < timeDelta; i++) {
                               if (i === 0) {
-                                  setTimeout(function () {
-                                      _addNewBaby(true);
-                                  }, i * 200);
+                                  _addNewBabyHelper(true, i);
                               } else {
-                                  setTimeout(function () {
-                                      _addNewBaby();
-                                  }, i * 200);
+                                  _addNewBabyHelper(false, i);
                               }
                           }
 

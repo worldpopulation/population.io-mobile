@@ -99,7 +99,10 @@ gulp.task('serve', function (event) {
 
 // data files task
 gulp.task('data', function (event) {
-    return gulp.src('app/scripts/data/country_continent.csv')
+    return gulp.src([
+        'data/populationio_countries/countries.csv',
+        'data/populationio_countries/countries_topo.json',
+    ])
       .pipe(plumber())
       .pipe(gulp.dest('dist/data'));
 });
@@ -108,7 +111,7 @@ gulp.task('data', function (event) {
 gulp.task('stylus', function (event) {
     return gulp.src(sources.style)
       .pipe(plumber())
-      .pipe(stylus({use: nib()}))
+      //.pipe(stylus({use: nib()}))
       .pipe(concat('main.css'))
       .pipe(gulp.dest(destinations.css));
 });
