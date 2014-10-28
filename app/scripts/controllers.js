@@ -567,7 +567,6 @@
               $rootScope.$on('ready', function () {
                   _update();
               });
-
               var _getDateWithOffset = function (date, offset) {
                   var year = parseInt($filter('date')(date, 'yyyy'), 0),
                     month = parseInt($filter('date')(date, 'M'), 0) - 1,
@@ -676,7 +675,6 @@
               };
 
               $scope.highlightMilestone = function (item) {
-                  console.log(item)
                   if ($scope.milestonesData) {
                       _($scope.milestonesData).each(function (milestone) {
                           milestone.selected = false;
@@ -708,12 +706,9 @@
                   return (new Date(item.date)).getTime();
               };
 
-              /*
-               $rootScope.$on('selectedYearChanged', function ($event, item) {
-               console.log('selectedYearChanged', item)
-               //$scope.highlightMilestone(item);
-               });
-               */
+              $rootScope.$on('selectedYearChanged', function ($event, item) {
+                  $scope.highlightMilestone(item);
+              });
 
               $scope.$watch(function () {
                   return $scope.loading;
@@ -1013,8 +1008,8 @@
               };
 
               var _getCountryObject = function (country) {
-                  console.log('Searching for country by field: ' + country)
-                  if (typeof country === 'object') {return country};
+                  if (typeof country === 'object') {return country}
+                  ;
                   return _.find($scope.countries, function (item) {return item.GMI_CNTRY == country || item.POPIO_NAME == country});
               };
               var _getCountryObjectByFullName = function (country) {

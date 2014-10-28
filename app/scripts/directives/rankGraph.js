@@ -17,7 +17,6 @@
                         xAxis, xAxisElement,
                         yAxis, yAxisElement,
                         yAxisFormat = d3.format('s');
-                      ;
 
                       var root = d3.select(element[0])
                         .append('svg')
@@ -27,7 +26,7 @@
                         })
                         .append('g')
                         .attr({
-                            transform: 'translate(' + [ 10, -10 ] + ')'
+                            transform: 'translate(' + [10, -10] + ')'
                         });
 
                       $scope.$watch('data', function (data) {
@@ -47,7 +46,7 @@
                             .attr({
                                 'class': 'people',
                                 transform: function () {
-                                    return 'translate(' + [ 40, 70 ] + ') rotate(-90)';
+                                    return 'translate(' + [40, 70] + ') rotate(-90)';
                                 }
                             });
                           frame.append('text')
@@ -55,7 +54,7 @@
                             .attr({
                                 'class': 'age',
                                 transform: function () {
-                                    return 'translate(' + [ width - 10, height + 3 ] + ')';
+                                    return 'translate(' + [width - 10, height + 3] + ')';
                                 }
                             });
 
@@ -103,7 +102,7 @@
                             ])
                             .range([40, width - 50]);
                           var yScale = d3.scale.linear()
-                              .domain([ 0, ticks[ticks.length - 1] ])
+                              .domain([0, ticks[ticks.length - 1]])
                               .range([height, 90])
                             ;
 
@@ -171,7 +170,7 @@
                               if (pointer.select('.percentage').empty()) {
                                   pointer.attr({
                                       transform: function () {
-                                          return 'translate(' + [ xScale(age), 0 ] + ')';
+                                          return 'translate(' + [xScale(age), 0] + ')';
                                       }
                                   });
                               }
@@ -180,7 +179,7 @@
                                 .transition()
                                 .duration(1000)
                                 .attr({
-                                    transform: 'translate(' + [ xScale(age), 0 ] + ')'
+                                    transform: 'translate(' + [xScale(age), 0] + ')'
                                 });
 
                               group.append('line');
