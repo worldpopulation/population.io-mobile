@@ -655,6 +655,7 @@
                           date: $filter('date')(Date.now(), 'yyyy-MM-dd'),
                           year: $filter('date')(Date.now(), 'yyyy'),
                           title: 'Now',
+                          selected: true,
                           now: true
                       },
                       {
@@ -674,9 +675,17 @@
                   ];
               };
 
-              $scope.highlightMilestone = function (year) {
+              $scope.highlightMilestone = function (item) {
+                  console.log(item)
+                  if ($scope.milestonesData) {
+                      _($scope.milestonesData).each(function (milestone) {
+                          milestone.selected = false;
+                      });
 
-                  $scope.selectedYear = year;
+                  }
+                  item.selected = true;
+                  $scope.selectedYear = item.year;
+
                   $scope.loading += 2;
                   $scope.age = $scope.selectedYear - ProfileService.birthday.year;
                   PopulationIOService.loadPopulation({
@@ -699,9 +708,12 @@
                   return (new Date(item.date)).getTime();
               };
 
-              $rootScope.$on('selectedYearChanged', function ($event, year) {
-                  $scope.highlightMilestone(year);
-              });
+              /*
+               $rootScope.$on('selectedYearChanged', function ($event, item) {
+               console.log('selectedYearChanged', item)
+               //$scope.highlightMilestone(item);
+               });
+               */
 
               $scope.$watch(function () {
                   return $scope.loading;
@@ -972,7 +984,7 @@
                   $scope.loading += 1;
                   PopulationIOService.loadLifeExpectancyRemaining({
                       sex: ProfileService.gender,
-                      country: _getCountryObjectByFullName($scope.selectedCountryRel).POPIO_NAME,
+                      country: _getCountryObject($scope.selectedCountryRel).POPIO_NAME,
                       date: date,
                       age: ProfileService.getAgeString()
                   }, function (remainingLife) {
@@ -1001,7 +1013,9 @@
               };
 
               var _getCountryObject = function (country) {
-                  return _.find($scope.countries, function (item) {return item.GMI_CNTRY == country});
+                  console.log('Searching for country by field: ' + country)
+                  if (typeof country === 'object') {return country};
+                  return _.find($scope.countries, function (item) {return item.GMI_CNTRY == country || item.POPIO_NAME == country});
               };
               var _getCountryObjectByFullName = function (country) {
                   return _.find($scope.countries, function (item) {return item.POPIO_NAME == country});
@@ -1030,7 +1044,6 @@
               }, true);
 
               $rootScope.$on('countryRelChanged', function (e, country) {
-                  console.log(country)
                   if (ProfileService.active && country) {
                       var foundCountry = _getCountryObject(country);
                       if (foundCountry) {

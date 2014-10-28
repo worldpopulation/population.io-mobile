@@ -168,7 +168,7 @@
                   }
                 })
                 .on('click', function (d) {
-                  $rootScope.$emit('selectedYearChanged', d.year);
+                  $rootScope.$emit('selectedYearChanged', d);
                 })
                 .on('mouseenter', function (d) {
                   d3.select(this).select('circle').transition().attr({r: 10})
@@ -192,7 +192,7 @@
 
               for (var k = 0; k < data.length; k += 1) {
                 if (data[k].now) {
-                  $rootScope.$emit('selectedYearChanged', data[k].year);
+                  $rootScope.$emit('selectedYearChanged', data[k]);
                 }
               }
             };

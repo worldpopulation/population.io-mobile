@@ -28,12 +28,16 @@
 
                   var path = d3.geo.path().projection(projection);
 
+                  var _getCountryObject = function (country) {
+                      return _.find(Countries, function (item) {return item.GMI_CNTRY == country});
+                  };
+
                   var _getCountryObjectByFullName = function (country) {
                       return _.find(Countries, function (item) {return item.POPIO_NAME == country});
                   };
 
+
                   var _addDescriptionLine = function (type, data) {
-                      console.log(data)
                       var countryId;
                       if (typeof data.country === 'string') {
                           countryId = _getCountryObjectByFullName(data.country).GMI_CNTRY
@@ -212,18 +216,17 @@
                         if (error) return console.error(error);
                         var countries = topojson.feature(countriestopo, countriestopo.objects.populationio_countries).features;
                         var country = root.select('.countries').selectAll('.country').data(countries);
-                        country.enter()
+                        country
+                          .enter()
                           .insert('path')
                           .attr({
                               'class': 'country',
                               d: path,
-                              'data-id': function (d) { return d.properties.GMI_CNTRY; }
-
-                              ,
+                              'data-id': function (d) { return d.properties.GMI_CNTRY; },
                               title: function (d) { return d.properties.GMI_CNTRY; }
                           })
                           .on('click', function (d) {
-                              $rootScope.$emit('countryRelChanged', d.properties.GMI_CNTRY);
+                              $rootScope.$emit('countryRelChanged', _getCountryObject(d.properties.GMI_CNTRY).POPIO_NAME);
                           });
 
                     }
@@ -232,7 +235,6 @@
 
 
                   $scope.$watch('countryRef', function (data) {
-                      console.log(data)
                       if (data) {
                           _addDescriptionLine('ref', data);
                       }
