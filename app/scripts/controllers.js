@@ -303,8 +303,9 @@
               }, 1000);
 
           }])
-      .controller('DeathCtrl', ['$scope', '$timeout', '$http', '$interval', '$modal', '$state', '$location', '$document', '$rootScope', '$filter', 'ProfileService', 'PopulationIOService', 'BrowserService',
-          function ($scope, $timeout, $http, $interval, $modal, $state, $location, $document, $rootScope, $filter, ProfileService, PopulationIOService, BrowserService) {
+      .controller('DeathCtrl',
+      ['$scope', '$interpolate', '$timeout', '$http', '$interval', '$modal', '$state', '$location', '$document', '$rootScope', '$filter', 'ProfileService', 'PopulationIOService', 'BrowserService',
+          function ($scope, $interpolate, $timeout, $http, $interval, $modal, $state, $location, $document, $rootScope, $filter, ProfileService, PopulationIOService, BrowserService) {
 
               $scope.$watch(function () {return ProfileService.active}, function (newVal, oldVal) {
                   if (newVal && newVal !== oldVal) {
@@ -329,7 +330,8 @@
                           var today = new Date();
                           $scope.dodWorld = $filter('date')(today.setDate(today.getDate() + (remainingLife * 365)), 'd MMM, yyyy');
 
-                          $scope.remainingLifeWorldInYears = parseInt(remainingLife, 10);
+                          $scope.remainingLifeWorldInYears = parseFloat(remainingLife).toFixed(2);
+                          $scope.totalLifeWorldInYears = moment(today).diff(moment(ProfileService.birthday), 'years', true);
                       });
                       PopulationIOService.loadLifeExpectancyRemaining({
                           sex: ProfileService.gender,
@@ -339,29 +341,34 @@
                       }, function (remainingLife) {
                           var today = new Date();
                           $scope.dodCountry = $filter('date')(today.setDate(today.getDate() + (remainingLife * 365)), 'd MMM, yyyy');
-                          $scope.remainingLifeCountryInYears = parseInt(remainingLife, 10);
+                          $scope.remainingLifeCountryInYears = parseFloat(remainingLife).toFixed(2);
+                          $scope.totalLifeCountryInYears = moment(today).diff(moment(ProfileService.birthday), 'years', true);
                       });
                       $scope.$watchGroup(['remainingLifeCountryInYears', 'remainingLifeWorldInYears'],
                         function (newVals, oldVals) {
                             if ((newVals[0] && newVals[1]) && (newVals[0] !== oldVals[0] && newVals[1] !== oldVals[0])) {
                                 var negative = false;
-                                $scope.differenceInDays = function () {
-                                    var val = (newVals[0] - newVals[1]) * 365;
 
-                                    if (val < 0) {
-                                        val = '- ' + (-1 * val);
-                                        negative = true;
-                                        $scope.differenceInYears = -1 * (newVals[0] - newVals[1]) + ' years';
-                                    }
-                                    else {
-                                        val = '+ ' + val;
-                                        negative = false;
-                                        $scope.differenceInYears = newVals[0] - newVals[1] + ' years';
-                                    }
-                                    return val + ' days';
-                                }();
+                                var c = moment($scope.dodCountry);
+                                var w = moment($scope.dodWorld);
+                                var diffDays = c.diff(w, 'days');
+                                var diffYears = c.diff(w, 'years');
 
-                                $scope.soMuchToDo = negative ? 'shorter' : 'longer';
+                                console.log(c, w);
+
+                                $scope.differenceInDays = diffDays < 0 ? '- ' + (-1 * diffDays) + ' days' : '+ ' + diffDays + ' days';
+                                $scope.soMuchToDo = diffDays < 1 ? 'shorter' : 'longer';
+
+                                console.log('diffYears ' + diffYears);
+                                if (diffYears < 1 && diffYears > -1) {
+                                    $scope.differenceInUnits = diffDays.toString().replace('-', '') + ' days';
+                                }
+                                else {
+
+                                    $scope.differenceInUnits = diffYears.toString().replace('-', '') + ' years';
+                                }
+                                console.log($scope.differenceInUnits);
+
 
                             }
                         })

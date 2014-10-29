@@ -25,7 +25,7 @@
     "jquery-ui": "1.11.0",
     "angular-scroll": "~0.6.2",
     "ics.js": "git@github.com:nwcell/ics.js.git",
-    "momentjs": "2.7.0"
+    "momentjs": "2.8.3"
   },
   "description": "The World Population Project",
   "license": "",

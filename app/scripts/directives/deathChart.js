@@ -13,6 +13,7 @@
                         pointerWorld, pointerCountry,
                         parentHeight = 240,
                         yAxisFormat = d3.format('.0%'),
+                        ageFormat = d3.format('.2f'),
                         xRange = d3.scale.linear(),
                         yRange = d3.scale.linear().nice(),
                         line = d3.svg.line(),
@@ -117,7 +118,7 @@
                                 x1: 0,
                                 y1: 0,
                                 x2: 0,
-                                y2: 0
+                                y2: parentHeight + 50
                             })
                             .style({
                                 stroke: '#888',
@@ -131,7 +132,8 @@
                             })
                             .attr({
                                 class: 'region',
-                                dx: 10
+                                dx: 10,
+                                dy: 10
                             })
                             .text('World')
                           ;
@@ -144,17 +146,19 @@
                             .attr({
                                 class: 'age',
                                 dx: 10,
-                                dy: 10
+                                dy: 25
                             })
                             .text('World')
                           ;
-                          pointerWorld.append('circle')
-                            .attr({
-                                r: 4
-                            })
-                            .style({
-                                fill: '#333'
-                            });
+                          /*
+                           pointerWorld.append('circle')
+                           .attr({
+                           r: 4
+                           })
+                           .style({
+                           fill: '#333'
+                           });
+                           */
 
                           pointerCountry = chart.append('g').attr({class: 'pointer'});
                           pointerCountry.append('line')
@@ -162,7 +166,7 @@
                                 x1: 0,
                                 y1: 0,
                                 x2: 0,
-                                y2: 0
+                                y2: parentHeight + 10
                             })
                             .style({
                                 stroke: '#888',
@@ -176,7 +180,8 @@
                             })
                             .attr({
                                 class: 'region',
-                                dx: 10
+                                dx: 10,
+                                dy: 10
                             })
                           ;
                           pointerCountry.append('text')
@@ -188,24 +193,25 @@
                             .attr({
                                 class: 'age',
                                 dx: 10,
-                                dy: 10
+                                dy: 25
                             })
                             .text('World')
                           ;
 
-                          pointerCountry.append('circle')
-                            .attr({
-                                r: 4
-                            })
-                            .style({
-                                fill: '#333'
-                            });
+                          /*
+                           pointerCountry.append('circle')
+                           .attr({
+                           r: 4
+                           })
+                           .style({
+                           fill: '#333'
+                           });
+                           */
                           areaWorld
                             .on('mouseenter', _showTooltip)
                             .on('mousemove', function (d) {
                                 var mouse = d3.mouse(this);
-
-                                var ageFormatted = $filter('number')(parseInt(xRange.invert(mouse[0]), 10), 0);
+                                var ageFormatted = $filter('number')(xRange.invert(mouse[0]), 2);
                                 var deathRate = $filter('number')(yRange.invert(mouse[1]), 2);
                                 tooltip.html(function (d, i) {
                                       return "<p><span class='tooltip-label'>Age:</span><span class='tooltip-value'>" + ageFormatted + " years</span></p>"
@@ -225,7 +231,7 @@
                             .on('mousemove', function (d) {
                                 var mouse = d3.mouse(this);
 
-                                var ageFormatted = $filter('number')(parseInt(xRange.invert(mouse[0]), 10), 0);
+                                var ageFormatted = $filter('number')(xRange.invert(mouse[0]), 2);
                                 var deathRate = $filter('number')(yRange.invert(mouse[1]), 2);
                                 tooltip.html(function (d, i) {
                                       return "<p><span class='tooltip-label'>Age:</span><span class='tooltip-value'>" + ageFormatted + " years</span></p>"
@@ -270,6 +276,7 @@
 
                           var worldMaxMortality = _.max(data.world, function (item) {return item.mortality_percent});
                           var countryMaxMortality = _.max(data.country, function (item) {return item.mortality_percent});
+                          console.log(data.country)
                           var yTickStep = d3.max([worldMax, countryMax]) / 3; // To have 4 ticks total for y axis
                           xAxis.tickFormat(function (d) {return d + 'y'});
                           yAxis.tickFormat(function (d) {return yAxisFormat(d / 100)})
@@ -329,53 +336,65 @@
                           pointerWorld
                             .transition()
                             .attr({
-                                transform: 'translate(' + [xRange(worldMaxMortality.age), yRange(worldMaxMortality.mortality_percent)] + ')'
+                                transform: 'translate(' + [xRange($scope.totalLifeWorldInYears), -100] + ')'
                             });
-                          pointerWorld.select('line')
-                            .transition()
-                            .attr({
-                                y2: -yRange(worldMaxMortality.mortality_percent) - 90
-                            });
-                          pointerWorld.select('.region')
-                            .transition()
-                            .attr({
-                                dy: -yRange(worldMaxMortality.mortality_percent) - 80
-                            });
+                          /*
+                           pointerWorld.select('line')
+                           .transition()
+                           .attr({
+                           y2: -yRange(worldMaxMortality.mortality_percent) - 90
+                           });
+                           */
+                          /*
+                           pointerWorld.select('.region')
+                           .transition()
+                           .attr({
+                           dy: -yRange(worldMaxMortality.mortality_percent) - 80
+                           });
+                           */
 
                           pointerWorld.select('.age')
                             .transition()
-                            .attr({
-                                dy: -yRange(worldMaxMortality.mortality_percent) - 65
-                            })
+                              /*
+                               .attr({
+                               dy: -yRange(worldMaxMortality.mortality_percent) - 65
+                               })
+                               */
                             .text(function () {
-                                return worldMaxMortality.age + ' years'
+                                return ageFormat($scope.totalLifeWorldInYears) + ' years'
                             });
 
                           pointerCountry
                             .transition()
                             .attr({
-                                transform: 'translate(' + [xRange(countryMaxMortality.age), yRange(countryMaxMortality.mortality_percent)] + ')'
+                                transform: 'translate(' + [xRange($scope.totalLifeCountryInYears), -60] + ')'
                             });
-                          pointerCountry.select('line')
-                            .transition()
-                            .attr({
-                                y2: -yRange(countryMaxMortality.mortality_percent) - 40
-                            });
+                          /*
+                           pointerCountry.select('line')
+                           .transition()
+                           .attr({
+                           y2: -yRange(countryMaxMortality.mortality_percent) - 40
+                           });
+                           */
 
                           pointerCountry.select('.region')
                             .text(ProfileService.country)
-                            .transition()
-                            .attr({
-                                dy: -yRange(countryMaxMortality.mortality_percent) - 30
-                            });
+                          /*
+                           .transition()
+                           .attr({
+                           dy: -yRange(countryMaxMortality.mortality_percent) - 30
+                           });
+                           */
 
                           pointerCountry.select('.age')
                             .transition()
-                            .attr({
-                                dy: -yRange(countryMaxMortality.mortality_percent) - 15
-                            })
+                              /*
+                               .attr({
+                               dy: -yRange(countryMaxMortality.mortality_percent) - 15
+                               })
+                               */
                             .text(function () {
-                                return countryMaxMortality.age + ' years'
+                                return ageFormat($scope.totalLifeCountryInYears) + ' years'
                             })
 
                       }
