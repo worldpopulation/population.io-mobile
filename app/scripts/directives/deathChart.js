@@ -118,7 +118,8 @@
                                 x1: 0,
                                 y1: 0,
                                 x2: 0,
-                                y2: parentHeight + 50
+                                y2: parentHeight + 50,
+                                'stroke-dasharray': '2,2'
                             })
                             .style({
                                 stroke: '#888',
@@ -166,7 +167,8 @@
                                 x1: 0,
                                 y1: 0,
                                 x2: 0,
-                                y2: parentHeight + 10
+                                y2: parentHeight + 10,
+                                'stroke-dasharray': '2,2'
                             })
                             .style({
                                 stroke: '#888',
