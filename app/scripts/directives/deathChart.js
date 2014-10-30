@@ -340,7 +340,7 @@
 
                       function _updateChart(data) {
 
-                          console.log(age)
+                          //console.log(age)
                           personAreaCountry = _.filter(data.country, function (item) {
                               return item.age >= age - 5;
 

@@ -110,7 +110,7 @@
                                 })
                                   .success(function (data) {
                                       if (data.mortality_distribution && onSuccess) {
-                                          console.log({world: world, country: data.mortality_distribution})
+                                          //console.log({world: world, country: data.mortality_distribution})
                                           onSuccess({world: world, country: data.mortality_distribution});
 
                                       }
@@ -162,7 +162,7 @@
 
                   // GET /1.0/wp-rank/{dob}/{sex}/{country}/on/{date}/
                   loadWpRankOnDate: function (args, onSuccess, onError) {
-                      console.log('loadWpRankOnDate')
+                      //console.log('loadWpRankOnDate')
                       $http({
                           method: 'get',
                           url: [

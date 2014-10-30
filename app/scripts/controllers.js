@@ -62,7 +62,7 @@
                           $scope.rankGlobal = rank;
                           $rootScope.$broadcast('rankGlobalChanged', $scope.rankGlobal);
                       });
-                      console.log(ProfileService.country)
+                      //console.log(ProfileService.country)
                       PopulationIOService.getLocalPopulation(ProfileService.country, function (data) {
                           $scope.localPopulationToday = data.total_population[0].population;
                           $scope.localPopulationTomorrow = data.total_population[1].population;
@@ -239,7 +239,7 @@
               var tickerOlderLocal = d3.scale.linear()
                 .domain([today.getTime(), _getNextDay().getTime()]);
 
-              console.log(today.getTime() + ' - ' + _getNextDay().getTime())
+              //console.log(today.getTime() + ' - ' + _getNextDay().getTime())
 
 
               $scope.$watch(function () {
@@ -296,7 +296,7 @@
                       country: ProfileService.country
                   }, function (rank) {
                       $scope.rankLocal = rank;
-                      console.log('$scope.rankLocal', $scope.rankLocal)
+                      //console.log('$scope.rankLocal', $scope.rankLocal)
                       $rootScope.$broadcast('rankLocalChanged', $scope.rankLocal);
                   });
 
@@ -307,7 +307,7 @@
                       country: 'World'
                   }, function (rank) {
                       $scope.rankGlobal = rank;
-                      console.log('$scope.rankGlobal', $scope.rankGlobal)
+                      //console.log('$scope.rankGlobal', $scope.rankGlobal)
                       $rootScope.$broadcast('rankGlobalChanged', $scope.rankGlobal);
                   });
 
@@ -329,7 +329,7 @@
                       date: $filter('date')(_getNextDay(), 'yyyy-MM-dd')
                   }, function (rank) {
                       $scope.rankGlobalTomorrow = rank;
-                      console.log('$scope.rankGlobalTomorrow', $scope.rankGlobalTomorrow)
+                      //console.log('$scope.rankGlobalTomorrow', $scope.rankGlobalTomorrow)
                   });
 
                   PopulationIOService.loadPopulation({
@@ -543,7 +543,7 @@
               });
               $scope.goGoGadget = function () {
                   if ($scope.goForm.$invalid) {
-                      console.log($scope.goForm);
+                      //console.log($scope.goForm);
                       $scope.highlightErrors = true;
                       $scope.highlightExtra = true;
                       $timeout(function () { $scope.highlightExtra = false}, 2000);
