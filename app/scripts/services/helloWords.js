@@ -921,7 +921,7 @@
         },
         {
           'abbreviation': 'SK',
-          'language': 'Slovakia',
+          'language': 'Slovak Republic',
           'greeting': 'Dobrý deň'
         },
         {
