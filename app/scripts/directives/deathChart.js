@@ -314,6 +314,7 @@
 
                           function _showTooltip() {
                               tooltip
+                                .attr({class: 'chart-tooltip death'})
                                 .transition()
                                 .duration(200)
                                 .style({
@@ -323,13 +324,14 @@
                           }
 
                           function _hideTooltip() {
-
                               tooltip
                                 .transition()
                                 .duration(200)
                                 .style("opacity", 0)
                                 .each('end', function () {
-                                    d3.select(this).style({display: 'none'})
+                                    d3.select(this)
+                                      .style({display: 'none'})
+                                      .attr({class: 'chart-tooltip'})
                                 })
                               ;
                           }

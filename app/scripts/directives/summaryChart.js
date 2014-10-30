@@ -9,6 +9,7 @@
                   link: function ($scope, element) {
                       var chart,
                         xAxis, yAxis,
+                        actionBox,
                         parentWidth = element[0].clientWidth,
                         data, pointer,
                         parentHeight = 240,
@@ -21,11 +22,9 @@
                         areaTotal, areaLine,
                         areaYounger,
                         xAxisElement, yAxisElement,
-                        verticalPointerLine,
                         xLabel, yLabel,
                         xLabelLine, yLabelLine,
-                        tooltip = d3.select('.chart-tooltip')
-                        ;
+                        tooltip = d3.select('.chart-tooltip');
 
                       _initChart();
                       $scope.$watch('region', function (newVal) {
@@ -108,18 +107,6 @@
                                 stroke: '#d9d9d9',
                                 'stroke-width': 1
                             });
-                          verticalPointerLine = chart.append('line')
-                            .attr({
-                                class: 'vertical-pointer',
-                                x1: -100,
-                                y1: -63,
-                                x2: -150,
-                                y2: parentHeight - 100
-                            })
-                            .style({
-                                stroke: 'rgba(0,0,0,0.2)',
-                                'stroke-width': 1
-                            });
 
                           yLabel = chart.append('text')
                             .text('People')
@@ -176,11 +163,22 @@
                                 fill: 'black',
                                 stroke: 'white'
                             });
+                          actionBox = chart.append('rect')
+                            .style({
+                                fill: 'red',
+                                opacity: 0
+                            })
+                            .attr({
+                                transform: 'translate(120,-40)',
+                                width: parentWidth - 190,
+                                height: 180
+                            })
+                          ;
 
 
-                          areaTotal
+                          actionBox
                             .on('mouseenter', _showTooltip)
-                            .on('mousemove', function (d) {
+                            .on('mousemove', function () {
                                 var mouse = d3.mouse(this);
 
                                 var ageFormatted = $filter('number')(parseInt(xRange.invert(mouse[0]), 10), 0);
@@ -190,38 +188,9 @@
                                         + "<p><span class='tooltip-label'>Population:</span><span class='tooltip-value'>" + populationFormatted + "</span></p>";
                                   }
                                 );
-                                verticalPointerLine.attr({
-                                    x1: d3.event.pageX - 38,
-                                    x2: d3.event.pageX - 38
-                                });
-
                                 tooltip
                                   .style("left", (d3.event.pageX - 105) + "px")
-                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] - 150) + "px");
-
-                            }
-                          )
-                            .on('mouseleave', _hideTooltip);
-                          areaYounger
-                            .on('mouseenter', _showTooltip)
-                            .on('mousemove', function (d) {
-                                var mouse = d3.mouse(this);
-
-                                var ageFormatted = $filter('number')(parseInt(xRange.invert(mouse[0]), 10), 0);
-                                var populationFormatted = $filter('number')(parseInt(yRange.invert(mouse[1]), 10), 0);
-                                tooltip.html(function (d, i) {
-                                      return "<p><span class='tooltip-label'>Age:</span><span class='tooltip-value'>" + ageFormatted + "</span></p>"
-                                        + "<p><span class='tooltip-label'>Population:</span><span class='tooltip-value'>" + populationFormatted + "</span></p>";
-                                  }
-                                );
-                                verticalPointerLine.attr({
-                                    x1: d3.event.pageX - 38,
-                                    x2: d3.event.pageX - 38
-                                });
-
-                                tooltip
-                                  .style("left", (d3.event.pageX - 105) + "px")
-                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] - 150) + "px");
+                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] - 130) + "px");
 
                             }
                           )
@@ -229,6 +198,7 @@
 
                           function _showTooltip() {
                               tooltip
+                                .attr({class: 'chart-tooltip summary'})
                                 .transition()
                                 .duration(200)
                                 .style({
@@ -238,17 +208,16 @@
                           }
 
                           function _hideTooltip() {
-                              verticalPointerLine.attr({
-                                  x1: -100,
-                                  x2: -100
-                              });
 
                               tooltip
                                 .transition()
                                 .duration(200)
                                 .style("opacity", 0)
                                 .each('end', function () {
-                                    d3.select(this).style({display: 'none'})
+                                    d3.select(this)
+                                      .style({display: 'none'})
+                                      .attr({class: 'chart-tooltip'})
+
                                 })
                               ;
                           }
