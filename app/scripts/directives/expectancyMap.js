@@ -11,7 +11,8 @@
               },
               link: function ($scope, element) {
                   var width = 1200,
-                    height = 500;
+                    height = 500,
+                    countryObject;
 
                   var root = d3.select(element[0])
                     .append('svg')
@@ -21,7 +22,7 @@
                     })
                     .append('g')
                     .attr({transform: 'translate(0,0)'});
-                  root.append('g').attr('class', 'countries')
+                  root.append('g').attr('class', 'countries');
                   var projection = d3.geo.robinson()
                     .scale(181)
                     .translate([width / 2, height / 1.80]);
@@ -62,9 +63,9 @@
                             x: bbox.x + bbox.width / 2,
                             y: bbox.y + bbox.height / 2
                         };
-                      console.log(_.find(Countries, function (item) {
+                      countryObject = _.find(Countries, function (item) {
                           return item.GMI_CNTRY === countryId
-                      }))
+                      });
                       var _textTween = function (data, node, label, prefix) {
                           var value = Math.round(data * 10) / 10,
                             i = d3.interpolate(0, value),
@@ -72,9 +73,7 @@
                             round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
 
                           return function (t) {
-                              var text = (prefix ? prefix + ' ' : '') + Math.round(i(t) * round) / round + (label ? ' ' + label : '');
-
-                              node.textContent = text;
+                              node.textContent = (prefix ? prefix + ' ' : '') + Math.round(i(t) * round) / round + (label ? ' ' + label : '');
                           };
                       };
 
@@ -206,10 +205,29 @@
                         .attr({
                             x1: 0,
                             x2: function () {
+                                console.log(countryId)
                                 if (type === 'ref') {
-                                    return -center.x;
+
+                                    //two edge cases. to be refactored by using xy coords from countries.csv
+                                    if (countryId === 'USA') {
+                                        return -200
+                                    }
+                                    else if (countryId === 'RUS') {
+                                        return -300
+                                    }
+                                    else {
+                                        return -center.x;
+                                    }
                                 } else {
-                                    return width - center.x;
+                                    if (countryId === 'USA') {
+                                        return width - 200
+                                    }
+                                    else if (countryId === 'RUS') {
+                                        return width - 300
+                                    }
+                                    else {
+                                        return width - center.x;
+                                    }
                                 }
                             }
                         });

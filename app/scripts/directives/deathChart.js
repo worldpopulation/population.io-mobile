@@ -269,7 +269,7 @@
                             })
                             .attr({
                                 transform: 'translate(120,-150)',
-                                width: parentWidth - 190,
+                                width: parentWidth - 280,
                                 height: 340
                             })
                           ;
@@ -278,14 +278,14 @@
                             .on('mouseenter', _showTooltip)
                             .on('mousemove', function () {
                                 var mouse = d3.mouse(this);
-                                var ageFormatted = $filter('number')(xRange.invert(mouse[0]), 2);
+                                var ageFormatted = $filter('number')(xRange.invert(mouse[0] + 120), 2);
 
                                 var yPositionWorld = _.find(personAreaWorld, function (item, i) {
-                                    return item.age >= xRange.invert(mouse[0]) - 5;
+                                    return item.age >= xRange.invert(mouse[0] + 120) - 5;
                                 }).mortality_percent;
 
                                 var yPositionCountry = _.find(personAreaCountry, function (item, i) {
-                                    return item.age >= xRange.invert(mouse[0]) - 5;
+                                    return item.age >= xRange.invert(mouse[0] + 120) - 5;
                                 }).mortality_percent;
 
                                 /*
@@ -342,11 +342,11 @@
 
                           console.log(age)
                           personAreaCountry = _.filter(data.country, function (item) {
-                              return item.age >= age - 5;
+                              return item.age >= age - 10;
 
                           });
                           personAreaWorld = _.filter(data.world, function (item) {
-                              return item.age >= age - 5;
+                              return item.age >= age - 10;
 
                           });
                           var worldMax = d3.max(personAreaWorld, function (d) { return d.mortality_percent; });
@@ -359,7 +359,7 @@
                           yAxis.tickFormat(function (d) {return yAxisFormat(d / 100)})
                             .tickValues([0, yTickStep, yTickStep * 2, d3.max([worldMax, countryMax])])
 
-                          xRange.range([120, parentWidth - 160]).domain([d3.min(personAreaCountry, function (d) { return d.age; }), d3.max(personAreaCountry, function (d) { return d.age; })]);
+                          xRange.range([120, parentWidth - 160]).domain([d3.min(personAreaCountry, function (d) { return d.age; }), d3.max(personAreaCountry, function (d) { return d.age; })]).nice();
                           yRange.range([parentHeight - 50, 0]).domain([0, d3.max([worldMax, countryMax])]);
 
 
