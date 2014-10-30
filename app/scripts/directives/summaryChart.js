@@ -8,7 +8,7 @@
                   restrict: 'E',
                   link: function ($scope, element) {
                       var chart,
-                        xAxis, yAxis,
+                        xAxis, yAxis, coords,
                         parentWidth = element[0].clientWidth,
                         data, pointer,
                         parentHeight = 240,
@@ -57,6 +57,17 @@
                           age = $scope.profile.getAge();
                           _updateChart(population)
                       });
+
+                      function findYatX(x, line) {
+                          function getXY(len) {
+                              var point = line.node().getPointAtLength(len);
+                              return [point.x, point.y];
+                          }
+
+                          var curlen = 0;
+                          while (getXY(curlen)[0] < x) { curlen += 0.01; }
+                          return getXY(curlen);
+                      }
 
                       function _initChart() {
                           chart = d3.select(element[0])
@@ -177,9 +188,10 @@
                                   }
                                 );
 
+                                coords = findYatX(d3.event.pageX - 35, areaTotal);
                                 tooltip
                                   .style("left", (d3.event.pageX - 100) + "px")
-                                  .style("top", (d3.event.pageY - 120) + "px");
+                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] + coords[1] - 120) + "px");
 
                             }
                           )
@@ -197,9 +209,10 @@
                                   }
                                 );
 
+                                coords = findYatX(d3.event.pageX - 35, areaYounger);
                                 tooltip
                                   .style("left", (d3.event.pageX - 100) + "px")
-                                  .style("top", (d3.event.pageY - 120) + "px");
+                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] + coords[1] - 120) + "px");
 
                             }
                           )

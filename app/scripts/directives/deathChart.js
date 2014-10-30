@@ -8,7 +8,7 @@
                   restrict: 'E',
                   link: function ($scope, element) {
                       var chart,
-                        xAxis, yAxis,
+                        xAxis, yAxis, coords,
                         parentWidth = element[0].clientWidth,
                         pointerPerson, pointerWorld, pointerCountry,
                         personAreaWorld, personAreaCountry,
@@ -36,6 +36,17 @@
                               _updateChart(mortality)
                           }, 0);
                       });
+
+                      function findYatX(x, line) {
+                          function getXY(len) {
+                              var point = line.node().getPointAtLength(len);
+                              return [point.x, point.y];
+                          }
+
+                          var curlen = 0;
+                          while (getXY(curlen)[0] < x) { curlen += 0.01; }
+                          return getXY(curlen);
+                      }
 
                       function _initChart() {
                           chart = d3.select(element[0])
@@ -262,18 +273,24 @@
                             .on('mousemove', function (d) {
                                 var mouse = d3.mouse(this);
                                 var ageFormatted = $filter('number')(xRange.invert(mouse[0]), 2);
-                                var yPosition = _.find(personAreaWorld, function (item) {
+                                var periodIndex;
+                                var yPosition = _.find(personAreaWorld, function (item, i) {
+                                    periodIndex = i;
                                     return item.age >= xRange.invert(mouse[0]) - 5;
                                 }).mortality_percent;
+
+
                                 var deathRate = $filter('number')(yPosition, 2);
                                 tooltip.html(function (d, i) {
                                       return "<p><span class='tooltip-label'>Age:</span><span class='tooltip-value'>" + ageFormatted + " years</span></p>"
                                         + "<p><span class='tooltip-label'>Relative Death Rate:</span><span class='tooltip-value'>" + deathRate + "%</span></p>";
                                   }
                                 );
+
+                                coords = findYatX(d3.event.pageX - 35, areaWorld);
                                 tooltip
                                   .style("left", (d3.event.pageX - 100) + "px")
-                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] + yRange(yPosition) - 100) + "px");
+                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] + coords[1] - 120) + "px");
 
                             }
                           )
@@ -295,9 +312,10 @@
                                   }
                                 );
 
+                                coords = findYatX(d3.event.pageX - 35, areaCountry);
                                 tooltip
                                   .style("left", (d3.event.pageX - 100) + "px")
-                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] + yRange(yPosition) - 100) + "px");
+                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] + coords[1] - 120) + "px");
 
                             }
                           )
@@ -337,10 +355,6 @@
                               return item.age >= age - 5;
 
                           });
-                          console.log(personAreaCountry)
-                          console.log(personAreaWorld)
-
-
                           var worldMax = d3.max(personAreaWorld, function (d) { return d.mortality_percent; });
                           var countryMax = d3.max(personAreaCountry, function (d) { return d.mortality_percent; });
 
@@ -362,7 +376,8 @@
                             .y(function (d) {
                                 return yRange(d.mortality_percent);
                             })
-                            .interpolate('linear');
+                            .interpolate('linear')
+                          ;
                           area
                             .x(function (d) { return xRange(d.age); })
                             .y0(parentHeight - 50)
