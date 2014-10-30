@@ -14,7 +14,7 @@ world-clock
                 .typeahead
                     input.year-field.form-control(type="text", name="birthdayYear", ng-value="profile.birthday.year", ng-model = "profile.birthday.year", placeholder = "Year", typeahead="birthdayYear for birthdayYear in birthdays($viewValue,'y')", typeahead-wait-ms="100", typeahead-editable="true", required, validate-year, typeahead-on-select='setYear($item, $model, $label)', formnovalidate)
                 .typeahead.icon-country
-                    input.form-control(type="text",name='country', placeholder="Country", ng-model="profile.country", ng-value="profile.country", typeahead="country.POPIO_NAME for country in countries | filter: $viewValue", typeahead-wait-ms="100", typeahead-editable="true", required, stoptab, validate-country, typeahead-on-select='setCountry($item, $model, $label)', formnovalidate)
+                    input.form-control(type="text",name='country', placeholder="Country", ng-model="profile.country", ng-value="profile.country", typeahead="country.POPIO_NAME for country in countriesList($viewValue)", typeahead-wait-ms="100", typeahead-editable="true", required, stoptab, validate-country, typeahead-on-select='setCountry($item, $model, $label)', formnovalidate)
                 .toggle
                     label.icon.icon-female(ng-model="profile.gender" btn-radio="'female'", required) Female
                     label.icon.icon-male(ng-model="profile.gender" btn-radio="'male'", required) Male

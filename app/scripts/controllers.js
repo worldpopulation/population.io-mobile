@@ -5,6 +5,26 @@
 
       .controller('MainCtrl', ['$scope', '$timeout', '$http', '$interval', '$modal', '$state', '$location', '$document', '$rootScope', '$filter', 'ProfileService', 'PopulationIOService', 'BrowserService', 'Countries',
           function ($scope, $timeout, $http, $interval, $modal, $state, $location, $document, $rootScope, $filter, ProfileService, PopulationIOService, BrowserService, Countries) {
+              $rootScope.countriesList = function (newVal) {
+                  var alternativeName = newVal;
+                  var aliases = [
+                        {alias: 'Great Britain', country: 'United Kingdom'},
+                        {alias: 'Britain', country: 'United Kingdom'},
+                        {alias: 'England', country: 'United Kingdom'},
+                        {alias: 'United States of America', country: 'United States'}]
+                    ;
+                  var foundAlias = _.find(aliases, function (item) {
+                      return item.alias.toLowerCase().indexOf(newVal.toLowerCase()) > -1
+                  });
+                  if (foundAlias) {
+                      alternativeName = foundAlias.country
+                  }
+
+                  return _.filter(Countries, function (v) {
+                      return (v.POPIO_NAME.toLowerCase().indexOf(newVal.toLowerCase()) > -1 || v.POPIO_NAME.toLowerCase().indexOf(alternativeName.toLowerCase()) > -1)
+                  });
+              };
+
               $scope.rankGlobal = 0;
               if (!BrowserService.isSupported()) {
                   $modal.open({

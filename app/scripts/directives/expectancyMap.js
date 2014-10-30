@@ -205,29 +205,10 @@
                         .attr({
                             x1: 0,
                             x2: function () {
-                                console.log(countryId)
                                 if (type === 'ref') {
-
-                                    //two edge cases. to be refactored by using xy coords from countries.csv
-                                    if (countryId === 'USA') {
-                                        return -200
-                                    }
-                                    else if (countryId === 'RUS') {
-                                        return -300
-                                    }
-                                    else {
-                                        return -center.x;
-                                    }
+                                    return -center.x;
                                 } else {
-                                    if (countryId === 'USA') {
-                                        return width - 200
-                                    }
-                                    else if (countryId === 'RUS') {
-                                        return width - 300
-                                    }
-                                    else {
-                                        return width - center.x;
-                                    }
+                                    return width - center.x;
                                 }
                             }
                         });
