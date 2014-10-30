@@ -63,14 +63,15 @@
                             y: bbox.y + bbox.height / 2
                         };
 
-                      var _textTween = function (data, node, label) {
+                      var _textTween = function (data, node, label, prefix) {
                           var value = Math.round(data * 10) / 10,
                             i = d3.interpolate(0, value),
                             prec = (value + '').split('.'),
                             round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
 
                           return function (t) {
-                              var text = Math.round(i(t) * round) / round + (label ? ' ' + label : '');
+                              var text = (prefix ? prefix+' ' : '') + Math.round(i(t) * round) / round + (label ? ' ' + label : '');
+
                               node.textContent = text;
                           };
                       };
@@ -164,16 +165,16 @@
                             y2: -20
                         });
 
-                      textBlock2.append('text').attr('y', 0).text('You will be');
+                      textBlock2.append('text').attr('y', 0).text('We estimate you will live');
                       textBlock2.append('text')
                         .text(data.lifeExpectancy)
                         .transition()
                         .duration(1000)
                         .tween('text', function () {
-                            return _textTween(data.lifeExpectancy, this, 'years old');
+                            return _textTween(data.lifeExpectancy, this, 'years', 'until age');
                         })
                         .attr('y', 20);
-                      textBlock2.append('text').attr('y', 40).text('on your day of death');
+                      //textBlock2.append('text').attr('y', 40).text('on your day of death');
                       textBlock2.append('text').attr('y', 65).text(deathDate)
                         .style({
                             'font-size': 20,

@@ -1053,9 +1053,7 @@
 
                       var ageDate = new Date(Date.now() - (new Date(ProfileService.birthday.formatted)).getTime());
                       var lifeExpectancy = ProfileService.getAge() + remainingLife + (ageDate.getMonth() / 11);
-                      console.log('****************************')
-                      console.log(ProfileService.getAge() + remainingLife + (ageDate.getMonth() / 11))
-                      console.log('****************************')
+                      $rootScope.totalLifeLengthLocal = ProfileService.getAge() + remainingLife + (ageDate.getMonth() / 11)
 
                       $scope.activeCountryRef = {
                           country: $scope.selectedCountryRef,
@@ -1086,7 +1084,7 @@
 
                       var ageDate = new Date(Date.now() - (new Date(ProfileService.birthday.formatted)).getTime());
                       var lifeExpectancy = ProfileService.getAge() + remainingLife + (ageDate.getMonth() / 11);
-
+                      $rootScope.totalLifeLengthLocal = ProfileService.getAge() + remainingLife + (ageDate.getMonth() / 11)
                       $scope.activeCountryRel = {
                           country: $scope.selectedCountryRel,
                           yearsLeft: remainingLife,

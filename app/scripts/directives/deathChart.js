@@ -363,7 +363,8 @@
                                })
                                */
                             .text(function () {
-                                return ageFormat($scope.totalLifeWorldInYears) + ' years'
+                                return $filter('number')($scope.totalLifeWorldInYears, 1) + ' years'
+                                //return '???' + ' years'
                             });
 
                           pointerCountry
@@ -396,7 +397,8 @@
                                })
                                */
                             .text(function () {
-                                return ageFormat($scope.totalLifeCountryInYears) + ' years'
+                                //return ageFormat($scope.totalLifeCountryInYears) + ' years'
+                                return $filter('number')($scope.totalLifeLengthLocal, 1) + ' years'
                             })
 
                       }
