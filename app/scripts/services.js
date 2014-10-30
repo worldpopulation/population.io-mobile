@@ -57,6 +57,24 @@
                         });
                   },
 
+                  getLocalPopulation: function (country, onSuccess, onError) {
+                      $http({
+                          method: 'get',
+                          url: baseUrl + '/population/' + country + '/today-and-tomorrow/'
+                      })
+                        .success(function (data) {
+                            if (data && onSuccess) {
+                                onSuccess(data);
+                            }
+                        })
+                        .error(function () {
+                            if (onError) {
+                                onError();
+                            }
+                            console.info('getCountryPopulation() error');
+                        });
+                  },
+
                   // GET /1.0/countries/
                   loadCountries: function (onSuccess, onError) {
                       $http({

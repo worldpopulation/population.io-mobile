@@ -42,6 +42,11 @@
                           $scope.rankGlobal = rank;
                           $rootScope.$broadcast('rankGlobalChanged', $scope.rankGlobal);
                       });
+                      console.log(ProfileService.country)
+                      PopulationIOService.getLocalPopulation(ProfileService.country, function (data) {
+                          $scope.localPopulationToday = data.total_population[0].population;
+                          $scope.localPopulationTomorrow = data.total_population[1].population;
+                      });
 
                       $timeout(function () {
                           $scope.showSection($rootScope.target);
@@ -291,10 +296,7 @@
                       country: ProfileService.country,
                       date: $filter('date')(_getNextDay(), 'yyyy-MM-dd')
                   }, function (rank) {
-                      console.log('******************************')
-                      console.log(rank)
                       $scope.rankLocalTomorrow = rank;
-                      console.log('$scope.rankLocalTomorrow', $scope.rankLocalTomorrow)
                   });
 
                   // Global rank for world of the user
@@ -335,35 +337,35 @@
                   });
               };
               $scope.$watchGroup(['rankLocal', 'rankGlobal', 'rankLocalTomorrow', 'rankGlobalTomorrow', 'countryPopulation', 'worldPopulation'], function (newVals, oldVals) {
-                  console.log($scope.worldPopulationToday);
-                  console.log($scope.worldPopulationTomorrow);
-                  console.log(newVals)
-                  console.log('#########################')
+                  //console.log($scope.worldPopulationToday);
+                  //console.log($scope.worldPopulationTomorrow);
+                  //console.log(newVals)
+                  //console.log('#########################')
                   if (!_(newVals).contains(undefined) && !rangeLoaded) {
 
                       tickerYoungerGlobal
                         .range([$scope.rankGlobal, $scope.rankGlobalTomorrow]);
                       tickerYoungerLocal
-                        .range([$scope.rankLocal, $scope.rankLocalTomorrow]);
+                        .range([$scope.rankLocal, $scope.rankLocalTomorrow])
 
                       tickerOlderGlobal
                         .range([$scope.rankGlobalTomorrow, $scope.worldPopulation]);
 
                       tickerOlderLocal
-                        .range([$scope.rankLocalTomorrow, $scope.rankLocalTomorrow]);
+                        .range([$scope.rankLocal, $scope.rankLocalTomorrow]);
 
 
                       $scope.scaledRankYoungerLocal = tickerYoungerLocal(new Date().getTime())
                       $scope.scaledRankYoungerGlobal = tickerYoungerGlobal(new Date().getTime())
 
-                      $scope.scaledRankOlderLocal = $scope.countryPopulation - tickerOlderLocal(new Date().getTime())
+                      $scope.scaledRankOlderLocal = $scope.localPopulationToday - tickerYoungerLocal(new Date().getTime())
                       $scope.scaledRankOlderGlobal = $scope.worldPopulation - tickerYoungerGlobal(new Date().getTime())
 
-                      console.log('!!!!!! tickerYoungerGlobal ' + tickerYoungerGlobal(new Date().getTime()))
-                      console.log('!!!!!! tickerYoungerLocal ' + tickerYoungerLocal(new Date().getTime()))
-
-                      console.log('!!!!!! tickerOlderGlobal ' + tickerOlderGlobal(new Date().getTime()))
-                      console.log('!!!!!! tickerOlderLocal ' + $scope.scaledRankOlderLocal)
+                      //console.log('!!!!!! tickerYoungerGlobal ' + tickerYoungerGlobal(new Date().getTime()))
+                      //console.log('!!!!!! tickerYoungerLocal ' + tickerYoungerLocal(new Date().getTime()))
+                      //
+                      //console.log('!!!!!! tickerOlderGlobal ' + tickerOlderGlobal(new Date().getTime()))
+                      //console.log('!!!!!! tickerOlderLocal ' + $scope.scaledRankOlderLocal)
 
                   }
 
@@ -441,7 +443,7 @@
                                     $scope.differenceInUnits = diffDays.toString().replace('-', '') + ' days';
                                 }
                                 else {
-                                    if (Math.abs(diffYears) <=1) {
+                                    if (Math.abs(diffYears) <= 1) {
                                         $scope.differenceInUnits = diffYears.toString().replace('-', '') + ' year';
                                     } else {
                                         $scope.differenceInUnits = diffYears.toString().replace('-', '') + ' years';
