@@ -70,7 +70,7 @@
                             round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
 
                           return function (t) {
-                              var text = (prefix ? prefix+' ' : '') + Math.round(i(t) * round) / round + (label ? ' ' + label : '');
+                              var text = (prefix ? prefix + ' ' : '') + Math.round(i(t) * round) / round + (label ? ' ' + label : '');
 
                               node.textContent = text;
                           };
@@ -167,11 +167,11 @@
 
                       textBlock2.append('text').attr('y', 0).text('We estimate you will live');
                       textBlock2.append('text')
-                        .text( 'until age' +  data.lifeExpectancy)
+                        .text('until age' + data.lifeExpectancy)
                         .transition()
                         .duration(1000)
                         .tween('text', function () {
-                            return _textTween(data.lifeExpectancy, this, 'years');
+                            return _textTween(data.lifeExpectancy, this, 'years', 'until age');
                         })
                         .attr('y', 20);
                       //textBlock2.append('text').attr('y', 40).text('on your day of death');
