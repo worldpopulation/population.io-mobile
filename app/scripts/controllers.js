@@ -432,7 +432,7 @@
                                 var diffDays = c.diff(w, 'days');
                                 var diffYears = c.diff(w, 'years');
 
-                                console.log(c, w);
+                                // console.log(c, w);
 
                                 $scope.differenceInDays = diffDays < 0 ? '- ' + (-1 * diffDays) + ' days' : '+ ' + diffDays + ' days';
                                 $scope.soMuchToDo = diffDays < 1 ? 'shorter' : 'longer';
@@ -441,8 +441,11 @@
                                     $scope.differenceInUnits = diffDays.toString().replace('-', '') + ' days';
                                 }
                                 else {
-
-                                    $scope.differenceInUnits = diffYears.toString().replace('-', '') + ' years';
+                                    if (Math.abs(diffYears) <=1) {
+                                        $scope.differenceInUnits = diffYears.toString().replace('-', '') + ' year';
+                                    } else {
+                                        $scope.differenceInUnits = diffYears.toString().replace('-', '') + ' years';
+                                    }
                                 }
                             }
                         })
