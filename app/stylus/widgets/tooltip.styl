@@ -10,6 +10,7 @@
     top 0
     z-index 2000
     display none
+    pointer-events none
     &:before
         content: '';
         width: 0;
@@ -21,7 +22,16 @@
         left: 50%;
         bottom: -10px;
         margin-left: -10px;
-
+    &:after
+        content ''
+        position absolute
+        display block
+        width 4px
+        height 205px
+        left 50%
+        margin-left -2px
+        top 135px
+        background rgba(0, 0, 0, 0.2)
     p
         overflow: hidden
         font-size 9pt

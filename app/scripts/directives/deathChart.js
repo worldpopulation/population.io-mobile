@@ -87,18 +87,6 @@
                                 stroke: '#d9d9d9',
                                 'stroke-width': 1
                             });
-                          verticalPointerLine = chart.append('line')
-                            .attr({
-                                class: 'vertical-pointer',
-                                x1: -100,
-                                y1: -10,
-                                x2: -100,
-                                y2: parentHeight - 50
-                            })
-                            .style({
-                                stroke: 'rgba(0,0,0,0.2)',
-                                'stroke-width': 1
-                            });
                           yLabel = chart.append('text')
                             .text('Relative Death Rate')
                             .attr(
@@ -277,12 +265,12 @@
                           actionBox = chart.append('rect')
                             .style({
                                 fill: 'red',
-                                opacity: 0.02
+                                opacity: 0
                             })
                             .attr({
-                                transform: 'translate(0,-200)',
-                                width: parentWidth,
-                                height: parentHeight + 210
+                                transform: 'translate(120,-150)',
+                                width: parentWidth - 190,
+                                height: 340
                             })
                           ;
 
@@ -316,13 +304,9 @@
                                         ;
                                   }
                                 );
-                                verticalPointerLine.attr({
-                                    x1: d3.event.pageX - 83,
-                                    x2: d3.event.pageX - 83
-                                });
                                 tooltip
                                   .style("left", (d3.event.pageX - 105) + "px")
-                                  .style("top", (d3.event.pageY - d3.mouse(this)[1]) + 50 + "px");
+                                  .style("top", (d3.event.pageY - d3.mouse(this)[1]) + "px");
 
                             }
                           )
@@ -339,10 +323,6 @@
                           }
 
                           function _hideTooltip() {
-                              verticalPointerLine.attr({
-                                  x1: -100,
-                                  x2: -100
-                              });
 
                               tooltip
                                 .transition()
