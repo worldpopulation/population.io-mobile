@@ -191,7 +191,7 @@
                                   }
                                 );
                                 tooltip
-                                  .style("left", (d3.event.pageX - 105) + "px")
+                                  .style("left", (d3.event.pageX - 100) + "px")
                                   .style("top", (d3.event.pageY - d3.mouse(this)[1] - 130) + "px");
 
                             }
