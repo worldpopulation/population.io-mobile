@@ -5,6 +5,7 @@
 
       .controller('MainCtrl', ['$scope', '$timeout', '$http', '$interval', '$modal', '$state', '$location', '$document', '$rootScope', '$filter', 'ProfileService', 'PopulationIOService', 'BrowserService', 'Countries',
           function ($scope, $timeout, $http, $interval, $modal, $state, $location, $document, $rootScope, $filter, ProfileService, PopulationIOService, BrowserService, Countries) {
+              $scope.rankGlobal = 0;
               if (!BrowserService.isSupported()) {
                   $modal.open({
                       templateUrl: 'browser-warning.html'
@@ -15,14 +16,18 @@
               $scope.worldPopulation = 0;
               PopulationIOService.getWorldPopulation(function (data) {
                   $scope.worldPopulation = data.total_population[1].population;
-                  $scope.peoplBornPerSecond = Math.ceil((data.total_population[1].population - data.total_population[0].population) / (24 * 60 * 60));
+
+                  $scope.worldPopulationToday = data.total_population[0].population;
+                  $scope.worldPopulationTomorrow = data.total_population[1].population;
+
+                  $scope.peopleBornPerSecond = Math.ceil((data.total_population[1].population - data.total_population[0].population) / (24 * 60 * 60));
               });
               $scope.$watch('worldPopulation', function (newValue, oldValue) {
                   $scope.rankGlobal += (newValue - oldValue);
                   $rootScope.$broadcast('rankGlobalChanged', $scope.rankGlobal);
               });
               $interval(function () {
-                  $scope.worldPopulation += $scope.peoplBornPerSecond;
+                  $scope.worldPopulation += $scope.peopleBornPerSecond;
               }, 1000);
 
               $scope.$watch(function () {
@@ -182,17 +187,33 @@
           }])
       .controller('SummaryCtrl', ['$scope', '$rootScope', '$interval', '$filter', 'PopulationIOService', 'ProfileService', '$timeout',
           function ($scope, $rootScope, $interval, $filter, PopulationIOService, ProfileService, $timeout) {
+              var rangeLoaded = false;
               $scope.region = 'World';
               $scope.age = new Date().getFullYear() - ProfileService.birthday.year;
               $rootScope.$on('ready', function () {
                   _update();
               });
+              var today = new Date();
 
               var _getNextDay = function () {
                   var tomorrow = new Date();
                   tomorrow.setDate((new Date()).getDate() + 1);
                   return tomorrow;
               };
+              var tickerYoungerGlobal = d3.scale.linear()
+                .domain([today.getTime(), _getNextDay().getTime()]);
+
+              var tickerYoungerLocal = d3.scale.linear()
+                .domain([today.getTime(), _getNextDay().getTime()]);
+
+              var tickerOlderGlobal = d3.scale.linear()
+                .domain([today.getTime(), _getNextDay().getTime()]);
+
+              var tickerOlderLocal = d3.scale.linear()
+                .domain([today.getTime(), _getNextDay().getTime()]);
+
+              console.log(today.getTime() + ' - ' + _getNextDay().getTime())
+
 
               $scope.$watch(function () {
                   return ProfileService.active;
@@ -207,6 +228,7 @@
                       $scope.isUpdated = false;
                   }
               });
+
               $scope.calcWorldOlderNumber = function () {
                   if (!$scope.rankGlobal || !$scope.worldPopulation) {return 0}
                   return $filter('number')(Math.max(0, $scope.worldPopulation - $scope.rankGlobal), 0);
@@ -240,31 +262,50 @@
 
               var _update = function () {
 
+                  // Local rank for country of the user
                   PopulationIOService.loadWpRankToday({
                       dob: ProfileService.birthday.formatted,
                       sex: 'unisex',
                       country: ProfileService.country
                   }, function (rank) {
                       $scope.rankLocal = rank;
+                      console.log('$scope.rankLocal', $scope.rankLocal)
                       $rootScope.$broadcast('rankLocalChanged', $scope.rankLocal);
                   });
 
+                  // Global rank for world of the user
                   PopulationIOService.loadWpRankToday({
                       dob: ProfileService.birthday.formatted,
                       sex: 'unisex',
                       country: 'World'
                   }, function (rank) {
                       $scope.rankGlobal = rank;
+                      console.log('$scope.rankGlobal', $scope.rankGlobal)
                       $rootScope.$broadcast('rankGlobalChanged', $scope.rankGlobal);
                   });
 
+                  // Local rank for country of the user
                   PopulationIOService.loadWpRankOnDate({
                       dob: ProfileService.birthday.formatted,
                       sex: 'unisex',
                       country: ProfileService.country,
                       date: $filter('date')(_getNextDay(), 'yyyy-MM-dd')
                   }, function (rank) {
+                      console.log('******************************')
+                      console.log(rank)
                       $scope.rankLocalTomorrow = rank;
+                      console.log('$scope.rankLocalTomorrow', $scope.rankLocalTomorrow)
+                  });
+
+                  // Global rank for world of the user
+                  PopulationIOService.loadWpRankOnDate({
+                      dob: ProfileService.birthday.formatted,
+                      sex: 'unisex',
+                      country: 'World',
+                      date: $filter('date')(_getNextDay(), 'yyyy-MM-dd')
+                  }, function (rank) {
+                      $scope.rankGlobalTomorrow = rank;
+                      console.log('$scope.rankGlobalTomorrow', $scope.rankGlobalTomorrow)
                   });
 
                   PopulationIOService.loadPopulation({
@@ -293,14 +334,51 @@
                       }
                   });
               };
+              $scope.$watchGroup(['rankLocal', 'rankGlobal', 'rankLocalTomorrow', 'rankGlobalTomorrow', 'countryPopulation', 'worldPopulation'], function (newVals, oldVals) {
+                  console.log($scope.worldPopulationToday);
+                  console.log($scope.worldPopulationTomorrow);
+                  console.log(newVals)
+                  console.log('#########################')
+                  if (!_(newVals).contains(undefined) && !rangeLoaded) {
 
-              $interval(function () {
-                  var diff = ($scope.rankLocalTomorrow - $scope.rankLocal) / 24 / 60 / 60;
-                  if (diff) {
-                      $scope.rankLocal += diff;
-                      $rootScope.$broadcast('rankLocalChanged', $scope.rankLocal);
+                      tickerYoungerGlobal
+                        .range([$scope.rankGlobal, $scope.rankGlobalTomorrow]);
+                      tickerYoungerLocal
+                        .range([$scope.rankLocal, $scope.rankLocalTomorrow]);
+
+                      tickerOlderGlobal
+                        .range([$scope.rankGlobalTomorrow, $scope.worldPopulation]);
+
+                      tickerOlderLocal
+                        .range([$scope.rankLocalTomorrow, $scope.rankLocalTomorrow]);
+
+
+                      $scope.scaledRankYoungerLocal = tickerYoungerLocal(new Date().getTime())
+                      $scope.scaledRankYoungerGlobal = tickerYoungerGlobal(new Date().getTime())
+
+                      $scope.scaledRankOlderLocal = $scope.countryPopulation - tickerOlderLocal(new Date().getTime())
+                      $scope.scaledRankOlderGlobal = $scope.worldPopulation - tickerYoungerGlobal(new Date().getTime())
+
+                      console.log('!!!!!! tickerYoungerGlobal ' + tickerYoungerGlobal(new Date().getTime()))
+                      console.log('!!!!!! tickerYoungerLocal ' + tickerYoungerLocal(new Date().getTime()))
+
+                      console.log('!!!!!! tickerOlderGlobal ' + tickerOlderGlobal(new Date().getTime()))
+                      console.log('!!!!!! tickerOlderLocal ' + $scope.scaledRankOlderLocal)
+
                   }
-              }, 1000);
+
+
+              });
+              /*
+               $interval(function () {
+
+               //var diff = ($scope.rankLocalTomorrow - $scope.rankLocal) / 24 / 60 / 60;
+               //if (diff) {
+               //    $scope.rankLocal += diff;
+               //    $rootScope.$broadcast('rankLocalChanged', $scope.rankLocal);
+               //}
+               }, 1000);
+               */
 
           }])
       .controller('DeathCtrl',
@@ -359,7 +437,6 @@
                                 $scope.differenceInDays = diffDays < 0 ? '- ' + (-1 * diffDays) + ' days' : '+ ' + diffDays + ' days';
                                 $scope.soMuchToDo = diffDays < 1 ? 'shorter' : 'longer';
 
-                                console.log('diffYears ' + diffYears);
                                 if (diffYears < 1 && diffYears > -1) {
                                     $scope.differenceInUnits = diffDays.toString().replace('-', '') + ' days';
                                 }
@@ -367,9 +444,6 @@
 
                                     $scope.differenceInUnits = diffYears.toString().replace('-', '') + ' years';
                                 }
-                                console.log($scope.differenceInUnits);
-
-
                             }
                         })
                   }
@@ -974,6 +1048,9 @@
 
                       var ageDate = new Date(Date.now() - (new Date(ProfileService.birthday.formatted)).getTime());
                       var lifeExpectancy = ProfileService.getAge() + remainingLife + (ageDate.getMonth() / 11);
+                      console.log('****************************')
+                      console.log(ProfileService.getAge() + remainingLife + (ageDate.getMonth() / 11))
+                      console.log('****************************')
 
                       $scope.activeCountryRef = {
                           country: $scope.selectedCountryRef,

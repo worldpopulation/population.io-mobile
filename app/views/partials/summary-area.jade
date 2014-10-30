@@ -9,10 +9,10 @@
             span(ng-class='{active:region!="World"}', ng-click='region=profile.country',title='{{profile.country}}') {{profile.country}}
         .younger-you-older-section
             .younger-column.country(ng-hide="region=='World'")
-                .number {{ rankLocal | number : 0}}
+                .number {{ scaledRankYoungerLocal | number : 0}}
                 .label(ng-bind='calcCountryYoungerPercentage()')
             .younger-column.world(ng-hide="region!='World'")
-                .number {{ rankGlobal | number : 0}}
+                .number {{ scaledRankYoungerGlobal | number : 0}}
                 .label(ng-bind='calcWorldYoungerPercentage()')
             .you-column
                 .icon(ng-hide="profile.gender!='female'")
@@ -35,9 +35,9 @@
 
                 .label You as a citizen <br>from <span>{{region || profile.country}}</span>
             .older-column.country(ng-hide="region=='World'")
-                .number(ng-bind='calcCountryOlderNumber()')
+                .number(ng-bind='scaledRankOlderLocal | number: 0')
                 .label(ng-bind='calcCountryOlderPercentage()')
             .older-column.world(ng-hide="region!='World'")
-                .number(ng-bind='calcWorldOlderNumber()')
+                .number(ng-bind='scaledRankOlderGlobal | number: 0')
                 .label(ng-bind='calcWorldOlderPercentage()')
         summary-chart
