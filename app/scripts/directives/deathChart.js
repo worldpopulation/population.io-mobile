@@ -11,6 +11,7 @@
                         xAxis, yAxis,
                         parentWidth = element[0].clientWidth,
                         pointerPerson, pointerWorld, pointerCountry,
+                        personAreaWorld, personAreaCountry,
                         parentHeight = 240,
                         yAxisFormat = d3.format('.0%'),
                         ageFormat = d3.format('.2f'),
@@ -261,16 +262,18 @@
                             .on('mousemove', function (d) {
                                 var mouse = d3.mouse(this);
                                 var ageFormatted = $filter('number')(xRange.invert(mouse[0]), 2);
-                                var deathRate = $filter('number')(yRange.invert(mouse[1]), 2);
+                                var yPosition = _.find(personAreaWorld, function (item) {
+                                    return item.age >= xRange.invert(mouse[0]) - 5;
+                                }).mortality_percent;
+                                var deathRate = $filter('number')(yPosition, 2);
                                 tooltip.html(function (d, i) {
                                       return "<p><span class='tooltip-label'>Age:</span><span class='tooltip-value'>" + ageFormatted + " years</span></p>"
                                         + "<p><span class='tooltip-label'>Relative Death Rate:</span><span class='tooltip-value'>" + deathRate + "%</span></p>";
                                   }
                                 );
-
                                 tooltip
                                   .style("left", (d3.event.pageX - 100) + "px")
-                                  .style("top", (d3.event.pageY - 120) + "px");
+                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] + yRange(yPosition) - 100) + "px");
 
                             }
                           )
@@ -281,7 +284,11 @@
                                 var mouse = d3.mouse(this);
 
                                 var ageFormatted = $filter('number')(xRange.invert(mouse[0]), 2);
-                                var deathRate = $filter('number')(yRange.invert(mouse[1]), 2);
+                                var yPosition = _.find(personAreaCountry, function (item) {
+                                    return item.age >= xRange.invert(mouse[0]) - 5;
+                                }).mortality_percent;
+
+                                var deathRate = $filter('number')(yPosition, 2);
                                 tooltip.html(function (d, i) {
                                       return "<p><span class='tooltip-label'>Age:</span><span class='tooltip-value'>" + ageFormatted + " years</span></p>"
                                         + "<p><span class='tooltip-label'>Relative Death Rate:</span><span class='tooltip-value'>" + deathRate + "%</span></p>";
@@ -290,7 +297,7 @@
 
                                 tooltip
                                   .style("left", (d3.event.pageX - 100) + "px")
-                                  .style("top", (d3.event.pageY - 120) + "px");
+                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] + yRange(yPosition) - 100) + "px");
 
                             }
                           )
@@ -322,11 +329,11 @@
                       function _updateChart(data) {
 
                           console.log(age)
-                          var personAreaCountry = _.filter(data.country, function (item) {
+                          personAreaCountry = _.filter(data.country, function (item) {
                               return item.age >= age - 5;
 
                           });
-                          var personAreaWorld = _.filter(data.world, function (item) {
+                          personAreaWorld = _.filter(data.world, function (item) {
                               return item.age >= age - 5;
 
                           });
