@@ -8,9 +8,10 @@
                   restrict: 'E',
                   link: function ($scope, element) {
                       var chart,
-                        xAxis, yAxis, coords,
+                        xAxis, yAxis,
                         parentWidth = element[0].clientWidth,
                         pointerPerson, pointerWorld, pointerCountry,
+                        verticalPointerLine,
                         personAreaWorld, personAreaCountry,
                         parentHeight = 240,
                         yAxisFormat = d3.format('.0%'),
@@ -37,17 +38,6 @@
                           }, 0);
                       });
 
-                      function findYatX(x, line) {
-                          function getXY(len) {
-                              var point = line.node().getPointAtLength(len);
-                              return [point.x, point.y];
-                          }
-
-                          var curlen = 0;
-                          while (getXY(curlen)[0] < x) { curlen += 0.01; }
-                          return getXY(curlen);
-                      }
-
                       function _initChart() {
                           chart = d3.select(element[0])
                             .append('svg')
@@ -72,6 +62,7 @@
                           chart.select('.x-label').remove();
                           chart.select('.y-label').remove();
                           chart.select('.label-line').remove();
+                          chart.select('.vertical-pointer').remove();
                           xLabel = chart.append('text')
                             .text('Age')
                             .attr(
@@ -93,6 +84,18 @@
                             })
                             .style({
                                 stroke: '#d9d9d9',
+                                'stroke-width': 1
+                            });
+                          verticalPointerLine = chart.append('line')
+                            .attr({
+                                class: 'vertical-pointer',
+                                x1: -100,
+                                y1: -10,
+                                x2: -100,
+                                y2: parentHeight - 50
+                            })
+                            .style({
+                                stroke: 'rgba(0,0,0,0.2)',
                                 'stroke-width': 1
                             });
                           yLabel = chart.append('text')
@@ -171,7 +174,7 @@
                             })
                           ;
 
-                          pointerWorld = chart.append('g').attr({class: 'pointer'});
+                          pointerWorld = chart.append('g').attr({class: 'pointer'}).attr({transform: 'translate(-200,0)'});
                           pointerWorld.append('line')
                             .attr({
                                 x1: 0,
@@ -220,7 +223,7 @@
                            });
                            */
 
-                          pointerCountry = chart.append('g').attr({class: 'pointer'});
+                          pointerCountry = chart.append('g').attr({class: 'pointer'}).attr({transform: 'translate(-200,0)'});;
                           pointerCountry.append('line')
                             .attr({
                                 x1: 0,
@@ -273,24 +276,38 @@
                             .on('mousemove', function (d) {
                                 var mouse = d3.mouse(this);
                                 var ageFormatted = $filter('number')(xRange.invert(mouse[0]), 2);
-                                var periodIndex;
-                                var yPosition = _.find(personAreaWorld, function (item, i) {
-                                    periodIndex = i;
+
+                                var yPositionWorld = _.find(personAreaWorld, function (item, i) {
                                     return item.age >= xRange.invert(mouse[0]) - 5;
                                 }).mortality_percent;
 
+                                var yPositionCountry = _.find(personAreaCountry, function (item, i) {
+                                    return item.age >= xRange.invert(mouse[0]) - 5;
+                                }).mortality_percent;
 
-                                var deathRate = $filter('number')(yPosition, 2);
+                                /*
+                                 var periodScale = d3.scale.linear()
+                                 .domain([yPositionWorld, personAreaWorld[periodIndex + 1].mortality_percent])
+                                 .range([yRange(yPositionWorld), personAreaWorld[periodIndex + 1].mortality_percent])
+                                 */
+
+                                var deathRateWorld = $filter('number')(yPositionWorld, 2);
+                                var deathRateCountry = $filter('number')(yPositionCountry, 2);
                                 tooltip.html(function (d, i) {
                                       return "<p><span class='tooltip-label'>Age:</span><span class='tooltip-value'>" + ageFormatted + " years</span></p>"
-                                        + "<p><span class='tooltip-label'>Relative Death Rate:</span><span class='tooltip-value'>" + deathRate + "%</span></p>";
+                                        + "<p class='tooltip-title'>Relative Death Rate</p>"
+                                        + "<p><span class='tooltip-label'>World:</span><span class='tooltip-value'>" + deathRateWorld + "%</span></p>"
+                                        + "<p><span class='tooltip-label'>" + ProfileService.country + ":</span><span class='tooltip-value'>" + deathRateCountry + "%</span></p>"
+                                        ;
                                   }
                                 );
-
-                                coords = findYatX(d3.event.pageX - 35, areaWorld);
+                                verticalPointerLine.attr({
+                                    x1: d3.event.pageX - 38,
+                                    x2: d3.event.pageX - 38
+                                });
                                 tooltip
-                                  .style("left", (d3.event.pageX - 100) + "px")
-                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] + coords[1] - 120) + "px");
+                                  .style("left", (d3.event.pageX - 105) + "px")
+                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] - 150) + "px");
 
                             }
                           )
@@ -301,21 +318,33 @@
                                 var mouse = d3.mouse(this);
 
                                 var ageFormatted = $filter('number')(xRange.invert(mouse[0]), 2);
-                                var yPosition = _.find(personAreaCountry, function (item) {
+
+                                var yPositionWorld = _.find(personAreaWorld, function (item, i) {
                                     return item.age >= xRange.invert(mouse[0]) - 5;
                                 }).mortality_percent;
 
-                                var deathRate = $filter('number')(yPosition, 2);
+                                var yPositionCountry = _.find(personAreaCountry, function (item, i) {
+                                    return item.age >= xRange.invert(mouse[0]) - 5;
+                                }).mortality_percent;
+
+                                var deathRateWorld = $filter('number')(yPositionWorld, 2);
+                                var deathRateCountry = $filter('number')(yPositionCountry, 2);
                                 tooltip.html(function (d, i) {
                                       return "<p><span class='tooltip-label'>Age:</span><span class='tooltip-value'>" + ageFormatted + " years</span></p>"
-                                        + "<p><span class='tooltip-label'>Relative Death Rate:</span><span class='tooltip-value'>" + deathRate + "%</span></p>";
+                                        + "<p class='tooltip-title'>Relative Death Rate</p>"
+                                        + "<p><span class='tooltip-label'>World:</span><span class='tooltip-value'>" + deathRateWorld + "%</span></p>"
+                                        + "<p><span class='tooltip-label'>" + ProfileService.country + ":</span><span class='tooltip-value'>" + deathRateCountry + "%</span></p>"
+                                        ;
                                   }
                                 );
+                                verticalPointerLine.attr({
+                                    x1: d3.event.pageX - 38,
+                                    x2: d3.event.pageX - 38
+                                });
 
-                                coords = findYatX(d3.event.pageX - 35, areaCountry);
                                 tooltip
-                                  .style("left", (d3.event.pageX - 100) + "px")
-                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] + coords[1] - 120) + "px");
+                                  .style("left", (d3.event.pageX - 105) + "px")
+                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] - 150) + "px");
 
                             }
                           )
@@ -332,6 +361,11 @@
                           }
 
                           function _hideTooltip() {
+                              verticalPointerLine.attr({
+                                  x1: -100,
+                                  x2: -100
+                              });
+
                               tooltip
                                 .transition()
                                 .duration(200)

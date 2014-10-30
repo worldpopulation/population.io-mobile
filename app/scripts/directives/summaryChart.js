@@ -8,7 +8,7 @@
                   restrict: 'E',
                   link: function ($scope, element) {
                       var chart,
-                        xAxis, yAxis, coords,
+                        xAxis, yAxis,
                         parentWidth = element[0].clientWidth,
                         data, pointer,
                         parentHeight = 240,
@@ -21,6 +21,7 @@
                         areaTotal, areaLine,
                         areaYounger,
                         xAxisElement, yAxisElement,
+                        verticalPointerLine,
                         xLabel, yLabel,
                         xLabelLine, yLabelLine,
                         tooltip = d3.select('.chart-tooltip')
@@ -57,17 +58,6 @@
                           age = $scope.profile.getAge();
                           _updateChart(population)
                       });
-
-                      function findYatX(x, line) {
-                          function getXY(len) {
-                              var point = line.node().getPointAtLength(len);
-                              return [point.x, point.y];
-                          }
-
-                          var curlen = 0;
-                          while (getXY(curlen)[0] < x) { curlen += 0.01; }
-                          return getXY(curlen);
-                      }
 
                       function _initChart() {
                           chart = d3.select(element[0])
@@ -118,6 +108,19 @@
                                 stroke: '#d9d9d9',
                                 'stroke-width': 1
                             });
+                          verticalPointerLine = chart.append('line')
+                            .attr({
+                                class: 'vertical-pointer',
+                                x1: -100,
+                                y1: -63,
+                                x2: -150,
+                                y2: parentHeight - 100
+                            })
+                            .style({
+                                stroke: 'rgba(0,0,0,0.2)',
+                                'stroke-width': 1
+                            });
+
                           yLabel = chart.append('text')
                             .text('People')
                             .attr(
@@ -187,11 +190,14 @@
                                         + "<p><span class='tooltip-label'>Population:</span><span class='tooltip-value'>" + populationFormatted + "</span></p>";
                                   }
                                 );
+                                verticalPointerLine.attr({
+                                    x1: d3.event.pageX - 38,
+                                    x2: d3.event.pageX - 38
+                                });
 
-                                coords = findYatX(d3.event.pageX - 35, areaTotal);
                                 tooltip
-                                  .style("left", (d3.event.pageX - 100) + "px")
-                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] + coords[1] - 120) + "px");
+                                  .style("left", (d3.event.pageX - 105) + "px")
+                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] - 150) + "px");
 
                             }
                           )
@@ -208,11 +214,14 @@
                                         + "<p><span class='tooltip-label'>Population:</span><span class='tooltip-value'>" + populationFormatted + "</span></p>";
                                   }
                                 );
+                                verticalPointerLine.attr({
+                                    x1: d3.event.pageX - 38,
+                                    x2: d3.event.pageX - 38
+                                });
 
-                                coords = findYatX(d3.event.pageX - 35, areaYounger);
                                 tooltip
-                                  .style("left", (d3.event.pageX - 100) + "px")
-                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] + coords[1] - 120) + "px");
+                                  .style("left", (d3.event.pageX - 105) + "px")
+                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] - 150) + "px");
 
                             }
                           )
@@ -229,6 +238,11 @@
                           }
 
                           function _hideTooltip() {
+                              verticalPointerLine.attr({
+                                  x1: -100,
+                                  x2: -100
+                              });
+
                               tooltip
                                 .transition()
                                 .duration(200)
