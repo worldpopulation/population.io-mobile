@@ -11,7 +11,7 @@
                         xAxis, yAxis,
                         actionBox,
                         parentWidth = element[0].clientWidth,
-                        data, pointer,
+                        currentData, pointer,
                         parentHeight = 240,
                         yAxisFormat = d3.format('s'),
                         xRange = d3.scale.linear(),
@@ -170,7 +170,7 @@
                             })
                             .attr({
                                 transform: 'translate(120,-40)',
-                                width: parentWidth - 190,
+                                width: parentWidth - 280,
                                 height: 180
                             })
                           ;
@@ -180,11 +180,13 @@
                             .on('mouseenter', _showTooltip)
                             .on('mousemove', function () {
                                 var mouse = d3.mouse(this);
-
-                                var ageFormatted = $filter('number')(parseInt(xRange.invert(mouse[0]), 10), 0);
-                                var populationFormatted = $filter('number')(parseInt(yRange.invert(mouse[1]), 10), 0);
+                                var currentAgeObject = _.find(currentData, function (item) {
+                                    return item.age == parseInt(xRange.invert(mouse[0] + 120), 10)
+                                });
+                                var ageFormatted = $filter('number')(parseInt(xRange.invert(mouse[0] + 120), 10), 0);
+                                var populationFormatted = $filter('number')(currentAgeObject.total, 0);
                                 tooltip.html(function (d, i) {
-                                      return "<p><span class='tooltip-label'>Age:</span><span class='tooltip-value'>" + ageFormatted + "</span></p>"
+                                      return "<p><span class='tooltip-label'>Age:</span><span class='tooltip-value'>" + ageFormatted + " years</span></p>"
                                         + "<p><span class='tooltip-label'>Population:</span><span class='tooltip-value'>" + populationFormatted + "</span></p>";
                                   }
                                 );
@@ -226,6 +228,7 @@
                       }
 
                       function _updateChart(data) {
+                          currentData = data;
                           var ticks = [], step;
                           step = $scope.region != 'World' ? 500000 : 50000000;
                           if ($scope.country != 'World' && d3.max(data, function (d) { return d.total; }) <= 500000000) {
