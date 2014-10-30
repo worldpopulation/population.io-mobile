@@ -269,7 +269,7 @@
                             .datum(data)
                             .transition()
                             .attr('d', area(data))
-                            .attr('fill', '#F3F3F3');
+                            .attr('fill', '#EBEBEB');
 
                           areaYounger
                             .transition()
