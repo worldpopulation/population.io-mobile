@@ -164,17 +164,17 @@
                             y2: -20
                         });
 
-                      textBlock2.append('text').attr('y', 0).text('You will be');
+                      textBlock2.append('text').attr('y', 0).text('We estimate you will live');
                       textBlock2.append('text')
-                        .text(data.lifeExpectancy)
+                        .text( 'until age' +  data.lifeExpectancy)
                         .transition()
                         .duration(1000)
                         .tween('text', function () {
-                            return _textTween(data.lifeExpectancy, this, 'years old');
+                            return _textTween(data.lifeExpectancy, this, 'years');
                         })
                         .attr('y', 20);
-                      textBlock2.append('text').attr('y', 40).text('on your day of death');
-                      textBlock2.append('text').attr('y', 65).text(deathDate)
+                      //textBlock2.append('text').attr('y', 40).text('on your day of death');
+                      textBlock2.append('text').attr('y', 45).text(deathDate)
                         .style({
                             'font-size': 20,
                             fill: '#444'
