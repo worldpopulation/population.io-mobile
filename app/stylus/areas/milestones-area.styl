@@ -12,7 +12,8 @@
     li:hover
       background #f3f3f3
     li
-      padding 20px 20px 20px 90px
+      border-top: 3px solid white;
+      padding: 17px 20px 17px 90px;
       font-size 18px
       position relative
       cursor pointer
@@ -23,6 +24,8 @@
       &.selected
         background #f3f3f3
         cursor pointer
+      &.selected:before
+        background #000 !important
       &:before
         position absolute
         content ''
@@ -34,7 +37,7 @@
       &.past:before
         background highlight-yellow
       &.now:before
-        background #000
+        background highlight-yellow
     .time
       position absolute
       top 50%
