@@ -62,7 +62,9 @@
                             x: bbox.x + bbox.width / 2,
                             y: bbox.y + bbox.height / 2
                         };
-
+                      console.log(_.find(Countries, function (item) {
+                          return item.GMI_CNTRY === countryId
+                      }))
                       var _textTween = function (data, node, label, prefix) {
                           var value = Math.round(data * 10) / 10,
                             i = d3.interpolate(0, value),

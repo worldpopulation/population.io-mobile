@@ -342,9 +342,9 @@
                   //console.log(newVals)
                   //console.log('#########################')
                   if (!_(newVals).contains(undefined) && !rangeLoaded) {
-                      console.log('$$$$$$$$$$$$$$$$$$$$$$$$')
-                      console.log(newVals)
-                      console.log('$$$$$$$$$$$$$$$$$$$$$$$$')
+                      //console.log('$$$$$$$$$$$$$$$$$$$$$$$$')
+                      //console.log(newVals)
+                      //console.log('$$$$$$$$$$$$$$$$$$$$$$$$')
 
                       tickerYoungerGlobal
                         .range([$scope.rankGlobal, $scope.rankGlobalTomorrow]);
