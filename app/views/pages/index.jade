@@ -24,7 +24,7 @@ block content
         li(ng-class="{'active': currentPage == 2}", ng-click="showSection('milestones')") <span></span>
         li(ng-class="{'active': currentPage == 3}", ng-click="showSection('birthdays')") <span></span>
         li(ng-class="{'active': currentPage == 4}", ng-click="showSection('expectancy')") <span></span>
-        li(ng-class="{'active': currentPage == 5}", ng-click="showSection('death')") <span></span>
+        //- li(ng-class="{'active': currentPage == 5}", ng-click="showSection('death')") <span></span>
 
     section#home(ng-controller='HomeCtrl', du-scrollspy='home', data-index="0")
         include ../partials/home-area
@@ -36,6 +36,6 @@ block content
         include ../partials/birthdays-area
     section#expectancy(ng-controller='ExpectancyCtrl', du-scrollspy='expectancy', data-index="4", offset='200', ng-class="{'hidden': !profile.active}")
         include ../partials/expectancy-area
-    section#death(ng-controller='DeathCtrl', du-scrollspy='death', data-index="5", offset='200', ng-class="{'hidden': !profile.active}")
-        include ../partials/death-area
+    //- section#death(ng-controller='DeathCtrl', du-scrollspy='death', data-index="5", offset='200', ng-class="{'hidden': !profile.active}")
+    //-     include ../partials/death-area
     include ../partials/modals
