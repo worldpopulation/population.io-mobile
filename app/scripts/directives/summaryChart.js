@@ -192,7 +192,7 @@
                                 );
                                 tooltip
                                   .style("left", (d3.event.pageX - 100) + "px")
-                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] - 130) + "px");
+                                  .style("top", (d3.event.pageY - d3.mouse(this)[1] - 80) + "px");
 
                             }
                           )

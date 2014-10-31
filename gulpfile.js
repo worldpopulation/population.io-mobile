@@ -14,30 +14,29 @@ var gulp = require('gulp'),
 
   sources = {
       scripts: [
-          'bower_components/momentjs/min/moment.min.js',
-          'bower_components/jquery/dist/jquery.min.js',
-          'bower_components/jquery-ui/jquery-ui.min.js',
-          'bower_components/d3/d3.min.js',
-          'bower_components/d3-geo-projection/index.js',
+          'bower_components/momentjs/moment.js',
+          'bower_components/jquery/dist/jquery.js',
+          'bower_components/jquery-ui/jquery-ui.js',
+          'bower_components/d3/d3.js',
           'bower_components/d3.slider/d3.slider.js',
           'bower_components/topojson/topojson.js',
-          'bower_components/lodash/dist/lodash.min.js',
-          'bower_components/bowser/bowser.min.js',
-          'bower_components/ics.js/ics.deps.min.js',
-          'bower_components/ics.js/ics.min.js',
           'vendor/d3.geo.projection.v0.min.js',
+          'bower_components/lodash/dist/lodash.js',
+          'bower_components/bowser/bowser.js',
+          'bower_components/ics.js/ics.deps.js',
+          'bower_components/ics.js/ics.js',
           'app/scripts/ga.js',
 
-          'bower_components/angular/angular.min.js',
-          'bower_components/angular-route/angular-route.min.js',
-          'bower_components/angular-scroll/angular-scroll.min.js',
-          'bower_components/angular-animate/angular-animate.min.js',
+          'bower_components/angular/angular.js',
+          'bower_components/angular-route/angular-route.js',
+          'bower_components/angular-scroll/angular-scroll.js',
+          'bower_components/angular-animate/angular-animate.js',
           'bower_components/angular-easy-social-share/easy-social-share.js',
           'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
-          'bower_components/angular-cookies/angular-cookies.min.js',
+          'bower_components/angular-cookies/angular-cookies.js',
           'bower_components/angular-resource/angular-resource.js',
-          'bower_components/angular-ui-router/release/angular-ui-router.min.js',
-          'bower_components/angular-sanitize/angular-sanitize.min.js',
+          'bower_components/angular-ui-router/release/angular-ui-router.js',
+          'bower_components/angular-sanitize/angular-sanitize.js',
 
           'app/scripts/app.js',
           'app/scripts/controllers.js',
@@ -111,7 +110,7 @@ gulp.task('data', function (event) {
 gulp.task('stylus', function (event) {
     return gulp.src(sources.style)
       .pipe(plumber())
-      //.pipe(stylus({use: nib()}))
+        //.pipe(stylus({use: nib()}))
       .pipe(concat('main.css'))
       .pipe(gulp.dest(destinations.css));
 });
@@ -132,8 +131,8 @@ gulp.task('scripts', function (event) {
     gulp.src(sources.scripts)
       .pipe(sourcemaps.init())
       .pipe(concat('main.js'))
-        //    .pipe(uglify({mangle: false,drop_console:true}))
-      .pipe(sourcemaps.write())
+      .pipe(uglify({mangle: false, drop_console: true}))
+      .pipe(sourcemaps.write('../maps'))
       .pipe(gulp.dest(destinations.scripts));
 });
 
@@ -261,7 +260,7 @@ gulp.task('upload', function () {
 gulp.task('default', [
     'serve',
     'fonts',
-    'maps',
+    //'maps',
     'data',
     'images:watch',
     'jade:watch',
