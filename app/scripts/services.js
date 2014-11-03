@@ -28,17 +28,6 @@
               var baseUrl = ' http://api.population.io/1.0';
 
               return {
-                  /*          getWorldPopulation: function () {
-                   //var p2013 = 7162119000;
-                   //var p2014 = 7243784000;
-                   //var growthRate = Math.log(p2014 / p2013) / (365 * 24 * 60 * 60);
-                   //var start = new Date(2013, 7, 1, 12, 0, 0, 0);
-                   //var now = new Date();
-                   //var dif = now.getTime() - start.getTime();
-                   //var diffSec = dif / 1000;
-                   //
-                   //return parseInt(p2013 * Math.pow((1 + growthRate), diffSec), 0);
-                   }*/
                   getWorldPopulation: function (onSuccess, onError) {
                       $http({
                           method: 'get',
@@ -104,16 +93,11 @@
                           url: baseUrl + '/mortality-distribution/World/' + args.gender + '/' + args.age + 'y/today'
                       })
                         .success(function (data) {
-                            //console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-                            //console.log(data);
-                            //console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
                             if (data.mortality_distribution) {
                                 // Dirty dirty temporary hack
                                 var remainder = data.mortality_distribution[0].age % 5;
                                 for (var i = 1; i < data.mortality_distribution.length; i++) {
-                                    console.log(data.mortality_distribution[i].age)
                                     data.mortality_distribution[i].age -= remainder;
-                                    console.log(data.mortality_distribution[i].age)
                                 }
                                 //
                                 worldDistribution = data.mortality_distribution;
@@ -132,6 +116,13 @@
                                 })
                                   .success(function (data) {
                                       if (data.mortality_distribution && onSuccess) {
+
+                                          var remainder = data.mortality_distribution[0].age % 5;
+                                          for (var i = 1; i < data.mortality_distribution.length; i++) {
+                                              data.mortality_distribution[i].age -= remainder;
+                                          }
+
+
                                           countryDistribution = data.mortality_distribution;
                                           var countryChancesPure = _.reduce(countryDistribution, function (acc, n) {
                                               acc.push((acc.length > 0 ? acc[acc.length - 1] : 0) + n.mortality_percent);
