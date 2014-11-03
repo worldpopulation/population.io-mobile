@@ -308,7 +308,6 @@
                                 var deathRateCountry = $filter('number')(yPositionCountry, 2);
                                 tooltip.html(function (d, i) {
                                       return "<p><span class='tooltip-label'>Age:</span><span class='tooltip-value'>" + ageFormatted + " years</span></p>"
-                                        + "<p class='tooltip-title'>Relative Death Rate</p>"
                                         + "<p><span class='tooltip-label'>World:</span><span class='tooltip-value'>" + deathRateWorld + "%</span></p>"
                                         + "<p><span class='tooltip-label'>" + ProfileService.country + ":</span><span class='tooltip-value'>" + deathRateCountry + "%</span></p>"
                                         ;
@@ -386,13 +385,74 @@
                           ;
 
                           areaCountry
+                            .attr('fill', function () {
+                                if ($scope.type == 'distribution') {
+                                    return '#6581f1'
+                                }
+                                else {
+                                    return 'transparent'
+                                }
+                            })
+                            .attr('stroke', function () {
+                                if ($scope.type == 'distribution') {
+                                    return 'transparent'
+                                }
+                                else {
+                                    return '#6581f1'
+                                }
+                            })
+                            .attr('stroke-width', function () {
+                                if ($scope.type == 'distribution') {
+                                    return 0
+                                }
+                                else {
+                                    return 5
+                                }
+                            })
                             .transition()
-                            .attr('d', area(personAreaCountry))
-                            .attr('fill', '#6581f1');
+                            .attr('d', function () {
+                                if ($scope.type === 'distribution') {
+                                    return area(personAreaCountry)
+                                }
+                                else {
+                                    return line(personAreaCountry)
+                                }
+                            });
+
                           areaWorld
+                            .attr('fill', function () {
+                                if ($scope.type == 'distribution') {
+                                    return '#98EC79'
+                                }
+                                else {
+                                    return 'transparent'
+                                }
+                            })
+                            .attr('stroke', function () {
+                                if ($scope.type == 'distribution') {
+                                    return 'transparent'
+                                }
+                                else {
+                                    return '#98EC79'
+                                }
+                            })
+                            .attr('stroke-width', function () {
+                                if ($scope.type == 'distribution') {
+                                    return 0
+                                }
+                                else {
+                                    return 5
+                                }
+                            })
                             .transition()
-                            .attr('d', area(personAreaWorld))
-                            .attr('fill', '#98EC79')
+                            .attr('d', function () {
+                                if ($scope.type === 'distribution') {
+                                    return area(personAreaWorld)
+                                }
+                                else {
+                                    return line(personAreaWorld)
+                                }
+                            })
                             .style({opacity: 0.5});
 
                           /* highlight-blue */
@@ -455,6 +515,28 @@
                             .attr({
                                 transform: 'translate(' + [xRange(age), parentHeight - 20] + ')'
                             });
+                          yLabel.text(function () {
+                              if ($scope.type === 'distribution') {
+                                  return 'Relative Death Rate'
+                              }
+                              else {
+                                  return 'Cumulative Chances of Dying'
+                              }
+                          });
+                          yLabelLine
+                            .transition()
+                            .attr({
+                                y1: function () {
+                                    if ($scope.type === 'distribution') {
+                                        return -130
+                                    }
+                                    else {
+                                        return -180
+                                    }
+
+                                }
+                            })
+
 
                       }
                   }
