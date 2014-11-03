@@ -184,7 +184,7 @@
                                 'stroke-dasharray': '2,2'
                             })
                             .style({
-                                stroke: '#98EC79',
+                                stroke: '#888',
                                 'stroke-width': '1px'
 
                             });
@@ -204,7 +204,7 @@
                           pointerWorld.append('text')
                             .style({
                                 'font-size': '9pt',
-                                fill: '#98EC79',
+                                fill: '#666',
                                 'text-anchor': 'start'
                             })
                             .attr({
@@ -234,7 +234,7 @@
                                 'stroke-dasharray': '2,2'
                             })
                             .style({
-                                stroke: '#6581f1',
+                                stroke: '#888',
                                 'stroke-width': '1px'
 
                             });
@@ -252,7 +252,7 @@
                           pointerCountry.append('text')
                             .style({
                                 'font-size': '9pt',
-                                fill: '#6581f1',
+                                fill: '#666',
                                 'text-anchor': 'start'
                             })
                             .attr({
