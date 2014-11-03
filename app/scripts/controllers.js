@@ -411,17 +411,20 @@
       .controller('DeathCtrl',
       ['$scope', '$interpolate', '$timeout', '$http', '$interval', '$modal', '$state', '$location', '$document', '$rootScope', '$filter', 'ProfileService', 'PopulationIOService', 'BrowserService',
           function ($scope, $interpolate, $timeout, $http, $interval, $modal, $state, $location, $document, $rootScope, $filter, ProfileService, PopulationIOService, BrowserService) {
-
+              $scope.type = 'distribution';
               $scope.$watch(function () {return ProfileService.active}, function (newVal, oldVal) {
                   if (newVal && newVal !== oldVal) {
 
                       PopulationIOService.loadMortalityDistribution({
                           country: ProfileService.country,
-                          gender: ProfileService.gender
+                          gender: ProfileService.gender,
+                          age: ProfileService.getAge()
                       }, function (data) {
+
                           $scope.loading -= 1;
                           $scope.mortalityDistributionData = data;
                           if (data) {
+                              console.log(data)
                               $scope.$broadcast('mortalityDistributionDataChanged', data)
                           }
                       });

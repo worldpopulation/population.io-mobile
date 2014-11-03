@@ -96,22 +96,53 @@
 
                   // GET /1.0/mortality-distribution/World/unisex/today/
                   loadMortalityDistribution: function (args, onSuccess, onError) {
-                      var world, country;
+                      var worldDistribution, countryDistribution,
+                        worldChances = [], countryChances = []
+                        ;
                       $http({
                           method: 'get',
-                          url: baseUrl + '/mortality-distribution/World/' + args.gender + '/today'
+                          url: baseUrl + '/mortality-distribution/World/' + args.gender + '/' + args.age + 'y/today'
                       })
                         .success(function (data) {
+                            //console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+                            //console.log(data);
+                            //console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
                             if (data.mortality_distribution) {
-                                world = data.mortality_distribution;
+                                worldDistribution = data.mortality_distribution;
+
+                                var worldChancesPure = _.reduce(worldDistribution, function (acc, n) {
+                                    acc.push((acc.length > 0 ? acc[acc.length - 1] : 0) + n.mortality_percent);
+                                    return acc
+                                }, []);
+                                _.each(worldDistribution, function (item, index) {
+                                    worldChances.push({age: item.age, mortality_percent: worldChancesPure[index]})
+                                });
+
+                                console.log(worldDistribution);
+                                console.log(worldChances);
+
                                 $http({
                                     method: 'get',
-                                    url: baseUrl + '/mortality-distribution/' + args.country + '/' + args.gender + '/today'
+                                    url: baseUrl + '/mortality-distribution/' + args.country + '/' + args.gender + '/' + args.age + 'y/today'
                                 })
                                   .success(function (data) {
                                       if (data.mortality_distribution && onSuccess) {
-                                          //console.log({world: world, country: data.mortality_distribution})
-                                          onSuccess({world: world, country: data.mortality_distribution});
+                                          countryDistribution = data.mortality_distribution;
+                                          var countryChancesPure = _.reduce(countryDistribution, function (acc, n) {
+                                              acc.push((acc.length > 0 ? acc[acc.length - 1] : 0) + n.mortality_percent);
+                                              return acc
+                                          }, []);
+
+                                          _.each(countryDistribution, function (item, index) {
+                                              countryChances.push({age: item.age, mortality_percent: countryChancesPure[index]})
+                                          });
+
+                                          onSuccess({
+                                              worldDistribution: worldDistribution,
+                                              countryDistribution: countryDistribution,
+                                              worldChances: worldChances,
+                                              countryChances: countryChances
+                                          });
 
                                       }
                                   })

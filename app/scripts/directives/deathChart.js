@@ -27,16 +27,26 @@
                         xAxisElement, yAxisElement,
                         xLabel, yLabel,
                         xLabelLine, yLabelLine,
-                        tooltip = d3.select('.chart-tooltip')
+                        tooltip = d3.select('.chart-tooltip'),
+                        fullData
                         ;
 
                       _initChart();
 
-                      $scope.$on('mortalityDistributionDataChanged', function (e, mortality) {
+                      $scope.$on('mortalityDistributionDataChanged', function (e, data) {
+                          fullData = data;
                           $timeout(function () {
                               age = $scope.profile.getAge();
-                              _updateChart(mortality)
+                              _updateChart({world: data.worldDistribution, country: data.countryDistribution})
                           }, 0);
+                      });
+                      $scope.$watch('type', function (newVal, oldVal) {
+                          if (newVal === 'distribution' && fullData) {
+                              _updateChart({world: fullData.worldDistribution, country: fullData.countryDistribution})
+                          }
+                          else if (newVal === 'chances') {
+                              _updateChart({world: fullData.worldChances, country: fullData.countryChances})
+                          }
                       });
 
                       function _initChart() {
@@ -339,8 +349,6 @@
                       }
 
                       function _updateChart(data) {
-
-                          //console.log(age)
                           personAreaCountry = _.filter(data.country, function (item) {
                               return item.age >= age - 5;
 
@@ -352,12 +360,8 @@
                           var worldMax = d3.max(personAreaWorld, function (d) { return d.mortality_percent; });
                           var countryMax = d3.max(personAreaCountry, function (d) { return d.mortality_percent; });
 
-                          //var worldMaxMortality = _.max(data.world, function (item) {return item.mortality_percent});
-                          //var countryMaxMortality = _.max(data.country, function (item) {return item.mortality_percent});
                           var yTickStep = d3.max([worldMax, countryMax]) / 3; // To have 4 ticks total for y axis
                           xAxis.tickFormat(function (d) {return d + 'y'})
-                            //.tickValues([0, 25, 50, 75, 100, 125]);
-                            //.ticks(6);
                           yAxis.tickFormat(function (d) {return yAxisFormat(d / 100)})
                             .tickValues([0, yTickStep, yTickStep * 2, d3.max([worldMax, countryMax])])
 
@@ -416,28 +420,9 @@
                             .attr({
                                 transform: 'translate(' + [xRange($scope.totalLifeWorldInYears), -100] + ')'
                             });
-                          /*
-                           pointerWorld.select('line')
-                           .transition()
-                           .attr({
-                           y2: -yRange(worldMaxMortality.mortality_percent) - 90
-                           });
-                           */
-                          /*
-                           pointerWorld.select('.region')
-                           .transition()
-                           .attr({
-                           dy: -yRange(worldMaxMortality.mortality_percent) - 80
-                           });
-                           */
 
                           pointerWorld.select('.age')
                             .transition()
-                              /*
-                               .attr({
-                               dy: -yRange(worldMaxMortality.mortality_percent) - 65
-                               })
-                               */
                             .text(function () {
                                 return $filter('number')($scope.totalLifeWorldInYears, 1) + ' years'
                                 //return '???' + ' years'
@@ -448,13 +433,6 @@
                             .attr({
                                 transform: 'translate(' + [xRange($scope.totalLifeCountryInYears), -60] + ')'
                             });
-                          /*
-                           pointerCountry.select('line')
-                           .transition()
-                           .attr({
-                           y2: -yRange(countryMaxMortality.mortality_percent) - 40
-                           });
-                           */
 
                           pointerCountry.select('.region')
                             .text(ProfileService.country)
@@ -467,13 +445,7 @@
 
                           pointerCountry.select('.age')
                             .transition()
-                              /*
-                               .attr({
-                               dy: -yRange(countryMaxMortality.mortality_percent) - 15
-                               })
-                               */
                             .text(function () {
-                                //return ageFormat($scope.totalLifeCountryInYears) + ' years'
                                 return $filter('number')($scope.totalLifeLengthLocal, 1) + ' years'
                             })
                           pointerPerson.select('.age').text(age + ' years')
