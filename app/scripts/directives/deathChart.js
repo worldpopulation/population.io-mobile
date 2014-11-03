@@ -184,13 +184,13 @@
                                 'stroke-dasharray': '2,2'
                             })
                             .style({
-                                stroke: '#888',
+                                stroke: '#98EC79',
                                 'stroke-width': '1px'
 
                             });
                           pointerWorld.append('text')
                             .style({
-                                fill: '#333',
+                                fill: '#98EC79',
                                 'text-anchor': 'start'
                             })
                             .attr({
@@ -200,10 +200,11 @@
                             })
                             .text('World')
                           ;
+
                           pointerWorld.append('text')
                             .style({
                                 'font-size': '9pt',
-                                fill: '#666',
+                                fill: '#98EC79',
                                 'text-anchor': 'start'
                             })
                             .attr({
@@ -224,7 +225,6 @@
                            */
 
                           pointerCountry = chart.append('g').attr({class: 'pointer'}).attr({transform: 'translate(-200,0)'});
-                          ;
                           pointerCountry.append('line')
                             .attr({
                                 x1: 0,
@@ -234,13 +234,13 @@
                                 'stroke-dasharray': '2,2'
                             })
                             .style({
-                                stroke: '#888',
+                                stroke: '#6581f1',
                                 'stroke-width': '1px'
 
                             });
                           pointerCountry.append('text')
                             .style({
-                                fill: '#333',
+                                fill: '#6581f1',
                                 'text-anchor': 'start'
                             })
                             .attr({
@@ -252,7 +252,7 @@
                           pointerCountry.append('text')
                             .style({
                                 'font-size': '9pt',
-                                fill: '#666',
+                                fill: '#6581f1',
                                 'text-anchor': 'start'
                             })
                             .attr({
@@ -260,7 +260,6 @@
                                 dx: 10,
                                 dy: 25
                             })
-                            .text('World')
                           ;
 
                           /*
@@ -436,6 +435,7 @@
                                     return '#98EC79'
                                 }
                             })
+
                             .attr('stroke-width', function () {
                                 if ($scope.type == 'distribution') {
                                     return 0

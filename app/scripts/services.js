@@ -108,6 +108,14 @@
                             //console.log(data);
                             //console.log('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
                             if (data.mortality_distribution) {
+                                // Dirty dirty temporary hack
+                                var remainder = data.mortality_distribution[0].age % 5;
+                                for (var i = 1; i < data.mortality_distribution.length; i++) {
+                                    console.log(data.mortality_distribution[i].age)
+                                    data.mortality_distribution[i].age -= remainder;
+                                    console.log(data.mortality_distribution[i].age)
+                                }
+                                //
                                 worldDistribution = data.mortality_distribution;
 
                                 var worldChancesPure = _.reduce(worldDistribution, function (acc, n) {
@@ -117,9 +125,6 @@
                                 _.each(worldDistribution, function (item, index) {
                                     worldChances.push({age: item.age, mortality_percent: worldChancesPure[index]})
                                 });
-
-                                console.log(worldDistribution);
-                                console.log(worldChances);
 
                                 $http({
                                     method: 'get',
