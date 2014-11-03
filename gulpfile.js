@@ -23,7 +23,7 @@ var gulp = require('gulp'),
           'vendor/d3.geo.projection.v0.min.js',
           'bower_components/lodash/dist/lodash.js',
           'bower_components/bowser/bowser.js',
-          'bower_components/ics.js/ics.deps.js',
+          'bower_components/ics.js/ics.deps.min.js',
           'bower_components/ics.js/ics.js',
           'app/scripts/ga.js',
 
