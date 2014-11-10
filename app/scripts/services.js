@@ -94,14 +94,7 @@
                       })
                         .success(function (data) {
                             if (data.mortality_distribution) {
-                                // Dirty dirty temporary hack
-                                var remainder = data.mortality_distribution[0].age % 5;
-                                for (var i = 1; i < data.mortality_distribution.length; i++) {
-                                    data.mortality_distribution[i].age -= remainder;
-                                }
-                                //
                                 worldDistribution = data.mortality_distribution;
-
                                 var worldChancesPure = _.reduce(worldDistribution, function (acc, n) {
                                     acc.push((acc.length > 0 ? acc[acc.length - 1] : 0) + n.mortality_percent);
                                     return acc
@@ -116,13 +109,6 @@
                                 })
                                   .success(function (data) {
                                       if (data.mortality_distribution && onSuccess) {
-
-                                          var remainder = data.mortality_distribution[0].age % 5;
-                                          for (var i = 1; i < data.mortality_distribution.length; i++) {
-                                              data.mortality_distribution[i].age -= remainder;
-                                          }
-
-
                                           countryDistribution = data.mortality_distribution;
                                           var countryChancesPure = _.reduce(countryDistribution, function (acc, n) {
                                               acc.push((acc.length > 0 ? acc[acc.length - 1] : 0) + n.mortality_percent);
