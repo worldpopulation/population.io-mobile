@@ -263,7 +263,6 @@
                             .y0(parentHeight - 100)
                             .y1(function (d) { return yRange(d.total); });
                           var younger = data.slice(0, age+1);
-                          console.log(younger)
 
                           areaTotal
                             .datum(data)

@@ -424,7 +424,6 @@
                           $scope.loading -= 1;
                           $scope.mortalityDistributionData = data;
                           if (data) {
-                              console.log(data)
                               $scope.$broadcast('mortalityDistributionDataChanged', data)
                           }
                       });
