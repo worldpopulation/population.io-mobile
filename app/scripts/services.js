@@ -165,7 +165,6 @@
                             }
                         })
                         .error(function (err) {
-                            console.log(err)
                             if (onError) {
                                 onError();
                             }
