@@ -555,7 +555,7 @@
                   var year = moment().year(ProfileService.birthday.year).format('YYYY'),
                     month = moment().month(ProfileService.birthday.month).format('MM'),
                     day = moment().date(ProfileService.birthday.day).format('DD');
-                  ProfileService.country = ProfileService.country.capitalize();
+                  ProfileService.country = ProfileService.country.capitalizeCountryName();
                   $location.path([
                       year,
                       month,

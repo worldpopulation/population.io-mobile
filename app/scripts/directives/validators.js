@@ -10,7 +10,7 @@ angular.module('populationioApp')
                       // it is valid
                       ctrl.$setValidity('validateMonth', true);
                       ctrl.$modelValue = moment().month(viewValue).format('MM');
-                      ctrl.$viewValue = viewValue.capitalize();
+                      ctrl.$viewValue = viewValue.capitalizeCountryName();
                       ctrl.$render();
                       return viewValue;
                   } else {
@@ -37,8 +37,8 @@ angular.module('populationioApp')
                         return v.POPIO_NAME.toLowerCase() == viewValue.toLowerCase()
                     }).length) {
                       ctrl.$setValidity('validateCountry', true);
-                      ctrl.$modelValue = viewValue.capitalize();
-                      ctrl.$viewValue = viewValue.capitalize();
+                      ctrl.$modelValue = viewValue.capitalizeCountryName();
+                      ctrl.$viewValue = viewValue.capitalizeCountryName();
                       ctrl.$render();
                       return viewValue;
                   } else {
