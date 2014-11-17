@@ -3,24 +3,24 @@
         header
             h1
                 | We estimate that you will live until <span>{{dodWorld}}</span>
-                | if you were a world citizen. Whereas in your home country <span>{{profile.country}}</span>
+                | if you were an average world citizen. Whereas in <span>{{profile.country}}</span>
                 | it would be until <span>{{dodCountry}}</span>.
         .type-switcher
             span(ng-class='{active:type=="distribution"}', ng-click='type="distribution"') Mortality Distribution
             span(ng-class='{active:type=="chances"}', ng-click='type="chances"') Chances of Dying
 
         death-chart
-        h2 Projected Date of Death
+        h2 Projected Life Expectancy
         .death-stats
             .column
                 .content
                     .title.world {{dodWorld}}
-                    .copy After <span>{{remainingLifeWorldInYears}} years</span> your life as a citizen of the <span>World</span> ends.
+                    .copy You are expected to live </br><span>{{remainingLifeWorldInYears}} years</span> as a citizen of the <span>World</span>
             .column
                 .content
                     .title {{differenceInDays}}
-                    .copy Your life will be approximately <span>{{soMuchToDo}}</span> than the world's average for about <span>{{differenceInUnits }}</span>.
+                    .copy Your life will be approximately <span>{{soMuchToDo}}</span> than the world's average for about <span>{{differenceInUnits }}</span>
             .column
                 .content
                     .title.country {{dodCountry}}
-                    .copy After <span>{{remainingLifeCountryInYears}} years</span> your life as a citizen of <span>{{profile.country}}</span> ends.
+                    .copy You are expected to live </br><span>{{remainingLifeCountryInYears}} years</span> as a citizen of <span>{{profile.country}}</span>

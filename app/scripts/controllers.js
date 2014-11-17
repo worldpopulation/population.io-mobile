@@ -437,7 +437,7 @@
                           var today = new Date();
                           $scope.dodWorld = $filter('date')(today.setDate(today.getDate() + (remainingLife * 365)), 'd MMM, yyyy');
 
-                          $scope.remainingLifeWorldInYears = parseFloat(remainingLife).toFixed(2);
+                          $scope.remainingLifeWorldInYears = parseFloat(remainingLife).toFixed(1);
                           $scope.totalLifeWorldInYears = moment(today).diff(moment(ProfileService.birthday), 'years', true);
                       });
                       PopulationIOService.loadLifeExpectancyRemaining({
@@ -448,7 +448,7 @@
                       }, function (remainingLife) {
                           var today = new Date();
                           $scope.dodCountry = $filter('date')(today.setDate(today.getDate() + (remainingLife * 365)), 'd MMM, yyyy');
-                          $scope.remainingLifeCountryInYears = parseFloat(remainingLife).toFixed(2);
+                          $scope.remainingLifeCountryInYears = parseFloat(remainingLife).toFixed(1);
                           $scope.totalLifeCountryInYears = moment(today).diff(moment(ProfileService.birthday), 'years', true);
                       });
                       $scope.$watchGroup(['remainingLifeCountryInYears', 'remainingLifeWorldInYears'],
