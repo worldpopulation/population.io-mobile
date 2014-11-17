@@ -10,7 +10,7 @@ angular.module('populationioApp')
                       // it is valid
                       ctrl.$setValidity('validateMonth', true);
                       ctrl.$modelValue = moment().month(viewValue).format('MM');
-                      ctrl.$viewValue = viewValue.capitalizeCountryName();
+                      ctrl.$viewValue = viewValue.capitalize();
                       ctrl.$render();
                       return viewValue;
                   } else {
@@ -33,12 +33,13 @@ angular.module('populationioApp')
                       ctrl.$setValidity('validateCountry', false);
                       return undefined;
                   }
-                  if (_.filter(Countries, function (v) {
-                        return v.POPIO_NAME.toLowerCase() == viewValue.toLowerCase()
-                    }).length) {
+                  var countriesFiltered = _.filter(Countries, function (v) {
+                      return v.POPIO_NAME.toLowerCase() == viewValue.toLowerCase()
+                  });
+                  if (countriesFiltered.length) {
                       ctrl.$setValidity('validateCountry', true);
-                      ctrl.$modelValue = viewValue.capitalizeCountryName();
-                      ctrl.$viewValue = viewValue.capitalizeCountryName();
+                      ctrl.$modelValue = countriesFiltered[0].POPIO_NAME;
+                      ctrl.$viewValue = countriesFiltered[0].POPIO_NAME;
                       ctrl.$render();
                       return viewValue;
                   } else {

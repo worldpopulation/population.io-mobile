@@ -555,7 +555,10 @@
                   var year = moment().year(ProfileService.birthday.year).format('YYYY'),
                     month = moment().month(ProfileService.birthday.month).format('MM'),
                     day = moment().date(ProfileService.birthday.day).format('DD');
-                  ProfileService.country = ProfileService.country.capitalizeCountryName();
+                  ProfileService.country = _.find(Countries, function (v) {
+                      return v.POPIO_NAME.toLowerCase() == ProfileService.country.toLowerCase()
+                  }).POPIO_NAME;
+                  console.log(ProfileService.country)
                   $location.path([
                       year,
                       month,
