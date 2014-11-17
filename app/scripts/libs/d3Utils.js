@@ -12,5 +12,9 @@ d3.selection.prototype.moveToBack = function () {
     });
 };
 String.prototype.capitalize = function () {
-    return this.replace(/(?:^|\s)\S/g, function (a) { return a.toUpperCase(); });
+    var str = this;
+    var upd = str.replace(/(?:^|\s)\S/g, function (a) { return a.toUpperCase(); });
+    upd = upd.replace(/ And /, ' and '); // use lowercase for `and` in long names like Bosnia and Herzegovina
+
+    return upd;
 };
