@@ -83,6 +83,7 @@
 
                   // TODO: check the url path for date and section
                   if (path && !ProfileService.active) {
+                      $rootScope.expanded = true;
                       var pathItems = $location.$$path.split('/'),
                         year = pathItems[1],
                         month = pathItems[2],
@@ -552,6 +553,8 @@
                       return;
                   }
 
+                  $rootScope.expanded = true;
+
                   var year = moment().year(ProfileService.birthday.year).format('YYYY'),
                     month = moment().month(ProfileService.birthday.month).format('MM'),
                     day = moment().date(ProfileService.birthday.day).format('DD');
@@ -559,7 +562,7 @@
                       return v.POPIO_NAME.toLowerCase() == ProfileService.country.toLowerCase()
                   }).POPIO_NAME;
                   console.log(ProfileService.country)
-                  $location.path([
+                  $location.path([  
                       year,
                       month,
                       day,

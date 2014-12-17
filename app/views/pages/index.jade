@@ -11,7 +11,7 @@ block content
             include ../../../assets/female-large.svg
             include ../../../assets/milestones.svg
 
-    .share.animate
+    .share.animate(ng-class="{'expanded': !expanded}")
         span 
         .tedtalk
             a(href='https://www.youtube.com/watch?v=87DDL6PiV2g') Watch the TED talk!
