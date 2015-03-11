@@ -1,0 +1,201 @@
+country	Proportion
+Afghanistan	0.739
+Albania	0.030
+Algeria	0.678
+Angola	0.705
+Antigua and Barbuda	0.001
+Azerbaijan	0.117
+Argentina	0.497
+Australia	0.225
+Austria	0.059
+The Bahamas	0.004
+Bahrain	0.014
+Bangladesh	2.229
+Armenia	0.028
+Barbados	0.003
+Belgium	0.093
+Bhutan	0.010
+Bolivia	0.200
+Bosnia and Herzegovina	0.025
+Botswana	0.034
+Brazil	2.127
+Belize	0.006
+Solomon Islands	0.012
+Brunei Darussalam	0.005
+Bulgaria	0.049
+Myanmar	0.649
+Burundi	0.341
+Belarus	0.072
+Cambodia	0.280
+Cameroon	0.611
+Canada	0.291
+Cabo Verde	0.007
+Central African Republic	0.116
+Sri Lanka	0.267
+Chad	0.439
+Chile	0.176
+China	13.016
+Colombia	0.645
+Comoros	0.019
+Mayotte	0.005
+Congo	0.123
+Dem Rep of Congo	2.146
+Costa Rica	0.053
+Croatia	0.029
+Cuba	0.075
+Cyprus	0.010
+Czech Republic	0.085
+Benin	0.278
+Denmark	0.046
+Dominican Republic	0.154
+Ecuador	0.235
+El Salvador	0.091
+Equatorial Guinea	0.020
+Ethiopia	2.277
+Eritrea	0.171
+Estonia	0.010
+Fiji	0.013
+Finland	0.044
+France	0.570
+French Guiana	0.004
+French Polynesia	0.003
+Djibouti	0.017
+Gabon	0.039
+Georgia	0.040
+The Gambia	0.060
+West Bank and Gaza	0.098
+Germany	0.507
+Ghana	0.580
+Kiribati	0.002
+Greece	0.076
+Grenada	0.001
+Guadeloupe	0.004
+Guam	0.002
+Guatemala	0.353
+Guinea	0.320
+Guyana	0.011
+Haiti	0.190
+Honduras	0.152
+Hong Kong SAR-China	0.049
+Hungary	0.070
+Iceland	0.003
+India	18.253
+Indonesia	3.311
+Islamic Republic of Iran	1.030
+Iraq	0.778
+Ireland	0.051
+Israel	0.112
+Italy	0.396
+Cote-d-Ivoire	0.551
+Jamaica	0.036
+Japan	0.748
+Kazakhstan	0.237
+Jordan	0.139
+Kenya	1.134
+Dem Peoples Rep of Korea	0.259
+Rep of Korea	0.341
+Kuwait	0.051
+Kyrgyz Republic	0.109
+Lao PDR	0.130
+Lebanon	0.048
+Lesotho	0.041
+Latvia	0.016
+Liberia	0.112
+Libya	0.090
+Lithuania	0.025
+Luxembourg	0.005
+Macao SAR China	0.004
+Madagascar	0.596
+Malawi	0.487
+Malaysia	0.387
+Maldives	0.005
+Mali	0.546
+Malta	0.003
+Martinique	0.003
+Mauritania	0.098
+Mauritius	0.010
+Mexico	1.594
+Mongolia	0.046
+Moldova	0.029
+Montenegro	0.005
+Morocco	0.537
+Mozambique	0.740
+Oman	0.054
+Namibia	0.044
+Nepal	0.412
+The Netherlands	0.129
+Curacao	0.001
+Aruba	0.001
+New Caledonia	0.003
+Vanuatu	0.005
+New Zealand	0.045
+Nicaragua	0.098
+Niger	0.685
+Nigeria	5.344
+Norway	0.046
+Federated States of Micronesia	0.002
+Pakistan	3.302
+Panama	0.054
+Papua New Guinea	0.154
+Paraguay	0.118
+Peru	0.429
+Philippines	1.755
+Poland	0.296
+Portugal	0.064
+Guinea-Bissau	0.047
+Timor-Leste	0.030
+Puerto Rico	0.031
+Qatar	0.017
+Reunion	0.010
+Romania	0.158
+Russian Federation	1.193
+Rwanda	0.303
+St-Lucia	0.002
+St-Vincent and the Grenadines	0.001
+Sao Tome and Principe	0.005
+Saudi Arabia	0.396
+Senegal	0.396
+Serbia	0.065
+Seychelles	0.001
+Sierra Leone	0.161
+Singapore	0.040
+Slovak Republic	0.042
+Vietnam	0.997
+Slovenia	0.015
+Somalia	0.344
+South Africa	0.780
+Zimbabwe	0.329
+Spain	0.340
+South Sudan	0.306
+Sudan	0.934
+Western Sahara	0.009
+Suriname	0.007
+Swaziland	0.027
+Sweden	0.084
+Switzerland	0.063
+Syrian Arab Rep	0.384
+Tajikistan	0.199
+Thailand	0.474
+Togo	0.182
+Tonga	0.002
+Trinidad and Tobago	0.013
+United Arab Emirates	0.091
+Tunisia	0.135
+Turkey	0.893
+Turkmenistan	0.080
+Uganda	1.218
+Ukraine	0.343
+FYR Macedonia	0.016
+Arab Rep of Egypt	1.364
+United Kingdom	0.554
+Channel Islands	0.001
+Tanzania	1.435
+United States	3.062
+US Virgin Islands	0.001
+Burkina Faso	0.513
+Uruguay	0.035
+Uzbekistan	0.443
+RB-de-Venezuela	0.430
+Samoa	0.003
+Rep of Yemen	0.555
+Zambia	0.473
