@@ -1,201 +1,201 @@
 country,proportion
-Afghanistan,"0,74"
-Albania,"0,03"
-Algeria,"0,68"
-Angola,"0,71"
-Antigua and Barbuda,"0,00"
-Azerbaijan,"0,12"
-Argentina,"0,50"
-Australia,"0,22"
-Austria,"0,06"
-The Bahamas,"0,00"
-Bahrain,"0,01"
-Bangladesh,"2,23"
-Armenia,"0,03"
-Barbados,"0,00"
-Belgium,"0,09"
-Bhutan,"0,01"
-Bolivia,"0,20"
-Bosnia and Herzegovina,"0,03"
-Botswana,"0,03"
-Brazil,"2,13"
-Belize,"0,01"
-Solomon Islands,"0,01"
-Brunei Darussalam,"0,00"
-Bulgaria,"0,05"
-Myanmar,"0,65"
-Burundi,"0,34"
-Belarus,"0,07"
-Cambodia,"0,28"
-Cameroon,"0,61"
-Canada,"0,29"
-Cabo Verde,"0,01"
-Central African Republic,"0,12"
-Sri Lanka,"0,27"
-Chad,"0,44"
-Chile,"0,18"
-China,"13,02"
-Colombia,"0,65"
-Comoros,"0,02"
-Mayotte,"0,00"
-Congo,"0,12"
-Dem Rep of Congo,"2,15"
-Costa Rica,"0,05"
-Croatia,"0,03"
-Cuba,"0,08"
-Cyprus,"0,01"
-Czech Republic,"0,08"
-Benin,"0,28"
-Denmark,"0,05"
-Dominican Republic,"0,15"
-Ecuador,"0,24"
-El Salvador,"0,09"
-Equatorial Guinea,"0,02"
-Ethiopia,"2,28"
-Eritrea,"0,17"
-Estonia,"0,01"
-Fiji,"0,01"
-Finland,"0,04"
-France,"0,57"
-French Guiana,"0,00"
-French Polynesia,"0,00"
-Djibouti,"0,02"
-Gabon,"0,04"
-Georgia,"0,04"
-The Gambia,"0,06"
-West Bank and Gaza,"0,10"
-Germany,"0,51"
-Ghana,"0,58"
-Kiribati,"0,00"
-Greece,"0,08"
-Grenada,"0,00"
-Guadeloupe,"0,00"
-Guam,"0,00"
-Guatemala,"0,35"
-Guinea,"0,32"
-Guyana,"0,01"
-Haiti,"0,19"
-Honduras,"0,15"
-Hong Kong SAR-China,"0,05"
-Hungary,"0,07"
-Iceland,"0,00"
-India,"18,25"
-Indonesia,"3,31"
-Islamic Republic of Iran,"1,03"
-Iraq,"0,78"
-Ireland,"0,05"
-Israel,"0,11"
-Italy,"0,40"
-Cote-d-Ivoire,"0,55"
-Jamaica,"0,04"
-Japan,"0,75"
-Kazakhstan,"0,24"
-Jordan,"0,14"
-Kenya,"1,13"
-Dem Peoples Rep of Korea,"0,26"
-Rep of Korea,"0,34"
-Kuwait,"0,05"
-Kyrgyz Republic,"0,11"
-Lao PDR,"0,13"
-Lebanon,"0,05"
-Lesotho,"0,04"
-Latvia,"0,02"
-Liberia,"0,11"
-Libya,"0,09"
-Lithuania,"0,02"
-Luxembourg,"0,00"
-Macao SAR China,"0,00"
-Madagascar,"0,60"
-Malawi,"0,49"
-Malaysia,"0,39"
-Maldives,"0,01"
-Mali,"0,55"
-Malta,"0,00"
-Martinique,"0,00"
-Mauritania,"0,10"
-Mauritius,"0,01"
-Mexico,"1,59"
-Mongolia,"0,05"
-Moldova,"0,03"
-Montenegro,"0,01"
-Morocco,"0,54"
-Mozambique,"0,74"
-Oman,"0,05"
-Namibia,"0,04"
-Nepal,"0,41"
-The Netherlands,"0,13"
-Curacao,"0,00"
-Aruba,"0,00"
-New Caledonia,"0,00"
-Vanuatu,"0,00"
-New Zealand,"0,04"
-Nicaragua,"0,10"
-Niger,"0,69"
-Nigeria,"5,34"
-Norway,"0,05"
-Federated States of Micronesia,"0,00"
-Pakistan,"3,30"
-Panama,"0,05"
-Papua New Guinea,"0,15"
-Paraguay,"0,12"
-Peru,"0,43"
-Philippines,"1,76"
-Poland,"0,30"
-Portugal,"0,06"
-Guinea-Bissau,"0,05"
-Timor-Leste,"0,03"
-Puerto Rico,"0,03"
-Qatar,"0,02"
-Reunion,"0,01"
-Romania,"0,16"
-Russian Federation,"1,19"
-Rwanda,"0,30"
-St-Lucia,"0,00"
-St-Vincent and the Grenadines,"0,00"
-Sao Tome and Principe,"0,00"
-Saudi Arabia,"0,40"
-Senegal,"0,40"
-Serbia,"0,06"
-Seychelles,"0,00"
-Sierra Leone,"0,16"
-Singapore,"0,04"
-Slovak Republic,"0,04"
-Vietnam,"1,00"
-Slovenia,"0,01"
-Somalia,"0,34"
-South Africa,"0,78"
-Zimbabwe,"0,33"
-Spain,"0,34"
-South Sudan,"0,31"
-Sudan,"0,93"
-Western Sahara,"0,01"
-Suriname,"0,01"
-Swaziland,"0,03"
-Sweden,"0,08"
-Switzerland,"0,06"
-Syrian Arab Rep,"0,38"
-Tajikistan,"0,20"
-Thailand,"0,47"
-Togo,"0,18"
-Tonga,"0,00"
-Trinidad and Tobago,"0,01"
-United Arab Emirates,"0,09"
-Tunisia,"0,14"
-Turkey,"0,89"
-Turkmenistan,"0,08"
-Uganda,"1,22"
-Ukraine,"0,34"
-FYR Macedonia,"0,02"
-Arab Rep of Egypt,"1,36"
-United Kingdom,"0,55"
-Channel Islands,"0,00"
-Tanzania,"1,44"
-United States,"3,06"
-US Virgin Islands,"0,00"
-Burkina Faso,"0,51"
-Uruguay,"0,04"
-Uzbekistan,"0,44"
-RB-de-Venezuela,"0,43"
-Samoa,"0,00"
-Rep of Yemen,"0,56"
-Zambia,"0,47"
+Afghanistan,0.739
+Albania,0.030
+Algeria,0.678
+Angola,0.705
+Antigua and Barbuda,0.001
+Azerbaijan,0.117
+Argentina,0.497
+Australia,0.225
+Austria,0.059
+The Bahamas,0.004
+Bahrain,0.014
+Bangladesh,2.229
+Armenia,0.028
+Barbados,0.003
+Belgium,0.093
+Bhutan,0.010
+Bolivia,0.200
+Bosnia and Herzegovina,0.025
+Botswana,0.034
+Brazil,2.127
+Belize,0.006
+Solomon Islands,0.012
+Brunei Darussalam,0.005
+Bulgaria,0.049
+Myanmar,0.649
+Burundi,0.341
+Belarus,0.072
+Cambodia,0.280
+Cameroon,0.611
+Canada,0.291
+Cabo Verde,0.007
+Central African Republic,0.116
+Sri Lanka,0.267
+Chad,0.439
+Chile,0.176
+China,13.016
+Colombia,0.645
+Comoros,0.019
+Mayotte,0.005
+Congo,0.123
+Dem Rep of Congo,2.146
+Costa Rica,0.053
+Croatia,0.029
+Cuba,0.075
+Cyprus,0.010
+Czech Republic,0.085
+Benin,0.278
+Denmark,0.046
+Dominican Republic,0.154
+Ecuador,0.235
+El Salvador,0.091
+Equatorial Guinea,0.020
+Ethiopia,2.277
+Eritrea,0.171
+Estonia,0.010
+Fiji,0.013
+Finland,0.044
+France,0.570
+French Guiana,0.004
+French Polynesia,0.003
+Djibouti,0.017
+Gabon,0.039
+Georgia,0.040
+The Gambia,0.060
+West Bank and Gaza,0.098
+Germany,0.507
+Ghana,0.580
+Kiribati,0.002
+Greece,0.076
+Grenada,0.001
+Guadeloupe,0.004
+Guam,0.002
+Guatemala,0.353
+Guinea,0.320
+Guyana,0.011
+Haiti,0.190
+Honduras,0.152
+Hong Kong SAR-China,0.049
+Hungary,0.070
+Iceland,0.003
+India,18.253
+Indonesia,3.311
+Islamic Republic of Iran,1.030
+Iraq,0.778
+Ireland,0.051
+Israel,0.112
+Italy,0.396
+Cote-d-Ivoire,0.551
+Jamaica,0.036
+Japan,0.748
+Kazakhstan,0.237
+Jordan,0.139
+Kenya,1.134
+Dem Peoples Rep of Korea,0.259
+Rep of Korea,0.341
+Kuwait,0.051
+Kyrgyz Republic,0.109
+Lao PDR,0.130
+Lebanon,0.048
+Lesotho,0.041
+Latvia,0.016
+Liberia,0.112
+Libya,0.090
+Lithuania,0.025
+Luxembourg,0.005
+Macao SAR China,0.004
+Madagascar,0.596
+Malawi,0.487
+Malaysia,0.387
+Maldives,0.005
+Mali,0.546
+Malta,0.003
+Martinique,0.003
+Mauritania,0.098
+Mauritius,0.010
+Mexico,1.594
+Mongolia,0.046
+Moldova,0.029
+Montenegro,0.005
+Morocco,0.537
+Mozambique,0.740
+Oman,0.054
+Namibia,0.044
+Nepal,0.412
+The Netherlands,0.129
+Curacao,0.001
+Aruba,0.001
+New Caledonia,0.003
+Vanuatu,0.005
+New Zealand,0.045
+Nicaragua,0.098
+Niger,0.685
+Nigeria,5.344
+Norway,0.046
+Federated States of Micronesia,0.002
+Pakistan,3.302
+Panama,0.054
+Papua New Guinea,0.154
+Paraguay,0.118
+Peru,0.429
+Philippines,1.755
+Poland,0.296
+Portugal,0.064
+Guinea-Bissau,0.047
+Timor-Leste,0.030
+Puerto Rico,0.031
+Qatar,0.017
+Reunion,0.010
+Romania,0.158
+Russian Federation,1.193
+Rwanda,0.303
+St-Lucia,0.002
+St-Vincent and the Grenadines,0.001
+Sao Tome and Principe,0.005
+Saudi Arabia,0.396
+Senegal,0.396
+Serbia,0.065
+Seychelles,0.001
+Sierra Leone,0.161
+Singapore,0.040
+Slovak Republic,0.042
+Vietnam,0.997
+Slovenia,0.015
+Somalia,0.344
+South Africa,0.780
+Zimbabwe,0.329
+Spain,0.340
+South Sudan,0.306
+Sudan,0.934
+Western Sahara,0.009
+Suriname,0.007
+Swaziland,0.027
+Sweden,0.084
+Switzerland,0.063
+Syrian Arab Rep,0.384
+Tajikistan,0.199
+Thailand,0.474
+Togo,0.182
+Tonga,0.002
+Trinidad and Tobago,0.013
+United Arab Emirates,0.091
+Tunisia,0.135
+Turkey,0.893
+Turkmenistan,0.080
+Uganda,1.218
+Ukraine,0.343
+FYR Macedonia,0.016
+Arab Rep of Egypt,1.364
+United Kingdom,0.554
+Channel Islands,0.001
+Tanzania,1.435
+United States,3.062
+US Virgin Islands,0.001
+Burkina Faso,0.513
+Uruguay,0.035
+Uzbekistan,0.443
+RB-de-Venezuela,0.430
+Samoa,0.003
+Rep of Yemen,0.555
+Zambia,0.473
