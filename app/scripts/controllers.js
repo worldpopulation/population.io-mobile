@@ -11,7 +11,12 @@
                         {alias: 'Great Britain', country: 'United Kingdom'},
                         {alias: 'Britain', country: 'United Kingdom'},
                         {alias: 'England', country: 'United Kingdom'},
-                        {alias: 'United States of America', country: 'United States'}]
+                        {alias: 'United States of America', country: 'United States'},
+                        {alias: 'USA', country: 'United States'},
+                        {alias: 'Egypt', country: 'Arab Rep of Egypt'},
+                        {alias: 'North Korea', country: 'Dem Peoples Rep of Korea'},
+                        {alias: 'South Korea', country: 'Rep of Korea'}
+                      ]
                     ;
                   var foundAlias = _.find(aliases, function (item) {
                       return item.alias.toLowerCase().indexOf(newVal.toLowerCase()) > -1
