@@ -3,7 +3,7 @@ header
         .logo
             a(ng-click="showHomepage()")
                 span.title Population.io
-                span.subtitle The World Population Project
+                span.subtitle {{ 'HEADER_TITLE' | translate }}
                 span.icon-alpha
         .loader.fa.fa-refresh(ng-class="{'active': loading}")
         ul.link-list

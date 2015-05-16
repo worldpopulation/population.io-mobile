@@ -37,6 +37,8 @@ var gulp = require('gulp'),
           'bower_components/angular-resource/angular-resource.js',
           'bower_components/angular-ui-router/release/angular-ui-router.js',
           'bower_components/angular-sanitize/angular-sanitize.js',
+          'bower_components/angular-translate/angular-translate.js',
+          'bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
 
           'app/scripts/app.js',
           'app/scripts/controllers.js',
@@ -72,7 +74,12 @@ var gulp = require('gulp'),
       maps: [
           'bower_components/angular-sanitize/angular-sanitize.min.js.map'
       ],
-      celebs: 'assets/celebrities/**'
+      celebs: 'assets/celebrities/**',
+      translations: [
+        'app/i18n/DE.json',
+        'app/i18n/EN.json',
+        'app/i18n/ES.json'
+      ]
   },
   destinations = {
       scripts: 'dist/scripts/',
@@ -80,7 +87,8 @@ var gulp = require('gulp'),
       partials: 'dist/partials',
       css: 'dist/css/',
       images: 'dist/images/',
-      celebs: 'dist/celebrities/'
+      celebs: 'dist/celebrities/',
+      translations: 'dist/i18n'
   };
 
 // server task
@@ -134,6 +142,11 @@ gulp.task('scripts', function (event) {
       .pipe(uglify({mangle: false, drop_console: true}))
       .pipe(sourcemaps.write('../maps'))
       .pipe(gulp.dest(destinations.scripts));
+});
+
+gulp.task('trans', function (event) {
+    gulp.src(sources.translations)
+      .pipe(gulp.dest(destinations.translations));
 });
 
 //// scripts watch task for development
@@ -265,6 +278,7 @@ gulp.task('default', [
     'images:watch',
     'jade:watch',
     'scripts',
+    'trans',
     'lint:watch',
     'stylus:watch'
 ]);

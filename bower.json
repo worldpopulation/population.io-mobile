@@ -18,6 +18,8 @@
     "angular-sanitize": "1.3.0",
     "angular-ui-router": "0.2.10",
     "angular-route": "1.3.0",
+    "angular-translate": "2.7.0",
+    "angular-translate-loader-static-files": "2.7.0",
     "lodash": "2.4.1",
     "fontawesome": "4.1.0",
     "bowser": "0.7.1",
