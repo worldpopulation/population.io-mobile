@@ -31,6 +31,7 @@
   "HOME_FORM_SUBMIT": "go",
 
   "SUMMARY_INTRO": "Do you think you belong to the young or old? You are the <span>{{rankGlobal | number : 0}}</span> person alive on the planet. This means that you are <span>older than {{(rankGlobal/(worldPopulation/100) | number : 0)}}%</span> of the world's population and <span>older than {{calcCountryYoungerPercentageSimple()}}%</span> of all people in <span>{{profile.country}}</span>.",
+  "SUMMARY_WORLD": "World",
   "SUMMARY_PEOPLE_YOUNGER": "People younger than you (' + value + '%)",
   "SUMMARY_PEOPLE_OLDER": "People older than you (' + value + '%)",
   "SUMMARY_CITIZEN": "You as a citizen <br>from <span>{{region || profile.country}}</span>",
@@ -38,6 +39,7 @@
   "SUMMARY_CHART_AXIS_X": "Age",
 
   "MILESTONES_INTRO": "What are the big milestones to expect in your life? Your next milestone is 17th Jan, 2021, then you’ll be 5th billionth person to be alive in the world.",
+  "MILESTONES_NOW": "Now",
   "MILESTONES_TITLE_AGE_DISTRIBUTION": "Age Distribution",
   "MILESTONES_TIMELINE": "Timeline (projections)",
   "MILESTONES_MILESTONE_LIFE_EXPECTANCY" : "Your projected life expectancy in {{country}}",

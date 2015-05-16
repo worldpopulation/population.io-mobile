@@ -1,9 +1,9 @@
 .container
     .milestones-area
         header
-            h1 What are the big milestones to expect in your life? <i ng-bind-html="titleAlive"></i>
+            h1 {{ 'MILESTONES_INTRO' | translate }}
         .rank
-            h2 Age Distribution
+            h2 {{ 'MILESTONES_TITLE_AGE_DISTRIBUTION' | translate }}
             .global-rank
                 .title World
                 rank-graph(country="'World'", data="globalRankData", age="age")
@@ -12,7 +12,7 @@
                 rank-graph(country="country", data="localRankData", age="age")
 
         .timeline
-            h2 Timeline (projections)
+            h2 {{ 'MILESTONES_TIMELINE' | translate }}
             ul
                 li(ng-repeat="item in milestonesData | orderBy:dateOrder:true", data-id="item.year", class="{{item.color}}", ng-class="{'is-rank': item.rank, 'now': item.now, 'past': item.year < year, 'selected': item.selected}", ng-click="highlightMilestone(item)" )
                     span.time
@@ -20,4 +20,3 @@
                         span.year {{item.date | date: 'yyyy' }}
                     span.title {{item.title}}
             milestones(data="milestonesData", selected-year="selectedYear")
-

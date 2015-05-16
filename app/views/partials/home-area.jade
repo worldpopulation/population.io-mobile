@@ -1,10 +1,10 @@
 world-clock
-    h3 <i class="icon icon-world"></i>Current world<br/>population clock
+    h3 <i class="icon icon-world"></i> {{ 'HOME_WORLD_CLOCK' | translate }}
 .container
     .home-area
         .question
-            h1 What's my place in the world population? How long will I live?
-            p The Journey of your life in numbers and dates!<br/>Please enter your date of birth, country of birth and sex at birth:
+            h1 {{ 'HOME_TEXT_BIG' | translate }}
+            p {{ 'HOME_TEXT_SMALL' | translate }}
             form.form-inline(name="goForm", novalidate, ng-class='{highlight:highlightErrors, "highlight-extra":highlightExtra}', autocomplete='off')
                 input.fake-disable-autocomplete(type="password", style="display: none")
                 .typeahead

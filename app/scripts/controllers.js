@@ -567,7 +567,7 @@
                       return v.POPIO_NAME.toLowerCase() == ProfileService.country.toLowerCase()
                   }).POPIO_NAME;
                   console.log(ProfileService.country)
-                  $location.path([  
+                  $location.path([
                       year,
                       month,
                       day,
@@ -788,7 +788,7 @@
                       {
                           date: $filter('date')(Date.now(), 'yyyy-MM-dd'),
                           year: $filter('date')(Date.now(), 'yyyy'),
-                          title: 'Now',
+                          title: $filter('translate')('MILESTONES_NOW'),
                           selected: true,
                           now: true
                       },

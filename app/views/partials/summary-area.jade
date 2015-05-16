@@ -1,11 +1,8 @@
 .container
     .summary-area
-        h3
-            | Do you think you belong to the young or old? You are the <span>{{rankGlobal | number : 0}}</span> person alive on the planet.
-            | This means that you are <span>older than {{(rankGlobal/(worldPopulation/100) | number : 0)}}%</span> of the world's population
-            | and <span>older than {{calcCountryYoungerPercentageSimple()}}%</span> of all people in <span>{{profile.country}}</span>.
+        h3 {{ 'SUMMARY_INTRO' | translate }}
         .region-switcher
-            span(ng-class='{active:region=="World"}', ng-click='region="World"') World
+            span(ng-class='{active:region=="World"}', ng-click='region="World"') {{ 'SUMMARY_WORLD' | translate }}
             span(ng-class='{active:region!="World"}', ng-click='region=profile.country',title='{{profile.country}}') {{profile.country}}
         .younger-you-older-section
             .younger-column.country(ng-hide="region=='World'")
@@ -33,7 +30,7 @@
                     | </svg>
 
 
-                .label You as a citizen <br>from <span>{{region || profile.country}}</span>
+                .label {{ 'SUMMARY_CITIZEN' | translate }}
             .older-column.country(ng-hide="region=='World'")
                 .number(ng-bind='scaledRankOlderLocal | number: 0')
                 .label(ng-bind='calcCountryOlderPercentage()')

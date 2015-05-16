@@ -10,7 +10,7 @@ angular
     delete $httpProvider.defaults.headers.common['X-Requested-With'];
 
     $translateProvider.useSanitizeValueStrategy(null);
-    
+
     $translateProvider.useStaticFilesLoader({
       prefix: 'i18n/',
       suffix: '.json'

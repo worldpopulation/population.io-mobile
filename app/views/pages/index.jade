@@ -12,11 +12,11 @@ block content
             include ../../../assets/milestones.svg
 
     .share.animate(ng-class="{'expanded': !expanded}")
-        span 
+        span
         .tedtalk
-            a(href='https://www.youtube.com/watch?v=87DDL6PiV2g') Watch the TED talk!
-            
-        span SHARE!
+            a(href='https://www.youtube.com/watch?v=87DDL6PiV2g') {{ 'SHARE_TED_TALK' | translate }}
+
+        span {{ 'SHARE_TEXT' | translate }}
         .links
             a.fa.fa-facebook-square(target="_blank", share="facebook", share-title="population.io")
             a.fa.fa-twitter-square(target="_blank", share="twitter", share-title="population.io")

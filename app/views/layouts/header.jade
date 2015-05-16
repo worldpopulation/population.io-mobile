@@ -6,11 +6,12 @@ header
                 span.subtitle {{ 'HEADER_TITLE' | translate }}
                 span.icon-alpha
         .loader.fa.fa-refresh(ng-class="{'active': loading}")
+
         ul.link-list
             li
-                a(ng-click="showAbout()") About
-                a(ng-click="showMethodology()") Methodology
-                a(ng-click="showDevelopers()") API
+                a(ng-click="showAbout()") {{ 'HEADER_MENU_ABOUT' | translate }}
+                a(ng-click="showMethodology()") {{ 'HEADER_MENU_METHODOLOGY' | translate }}
+                a(ng-click="showDevelopers()") {{ 'HEADER_MENU_API' | translate }}
         .profile.animate( ng-show="currentPage > 0", ng-click="showHomepage()", ng-cloak ) {{profile.birthday.formatted | date:'dd MMM yyyy' }}, {{profile.country}}
         .world-population.animate(ng-show="currentPage > 0", ng-cloak)
             span(ng-show="clockType === 'personal'") {{rankGlobal | number:0}}
