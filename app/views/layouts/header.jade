@@ -9,6 +9,9 @@ header
 
         ul.link-list
             li
+                a(ng-click="changeLanguage('DE')") DE
+                a(ng-click="changeLanguage('EN')") EN
+                a(ng-click="changeLanguage('ES')") ES
                 a(ng-click="showAbout()") {{ 'HEADER_MENU_ABOUT' | translate }}
                 a(ng-click="showMethodology()") {{ 'HEADER_MENU_METHODOLOGY' | translate }}
                 a(ng-click="showDevelopers()") {{ 'HEADER_MENU_API' | translate }}
