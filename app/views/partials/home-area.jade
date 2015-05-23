@@ -17,6 +17,6 @@ world-clock
                 .typeahead.icon-country
                     input.form-control(type="text",name='country', placeholder="Country", ng-model="profile.country", ng-value="profile.country", typeahead="country.POPIO_NAME for country in countriesList($viewValue)", typeahead-wait-ms="100", typeahead-editable="true", required, stoptab, validate-country, typeahead-on-select='setCountry($item, $model, $label)', formnovalidate)
                 .toggle
-                    label.icon.icon-female(ng-model="profile.gender" btn-radio="'female'", required) Female
-                    label.icon.icon-male(ng-model="profile.gender" btn-radio="'male'", required) Male
+                    label.icon.icon-female(ng-model="profile.gender" btn-radio="'female'", required) {{ 'LOCAL_FEMALE' | translate }}
+                    label.icon.icon-male(ng-model="profile.gender" btn-radio="'male'", required) {{ 'LOCAL_MALE' | translate }}
                 a.btn.btn-big(ng-click="goGoGadget()", ng-disabled="loading", ng-class='{inactive:goForm.$invalid, loading:loading}') <span class="fa fa-refresh"></span>

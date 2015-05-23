@@ -35,7 +35,7 @@
 
   "API_INTRO": "Todas las estadísticas de population.io están muy bien documentadas con detalles de la metodología y las fuentes utilizadas aquí:<br> <a href='http://api.population.io' target='_blank'>api.population.io</a><br> El código fuente de este sitio también está disponible en: <a href='https://github.com/worldpopulation/'>github.com/worldpopulation</a> y los desarrolladores pueden utilizar tanto la aplicación como su API.",
 
-  "HOME_WORLD_CLOCK": "Reloj actual <br> de la población global",
+  "HOME_WORLD_CLOCK": "Reloj actual <br> de la población <br> global",
   "HOME_TEXT_BIG": "¿Cuál es mi lugar en la población global? ¿Cuánto tiempo voy a vivir?",
   "HOME_TEXT_SMALL": "¡Tu vida en números y fechas!<br>Ingresa tu fecha de nacimiento, país de nacimiento, y género",
   "HOME_FORM_SUBMIT": "Ir",
@@ -46,6 +46,7 @@
   "SUMMARY_CITIZEN": "Tu lugar como ciudadano <br>de <span>{{region || profile.country}}</span>",
   "SUMMARY_CHART_AXIS_Y": "Personas",
   "SUMMARY_CHART_AXIS_X": "Edad",
+  "SUMMARY_WORLD": "Mundo",
 
   "MILESTONES_INTRO": "¿Cuáles son los grandes momentos que puedes esperar en tu vida? Tu próximo gran momento es Enero 17, 2021, cuando serás la persona número 5 mil millones en el mundo!",
   "MILESTONES_TITLE_AGE_DISTRIBUTION": "Distribución por edades",
