@@ -1,7 +1,7 @@
 .container
     .death-area
         header
-            h1 {{ 'DEATH_INTRO' | translate }}
+            h1(compile-unsafe="'DEATH_INTRO' | translate")
         .type-switcher
             span(ng-class='{active:type=="distribution"}', ng-click='type="distribution"') {{ 'DEATH_MORTALITY_DISTRIBUTION' | translate }}
             span(ng-class='{active:type=="chances"}', ng-click='type="chances"') {{ 'DEATH_CHANCES_OF_DYING' | translate }}
@@ -12,12 +12,12 @@
             .column
                 .content
                     .title.world {{dodWorld}}
-                    .copy {{ 'DEATH_EXPECTANCY_TXT_WORLD' | translate }}
+                    .copy(compile-unsafe="'DEATH_EXPECTANCY_TXT_WORLD' | translate")
             .column
                 .content
                     .title {{differenceInDays}}
-                    .copy {{ 'DEATH_EXPECTANCY_TXT_DIFFERENCE' | translate }}
+                    .copy(compile-unsafe="'DEATH_EXPECTANCY_TXT_DIFFERENCE' | translate")
             .column
                 .content
                     .title.country {{dodCountry}}
-                    .copy {{ 'DEATH_EXPECTANCY_TXT_COUNTRY' | translate }}
+                    .copy(compile-unsafe="'DEATH_EXPECTANCY_TXT_COUNTRY' | translate")

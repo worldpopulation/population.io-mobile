@@ -2,8 +2,8 @@
   .birthdays-area
     header
       h1 {{ 'BIRTHDAYS_INTRO' | translate }} <i ng-bind-html="birthdayShare"></i>
-    h2.continental {{ 'BIRTHDAYS_TITLE_CONTINENTAL' | translate }}
-    h2.world {{ 'BIRTHDAYS_TITLE_WORLD' | translate }}
+    h2.continental(compile-unsafe="'BIRTHDAYS_TITLE_CONTINENTAL' | translate")
+    h2.world(compile-unsafe="'BIRTHDAYS_TITLE_WORLD' | translate")
     birthdays-chart(continents-data="continentsData", world-data="worldData")
     .continents
       span {{ 'BIRTHDAYS_SWITCH_LABEL' | translate }}

@@ -5,7 +5,7 @@ world-clock
     .home-area
         .question
             h1 {{ 'HOME_TEXT_BIG' | translate }}
-            p {{ 'HOME_TEXT_SMALL' | translate }}
+            p(compile-unsafe="'HOME_TEXT_SMALL' | translate")
             form.form-inline(name="goForm", novalidate, ng-class='{highlight:highlightErrors, "highlight-extra":highlightExtra}', autocomplete='off')
                 input.fake-disable-autocomplete(type="password", style="display: none")
                 .typeahead

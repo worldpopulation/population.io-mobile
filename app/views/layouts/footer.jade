@@ -2,7 +2,7 @@ footer
     .container
         .block
             h2.icon.icon-mail {{ 'FOOTER_SIGNUP_TITLE' | translate }}
-            p {{ 'FOOTER_SIGNUP_TXT' | translate }}
+            p(compile-unsafe="'FOOTER_SIGNUP_TXT' | translate")
             form.form-inline(name="emailForm", novalidate)
                 input.form-control.input-dark(
                 type="email",
@@ -16,7 +16,7 @@ footer
                 ng-disabled="emailForm.$invalid || sending"
                 )
         .block
-            h2.icon.icon-calendar {{ 'FOOTER_ADD_TO_CALENDAR_TITLE' | translate }}
+            h2.icon.icon-calendar(compile-unsafe="'FOOTER_ADD_TO_CALENDAR_TITLE' | translate")
             ul
                 li
                     a(ng-click="downloadICal()", data-ref="1") iCalendar
