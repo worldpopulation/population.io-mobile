@@ -41,7 +41,7 @@
   "HOME_TEXT_SMALL": "¡Tu vida en números y fechas!<br>Ingresa tu fecha de nacimiento, país de nacimiento, y género",
   "HOME_FORM_SUBMIT": "Ir",
 
-  "SUMMARY_INTRO": "¿Crees que estás entre los jóvenes o los viejos? Eres la persona número <span>{{rankGlobal | number : 0}}</span> viva en el planeta. Eso quiere decir que eres <span>mayor que {{(rankGlobal/(worldPopulation/100) | number : 0)}}%</span> de la población mundial y <span> mayor que {{calcCountryYoungerPercentageSimple()}}%</span> de la gente en <span>{{profile.country}}</span>.",
+  "SUMMARY_INTRO": "¿Crees que estás entre los jóvenes o los viejos? Eres la persona número <span>{{val1}}</span> viva en el planeta. Eso quiere decir que eres <span>mayor que {{val2}}%</span> de la población mundial y <span> mayor que {{val3}}%</span> de la gente en <span>{{val4}}</span>.",
   "SUMMARY_PEOPLE_YOUNGER": "Personas menores que tú",
   "SUMMARY_PEOPLE_OLDER": "Personas mayores que tú",
   "SUMMARY_CITIZEN": "Tu lugar como ciudadano <br>de <span>{{region || profile.country}}</span>",
