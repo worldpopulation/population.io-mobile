@@ -42,8 +42,8 @@
   "HOME_FORM_SUBMIT": "Ir",
 
   "SUMMARY_INTRO": "¿Crees que estás entre los jóvenes o los viejos? Eres la persona número <span>{{val1}}</span> viva en el planeta. Eso quiere decir que eres <span>mayor que {{val2}}%</span> de la población mundial y <span> mayor que {{val3}}%</span> de la gente en <span>{{val4}}</span>.",
-  "SUMMARY_PEOPLE_YOUNGER": "Personas menores que tú",
-  "SUMMARY_PEOPLE_OLDER": "Personas mayores que tú",
+  "SUMMARY_PEOPLE_YOUNGER": "Personas menores que tú ",
+  "SUMMARY_PEOPLE_OLDER": "Personas mayores que tú ",
   "SUMMARY_CITIZEN": "Tu lugar como ciudadano <br>de <span>{{region || profile.country}}</span>",
   "SUMMARY_CHART_AXIS_Y": "Personas",
   "SUMMARY_CHART_AXIS_X": "Edad",

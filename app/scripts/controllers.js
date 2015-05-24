@@ -8,6 +8,7 @@
 
             $scope.changeLanguage = function (langKey) {
               $translate.use(langKey);
+              //$rootScope.$broadcast('ready');
               $scope.updatePlaceholders();
 
             };
@@ -282,7 +283,7 @@
               };
               $scope.calcWorldOlderPercentage = function () {
                   var value = $filter('number')(Math.max(0, 100 - $scope.rankGlobal / ($scope.worldPopulation / 100)), 0);
-                  return 'People older than you (' + value + '%)';
+                  return $filter('translate')('SUMMARY_PEOPLE_OLDER')+ value + '%)';
               };
 
               $scope.calcCountryOlderNumber = function () {
@@ -291,17 +292,17 @@
               $scope.calcCountryOlderPercentage = function () {
 
                   var value = $filter('number')(Math.max(0, 100 - $scope.rankLocal / ($scope.countryPopulation / 100)), 0);
-                  return 'People older than you (' + value + '%)';
+                  return $filter('translate')('SUMMARY_PEOPLE_OLDER') + value + '%)';
               };
 
               $scope.calcCountryYoungerPercentage = function () {
                   var value = $filter('number')(Math.min(100, $scope.rankLocal / ($scope.countryPopulation / 100)), 0);
-                  return 'People younger than you (' + value + '%)';
+                  return $filter('translate')('SUMMARY_PEOPLE_YOUNGER') + value + '%)';
               };
 
               $scope.calcWorldYoungerPercentage = function () {
                   var value = $filter('number')(Math.min(100, $scope.rankGlobal / ($scope.worldPopulation / 100)), 0);
-                  return 'People younger than you (' + value + '%)';
+                  return $filter('translate')('SUMMARY_PEOPLE_YOUNGER') + value + '%)';
               };
               $scope.calcCountryYoungerPercentageSimple = function () {
                   return $filter('number')(Math.min(100, $scope.rankLocal / ($scope.countryPopulation / 100)), 0);
@@ -741,7 +742,7 @@
                       $scope.milestonesData.push({
                           date: $filter('date')(date, 'yyyy-MM-dd'),
                           year: $filter('date')(date, 'yyyy'),
-                          title: 'Your projected life expectancy in ' + (country === 'World' ? 'the World' : country)
+                          title: $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + (country === 'World' ? 'the World' : country)
                       });
 
                       if (onSuccess) {
@@ -802,14 +803,14 @@
                       {
                           date: $filter('date')(Date.now(), 'yyyy-MM-dd'),
                           year: $filter('date')(Date.now(), 'yyyy'),
-                          title: $filter('translate')('MILESTONES_NOW'),
+                          title: $filter('translate')('MILESTONES_MILESTONE_NOW'),
                           selected: true,
                           now: true
                       },
                       {
                           date: ProfileService.birthday.formatted,
                           year: ProfileService.birthday.year,
-                          title: 'Born',
+                          title: $filter('translate')('MILESTONES_MILESTONE_BORN'),
                           born: true
                       },
                       {
@@ -818,7 +819,7 @@
                             new Date(ProfileService.birthday.formatted),
                             18
                           ), 'yyyy'),
-                          title: 'You turn 18!'
+                          title: $filter('translate')('MILESTONES_MILESTONE_18')
                       }
                   ];
               };
