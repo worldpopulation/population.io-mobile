@@ -5,9 +5,19 @@
 
       .controller('MainCtrl', ['$translate', '$scope', '$timeout', '$http', '$interval', '$modal', '$state', '$location', '$document', '$rootScope', '$filter', 'ProfileService', 'PopulationIOService', 'BrowserService', 'Countries',
           function ($translate, $scope, $timeout, $http, $interval, $modal, $state, $location, $document, $rootScope, $filter, ProfileService, PopulationIOService, BrowserService, Countries) {
+
             $scope.changeLanguage = function (langKey) {
               $translate.use(langKey);
+              $scope.updatePlaceholders();
+
             };
+            $scope.updatePlaceholders = function(){
+              $("#inputBirthDay").attr("placeholder", $filter('translate')('LOCAL_DAY')); //LOCAL_DAY
+              $("#inputBirthMonth").attr("placeholder", $filter('translate')('LOCAL_MONTH')); //LOCAL_MONTH
+              $("#inputBirthYear").attr("placeholder", $filter('translate')('LOCAL_YEAR')); //LOCAL_YEAR
+              $("#inputBirthCountry").attr("placeholder", $filter('translate')('LOCAL_COUNTRY')); //LOCAL_COUNTRY
+            };
+
               $rootScope.countriesList = function (newVal) {
                   var alternativeName = newVal;
                   var aliases = [
@@ -220,6 +230,7 @@
                       templateUrl: 'developers.html'
                   });
               };
+
           }])
       .controller('SummaryCtrl', ['$scope', '$rootScope', '$interval', '$filter', 'PopulationIOService', 'ProfileService', '$timeout',
           function ($scope, $rootScope, $interval, $filter, PopulationIOService, ProfileService, $timeout) {
