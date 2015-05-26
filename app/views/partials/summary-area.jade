@@ -1,6 +1,6 @@
 .container
     .summary-area
-        h3(translate="SUMMARY_INTRO" translate-values="{val1: rankGlobal, val2: (rankGlobal/(worldPopulation/100)), val3: countryYoungerPercentageSimple, val4: profile.country }")
+        h3(translate="SUMMARY_INTRO" translate-values="{val1: rankGlobal, val2: worldYoungerPercentageSimple, val3: countryYoungerPercentageSimple, val4: profile.country }")
         .region-switcher
             span(ng-class='{active:region=="World"}', ng-click='region="World"') {{ 'SUMMARY_WORLD' | translate }}
             span(ng-class='{active:region!="World"}', ng-click='region=profile.country',title='{{profile.country}}') {{profile.country}}

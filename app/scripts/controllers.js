@@ -384,6 +384,9 @@
                   //console.log($scope.worldPopulationTomorrow);
                   //console.log(newVals)
                   //console.log('#########################')
+                  $scope.countryYoungerPercentageSimple = $filter('number')(Math.min(100, $scope.rankLocal / ($scope.countryPopulation / 100)), 0);
+                  $scope.worldYoungerPercentageSimple = $filter('number')($scope.rankGlobal/($scope.worldPopulation/100))
+
                   if (!_(newVals).contains(undefined) && !rangeLoaded) {
                       //console.log('$$$$$$$$$$$$$$$$$$$$$$$$')
                       //console.log(newVals)
