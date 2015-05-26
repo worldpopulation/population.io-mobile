@@ -22,7 +22,7 @@
                         areaTotal, areaLine,
                         areaYounger,
                         xAxisElement, yAxisElement,
-                        xLabel, yLabel,
+                        xLabel, yLabel, yLabelText, xLabelText,
                         xLabelLine, yLabelLine,
                         tooltip = d3.select('.chart-tooltip');
 
@@ -84,8 +84,10 @@
                           chart.select('.x-label').remove();
                           chart.select('.y-label').remove();
                           chart.select('.label-line').remove();
+
+                          xLabelText = $filter('translate')('SUMMARY_CHART_AXIS_X');
                           xLabel = chart.append('text')
-                            .text($filter('translate')('SUMMARY_CHART_AXIS_X'))
+                            .text(xLabelText)
                             .attr(
                             {
                                 class: 'x-label',
@@ -108,17 +110,20 @@
                                 'stroke-width': 1
                             });
 
-                          yLabel = chart.append('text')
-                            .text($filter('translate')('SUMMARY_CHART_AXIS_Y'))
-                            .attr(
-                            {
-                                class: 'y-label',
-                                transform: 'translate(' + [110, -20] + ')'
-                            })
-                            .style(
-                            {
-                                'text-anchor': 'end'
-                            });
+                            yLabelText = $filter('translate')('SUMMARY_CHART_AXIS_Y');
+
+                            yLabel = chart.append('text')
+                              .text(yLabelText)
+                              .attr(
+                              {
+                                  class: 'y-label',
+                                  transform: 'translate(' + [110, -20] + ')'
+                              })
+                              .style(
+                              {
+                                  'text-anchor': 'end'
+                              });
+
 
                           yLabelLine = chart.append('line')
                             .attr({
@@ -249,6 +254,13 @@
 
                           xRange.range([120, parentWidth - 160]).domain([0, d3.max(data, function (d) { return d.age; })]);
                           yRange.range([parentHeight - 100, 0]).domain([0, ticks[ticks.length - 1]]);
+
+
+                            yLabelText = $filter('translate')('SUMMARY_CHART_AXIS_Y');
+                            yLabel.text(yLabelText);
+
+                            xLabelText = $filter('translate')('SUMMARY_CHART_AXIS_X');
+                            xLabel.text(xLabelText);
 
                           line
                             .x(function (d) {
