@@ -85,7 +85,7 @@
                           chart.select('.y-label').remove();
                           chart.select('.label-line').remove();
                           xLabel = chart.append('text')
-                            .text('Age')
+                            .text($filter('translate')('SUMMARY_CHART_AXIS_X'))
                             .attr(
                             {
                                 class: 'x-label',
@@ -109,7 +109,7 @@
                             });
 
                           yLabel = chart.append('text')
-                            .text('People')
+                            .text($filter('translate')('SUMMARY_CHART_AXIS_Y'))
                             .attr(
                             {
                                 class: 'y-label',

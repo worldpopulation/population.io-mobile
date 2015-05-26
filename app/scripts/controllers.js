@@ -802,18 +802,21 @@
               };
 
               var _getInitialMilestonesData = function () {
+                var milestoneNow = $filter('translate')('MILESTONES_MILESTONE_NOW');
+                var milestoneBorn = $filter('translate')('MILESTONES_MILESTONE_BORN');
+                var milestone18 = $filter('translate')('MILESTONES_MILESTONE_18');
                   return [
                       {
                           date: $filter('date')(Date.now(), 'yyyy-MM-dd'),
                           year: $filter('date')(Date.now(), 'yyyy'),
-                          title: $filter('translate')('MILESTONES_MILESTONE_NOW'),
+                          title: milestoneNow,
                           selected: true,
                           now: true
                       },
                       {
                           date: ProfileService.birthday.formatted,
                           year: ProfileService.birthday.year,
-                          title: $filter('translate')('MILESTONES_MILESTONE_BORN'),
+                          title: milestoneBorn,
                           born: true
                       },
                       {
@@ -822,7 +825,7 @@
                             new Date(ProfileService.birthday.formatted),
                             18
                           ), 'yyyy'),
-                          title: $filter('translate')('MILESTONES_MILESTONE_18')
+                          title: milestone18
                       }
                   ];
               };
