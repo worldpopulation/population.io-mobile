@@ -8,7 +8,7 @@
 
             $scope.changeLanguage = function (langKey) {
               $translate.use(langKey);
-              //$rootScope.$broadcast('ready');
+              $scope.$broadcast('languageChange');
               $scope.updatePlaceholders();
 
             };
@@ -718,6 +718,9 @@
           function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationIOService) {
 
               $rootScope.$on('ready', function () {
+                  _update();
+              });
+              $scope.$on('languageChange', function () {
                   _update();
               });
               var _getDateWithOffset = function (date, offset) {

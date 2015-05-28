@@ -2,8 +2,8 @@
     'use strict';
 
     angular.module('populationioApp')
-      .directive('rankGraph', ['ProfileService',
-          function (ProfileService) {
+      .directive('rankGraph', ['$filter','ProfileService',
+          function ($filter, ProfileService) {
               return {
                   restrict: 'E',
                   scope: {
@@ -29,34 +29,24 @@
                             transform: 'translate(' + [10, -10] + ')'
                         });
 
+                      $scope.$on('languageChange', function () {
+
+                      });
                       $scope.$watch('data', function (data) {
                           if (data) {
                               _updateGraph(data);
                           }
                       });
 
-                      var _initGraph = function () {
-                          var frame = root.append('g')
-                            .attr({
-                                'class': 'frame'
-                            });
+                      var frame = root.append('g')
+                        .attr({
+                            'class': 'frame'
+                        });
 
-                          frame.append('text')
-                            .text('People')
-                            .attr({
-                                'class': 'people',
-                                transform: function () {
-                                    return 'translate(' + [40, 70] + ') rotate(-90)';
-                                }
-                            });
-                          frame.append('text')
-                            .text('Age')
-                            .attr({
-                                'class': 'age',
-                                transform: function () {
-                                    return 'translate(' + [width - 10, height + 3] + ')';
-                                }
-                            });
+                      var _initGraph = function () {
+
+
+
 
                           root.append('g').attr('class', 'chart');
                           root.append('g').attr('class', 'pointer');
@@ -78,6 +68,23 @@
                       };
 
                       var _updateGraph = function (data) {
+                        frame.append('text')
+                          .text($filter('translate')('MILESTONES_CHART_AXIS_Y'))
+                          .attr({
+                              'class': 'people',
+                              transform: function () {
+                                  return 'translate(' + [40, 70] + ') rotate(-90)';
+                              }
+                          });
+                        frame.append('text')
+                          .text($filter('translate')('MILESTONES_CHART_AXIS_X'))
+                          .attr({
+                              'class': 'age',
+                              transform: function () {
+                                  return 'translate(' + [width - 10, height + 3] + ')';
+                              }
+                          });
+
                           var age = $scope.age;
 
                           var ticks = [], step = $scope.country != 'World' ? 500000 : 50000000;
@@ -216,7 +223,7 @@
                                     'class': 'percentage'
                                 });
                               textBlock.append('text')
-                                .text('your age')
+                                .text($filter('translate')('MILESTONES_CHART_POINTER'))
                                 .attr({
                                     'class': 'desc',
                                     transform: function () {
