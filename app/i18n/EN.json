@@ -101,5 +101,19 @@
   "FOOTER_MORE_TITLE": "Want to know more?",
   "FOOTER_MORE_CONTACT": "Contact",
   "FOOTER_MORE_API": "API",
-  "FOOTER_SHARE_TITLE": "Share"
+  "FOOTER_SHARE_TITLE": "Share",
+
+
+  "MONTH1": "January",
+  "MONTH2": "February",
+  "MONTH3": "March",
+  "MONTH4": "April",
+  "MONTH5": "May",
+  "MONTH6": "June",
+  "MONTH7": "July",
+  "MONTH8": "August",
+  "MONTH9": "September",
+  "MONTH10": "October",
+  "MONTH11": "November",
+  "MONTH12": "December"
 }

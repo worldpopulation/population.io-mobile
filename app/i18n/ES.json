@@ -97,5 +97,18 @@
   "FOOTER_MORE_TITLE": "¿Quieres saber más?",
   "FOOTER_MORE_CONTACT": "Contacto",
   "FOOTER_MORE_API": "API",
-  "FOOTER_SHARE_TITLE": "Compartir"
+  "FOOTER_SHARE_TITLE": "Compartir",
+
+  "MONTH1": "enero",
+  "MONTH2": "febrero",
+  "MONTH3": "marzo",
+  "MONTH4": "abril",
+  "MONTH5": "mayo",
+  "MONTH6": "junio",
+  "MONTH7": "julio",
+  "MONTH8": "agosto",
+  "MONTH9": "septiembre",
+  "MONTH10": "octubre",
+  "MONTH11": "noviembre",
+  "MONTH12": "diciembre"
 }
