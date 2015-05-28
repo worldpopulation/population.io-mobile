@@ -25,13 +25,29 @@
                         areaCountry, areaWorld,
                         areaLine,
                         xAxisElement, yAxisElement,
-                        xLabel, yLabel,
+                        xLabel, yLabel, someLabel, worldLabel, worldLabel2,
                         xLabelLine, yLabelLine,
                         tooltip = d3.select('.chart-tooltip'),
                         fullData
                         ;
 
                       _initChart();
+
+                      $scope.$on('languageChange', function () {
+                        xLabel.text($filter('translate')('DEATH_CHART_AXIS_X'));
+                        yLabel.text($filter('translate')('DEATH_CHANCES_OF_DYING'));
+                        yLabel.text(function () {
+                            if ($scope.type === 'distribution') {
+                                return $filter('translate')('DEATH_CHANCES_OF_DYING')
+                            }
+                            else {
+                                return $filter('translate')('DEATH_CHART_AXIS_Y')
+                            }
+                        });
+                        someLabel.text($filter('translate')('DEATH_CHART_YOUR_AGE'));
+                        worldLabel.text($filter('translate')('SUMMARY_WORLD'));
+                        worldLabel2.text($filter('translate')('SUMMARY_WORLD'));
+                      });
 
                       $scope.$on('mortalityDistributionDataChanged', function (e, data) {
                           fullData = data;
@@ -75,7 +91,7 @@
                           chart.select('.label-line').remove();
                           chart.select('.vertical-pointer').remove();
                           xLabel = chart.append('text')
-                            .text('Age')
+                            .text($filter('translate')('DEATH_CHART_AXIS_X'))
                             .attr(
                             {
                                 class: 'x-label',
@@ -98,7 +114,7 @@
                                 'stroke-width': 1
                             });
                           yLabel = chart.append('text')
-                            .text('Relative Death Rate')
+                            .text($filter('translate')('DEATH_CHANCES_OF_DYING'))
                             .attr(
                             {
                                 class: 'y-label',
@@ -149,7 +165,7 @@
                                 fill: '#333'
                             });
 
-                          pointerPerson.append('text')
+                          someLabel = pointerPerson.append('text')
                             .style({
                                 fill: '#333',
                                 'text-anchor': 'start'
@@ -159,7 +175,7 @@
                                 dx: 10,
                                 dy: 10
                             })
-                            .text('Your age')
+                            .text($filter('translate')('DEATH_CHART_YOUR_AGE'))
                           ;
                           pointerPerson.append('text')
                             .style({
@@ -188,7 +204,7 @@
                                 'stroke-width': '1px'
 
                             });
-                          pointerWorld.append('text')
+                          worldLabel = pointerWorld.append('text')
                             .style({
                                 fill: '#98EC79',
                                 'text-anchor': 'start'
@@ -198,10 +214,10 @@
                                 dx: 10,
                                 dy: 10
                             })
-                            .text('World')
+                            .text($filter('translate')('SUMMARY_WORLD'))
                           ;
 
-                          pointerWorld.append('text')
+                          worldLabel2 = pointerWorld.append('text')
                             .style({
                                 'font-size': '9pt',
                                 fill: '#666',
@@ -212,7 +228,7 @@
                                 dx: 10,
                                 dy: 25
                             })
-                            .text('World')
+                            .text($filter('translate')('SUMMARY_WORLD'))
                           ;
                           /*
                            pointerWorld.append('circle')
@@ -484,7 +500,7 @@
                           pointerWorld.select('.age')
                             .transition()
                             .text(function () {
-                                return $filter('number')($scope.totalLifeWorldInYears, 1) + ' years'
+                                return $filter('number')($scope.totalLifeWorldInYears, 1) + ' ' + $filter('translate')('LOCAL_YEARS')
                                 //return '???' + ' years'
                             });
 
@@ -506,9 +522,9 @@
                           pointerCountry.select('.age')
                             .transition()
                             .text(function () {
-                                return $filter('number')($scope.totalLifeLengthLocal, 1) + ' years'
+                                return $filter('number')($scope.totalLifeLengthLocal, 1) + ' ' + $filter('translate')('LOCAL_YEARS')
                             })
-                          pointerPerson.select('.age').text(age + ' years')
+                          pointerPerson.select('.age').text(age + ' ' + $filter('translate')('LOCAL_YEARS'))
 
                           pointerPerson
                             .transition()
@@ -517,10 +533,10 @@
                             });
                           yLabel.text(function () {
                               if ($scope.type === 'distribution') {
-                                  return 'Relative Death Rate'
+                                  return $filter('translate')('DEATH_CHANCES_OF_DYING')
                               }
                               else {
-                                  return 'Cumulative Chances of Dying'
+                                  return $filter('translate')('DEATH_CHART_AXIS_Y')
                               }
                           });
                           yLabelLine
