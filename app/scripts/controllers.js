@@ -7,17 +7,22 @@
           function ($translate, $scope, $timeout, $http, $interval, $modal, $state, $location, $document, $rootScope, $filter, ProfileService, PopulationIOService, BrowserService, Countries) {
 
             $scope.changeLanguage = function (langKey) {
-              $translate.use(langKey);
-              $scope.$broadcast('languageChange');
-              $scope.updatePlaceholders();
-
+              $translate.use(langKey).then(function (langKey) {
+                $scope.$broadcast('languageChange');
+                $scope.updatePlaceholders();
+              }, function (langKey) {
+                console.log("Irgendwas lief schief.");
+              });
             };
+
             $scope.updatePlaceholders = function(){
               $("#inputBirthDay").attr("placeholder", $filter('translate')('LOCAL_DAY')); //LOCAL_DAY
               $("#inputBirthMonth").attr("placeholder", $filter('translate')('LOCAL_MONTH')); //LOCAL_MONTH
               $("#inputBirthYear").attr("placeholder", $filter('translate')('LOCAL_YEAR')); //LOCAL_YEAR
               $("#inputBirthCountry").attr("placeholder", $filter('translate')('LOCAL_COUNTRY')); //LOCAL_COUNTRY
             };
+
+            $scope.changeLanguage('EN');
 
               $rootScope.countriesList = function (newVal) {
                   var alternativeName = newVal;
