@@ -29,8 +29,14 @@
                             transform: 'translate(' + [10, -10] + ')'
                         });
 
-                      $scope.$on('languageChange', function () {
+                        var labelX;
+                        var labelY;
+                        var labelPointer;
 
+                      $scope.$on('languageChange', function () {
+                        labelX.text($filter('translate')('MILESTONES_CHART_AXIS_X'));
+                        labelY.text($filter('translate')('MILESTONES_CHART_AXIS_Y'));
+                        labelPointer.text($filter('translate')('MILESTONES_CHART_POINTER'));
                       });
                       $scope.$watch('data', function (data) {
                           if (data) {
@@ -68,7 +74,7 @@
                       };
 
                       var _updateGraph = function (data) {
-                        frame.append('text')
+                        labelY = frame.append('text')
                           .text($filter('translate')('MILESTONES_CHART_AXIS_Y'))
                           .attr({
                               'class': 'people',
@@ -76,7 +82,7 @@
                                   return 'translate(' + [40, 70] + ') rotate(-90)';
                               }
                           });
-                        frame.append('text')
+                          labelX = frame.append('text')
                           .text($filter('translate')('MILESTONES_CHART_AXIS_X'))
                           .attr({
                               'class': 'age',
@@ -222,7 +228,7 @@
                                 .attr({
                                     'class': 'percentage'
                                 });
-                              textBlock.append('text')
+                                labelPointer = textBlock.append('text')
                                 .text($filter('translate')('MILESTONES_CHART_POINTER'))
                                 .attr({
                                     'class': 'desc',
