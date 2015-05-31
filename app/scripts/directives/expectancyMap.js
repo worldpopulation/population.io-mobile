@@ -37,8 +37,25 @@
                       return _.find(Countries, function (item) {return item.POPIO_NAME == country});
                   };
 
+                  var currentDataObjectRel;
+                  var currentDataObjectRef;
+
+                  $scope.$on('languageChange', function () {
+                    if(currentDataObjectRel){
+                      _addDescriptionLine('rel', currentDataObjectRel);
+                    }
+                    if(currentDataObjectRef){
+                      _addDescriptionLine('ref', currentDataObjectRef);
+                    }
+                  });
 
                   var _addDescriptionLine = function (type, data) {
+                      if (type === 'ref') {
+                        currentDataObjectRef = data;
+                      } else {
+                        currentDataObjectRel = data;
+                      }
+
                       var countryId;
                       if (typeof data.country === 'string') {
                           countryId = _getCountryObjectByFullName(data.country).GMI_CNTRY

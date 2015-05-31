@@ -1131,7 +1131,14 @@
               });
               $scope.loading = 0;
 
+              $scope.$on('languageChange', function () {
+                $("#countryRel").attr("placeholder", $filter('translate')('LOCAL_COUNTRY'));
+                $("#countryRef").attr("placeholder", $filter('translate')('LOCAL_COUNTRY'));
+              });
+
               var _update = function () {
+                  $("#countryRel").attr("placeholder", $filter('translate')('LOCAL_COUNTRY'));
+                  $("#countryRef").attr("placeholder", $filter('translate')('LOCAL_COUNTRY'));
                   $scope.selectedCountryRef = _getCountryObjectByFullName(ProfileService.country);
                   _updateCountryRef(date);
               };
