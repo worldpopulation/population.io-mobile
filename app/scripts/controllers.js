@@ -129,6 +129,7 @@
 
                           $rootScope.target = path;
                           $rootScope.$broadcast('ready');
+                          $scope.$broadcast('languageChange');
                       }
                   }
 
@@ -833,6 +834,14 @@
                       $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_10_BILLION');
                     }else if($scope.milestonesData[i].title === '11000 millones de personas' ){
                       $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_11_BILLION');
+
+
+                    }else if($scope.milestonesData[i].title === 'MILESTONES_MILESTONE_18' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_18');
+                    }else if($scope.milestonesData[i].title === 'MILESTONES_MILESTONE_NOW' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_NOW');
+                    }else if($scope.milestonesData[i].title === 'MILESTONES_MILESTONE_BORN' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_BORN');
                     }
 
                   }
