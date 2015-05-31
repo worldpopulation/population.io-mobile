@@ -117,5 +117,9 @@
   "MONTH9": "Septiembre",
   "MONTH10": "Octubre",
   "MONTH11": "Noviembre",
-  "MONTH12": "Diciembre"
+  "MONTH12": "Diciembre",
+
+  "UNIT_DAYS": "día",
+  "UNIT_YEAR": "año",
+  "UNIT_YEARS": "años"
 }

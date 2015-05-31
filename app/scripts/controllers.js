@@ -481,32 +481,40 @@
                           $scope.remainingLifeCountryInYears = parseFloat(remainingLife).toFixed(1);
                           $scope.totalLifeCountryInYears = moment(today).diff(moment(ProfileService.birthday), 'years', true);
                       });
+                    var updateValues = function(){
+                      var negative = false;
+
+                      var c = moment($scope.dodCountry);
+                      var w = moment($scope.dodWorld);
+                      var diffDays = c.diff(w, 'days');
+                      var diffYears = c.diff(w, 'years');
+
+                      // console.log(c, w);
+
+                      $scope.differenceInDays = diffDays < 0 ? '- ' + (-1 * diffDays) + ' days' : '+ ' + diffDays + ' days';
+                      $scope.soMuchToDo = diffDays < 1 ? $filter('translate')('DEATH_EXPECTANCY_TXT_SHORTER') : $filter('translate')('DEATH_EXPECTANCY_TXT_LONGER');
+
+
+                      if (diffYears < 1 && diffYears > -1) {
+                          $scope.differenceInUnits = diffDays.toString().replace('-', '') + ' ' + $filter('translate')('UNIT_DAYS');
+                      }
+                      else {
+                          if (Math.abs(diffYears) <= 1) {
+                              $scope.differenceInUnits = diffYears.toString().replace('-', '') + ' ' + $filter('translate')('UNIT_YEAR');
+                          } else {
+                              $scope.differenceInUnits = diffYears.toString().replace('-', '') + ' ' + $filter('translate')('UNIT_YEARS');
+                          }
+                      }
+                    };
+                    
+                    $scope.$on('languageChange', function () {
+                      updateValues();
+                    });
+
                       $scope.$watchGroup(['remainingLifeCountryInYears', 'remainingLifeWorldInYears'],
                         function (newVals, oldVals) {
                             if ((newVals[0] && newVals[1]) && (newVals[0] !== oldVals[0] && newVals[1] !== oldVals[0])) {
-                                var negative = false;
-
-                                var c = moment($scope.dodCountry);
-                                var w = moment($scope.dodWorld);
-                                var diffDays = c.diff(w, 'days');
-                                var diffYears = c.diff(w, 'years');
-
-                                // console.log(c, w);
-
-                                $scope.differenceInDays = diffDays < 0 ? '- ' + (-1 * diffDays) + ' days' : '+ ' + diffDays + ' days';
-                                $scope.soMuchToDo = diffDays < 1 ? $filter('translate')('DEATH_EXPECTANCY_TXT_SHORTER') : $filter('translate')('DEATH_EXPECTANCY_TXT_LONGER');
-
-
-                                if (diffYears < 1 && diffYears > -1) {
-                                    $scope.differenceInUnits = diffDays.toString().replace('-', '') + ' days';
-                                }
-                                else {
-                                    if (Math.abs(diffYears) <= 1) {
-                                        $scope.differenceInUnits = diffYears.toString().replace('-', '') + ' year';
-                                    } else {
-                                        $scope.differenceInUnits = diffYears.toString().replace('-', '') + ' years';
-                                    }
-                                }
+                              updateValues();
                             }
                         })
                   }
