@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('populationioApp')
-      .directive('expectancyMap', function ($rootScope, ProfileService, Countries) {
+      .directive('expectancyMap', function ($rootScope, ProfileService, Countries, $filter) {
           return {
               restrict: 'E',
               scope: {
@@ -135,10 +135,10 @@
 
                       var deathDate = moment(data.dod).format('DD MMM, YYYY');
 
-                      textBlock1.append('text').text('years of life left');
+                      textBlock1.append('text').text($filter('translate')('EXPECTANCY_MAP_POINTER_1'));
                       textBlock1.append('text')
                         .attr({y: 20})
-                        .text('in ')
+                        .text($filter('translate')('EXPECTANCY_MAP_POINTER_2'))
                         .append('tspan')
                         .text(function () {
                             var countryName;
@@ -166,13 +166,13 @@
                             y2: -20
                         });
 
-                      textBlock2.append('text').attr('y', 0).text('We estimate you will live');
+                      textBlock2.append('text').attr('y', 0).text($filter('translate')('EXPECTANCY_MAP_POINTER_3'));
                       textBlock2.append('text')
-                        .text('until age' + data.lifeExpectancy)
+                        .text($filter('translate')('EXPECTANCY_MAP_POINTER_4') + data.lifeExpectancy)
                         .transition()
                         .duration(1000)
                         .tween('text', function () {
-                            return _textTween(data.lifeExpectancy, this, 'years', 'until age');
+                            return _textTween(data.lifeExpectancy, this, $filter('translate')('EXPECTANCY_MAP_POINTER_5'), $filter('translate')('EXPECTANCY_MAP_POINTER_4'));
                         })
                         .attr('y', 20);
                       //textBlock2.append('text').attr('y', 40).text('on your day of death');

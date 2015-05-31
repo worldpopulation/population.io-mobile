@@ -79,6 +79,11 @@
 
   "EXPECTANCY_INTRO": "Imagina si vivieras hoy en día en otro país, con la expectativa de vida de otra época - ¿Cuánto tiempo vivirías?",
   "EXPECTANCY_MAP_POINTER": "{{year}}<br> años de vida restantes<br> en {{country}}<br><br> Estimamos que vivirás<br> hasta la edad de {{age}} años<br> {{date}}",
+  "EXPECTANCY_MAP_POINTER_1": "años de vida restantes",
+  "EXPECTANCY_MAP_POINTER_2": "en ",
+  "EXPECTANCY_MAP_POINTER_3": "Estimamos que vivirás",
+  "EXPECTANCY_MAP_POINTER_4": "hasta la edad de",
+  "EXPECTANCY_MAP_POINTER_5": "años",
 
   "DEATH_INTRO": "Estimamos que vivirías hasta el <span>{{dodWorld}}</span> si fueses un ciudadano promedio del mundo. En <span>{{profile.country}}</span> vivirías hasta el <span>{{dodCountry}}</span>.",
   "DEATH_MORTALITY_DISTRIBUTION": "Distribución de mortalidad",

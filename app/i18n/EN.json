@@ -83,6 +83,11 @@
 
   "EXPECTANCY_INTRO": "Imagine you lived today in a different country and with the life expectancy from a different time - how long could you expect to live?",
   "EXPECTANCY_MAP_POINTER": "{{year}}<br> years of life left<br> in {{country}}<br><br> We estimate you will live<br> until age {{age}} years<br> {{date}}",
+  "EXPECTANCY_MAP_POINTER_1": "years of life left",
+  "EXPECTANCY_MAP_POINTER_2": "in ",
+  "EXPECTANCY_MAP_POINTER_3": "We estimate you will live",
+  "EXPECTANCY_MAP_POINTER_4": "until age",
+  "EXPECTANCY_MAP_POINTER_5": "years",
 
   "DEATH_INTRO": "We estimate that you will live until <span>{{dodWorld}}</span> if you were an average world citizen. Whereas in <span>{{profile.country}}</span> it would be until <span>{{dodCountry}}</span>.",
   "DEATH_MORTALITY_DISTRIBUTION": "Mortality Distribution",
