@@ -506,7 +506,7 @@
                           }
                       }
                     };
-                    
+
                     $scope.$on('languageChange', function () {
                       updateValues();
                     });
@@ -763,7 +763,81 @@
                   _update();
               });
               $scope.$on('languageChange', function () {
-                  //_update();
+
+
+                  for (var i = 0; i < $scope.milestonesData.length; i += 1) {
+
+                    if($scope.milestonesData[i].title === 'Your projected life expectancy in World'){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + $filter('translate')('LOCAL_WORLD') ;
+                    }else if($scope.milestonesData[i].title.substring(0, 'Your projected life expectancy in'.length) === 'Your projected life expectancy in'){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + ProfileService.country;
+                    }else if($scope.milestonesData[i].title === 'Now' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_NOW');
+                    }else if($scope.milestonesData[i].title === 'You turn 18!' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_18');
+                    }else if($scope.milestonesData[i].title === 'Born' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_BORN');
+                    }else if($scope.milestonesData[i].title === '1st billion person' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_1_BILLION');
+                    }else if($scope.milestonesData[i].title === '2nd billion person' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_2_BILLION');
+                    }else if($scope.milestonesData[i].title === '3rd billion person' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_3_BILLION');
+                    }else if($scope.milestonesData[i].title === '4th billion person' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_4_BILLION');
+                    }else if($scope.milestonesData[i].title === '5th billion person' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_5_BILLION');
+                    }else if($scope.milestonesData[i].title === '6th billion person' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_6_BILLION');
+                    }else if($scope.milestonesData[i].title === '7th billion person' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_7_BILLION');
+                    }else if($scope.milestonesData[i].title === '8th billion person' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_8_BILLION');
+                    }else if($scope.milestonesData[i].title === '9th billion person' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_9_BILLION');
+                    }else if($scope.milestonesData[i].title === '10th billion person' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_10_BILLION');
+                    }else if($scope.milestonesData[i].title === '11th billion person' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_11_BILLION');
+
+
+                    }else if($scope.milestonesData[i].title === 'Tu expectativa de vida en Mundo'){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + $filter('translate')('LOCAL_WORLD') ;
+                    }else if($scope.milestonesData[i].title.substring(0, 'Tu expectativa de vida en'.length) === 'Tu expectativa de vida en'){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + ProfileService.country;
+                    }else if($scope.milestonesData[i].title === 'Hoy' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_NOW');
+                    }else if($scope.milestonesData[i].title === '¡Cumples 18 años!' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_18');
+                    }else if($scope.milestonesData[i].title === 'Nacimiento' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_BORN');
+                    }else if($scope.milestonesData[i].title === 'Primer 1000 millones de personas' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_1_BILLION');
+                    }else if($scope.milestonesData[i].title === '2000 millones de personas' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_2_BILLION');
+                    }else if($scope.milestonesData[i].title === '3000 millones de personas' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_3_BILLION');
+                    }else if($scope.milestonesData[i].title === '4000 millones de personas' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_4_BILLION');
+                    }else if($scope.milestonesData[i].title === '5000 millones de personas' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_5_BILLION');
+                    }else if($scope.milestonesData[i].title === '6000 millones de personas' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_6_BILLION');
+                    }else if($scope.milestonesData[i].title === '7000 millones de personas' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_7_BILLION');
+                    }else if($scope.milestonesData[i].title === '8000 millones de personas' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_8_BILLION');
+                    }else if($scope.milestonesData[i].title === '9000 millones de personas' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_9_BILLION');
+                    }else if($scope.milestonesData[i].title === '10000 millones de personas' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_10_BILLION');
+                    }else if($scope.milestonesData[i].title === '11000 millones de personas' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_11_BILLION');
+                    }
+
+                  }
+
+
               });
               var _getDateWithOffset = function (date, offset) {
                   var year = parseInt($filter('date')(date, 'yyyy'), 0),
@@ -790,7 +864,7 @@
                       $scope.milestonesData.push({
                           date: $filter('date')(date, 'yyyy-MM-dd'),
                           year: $filter('date')(date, 'yyyy'),
-                          title: $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + (country === 'World' ? 'the World' : country)
+                          title: $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + (country === 'World' ? $filter('translate')('LOCAL_WORLD') : country)
                       });
 
                       if (onSuccess) {
@@ -810,6 +884,8 @@
                   };
 
                   var _updateTitleAlive = function (date, atomicNumber) {
+                    $scope.milestoneDate = $filter('ordinal')($filter('date')(date, 'd')) + ' ' + $filter('date')(date, 'MMM, yyyy');
+                    $scope.milestoneCounter = atomicNumber;
                       $scope.titleAlive = $sce.trustAsHtml([
                           'Your next milestone is <span>' + $filter('ordinal')($filter('date')(date, 'd')) + ' ',
                           $filter('date')(date, 'MMM, yyyy') + '</span>, then you’ll be <span>',

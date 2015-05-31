@@ -1,11 +1,11 @@
 .container
     .milestones-area
         header
-            h1(translate="MILESTONES_INTRO" translate-values="{sharedDay: sharedDay, sharedHour: sharedHour }")
+            h1(translate="MILESTONES_INTRO" translate-values="{val1: milestoneDate, val2: milestoneCounter }")
         .rank
             h2 {{ 'MILESTONES_TITLE_AGE_DISTRIBUTION' | translate }}
             .global-rank
-                .title World
+                .title {{ 'LOCAL_WORLD' | translate }}
                 rank-graph(country="'World'", data="globalRankData", age="age")
             .local-rank
                 .title {{profile.country}}

@@ -53,7 +53,7 @@
   "BROWSER_WARNING_TITLE":"Browser Warning",
   "BROWSER_WARNING_INTRO":"Your browser is out-of-date for this showcase. Please download one of these up-to-date, free and excellent browsers.",
 
-  "MILESTONES_INTRO": "What are the big milestones to expect in your life? Your next milestone is 17th Jan, 2021, then you’ll be 5th billionth person to be alive in the world.",
+  "MILESTONES_INTRO": "What are the big milestones to expect in your life? Your next milestone is {{val1}} then you’ll be {{val2}} billionth person to be alive in the world.",
   "MILESTONES_NOW": "Now",
   "MILESTONES_TITLE_AGE_DISTRIBUTION": "Age Distribution",
   "MILESTONES_TIMELINE": "Timeline (projections)",

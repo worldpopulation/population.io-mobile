@@ -49,7 +49,7 @@
   "SUMMARY_CHART_AXIS_X": "Edad",
   "SUMMARY_WORLD": "Mundo",
 
-  "MILESTONES_INTRO": "¿Cuáles son los grandes momentos que puedes esperar en tu vida? Tu próximo gran momento es Enero 17, 2021, cuando serás la persona número 5 mil millones en el mundo!",
+  "MILESTONES_INTRO": "¿Cuáles son los grandes momentos que puedes esperar en tu vida? Tu próximo gran momento es {{val1}} cuando serás la persona número {{val2}} millones en el mundo!",
   "MILESTONES_TITLE_AGE_DISTRIBUTION": "Distribución por edades",
   "MILESTONES_TIMELINE": "Cronología (proyección)",
   "MILESTONES_MILESTONE_LIFE_EXPECTANCY" : "Tu expectativa de vida en {{country}}",
@@ -65,7 +65,6 @@
   "MILESTONES_MILESTONE_10_BILLION": "10000 millones de personas",
   "MILESTONES_MILESTONE_11_BILLION": "11000 millones de personas",
   "MILESTONES_MILESTONE_NOW": "Hoy",
-  "MILESTONES_MILESTONE_18": "¡Cumples 18 años!",
   "MILESTONES_MILESTONE_18": "¡Cumples 18 años!",
   "MILESTONES_MILESTONE_BORN": "Nacimiento",
   "MILESTONES_CHART_AXIS_Y": "Personas",
