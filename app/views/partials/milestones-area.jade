@@ -1,7 +1,7 @@
 .container
     .milestones-area
         header
-            h1 {{ 'MILESTONES_INTRO' | translate }}
+            h1(translate="MILESTONES_INTRO" translate-values="{sharedDay: sharedDay, sharedHour: sharedHour }")
         .rank
             h2 {{ 'MILESTONES_TITLE_AGE_DISTRIBUTION' | translate }}
             .global-rank

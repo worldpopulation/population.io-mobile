@@ -752,7 +752,7 @@
                   _update();
               });
               $scope.$on('languageChange', function () {
-                  _update();
+                  //_update();
               });
               var _getDateWithOffset = function (date, offset) {
                   var year = parseInt($filter('date')(date, 'yyyy'), 0),
@@ -1097,12 +1097,15 @@
                       country: 'World',
                       age: ProfileService.getAge()
                   }, function (data) {
-                      $scope.birthdayShare = $sce.trustAsHtml([
+
+                    $scope.sharedDay = $filter('number')(parseInt(data[0].total / 365, 0), 0);
+                    $scope.sharedHour = $filter('number')(parseInt(data[0].total / 365 / 24, 0), 0);
+                      /*$scope.birthdayShare = $sce.trustAsHtml([
                           '<span>' + $filter('number')(parseInt(data[0].total / 365, 0), 0),
                           '</span> people around the world and that approximately ',
                           '<span>' + $filter('number')(parseInt(data[0].total / 365 / 24, 0), 0),
                           '</span> people were born in the same hour?'
-                      ].join(''));
+                      ].join(''));*/
 
                       $scope.loading -= 1;
                   }, function () {
