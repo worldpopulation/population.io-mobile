@@ -98,7 +98,9 @@
   "DEATH_EXPECTANCY_TITLE": "Projected Life Expectancy",
   "DEATH_EXPECTANCY_TXT_WORLD": "You are expected to live </br><span>{{remainingLifeWorldInYears}} years</span> as a citizen of the <span>World</span>",
   "DEATH_EXPECTANCY_TXT_DIFFERENCE": "Your life will be approximately <span>{{soMuchToDo}}</span> than the world's average for about <span>{{differenceInUnits}}</span>",
-  "DEATH_EXPECTANCY_TXT_COUNTRY": "You are expected to live </br><span>{{remainingLifeCountryInYears}} years</span> as a citizen of <span>{{profile.country}}</span>",
+  "DEATH_EXPECTANCY_TXT_COUNTRY": "You are expected to live </br><span>{{remainingLifeCountryInYears}} years</span> as a citizen of <span>{{country}}</span>",
+  "DEATH_EXPECTANCY_TXT_SHORTER": "shorter",
+  "DEATH_EXPECTANCY_TXT_LONGER": "longer",
 
   "FOOTER_SIGNUP_TITLE": "Keep me posted",
   "FOOTER_SIGNUP_TXT": "Send me every year on my<br> birthday an update!",

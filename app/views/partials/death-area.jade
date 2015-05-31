@@ -12,12 +12,12 @@
             .column
                 .content
                     .title.world {{dodWorld}}
-                    .copy(compile-unsafe="'DEATH_EXPECTANCY_TXT_WORLD' | translate")
+                    .copy(translate="DEATH_EXPECTANCY_TXT_WORLD" translate-values="{remainingLifeWorldInYears: remainingLifeWorldInYears}")
             .column
                 .content
                     .title {{differenceInDays}}
-                    .copy(compile-unsafe="'DEATH_EXPECTANCY_TXT_DIFFERENCE' | translate")
+                    .copy(translate="DEATH_EXPECTANCY_TXT_DIFFERENCE" translate-values="{soMuchToDo: soMuchToDo, differenceInUnits:differenceInUnits}")
             .column
                 .content
                     .title.country {{dodCountry}}
-                    .copy(compile-unsafe="'DEATH_EXPECTANCY_TXT_COUNTRY' | translate")
+                    .copy(translate="DEATH_EXPECTANCY_TXT_COUNTRY" translate-values="{remainingLifeCountryInYears: remainingLifeCountryInYears, country:country}")

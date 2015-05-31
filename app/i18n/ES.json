@@ -94,7 +94,9 @@
   "DEATH_EXPECTANCY_TITLE": "Proyección de expectativa de vida",
   "DEATH_EXPECTANCY_TXT_WORLD": "Tienes una expectativa de vida de </br><span>{{remainingLifeWorldInYears}} años</span> como ciudadano del <span>mundo</span>",
   "DEATH_EXPECTANCY_TXT_DIFFERENCE": "Tu vida será aproximadamente <span>{{soMuchToDo}}</span> que el promedio mundial durante unos <span>{{differenceInUnits}}</span>",
-  "DEATH_EXPECTANCY_TXT_COUNTRY": "Tu expectativa de vida es de</br><span>{{remainingLifeCountryInYears}} años</span> como ciudadano de <span>{{profile.country}}</span>",
+  "DEATH_EXPECTANCY_TXT_COUNTRY": "Tu expectativa de vida es de</br><span>{{remainingLifeCountryInYears}} años</span> como ciudadano de <span>{{country}}</span>",
+  "DEATH_EXPECTANCY_TXT_SHORTER": "más corto",
+  "DEATH_EXPECTANCY_TXT_LONGER": "más tiempo",
 
   "FOOTER_SIGNUP_TITLE": "Mándame noticias",
   "FOOTER_SIGNUP_TXT": "Envíame una actualización todos<br>los años en mi cumplaños",

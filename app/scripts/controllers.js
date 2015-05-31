@@ -443,6 +443,7 @@
               $scope.type = 'distribution';
               $scope.$watch(function () {return ProfileService.active}, function (newVal, oldVal) {
                   if (newVal && newVal !== oldVal) {
+                    $scope.country  = ProfileService.country;
 
                       PopulationIOService.loadMortalityDistribution({
                           country: ProfileService.country,
@@ -493,7 +494,8 @@
                                 // console.log(c, w);
 
                                 $scope.differenceInDays = diffDays < 0 ? '- ' + (-1 * diffDays) + ' days' : '+ ' + diffDays + ' days';
-                                $scope.soMuchToDo = diffDays < 1 ? 'shorter' : 'longer';
+                                $scope.soMuchToDo = diffDays < 1 ? $filter('translate')('DEATH_EXPECTANCY_TXT_SHORTER') : $filter('translate')('DEATH_EXPECTANCY_TXT_LONGER');
+
 
                                 if (diffYears < 1 && diffYears > -1) {
                                     $scope.differenceInUnits = diffDays.toString().replace('-', '') + ' days';
@@ -615,6 +617,7 @@
                   ProfileService.country = _.find(Countries, function (v) {
                       return v.POPIO_NAME.toLowerCase() == ProfileService.country.toLowerCase()
                   }).POPIO_NAME;
+                  $scope.country  = ProfileService.country;
                   console.log(ProfileService.country)
                   $location.path([
                       year,
