@@ -89,7 +89,7 @@
   "EXPECTANCY_MAP_POINTER_4": "until age",
   "EXPECTANCY_MAP_POINTER_5": "years",
 
-  "DEATH_INTRO": "We estimate that you will live until <span>{{dodWorld}}</span> if you were an average world citizen. Whereas in <span>{{profile.country}}</span> it would be until <span>{{dodCountry}}</span>.",
+  "DEATH_INTRO": "We estimate that you will live until <span>{{dodWorld}}</span> if you were an average world citizen. Whereas in <span>{{country}}</span> it would be until <span>{{dodCountry}}</span>.",
   "DEATH_MORTALITY_DISTRIBUTION": "Mortality Distribution",
   "DEATH_CHANCES_OF_DYING": "Chances of Dying",
   "DEATH_CHART_AXIS_Y": "Cumulative Chances of Dying",
