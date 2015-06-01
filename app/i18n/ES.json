@@ -49,7 +49,7 @@
   "SUMMARY_CHART_AXIS_X": "Edad",
   "SUMMARY_WORLD": "Mundo",
 
-  "MILESTONES_INTRO": "¿Cuáles son los grandes momentos que puedes esperar en tu vida? Tu próximo gran momento es {{val1}} cuando serás la persona número {{val2}} millones en el mundo!",
+  "MILESTONES_INTRO": "¿Cuáles son los grandes momentos que puedes esperar en tu vida? Tu próximo gran momento es <span>{{val1}}</span> cuando serás la persona número <span>{{val2}} millones</span> en el mundo!",
   "MILESTONES_TITLE_AGE_DISTRIBUTION": "Distribución por edades",
   "MILESTONES_TIMELINE": "Cronología (proyección)",
   "MILESTONES_MILESTONE_LIFE_EXPECTANCY" : "Tu expectativa de vida en {{country}}",
@@ -71,7 +71,7 @@
   "MILESTONES_CHART_AXIS_X": "Edad",
   "MILESTONES_CHART_POINTER": "Tu edad",
 
-  "BIRTHDAYS_INTRO": "Sabías que tienes el mismo cumpleaños que {{sharedDay}} personas en el mundo y que aproximadamente {{sharedHour}} personas nacieron en la misma hora que tú?",
+  "BIRTHDAYS_INTRO": "Sabías que tienes el mismo cumpleaños que <span>{{sharedDay}}</span> personas en el mundo y que aproximadamente <span>{{sharedHour}}</span> personas nacieron en la misma hora que tú?",
   "BIRTHDAYS_TITLE_CONTINENTAL": "Estadísticas<br>continentales",
   "BIRTHDAYS_TITLE_WORLD": "Páises con más nacimientos<br>en tu cumpleaños",
   "BIRTHDAYS_SWITCH_LABEL": "Cumpleaños en:",
