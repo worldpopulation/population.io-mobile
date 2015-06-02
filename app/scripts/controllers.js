@@ -45,7 +45,7 @@
                   }
 
                   return _.filter(Countries, function (v) {
-                      return (v.POPIO_NAME.toLowerCase().indexOf(newVal.toLowerCase()) > -1 || v.POPIO_NAME.toLowerCase().indexOf(alternativeName.toLowerCase()) > -1)
+                      return (v.POPIO_NAME_EN.toLowerCase().indexOf(newVal.toLowerCase()) > -1 || v.POPIO_NAME_EN.toLowerCase().indexOf(alternativeName.toLowerCase()) > -1)
                   });
               };
 
@@ -624,8 +624,8 @@
                     month = moment().month(ProfileService.birthday.month).format('MM'),
                     day = moment().date(ProfileService.birthday.day).format('DD');
                   ProfileService.country = _.find(Countries, function (v) {
-                      return v.POPIO_NAME.toLowerCase() == ProfileService.country.toLowerCase()
-                  }).POPIO_NAME;
+                      return v.POPIO_NAME_EN.toLowerCase() == ProfileService.country.toLowerCase()
+                  }).POPIO_NAME_EN;
                   $scope.country  = ProfileService.country;
                   console.log(ProfileService.country)
                   $location.path([
@@ -1070,7 +1070,7 @@
               var _getCountry = function (name) {
                   for (var i = 0; i < countries.length; i += 1) {
                       var country = countries[i];
-                      if (country.POPIO_NAME === name) {
+                      if (country.POPIO_NAME_EN === name) {
                           return country;
                       }
                   }
@@ -1172,7 +1172,7 @@
                   };
 
                   for (var j = 0; j < countries.length; j += 1) {
-                      _loadCountryBirthdays(countries[j].POPIO_NAME || countries[j]);
+                      _loadCountryBirthdays(countries[j].POPIO_NAME_EN || countries[j]);
                   }
               };
 
@@ -1242,7 +1242,7 @@
               var _updateCountryRef = function (date) {
                   $scope.loading += 1;
                   var countryName;
-                  countryName = typeof $scope.selectedCountryRef !== 'string' ? $scope.selectedCountryRef.POPIO_NAME : $scope.selectedCountryRef;
+                  countryName = typeof $scope.selectedCountryRef !== 'string' ? $scope.selectedCountryRef.POPIO_NAME_EN : $scope.selectedCountryRef;
                   PopulationIOService.loadLifeExpectancyRemaining({
                       sex: ProfileService.gender,
                       country: countryName,
@@ -1276,7 +1276,7 @@
                   $scope.loading += 1;
                   PopulationIOService.loadLifeExpectancyRemaining({
                       sex: ProfileService.gender,
-                      country: _getCountryObject($scope.selectedCountryRel).POPIO_NAME,
+                      country: _getCountryObject($scope.selectedCountryRel).POPIO_NAME_EN,
                       date: date,
                       age: ProfileService.getAgeString()
                   }, function (remainingLife) {
@@ -1307,10 +1307,10 @@
               var _getCountryObject = function (country) {
                   if (typeof country === 'object') {return country}
                   ;
-                  return _.find($scope.countries, function (item) {return item.GMI_CNTRY == country || item.POPIO_NAME == country});
+                  return _.find($scope.countries, function (item) {return item.GMI_CNTRY == country || item.POPIO_NAME_EN == country});
               };
               var _getCountryObjectByFullName = function (country) {
-                  return _.find($scope.countries, function (item) {return item.POPIO_NAME == country});
+                  return _.find($scope.countries, function (item) {return item.POPIO_NAME_EN == country});
               };
 
               $scope.$on('timesliderChanged', function (e, year) {
