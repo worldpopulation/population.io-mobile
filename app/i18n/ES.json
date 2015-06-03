@@ -120,5 +120,7 @@
 
   "UNIT_DAYS": "día",
   "UNIT_YEAR": "año",
-  "UNIT_YEARS": "años"
+  "UNIT_YEARS": "años",
+
+  "BIRTHDAY_SHARED": "cumpleaños compartidos"
 }

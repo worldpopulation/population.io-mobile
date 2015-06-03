@@ -34,6 +34,14 @@
                       var continentsChart = chart.append('g')
                         .attr('class', 'continents-chart');
 
+                      var label1;
+                      var label2;
+
+                      $scope.$on('languageChange', function () {
+                        label1.text($filter('translate')('BIRTHDAY_SHARED'));
+                        label2.text($filter('translate')('BIRTHDAY_SHARED'));
+                      });
+
                       function _buildContinentsChart(continentsData) {
 
                           var radius = d3.scale.sqrt()
@@ -94,13 +102,13 @@
                             })
                             .text('');
 
-                          tooltipElement.append('text')
+                          label1 = tooltipElement.append('text')
                             .attr({
                                 'class': 'shared-label',
                                 x: 0,
                                 y: 40
                             })
-                            .text('shared birthdays');
+                            .text($filter('translate')('BIRTHDAY_SHARED'));
                           tooltipElement.append('text')
                             .attr({
                                 'class': 'country-label',
@@ -549,7 +557,7 @@
                             })
                             .style('font-size', 22)
                           ;
-                          labelArea.append('text')
+                          label2 = labelArea.append('text')
                             .attr('class', 'world-chart-shared-birthdays-label')
                             .attr('opacity', 0)
                             .attr('dy', '27px')
