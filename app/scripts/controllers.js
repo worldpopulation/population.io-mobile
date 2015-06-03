@@ -962,7 +962,7 @@
                           rank: true,
                           titleType: atomicNumber,
                           year: $filter('date')(date, 'yyyy'),
-                          title: atomicNumber + ' billion person'
+                          title: $filter('translate')(atomicNumber) + ' billion person'
                       });
 
                       $scope.loading -= 1;
