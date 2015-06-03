@@ -122,5 +122,13 @@
   "UNIT_YEAR": "año",
   "UNIT_YEARS": "años",
 
-  "BIRTHDAY_SHARED": "cumpleaños compartidos"
+  "BIRTHDAY_SHARED": "cumpleaños compartidos",
+
+  "ORDINAL_NUMBER_1":"primero",
+  "ORDINAL_NUMBER_2":"segundo",
+  "ORDINAL_NUMBER_3":"tercero",
+  "ORDINAL_NUMBER_4":"cuatro",
+  "ORDINAL_NUMBER_5":"quinto",
+  "ORDINAL_NUMBER_6":"sexto",
+  "ORDINAL_NUMBER_7":"séptimo"
 }

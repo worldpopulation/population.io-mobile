@@ -45,7 +45,7 @@
                   }
 
                   return _.filter(Countries, function (v) {
-                      return (v.POPIO_NAME_EN.toLowerCase().indexOf(newVal.toLowerCase()) > -1 || v.POPIO_NAME_EN.toLowerCase().indexOf(alternativeName.toLowerCase()) > -1)
+                      return (v.POPIO_NAME.toLowerCase().indexOf(newVal.toLowerCase()) > -1 || v.POPIO_NAME.toLowerCase().indexOf(alternativeName.toLowerCase()) > -1)
                   });
               };
 
@@ -624,8 +624,8 @@
                     month = moment().month(ProfileService.birthday.month).format('MM'),
                     day = moment().date(ProfileService.birthday.day).format('DD');
                   ProfileService.country = _.find(Countries, function (v) {
-                      return v.POPIO_NAME_EN.toLowerCase() == ProfileService.country.toLowerCase()
-                  }).POPIO_NAME_EN;
+                      return v.POPIO_NAME.toLowerCase() == ProfileService.country.toLowerCase()
+                  }).POPIO_NAME;
                   $scope.country  = ProfileService.country;
                   console.log(ProfileService.country)
                   $location.path([
@@ -764,9 +764,46 @@
                   _update();
               });
               $scope.$on('languageChange', function () {
-
+                $scope.milestoneCounter = $filter('translate')($scope.atomicNumber);
 
                   for (var i = 0; i < $scope.milestonesData.length; i += 1) {
+
+                    if($scope.milestonesData[i].titleType === 'lifeExpWorld'){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + $filter('translate')('LOCAL_WORLD') ;
+                    }else if($scope.milestonesData[i].titleType === 'lifeExpCountry'){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + ProfileService.country;
+                    }else if($scope.milestonesData[i].titleType === 'MILESTONES_MILESTONE_NOW' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_NOW');
+                    }else if($scope.milestonesData[i].titleType === 'MILESTONES_MILESTONE_18' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_18');
+                    }else if($scope.milestonesData[i].titleType === 'MILESTONES_MILESTONE_BORN' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_BORN');
+                    }else if($scope.milestonesData[i].titleType === 'ORDINAL_NUMBER_1' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_1_BILLION');
+                    }else if($scope.milestonesData[i].titleType === 'ORDINAL_NUMBER_2' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_2_BILLION');
+                    }else if($scope.milestonesData[i].titleType === 'ORDINAL_NUMBER_3' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_3_BILLION');
+                    }else if($scope.milestonesData[i].titleType === 'ORDINAL_NUMBER_4' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_4_BILLION');
+                    }else if($scope.milestonesData[i].titleType === 'ORDINAL_NUMBER_5' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_5_BILLION');
+                    }else if($scope.milestonesData[i].titleType === 'ORDINAL_NUMBER_6' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_6_BILLION');
+                    }else if($scope.milestonesData[i].titleType === 'ORDINAL_NUMBER_7' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_7_BILLION');
+                    }/*else if($scope.milestonesData[i].titleType === '8th billion person' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_8_BILLION');
+                    }else if($scope.milestonesData[i].titleType === '9th billion person' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_9_BILLION');
+                    }else if($scope.milestonesData[i].titleType === '10th billion person' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_10_BILLION');
+                    }else if($scope.milestonesData[i].titleType === '11th billion person' ){
+                      $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_11_BILLION');
+
+
+                    }
+
 
                     if($scope.milestonesData[i].title === 'Your projected life expectancy in World'){
                       $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + $filter('translate')('LOCAL_WORLD') ;
@@ -842,7 +879,7 @@
                       $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_NOW');
                     }else if($scope.milestonesData[i].title === 'MILESTONES_MILESTONE_BORN' ){
                       $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_BORN');
-                    }
+                    }*/
 
                   }
 
@@ -873,6 +910,7 @@
                       $scope.milestonesData.push({
                           date: $filter('date')(date, 'yyyy-MM-dd'),
                           year: $filter('date')(date, 'yyyy'),
+                          titleType: (country === 'World' ? 'lifeExpWorld' : 'lifeExpCountry'),
                           title: $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + (country === 'World' ? $filter('translate')('LOCAL_WORLD') : country)
                       });
 
@@ -887,18 +925,19 @@
               };
 
               var _loadWpRankRanked = function (rank, atomicNumber) {
-
+                $scope.atomicNumber = atomicNumber;
                   var _isDateGreaterThenToday = function (date) {
                       return new Date(date) >= new Date();
                   };
 
                   var _updateTitleAlive = function (date, atomicNumber) {
                     $scope.milestoneDate = $filter('ordinal')($filter('date')(date, 'd')) + ' ' + $filter('date')(date, 'MMM, yyyy');
-                    $scope.milestoneCounter = atomicNumber;
+
+                    $scope.milestoneCounter = $filter('translate')(atomicNumber);
                       $scope.titleAlive = $sce.trustAsHtml([
                           'Your next milestone is <span>' + $filter('ordinal')($filter('date')(date, 'd')) + ' ',
                           $filter('date')(date, 'MMM, yyyy') + '</span>, then you’ll be <span>',
-                          atomicNumber + ' billionth</span> person to be alive in the world.'
+                          $filter('translate')(atomicNumber) + ' billionth</span> person to be alive in the world.'
                       ].join(''));
                   };
 
@@ -921,6 +960,7 @@
                       $scope.milestonesData.push({
                           date: date,
                           rank: true,
+                          titleType: atomicNumber,
                           year: $filter('date')(date, 'yyyy'),
                           title: atomicNumber + ' billion person'
                       });
@@ -940,6 +980,7 @@
                           date: $filter('date')(Date.now(), 'yyyy-MM-dd'),
                           year: $filter('date')(Date.now(), 'yyyy'),
                           title: milestoneNow,
+                          titleType:'MILESTONES_MILESTONE_NOW',
                           selected: true,
                           now: true
                       },
@@ -947,6 +988,7 @@
                           date: ProfileService.birthday.formatted,
                           year: ProfileService.birthday.year,
                           title: milestoneBorn,
+                          titleType:'MILESTONES_MILESTONE_BORN',
                           born: true
                       },
                       {
@@ -955,7 +997,8 @@
                             new Date(ProfileService.birthday.formatted),
                             18
                           ), 'yyyy'),
-                          title: milestone18
+                          title: milestone18,
+                          titleType:'MILESTONES_MILESTONE_18',
                       }
                   ];
               };
@@ -1024,16 +1067,16 @@
                       $scope.rankLocal = rankLocal;
                   });
 
-                  _loadWpRankRanked(3000000000, '3rd');
-                  _loadWpRankRanked(4000000000, '4th');
-                  _loadWpRankRanked(5000000000, '5th');
+                  _loadWpRankRanked(3000000000, 'ORDINAL_NUMBER_3');
+                  _loadWpRankRanked(4000000000, 'ORDINAL_NUMBER_4');
+                  _loadWpRankRanked(5000000000, 'ORDINAL_NUMBER_5');
 
                   if (ProfileService.getAge() > 30) {
-                      _loadWpRankRanked(6000000000, '6th');
-                      _loadWpRankRanked(7000000000, '7th');
+                      _loadWpRankRanked(6000000000, 'ORDINAL_NUMBER_6');
+                      _loadWpRankRanked(7000000000, 'ORDINAL_NUMBER_7');
                   } else {
-                      _loadWpRankRanked(1000000000, '1st');
-                      _loadWpRankRanked(2000000000, '2nd');
+                      _loadWpRankRanked(1000000000, 'ORDINAL_NUMBER_1');
+                      _loadWpRankRanked(2000000000, 'ORDINAL_NUMBER_2');
                   }
 
                   _loadLifeExpectancyRemaining(ProfileService.country, function (remainingLife) {
@@ -1070,7 +1113,7 @@
               var _getCountry = function (name) {
                   for (var i = 0; i < countries.length; i += 1) {
                       var country = countries[i];
-                      if (country.POPIO_NAME_EN === name) {
+                      if (country.POPIO_NAME === name) {
                           return country;
                       }
                   }
@@ -1172,7 +1215,7 @@
                   };
 
                   for (var j = 0; j < countries.length; j += 1) {
-                      _loadCountryBirthdays(countries[j].POPIO_NAME_EN || countries[j]);
+                      _loadCountryBirthdays(countries[j].POPIO_NAME || countries[j]);
                   }
               };
 
@@ -1242,7 +1285,7 @@
               var _updateCountryRef = function (date) {
                   $scope.loading += 1;
                   var countryName;
-                  countryName = typeof $scope.selectedCountryRef !== 'string' ? $scope.selectedCountryRef.POPIO_NAME_EN : $scope.selectedCountryRef;
+                  countryName = typeof $scope.selectedCountryRef !== 'string' ? $scope.selectedCountryRef.POPIO_NAME : $scope.selectedCountryRef;
                   PopulationIOService.loadLifeExpectancyRemaining({
                       sex: ProfileService.gender,
                       country: countryName,
@@ -1276,7 +1319,7 @@
                   $scope.loading += 1;
                   PopulationIOService.loadLifeExpectancyRemaining({
                       sex: ProfileService.gender,
-                      country: _getCountryObject($scope.selectedCountryRel).POPIO_NAME_EN,
+                      country: _getCountryObject($scope.selectedCountryRel).POPIO_NAME,
                       date: date,
                       age: ProfileService.getAgeString()
                   }, function (remainingLife) {
@@ -1307,10 +1350,10 @@
               var _getCountryObject = function (country) {
                   if (typeof country === 'object') {return country}
                   ;
-                  return _.find($scope.countries, function (item) {return item.GMI_CNTRY == country || item.POPIO_NAME_EN == country});
+                  return _.find($scope.countries, function (item) {return item.GMI_CNTRY == country || item.POPIO_NAME == country});
               };
               var _getCountryObjectByFullName = function (country) {
-                  return _.find($scope.countries, function (item) {return item.POPIO_NAME_EN == country});
+                  return _.find($scope.countries, function (item) {return item.POPIO_NAME == country});
               };
 
               $scope.$on('timesliderChanged', function (e, year) {
