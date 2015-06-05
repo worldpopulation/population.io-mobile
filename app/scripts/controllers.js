@@ -7,11 +7,12 @@
           function ($translate, $scope, $timeout, $http, $interval, $modal, $state, $location, $document, $rootScope, $filter, ProfileService, PopulationIOService, BrowserService, Countries) {
 
             $scope.changeLanguage = function (langKey) {
+              // console.log('changeLanguage', langKey);
               $translate.use(langKey).then(function (langKey) {
                 $scope.$broadcast('languageChange');
                 $scope.updatePlaceholders();
               }, function (langKey) {
-                console.log("Irgendwas lief schief.");
+                console.log("Something wrong with this language:", langKey);
               });
             };
 
