@@ -846,7 +846,7 @@
                   };
 
                   var _updateTitleAlive = function (date, atomicNumber) {
-                    $scope.milestoneDate = $filter('ordinal')($filter('date')(date, 'd')) + ' ' + $filter('date')(date, 'MMM, yyyy');
+                    $scope.milestoneDate = $filter('date')(date, 'd MMM, yyyy');
 
                     $scope.milestoneCounter = $filter('translate')(atomicNumber);
                       $scope.titleAlive = $sce.trustAsHtml([
