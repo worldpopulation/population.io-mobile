@@ -38,8 +38,13 @@
                       var label2;
 
                       $scope.$on('languageChange', function () {
-                        label1.text($filter('translate')('BIRTHDAY_SHARED'));
-                        label2.text($filter('translate')('BIRTHDAY_SHARED'));
+                        if(label1){
+                          label1.text($filter('translate')('BIRTHDAY_SHARED'));
+                        }
+                        if(label2){
+                          label2.text($filter('translate')('BIRTHDAY_SHARED'));
+                        }
+                        
                       });
 
                       function _buildContinentsChart(continentsData) {

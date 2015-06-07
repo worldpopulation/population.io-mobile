@@ -34,9 +34,17 @@
                         var labelPointer;
 
                       $scope.$on('languageChange', function () {
-                        labelX.text($filter('translate')('MILESTONES_CHART_AXIS_X'));
-                        labelY.text($filter('translate')('MILESTONES_CHART_AXIS_Y'));
-                        labelPointer.text($filter('translate')('MILESTONES_CHART_POINTER'));
+                        if(labelX){
+                          labelX.text($filter('translate')('MILESTONES_CHART_AXIS_X'));
+                        }
+                        if(labelY){
+                          labelY.text($filter('translate')('MILESTONES_CHART_AXIS_Y'));
+                        }
+                        if(labelPointer){
+                          labelPointer.text($filter('translate')('MILESTONES_CHART_POINTER'));
+                        }
+
+
                       });
                       $scope.$watch('data', function (data) {
                           if (data) {
