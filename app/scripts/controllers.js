@@ -23,7 +23,7 @@
               $("#inputBirthCountry").attr("placeholder", $filter('translate')('LOCAL_COUNTRY')); //LOCAL_COUNTRY
             };
 
-            $scope.changeLanguage('EN');
+            $scope.changeLanguage($rootScope.defaultLanguage);
 
               $rootScope.countriesList = function (newVal) {
                   var alternativeName = newVal;

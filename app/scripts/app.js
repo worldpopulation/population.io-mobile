@@ -16,12 +16,16 @@ angular
       suffix: '.json'
     });
 
-
-  $translateProvider.preferredLanguage('EN');
-
   })
   .run(function ($rootScope) {
     console.log('App is running...');
+
+    var userLanguage = window.navigator.userLanguage || window.navigator.language;
+    $rootScope.defaultLanguage = 'EN';
+    if(userLanguage === 'es-ES' || userLanguage ==='es'){
+      $rootScope.defaultLanguage = 'ES';
+    }
+
     $rootScope.currentPage = 0;
   })
 ;
