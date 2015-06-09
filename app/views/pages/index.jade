@@ -11,17 +11,6 @@ block content
             include ../../../assets/female-large.svg
             include ../../../assets/milestones.svg
 
-    .share.animate(ng-class="{'expanded': !expanded}")
-        span
-        .tedtalk
-            a(href='https://www.youtube.com/watch?v=87DDL6PiV2g') {{ 'SHARE_TED_TALK' | translate }}
-
-        span {{ 'SHARE_TEXT' | translate }}
-        .links
-            a.fa.fa-facebook-square(target="_blank", share="facebook", share-title="population.io")
-            a.fa.fa-twitter-square(target="_blank", share="twitter", share-title="population.io")
-            a.fa.fa-linkedin-square(target="_blank", share="linkedin", share-title="population.io")
-
     ul.navigation(ng-show="profile.active")
         li(ng-class="{'active': currentPage == 0}", ng-click="showSection('home')") <span></span>
         li(ng-class="{'active': currentPage == 1}", ng-click="showSection('summary')") <span></span>

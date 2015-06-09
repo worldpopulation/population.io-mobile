@@ -4,7 +4,8 @@ html(ng-app="populationioApp")
         title Population.io
         meta(charset="utf-8")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
-        meta(name="viewport", content="width=1300")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no")
+
         meta(name="description", content="The World Population Project")
 
         meta(property="og:title", content="Population.io")
@@ -25,7 +26,8 @@ html(ng-app="populationioApp")
 
         script(src='scripts/main.js')
 
-    body(ng-controller='MainCtrl', ng-cloak)
+    body(ng-controller='MainCtrl')
+      div(class="inner")
         include header
         .content-block
             block content

@@ -22,9 +22,9 @@ angular
 
     var userLanguage = window.navigator.userLanguage || window.navigator.language;
     $rootScope.defaultLanguage = 'EN';
-    if(userLanguage.startsWith('es') ){
-      $rootScope.defaultLanguage = 'ES';
-    }
+    //if(userLanguage.startsWith('es') ){
+    //  $rootScope.defaultLanguage = 'ES';
+    //}
 
     $rootScope.currentPage = 0;
   })
