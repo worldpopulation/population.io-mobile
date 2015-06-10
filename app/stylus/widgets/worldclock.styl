@@ -1,0 +1,40 @@
+world-clock
+  clearfix()
+  position relative
+  pointer-events none
+  z-index 30
+  display inline-block
+  overflow hidden
+  h3
+    font-weight normal
+    font-size 18px
+    line-height 1.1em
+    position relative
+    color #666666
+    width 100%
+    .icon
+      background-icon()
+      position absolute
+      left 0
+      height 40px
+      width 60px
+      background-position -25px -130px
+  .digit
+  .placeholder
+    text
+      fill $color3
+      font-weight 300
+      font-size 20px
+      text-anchor middle
+  .counter
+    text
+      font-size 20px
+  .country-title
+    font-size 16px
+    fill #555
+    text-anchor middle
+world-clock::after
+  clearfix()
+  display block
+  margin-top -10px
+  border-bottom 0.5px solid grey

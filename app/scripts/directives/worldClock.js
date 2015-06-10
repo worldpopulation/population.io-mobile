@@ -10,10 +10,10 @@
         var digits, countElement, clockElement, digit, placeholder,
         digitText, placeholderText, chart,
         babiesArea, babiesList, lastReborn, countryTitle,
-        digitCellWidth = 26,
+        digitCellWidth = 15,
         animationDuration = 400,
-        parentWidth = 1200,
-        parentHeight = 220,
+        parentWidth = 770,
+        parentHeight = 50,
         currentValue = 0;
         var root = d3.select(element[0])
         .append('svg')
@@ -24,16 +24,17 @@
         chart = root.append('g')
         .attr({
           'class': 'chart-wrapper',
-          height: parentHeight
+          height: parentHeight,
+          width: '100%'
         });
 
         function updateWindow() {
           var d = document,
           e = d.documentElement,
           x = e.clientWidth;
-          root.attr('width', x);
+          root.attr('width', '100%');
           chart.attr({
-            transform: 'translate(' + [x / 2 - parentWidth / 2, 0] + ')'
+            transform: 'translate(' + [(x / 2 - parentWidth / 2) + 100, -120] + ')'
           });
         }
 
