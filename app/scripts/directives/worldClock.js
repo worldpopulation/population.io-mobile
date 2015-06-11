@@ -34,7 +34,7 @@
           x = e.clientWidth;
           root.attr('width', '100%');
           chart.attr({
-            transform: 'translate(' + [(x / 2 - parentWidth / 2) + 100, -120] + ')'
+            transform: 'translate(' + [(x / 2 - parentWidth / 2) + 75, -120] + ')'
           });
         }
 

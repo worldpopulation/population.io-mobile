@@ -1,0 +1,90 @@
+.home-area
+  width 100%
+  position relative
+  .question
+    .prespace
+      padding 35px 0px
+      border-bottom 1px solid $color2
+
+      h1
+        font-weight bold
+        font-size 30px
+      p
+        color $color2
+        font-size 23px
+        letter-spacing 1px
+        line-height 36px
+        margin-bottom: 10px
+      form
+        clearfix()
+        &.highlight
+            input
+                &.ng-invalid
+                    box-shadow 0 0 8px rgba(red, 1)
+        &.highlight-extra
+            input
+                &.ng-dirty.ng-invalid
+                &.ng-invalid
+                    box-shadow 0 0 8px rgba(red, 1)
+        button
+            position relative
+        input
+            transition all 0.2s
+            background highlight-yellow
+            border 1px solid highlight-yellow
+            width 95%
+            height 50px
+            padding 0 20px
+            margin 0
+            border-radius 12px
+            &.ng-dirty.ng-invalid
+                box-shadow 0 0 8px rgba(red, 1)
+            &.day-field
+                width 25%
+                margin-right 5px
+            &.month-field
+                width 40%
+                margin-right 5px
+            &.year-field
+                width 25%
+                margin-right 5px
+
+
+        ::-webkit-input-placeholder
+            color #666
+        .typeahead
+            margin 0 0 20px 0
+            &.icon-country
+                margin 0 10px 0 0
+                &:after
+                    content ''
+                    height 40px
+                    width 40px
+                    position absolute
+                    z-index 9
+                    right 5px
+                    top 6px
+                    background-icon()
+                    background-position -30px -830px
+
+        .toggle
+            margin-top 20px
+            label
+                padding-right 60px
+        .icon
+            position relative
+            margin 0
+            input
+                padding-right 40px
+            &:after
+                content ''
+                height 40px
+                width 40px
+                z-index 9
+                background-icon()
+            &.icon-birthday:after
+                background-position -35px -230px
+            &.icon-male:after
+                background-position -130px -330px
+            &.icon-female:after
+                background-position -30px -330px
