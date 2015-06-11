@@ -28,10 +28,11 @@
         button
             position relative
         input
+            float: none
             transition all 0.2s
             background highlight-yellow
             border 1px solid highlight-yellow
-            width 95%
+            width 71%
             height 50px
             padding 0 20px
             margin 0
@@ -55,28 +56,32 @@
             margin 0 0 20px 0
             &.icon-country
                 margin 0 10px 0 0
-                &:after
+                &:before
                     content ''
                     height 40px
                     width 40px
                     position absolute
                     z-index 9
-                    right 5px
                     top 6px
+                    left: -8px;
                     background-icon()
                     background-position -30px -830px
 
         .toggle
             margin-top 20px
             margin-right 0px
+            float left
             label
-                padding-right 20px
+                padding 0 30px
         .icon
             position relative
             margin 0
             input
                 padding-right 40px
-            &:after
+            &:before
+                position absolute
+                left -2px
+                top 4px
                 content ''
                 height 40px
                 width 40px
@@ -84,7 +89,7 @@
                 background-icon()
             &.icon-birthday:after
                 background-position -35px -230px
-            &.icon-male:after
+            &.icon-male:before
                 background-position -130px -330px
-            &.icon-female:after
+            &.icon-female:before
                 background-position -30px -330px
