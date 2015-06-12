@@ -73,8 +73,6 @@ a
     .loader
       position absolute
       text-align right
-      left 290px
-      top 32px
       z-index 2
       font-size 20px
       color #666
@@ -87,24 +85,8 @@ a
       &:after
         display block
         content ''
-        position absolute
         z-index 1
-        right -10px
-        top -9px
         height 40px
         width 40px
         background highlight-yellow
         border-radius 40px
-
-      &:before
-        z-index 2
-        position absolute
-        right 1px
-        top 1px
-        animation loading-animation 1.25s infinite linear
-
-@keyframes loading-animation
-  0%
-      transform rotate(0deg)
-  100%
-      transform rotate(360deg)

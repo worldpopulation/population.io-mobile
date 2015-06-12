@@ -372,7 +372,7 @@ section
         position absolute
         border-radius 12px
         left 0px
-        right 0px
+        right 8px
         box-shadow 0 1px 1px rgba(0, 0, 0, 0.2)
         background-color #ffffff
     li
@@ -443,21 +443,19 @@ form
             line-height @height
             animation loading-animation 1.25s infinite linear
 .btn.gobtn
-    font-size 30px
+    font-size 20px
+    font-weight lighter
     color #fff
     display block
     float right
-    left 50%
-    top 50%
-    background #000
+    background $color2
     width 60px
     height @width
-    margin-left - (@width / 2)
-    margin-top -( @width / 2)
+    margin-right 10px
+    margin-top -20px
     border-radius @width
     text-align center
-    line-height @height
-    animation loading-animation 1.25s infinite linear
+    line-height 55px
 .btn.btn-big
     height 120px
     width 120px
