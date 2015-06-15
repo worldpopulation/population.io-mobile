@@ -18,7 +18,6 @@ block content
         li(ng-class="{'active': currentPage == 3}", ng-click="showSection('birthdays')") <span></span>
         li(ng-class="{'active': currentPage == 4}", ng-click="showSection('expectancy')") <span></span>
         li(ng-class="{'active': currentPage == 5}", ng-click="showSection('death')") <span></span>
-
     section#home(ng-controller='HomeCtrl', du-scrollspy='home', data-index="0")
         include ../partials/home-area
     section#summary(ng-controller='SummaryCtrl', du-scrollspy='summary', data-index="1", offset='200', ng-class="{'hidden': !profile.active}")

@@ -95,7 +95,7 @@
                                 }
                             }
                         });
-                    axis.selectAll('text').attr('dy', '2em')
+                    axis.selectAll('text').attr('dy', '2em');
                     var handle = slider.append('g')
                         .attr({
                             'class': 'handle'

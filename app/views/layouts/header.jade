@@ -2,11 +2,14 @@ header
     .container
         .logo
             a(ng-click="showHomepage()")
-                span.title Population.io
-                span.subtitle {{ 'HEADER_TITLE' | translate }}
-                span.icon-alpha
-                i.fa.fa-bars.link-list
-        .loader.fa.fa-refresh(ng-class="{'active': loading}")
+                span.title(ng-show="currentPage == 0") Population.io
+                span.subtitle(ng-show="currentPage == 0") {{ 'HEADER_TITLE' | translate }}
+                span.icon-alpha(ng-show="currentPage == 0")
+
+                span
+
+
+                i.fa.fa-bars.link-list(ng-show="currentPage >= 0")
 
         form.change-language.remove
             label
@@ -22,10 +25,10 @@ header
                 a(ng-click="showDevelopers()") {{ 'HEADER_MENU_API' | translate }}
                 //- a(ng-click="changeLanguage('EN')") EN
                 //- a(ng-click="changeLanguage('ES')") ES
-        .profile.animate( ng-show="currentPage > 0", ng-click="showHomepage()", ng-cloak ) {{profile.birthday.formatted | date:'dd MMM yyyy' }}, {{profile.country}}
-        .world-population.animate(ng-show="currentPage > 0", ng-cloak)
-            span(ng-show="clockType === 'personal'") {{rankGlobal | number:0}}
-            span(ng-show="clockType === 'world'") {{worldPopulation | number:0}}
+        //  .profile.animate( ng-show="currentPage > 0", ng-click="showHomepage()", ng-cloak ) {{profile.birthday.formatted | date:'dd MMM yyyy' }}, {{profile.country}}
+        //  .world-population.animate(ng-show="currentPage > 0", ng-cloak)
+        //      span(ng-show="clockType === 'personal'") {{rankGlobal | number:0}}
+        //      span(ng-show="clockType === 'world'") {{worldPopulation | number:0}}
             .toggle
                 label( ng-class="{'icon-gender icon-female': profile.gender === 'female', 'icon-male icon-gender': profile.gender === 'male'}", ng-model="clockType", btn-radio="'personal'" )
                 label(class="icon-world", ng-model="clockType", btn-radio="'world'")

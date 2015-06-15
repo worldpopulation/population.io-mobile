@@ -525,7 +525,7 @@
 
       .controller('HomeCtrl', ['$scope', '$document', '$timeout', '$filter', '$location', '$rootScope', 'ProfileService', 'PopulationIOService', "Countries",
           function ($scope, $document, $timeout, $filter, $location, $rootScope, ProfileService, PopulationIOService, Countries) {
-
+            debugger
             var getMonths = function(){
               var month1 = $filter('translate')('MONTH1');
               var month2 = $filter('translate')('MONTH2');
@@ -612,31 +612,34 @@
               });
               $scope.goGoGadget = function () {
                   if ($scope.goForm.$invalid) {
-                      //console.log($scope.goForm);
+                      console.log($scope.goForm);
                       $scope.highlightErrors = true;
                       $scope.highlightExtra = true;
                       $timeout(function () { $scope.highlightExtra = false}, 2000);
                       return;
                   }
 
-                  $rootScope.expanded = true;
+                   $rootScope.expanded = false;
 
-                  var year = moment().year(ProfileService.birthday.year).format('YYYY'),
-                    month = moment().month(ProfileService.birthday.month).format('MM'),
-                    day = moment().date(ProfileService.birthday.day).format('DD');
+                   var year = moment().year(ProfileService.birthday.year).format('YYYY'),
+                     month = moment().month(ProfileService.birthday.month).format('MM'),
+                     day = moment().date(ProfileService.birthday.day).format('DD');
                   ProfileService.country = _.find(Countries, function (v) {
                       return v.POPIO_NAME.toLowerCase() == ProfileService.country.toLowerCase()
                   }).POPIO_NAME;
                   $scope.country  = ProfileService.country;
-                  console.log(ProfileService.country)
-                  $location.path([
-                      year,
-                      month,
-                      day,
-                      ProfileService.gender,
-                      ProfileService.country,
-                      'summary'
-                  ].join('/'));
+
+                   $location.path([
+                       year,
+                       month,
+                       day,
+                       ProfileService.gender,
+                       ProfileService.country,
+                       'summary'
+                   ].join('/'));
+
+                  
+
               };
 
               $rootScope.$on('ready', function () {
@@ -647,7 +650,7 @@
                   return ProfileService.active;
               }, function (active) {
                   if (active) {
-                      $scope.loading = 0;
+                      $scope.loading = 1;
                   }
               });
 
