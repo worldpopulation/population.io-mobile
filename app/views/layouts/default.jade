@@ -27,7 +27,7 @@ html(ng-app="populationioApp")
         script(src='scripts/main.js')
 
     body(ng-controller='MainCtrl')
-      div(class="inner")
+      div(class="inner", ng-controller='GoCtrl')
         include header
         .content-block
             block content

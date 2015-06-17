@@ -240,6 +240,13 @@
               };
 
           }])
+        .controller('GoCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
+
+          $rootScope.$on('go', function(){
+            $scope.isResults = true;
+          });
+
+        }])
       .controller('SummaryCtrl', ['$scope', '$rootScope', '$interval', '$filter', 'PopulationIOService', 'ProfileService', '$timeout',
           function ($scope, $rootScope, $interval, $filter, PopulationIOService, ProfileService, $timeout) {
               var rangeLoaded = false;
@@ -638,7 +645,7 @@
                        'summary'
                    ].join('/'));
 
-                  
+                  $rootScope.$broadcast('go');
 
               };
 

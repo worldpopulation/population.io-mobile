@@ -10,19 +10,11 @@ block content
             include ../../../assets/shapes-05-large.svg
             include ../../../assets/female-large.svg
             include ../../../assets/milestones.svg
-
-    ul.navigation(ng-show="profile.active")
-        li(ng-class="{'active': currentPage == 0}", ng-click="showSection('home')") <span></span>
-        li(ng-class="{'active': currentPage == 1}", ng-click="showSection('summary')") <span></span>
-        li(ng-class="{'active': currentPage == 2}", ng-click="showSection('milestones')") <span></span>
-        li(ng-class="{'active': currentPage == 3}", ng-click="showSection('birthdays')") <span></span>
-        li(ng-class="{'active': currentPage == 4}", ng-click="showSection('expectancy')") <span></span>
-        li(ng-class="{'active': currentPage == 5}", ng-click="showSection('death')") <span></span>
-    section#home(ng-controller='HomeCtrl', du-scrollspy='home', data-index="0")
+    section#home(ng-controller='HomeCtrl' ng-if='!isResults')
         include ../partials/home-area
-    section#summary(ng-controller='SummaryCtrl', du-scrollspy='summary', data-index="1", offset='200', ng-class="{'hidden': !profile.active}")
+    section#summary(ng-controller='SummaryCtrl', ng-class="{'hidden': !profile.active}", ng-if='isResults')
         include ../partials/summary-area
-    section#milestones(ng-controller='MilestonesCtrl', du-scrollspy='milestones', offset='200', data-index="2", ng-class="{'hidden': !profile.active}")
+    section#milestones(ng-controller='MilestonesCtrl', du-scrollspy='milestones', offset='200', data-index="2",  ng-class="{'hidden': !profile.active}")
         include ../partials/milestones-area
     section#birthdays(ng-controller='BirthdaysCtrl', du-scrollspy='birthdays', data-index="3", offset='200', ng-class="{'hidden': !profile.active}")
         include ../partials/birthdays-area
