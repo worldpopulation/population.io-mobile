@@ -3,18 +3,26 @@ header.grey
     .logo
       a(ng-click="showHomepage()")
         h3 What is my relative age in the world?
-      ul
-        li
-        li
-        li
-        li
-        li
-        li
-        li
+      .hr-ul-c
+        ul.hr-inline
+          li
+            span.dcircle.active
+          li
+            span.dcircle
+          li
+            span.dcircle
+          li
+            span.dcircle
+          li
+            span.dcircle
+          li
+            span.dcircle
+          li
+            span.dcircle
 
 .container
   .summary-area
-      h3(translate="SUMMARY_INTRO" translate-values="{val1: rankGlobal, val2: worldYoungerPercentageSimple, val3: countryYoungerPercentageSimple, val4: profile.country }")
+      h3(translate="SUMMARY_INTRO_WORLD")
 
       .younger-you-older-section
           .younger-column.country(ng-hide="region=='World'")

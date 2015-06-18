@@ -199,7 +199,7 @@
               };
 
               $scope.showHomepage = function () {
-                  $scope.showSection('home');
+                  $scope.showSection('/');
               };
 
               $scope.registerMail = function () {
@@ -241,6 +241,9 @@
 
           }])
         .controller('GoCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
+          if ($scope.isResults == false){
+            $location.path.join('');
+          }
 
           $rootScope.$on('go', function(){
             $scope.isResults = true;
