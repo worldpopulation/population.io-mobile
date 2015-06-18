@@ -42,11 +42,9 @@
 
   "API_INTRO": "All of the data you see on <i>population.io</i> is from a restful API which is nicely documented with details of methods and data sources used here:<br><br> <a href='http://api.population.io' target='_blank'>api.population.io</a><br><br> The source code behind this site and the API is also available at: <a href='https://github.com/worldpopulation/'>github.com/worldpopulation</a> and developers are welcome to build on both the application and API.",
 
-  "SUMMARY_INTRO": "Do you think you belong to the young or old? You are the <span>{{val1}}</span> person alive on the planet. This means that you are <span>older than {{val2}}%</span> of the world's population and <span>older than {{val3}}%</span> of all people in <span>{{val4}}</span>.",
   "SUMMARY_INTRO_WORLD": "You are older than <span>{{val1}}%</span> of the world population",
   "SUMMARY_WORLD": "World",
-  "SUMMARY_PEOPLE_YOUNGER": "People younger than you (",
-  "SUMMARY_PEOPLE_OLDER": "People older than you (",
+  "SUMMARY_PEOPLE_YOUNGER_A_OLDER": "There are <span class='green'>{{val1}}</span> people younger and <span class='green'>{{val2}}</span> people older than you",
   "SUMMARY_CITIZEN": "You as a citizen <br>from <span>{{region || profile.country}}</span>",
   "SUMMARY_CHART_AXIS_Y": "People",
   "SUMMARY_CHART_AXIS_X": "Age",

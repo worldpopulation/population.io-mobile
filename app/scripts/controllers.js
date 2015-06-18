@@ -324,6 +324,11 @@
               $scope.calcCountryYoungerPercentageSimple = function () {
                   return $filter('number')(Math.min(100, $scope.rankLocal / ($scope.countryPopulation / 100)), 0);
               };
+              $scope.calcWorldYoungerPercentageSimple = function() {
+                return $filter('number')(Math.min(100, $scope.rankGlobal / ($scope.worldPopulation / 100)), 0);
+              }
+              
+
 
               var _update = function () {
 

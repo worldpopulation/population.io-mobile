@@ -23,20 +23,5 @@ header.grey
 .container
   .summary-area
       h3(translate="SUMMARY_INTRO_WORLD", translate-values="{val1: worldYoungerPercentageSimple}")
-
-      .younger-you-older-section
-          .younger-column.country(ng-hide="region=='World'")
-              .number {{ scaledRankYoungerLocal | number : 0}}
-              .label(ng-bind='calcCountryYoungerPercentage()')
-          .younger-column.world(ng-hide="region!='World'")
-              .number {{ scaledRankYoungerGlobal | number : 0}}
-              .label(ng-bind='calcWorldYoungerPercentage()')
-
-              .label(compile-unsafe="'SUMMARY_CITIZEN' | translate")
-          .older-column.country(ng-hide="region=='World'")
-              .number(ng-bind='scaledRankOlderLocal | number: 0')
-              .label(ng-bind='calcCountryOlderPercentage()')
-          .older-column.world(ng-hide="region!='World'")
-              .number(ng-bind='scaledRankOlderGlobal | number: 0')
-              .label(ng-bind='calcWorldOlderPercentage()')
       summary-chart
+      p(translate="SUMMARY_PEOPLE_YOUNGER_A_OLDER", translate-values="{val1: scaledRankYoungerGlobalSimple, val2: scaledRankOlderGlobalSimple}")
