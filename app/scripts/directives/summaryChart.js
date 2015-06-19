@@ -175,7 +175,7 @@
                             })
                             .attr({
                                 transform: 'translate(120,-40)',
-                                width: parentWidth - 280,
+                                width: parentWidth,
                                 height: 180
                             })
                           ;

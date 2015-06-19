@@ -14,12 +14,12 @@ block content
         include ../partials/home-area
     section#summary(ng-controller='SummaryCtrl', ng-class="{'hidden': !profile.active}", ng-if='isResults')
         include ../partials/summary-area
-    section#milestones(ng-controller='MilestonesCtrl', du-scrollspy='milestones', offset='200', data-index="2",  ng-class="{'hidden': !profile.active}")
+    section#milestones(ng-controller='MilestonesCtrl', class="hidden")
         include ../partials/milestones-area
-    section#birthdays(ng-controller='BirthdaysCtrl', du-scrollspy='birthdays', data-index="3", offset='200', ng-class="{'hidden': !profile.active}")
+    section#birthdays(ng-controller='BirthdaysCtrl', class="hidden")
         include ../partials/birthdays-area
-    section#expectancy(ng-controller='ExpectancyCtrl', du-scrollspy='expectancy', data-index="4", offset='200', ng-class="{'hidden': !profile.active}")
+    section#expectancy(ng-controller='ExpectancyCtrl',class="hidden")
         include ../partials/expectancy-area
-    section#death(ng-controller='DeathCtrl', du-scrollspy='death', data-index="5", offset='200', ng-class="{'hidden': !profile.active}")
+    section#death(ng-controller='DeathCtrl', class="hidden")
         include ../partials/death-area
     include ../partials/modals
