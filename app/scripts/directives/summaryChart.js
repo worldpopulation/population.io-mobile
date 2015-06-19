@@ -61,7 +61,7 @@
                       function _initChart() {
                           chart = d3.select(element[0])
                             .append('svg')
-                            .attr({width: parentWidth, height: parentHeight + 100})
+                            .attr({width: parentWidth, height: parentHeight})
                             .append('g')
                             .attr({
                                 class: 'summary-chart',
@@ -72,7 +72,7 @@
                           xAxis = d3.svg.axis()
                             .scale(xRange)
                             .tickSize(5)
-                            .tickValues([0, 25, 50, 75, 100, 125, 150]);
+                            .tickValues([0, 25, 50, 75, 100]);
                           yAxis = d3.svg.axis()
                             .scale(yRange)
                             .tickSize(5)
@@ -252,8 +252,8 @@
                           yAxis.tickFormat(function (d) {return yAxisFormat(d).replace('k', 'K')})
                             .tickValues(ticks);
 
-                          xRange.range([120, parentWidth - 160]).domain([0, d3.max(data, function (d) { return d.age; })]);
-                          yRange.range([parentHeight - 100, 0]).domain([0, ticks[ticks.length - 1]]);
+                          xRange.range([20, parentWidth -20]).domain([0, d3.max(data, function (d) { return d.age; })]);
+                          yRange.range([parentHeight, 0]).domain([0, ticks[ticks.length - 1]]);
 
 
                             yLabelText = $filter('translate')('SUMMARY_CHART_AXIS_Y');
@@ -272,7 +272,7 @@
                             .interpolate('linear');
                           area
                             .x(function (d) { return xRange(d.age); })
-                            .y0(parentHeight - 100)
+                            .y0(parentHeight)
                             .y1(function (d) { return yRange(d.total); });
                           var younger = data.slice(0, age+1);
 
@@ -280,12 +280,12 @@
                             .datum(data)
                             .transition()
                             .attr('d', area(data))
-                            .attr('fill', '#EBEBEB');
+                            .attr('fill', '#98ec79');
 
                           areaYounger
                             .transition()
                             .attr('d', area(younger))
-                            .attr('fill', '#6581F1');
+                            .attr('fill', '#3c3');
                           /* highlight-blue */
 
                           areaLine
