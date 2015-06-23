@@ -252,7 +252,7 @@
                           yAxis.tickFormat(function (d) {return yAxisFormat(d).replace('k', 'K')})
                             .tickValues(ticks);
 
-                          xRange.range([20, parentWidth -20]).domain([0, d3.max(data, function (d) { return d.age; })]);
+                          xRange.range([20, parentWidth]).domain([0, d3.max(data, function (d) { return d.age; })]);
                           yRange.range([parentHeight, 0]).domain([0, ticks[ticks.length - 1]]);
 
 
