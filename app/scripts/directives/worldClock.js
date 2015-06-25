@@ -2,14 +2,13 @@
   'use strict';
 
   angular.module('populationioApp')
-  .directive('worldClock', ['$filter', 'PopulationIOService', 'HelloWords',
-  function ($filter, PopulationIOService, HelloWords) {
+  .directive('worldClock', ['$filter',
+  function ($filter) {
     return {
       restrict: 'E',
       link: function ($scope, element) {
         var digits, countElement, clockElement, digit, placeholder,
         digitText, placeholderText, chart,
-        babiesArea, babiesList, lastReborn, countryTitle,
         digitCellWidth = 15,
         animationDuration = 400,
         parentWidth = 770,

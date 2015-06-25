@@ -24,7 +24,8 @@
                         xAxisElement, yAxisElement,
                         xLabel, yLabel, yLabelText, xLabelText,
                         xLabelLine, yLabelLine,
-                        tooltip = d3.select('.chart-tooltip');
+                        tooltip = d3.select('.chart-tooltip'),
+                        padding = {top: 80, right: 20, bottom: 30, left: 50};
 
                       _initChart();
                       $scope.$watch('region', function (newVal) {
@@ -65,9 +66,8 @@
                             .append('g')
                             .attr({
                                 class: 'summary-chart',
-                                transform: 'translate(0,80)'
-                            })
-                          ;
+                                transform: 'translate(' + padding.left + ',' + padding.top + ')'
+                            });
 
                           xAxis = d3.svg.axis()
                             .scale(xRange)
@@ -76,8 +76,8 @@
                           yAxis = d3.svg.axis()
                             .scale(yRange)
                             .tickSize(5)
-                            .orient('left')
-                          ;
+                            .orient('left');
+
                           areaTotal = chart.append('path');
                           areaYounger = chart.append('path');
                           areaLine = chart.append('path');
@@ -91,7 +91,7 @@
                             .attr(
                             {
                                 class: 'x-label',
-                                transform: 'translate(' + [parentWidth - 100, parentHeight - 100 + 16] + ')'
+                                transform: 'translate(' + [parentWidth, parentHeight] + ')'
                             })
                             .style(
                             {
@@ -100,10 +100,10 @@
                           xLabelLine = chart.append('line')
                             .attr({
                                 class: 'label-line',
-                                x1: parentWidth - 200,
-                                y1: parentHeight - 100,
-                                x2: parentWidth - 70,
-                                y2: parentHeight - 100
+                                x1: parentWidth,
+                                y1: parentHeight,
+                                x2: parentWidth ,
+                                y2: parentHeight
                             })
                             .style({
                                 stroke: '#d9d9d9',
@@ -174,9 +174,9 @@
                                 opacity: 0
                             })
                             .attr({
-                                transform: 'translate(120,-40)',
+                                transform: 'translate(0,-40)',
                                 width: parentWidth,
-                                height: 180
+                                height: parentHeight
                             })
                           ;
 
@@ -231,6 +231,7 @@
 
 
                       }
+
 
                       function _updateChart(data) {
                           currentData = data;
@@ -303,7 +304,7 @@
                           yAxisElement
                             .transition()
                             .attr('class', 'y axis')
-                            .attr('transform', 'translate(120,0)')
+                            .attr('transform', 'translate(0,0)')
                             .call(yAxis);
                           pointer
                             .transition()
