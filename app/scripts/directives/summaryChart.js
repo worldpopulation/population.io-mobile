@@ -103,7 +103,7 @@
           .attr(
             {
               class: 'x-label',
-              transform: 'translate(' + [parentWidth - 3, parentHeight + 25] + ')'
+              transform: 'translate(' + [parentWidth - 6, parentHeight + 25] + ')'
             })
             .style(
               {
@@ -152,7 +152,24 @@
                   });
 
                   xAxisElement = chart.append('g');
+
+                  xAxisElement.append('circle').attr({
+                    r: 2
+                  })
+                  .style({
+                    fill: 'black'
+                  })
+
+
                   yAxisElement = chart.append('g');
+
+                  yAxisElement.append('circle').attr({
+                    r: 2
+                  })
+                  .style({
+                    fill: 'black'
+                  });
+
                   pointer = chart.append('g').attr({class: 'pointer'});
                   pointer.append('line')
                   .attr({
@@ -175,7 +192,7 @@
                   pointer.append('circle').attr({
                     r: 6
                   })
-                  .attr('stroke-width', 2)
+                  .attr('stroke-width', 0.5)
                   .style({
                     fill: 'black',
                     stroke: 'white'
@@ -249,24 +266,27 @@
                   xAxisElement
                   .transition()
                   .attr('class', 'x axis')
-                  .attr('transform', 'translate(0,' + (parentHeight) + ')')
+                  .attr('transform', 'translate('+ parentWidth +',' + (parentHeight) + ')')
                   .call(xAxis)
                     .selectAll('text')
-                    .attr('x', '-15');
+                    .attr('y', '30')
+                    .attr('x', '-310');
 
                   yAxisElement
                   .transition()
                   .attr('class', 'y axis')
-                .attr('transform', 'translate(20,' + '-' +(parentHeight - 10) + ')')
+                  .attr('transform', 'translate(20,' + 0 + ')')
                   .call(yAxis)
                     .selectAll('text')
-                    .attr('y', '10')
-                    .attr('x', '35');
+                    .attr('y', '-20')
+                    .attr('x', '36');
+
                   pointer
                   .transition()
                   .attr({
-                    transform: 'translate(' + [xRange(age), -40] + ')'
+                    transform: 'translate(' + [xRange(age), 40] + ')'
                   });
+
                   pointer.select('line')
                   .transition()
                   .attr({
