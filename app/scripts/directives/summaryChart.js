@@ -15,7 +15,7 @@
         parentHeight = 40,
         yAxisFormat = d3.format('s'),
         xRange = d3.scale.linear(),
-        yRange = d3.scale.linear().nice(),
+        yRange = d3.scale.linear(),
         line = d3.svg.line(),
         area = d3.svg.area(),
         age,
@@ -61,9 +61,17 @@
           _updateChart(population)
         });
 
+
+
         function _initChart() {
+            var vB = parentWidth + 20;
+
           chart = d3.select(element[0])
           .append('svg')
+          .attr('width', '100%')
+          .attr('height', '100%')
+          .attr('viewBox', '0 0 '+ vB +' 200 ')
+          .attr('preserveAspectRatio','xMinYMin meet')
           .append('g')
           .attr({
             class: 'summary-chart',
@@ -74,10 +82,12 @@
           .scale(xRange)
           .tickSize(5)
           .orient('bottom')
-          .tickValues([0, 25, 50, 75, 100]);
+          .tickPadding([25])
+          .tickValues([100]);
+
           yAxis = d3.svg.axis()
           .scale(yRange)
-          .tickSize(1)
+          .tickSize(5)
           .orient('left');
 
           areaTotal = chart.append('path');
@@ -93,7 +103,7 @@
           .attr(
             {
               class: 'x-label',
-              transform: 'translate(' + [290, parentHeight + 25] + ')'
+              transform: 'translate(' + [parentWidth - 3, parentHeight + 25] + ')'
             })
             .style(
               {
@@ -101,12 +111,17 @@
               });
               xLabelLine = chart.append('line')
               .attr({
-                class: 'label-line'
+                class: 'label-line',
+                x1: 290,
+                y1: 80,
+                x2: 290,
+                y2: 40
               })
               .style({
-                stroke: '#d9d9d9',
+                stroke: '#333',
                 'stroke-width': 1
               });
+
 
               yLabelText = $filter('translate')('SUMMARY_CHART_AXIS_Y');
 
@@ -115,7 +130,7 @@
               .attr(
                 {
                   class: 'y-label',
-                  transform: 'translate(' + [110, -20] + ')'
+                  transform: 'translate(' + [62, parentHeight - 70 ] + ')'
                 })
                 .style(
                   {
@@ -126,13 +141,13 @@
                   yLabelLine = chart.append('line')
                   .attr({
                     class: 'label-line',
-                    x1: 120,
+                    x1: 20,
                     y1: -40,
-                    x2: 120,
+                    x2: 20,
                     y2: 0
                   })
                   .style({
-                    stroke: '#d9d9d9',
+                    stroke: '#333',
                     'stroke-width': 1
                   });
 
@@ -150,8 +165,7 @@
                     stroke: '#333',
                     'stroke-width': '1px'
 
-                  })
-                  ;
+                  });
                   pointer.append('text')
                   .style({
                     fill: '#333',
@@ -184,7 +198,7 @@
                     step = Math.ceil(d3.max(data, function (d) { return d.total; }) / 200) * 200
                   }
                   for (var i = 0; i < d3.max(data, function (d) { return d.total; }) + step; i = i + step) {
-                    ticks.push(i)
+                    ticks[0] = i;
                   }
                   xAxis.tickFormat(function (d) {return d + 'y'});
                   yAxis.tickFormat(function (d) {return yAxisFormat(d).replace('k', 'K')})
@@ -235,14 +249,19 @@
                   xAxisElement
                   .transition()
                   .attr('class', 'x axis')
-                  .attr('transform', 'translate(0,' + (parentHeight - 100) + ')')
-                  .call(xAxis);
+                  .attr('transform', 'translate(0,' + (parentHeight) + ')')
+                  .call(xAxis)
+                    .selectAll('text')
+                    .attr('x', '-15');
 
                   yAxisElement
                   .transition()
                   .attr('class', 'y axis')
-                  .attr('transform', 'translate(0,0)')
-                  .call(yAxis);
+                .attr('transform', 'translate(20,' + '-' +(parentHeight - 10) + ')')
+                  .call(yAxis)
+                    .selectAll('text')
+                    .attr('y', '10')
+                    .attr('x', '35');
                   pointer
                   .transition()
                   .attr({

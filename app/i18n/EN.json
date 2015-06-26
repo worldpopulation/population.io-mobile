@@ -46,8 +46,8 @@
   "SUMMARY_WORLD": "World",
   "SUMMARY_PEOPLE_YOUNGER_A_OLDER": "There are <span class='green number'>{{val1}}</span> people younger and <span class='green number'>{{val2}}</span> people older than you",
   "SUMMARY_CITIZEN": "You as a citizen <br>from <span>{{region || profile.country}}</span>",
-  "SUMMARY_CHART_AXIS_Y": "People",
-  "SUMMARY_CHART_AXIS_X": "Age",
+  "SUMMARY_CHART_AXIS_Y": "people",
+  "SUMMARY_CHART_AXIS_X": "age",
 
 
   "BROWSER_WARNING_TITLE":"Browser Warning",
