@@ -27,7 +27,7 @@
         tooltip = d3.select('.chart-tooltip'),
         prevChartWidth = 0,
         prevChartHeight = 0,
-        margin = {top: 80, right: 20, bottom: 30, left: 0};
+        margin = {top: 50, right: 20, bottom: 30, left: 0};
 
         _initChart();
         $scope.$watch('region', function (newVal) {
@@ -171,31 +171,18 @@
                   });
 
                   pointer = chart.append('g').attr({class: 'pointer'});
-                  pointer.append('line')
-                  .attr({
-                    x1: 0,
-                    y1: 10,
-                    x2: 0,
-                    y2: 0
-                  })
-                  .style({
-                    stroke: '#333',
-                    'stroke-width': '1px'
 
-                  });
                   pointer.append('text')
                   .style({
                     fill: '#333',
-                    'text-anchor': 'middle'
+                    'font-size':'45px',
+                    'text-anchor': 'start'
+                  });
+                  pointer.append('polygon').attr({
+                     points: '-20,45 0,10 20,45'
                   })
-                  ;
-                  pointer.append('circle').attr({
-                    r: 6
-                  })
-                  .attr('stroke-width', 0.5)
                   .style({
                     fill: 'black',
-                    stroke: 'white'
                   });
                 }
 
@@ -287,12 +274,7 @@
                     transform: 'translate(' + [xRange(age), 40] + ')'
                   });
 
-                  pointer.select('line')
-                  .transition()
-                  .attr({
-                    y2: yRange(data[age].total) + 40
-                  });
-                  pointer.select('circle')
+                  pointer.select('polygon')
                   .transition()
                   .attr({
                     cy: yRange(data[age].total) + 40
@@ -307,6 +289,8 @@
                       return $filter('number')(Math.min(100, $scope.rankGlobal / ($scope.worldPopulation / 100)), '0') + '%'
                     }
                   })
+                  .attr('x', '20')
+                  .attr('y', '90');
 
                 }
 
