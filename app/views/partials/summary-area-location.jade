@@ -1,0 +1,27 @@
+header.grey
+  .container
+    .logo
+      a(ng-click="showHomepage()")
+        h3 What is my relative age in my country?
+      .hr-ul-c
+        ul.hr-inline
+          li
+            span.dcircle
+          li
+            span.dcircle.active
+          li
+            span.dcircle
+          li
+            span.dcircle
+          li
+            span.dcircle
+          li
+            span.dcircle
+          li
+            span.dcircle
+
+.container(ng-init="region='profile.country'")
+  .summary-area-location
+      h3(translate="SUMMARY_INTRO_COUNTRY", translate-values="{val1: countryYoungerPercentageSimple, val2: profile.country}")
+      summary-chart-location
+      h3(translate="SUMMARY_PEOPLE_YOUNGER_A_OLDER_COUNTRY", translate-values="{val1: scaledRankYoungerLocalSimple, val2: scaledRankOlderLocalSimple}")

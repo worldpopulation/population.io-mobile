@@ -14,7 +14,9 @@ block content
         include ../partials/home-area
     section#summary(ng-controller='SummaryCtrl', ng-class="{'hidden': !profile.active}", ng-if='isResults')
         include ../partials/summary-area
-    section#milestones(ng-controller='MilestonesCtrl', class="hidden")
+    section#summarylocation(ng-controller='SummaryCtrl', ng-class="{'hidden':!profile.active}", ng-if='isResults')
+        include ../partials/summary-area-location
+    section#milestones(ng-controller='MilestonesCtrl')
         include ../partials/milestones-area
     section#birthdays(ng-controller='BirthdaysCtrl', class="hidden")
         include ../partials/birthdays-area

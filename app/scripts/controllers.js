@@ -436,6 +436,10 @@
 
                       $scope.scaledRankYoungerGlobalSimple = $filter('number')(tickerYoungerGlobal(new Date().getTime()), 0);
 
+                      $scope.scaledRankYoungerLocalSimple = $filter('number')(tickerYoungerLocal(new Date().getTime()), 0);
+
+                      $scope.scaledRankOlderLocalSimple = $filter('number')($scope.countryPopulation - tickerOlderLocal(new Date().getTime()), 0);
+
                       //console.log('!!!!!! tickerYoungerGlobal ' + tickerYoungerGlobal(new Date().getTime()))
                       //console.log('!!!!!! tickerYoungerLocal ' + tickerYoungerLocal(new Date().getTime()))
                       //

@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('populationioApp')
-  .directive('summaryChart', ['$filter', 'PopulationIOService', 'HelloWords', '$timeout',
+  .directive('summaryChartLocation', ['$filter', 'PopulationIOService', 'HelloWords', '$timeout',
   function ($filter, PopulationIOService, HelloWords, $timeout) {
     return {
       restrict: 'E',
@@ -218,6 +218,17 @@
                   xLabelText = $filter('translate')('SUMMARY_CHART_AXIS_X');
                   xLabel.text(xLabelText);
 
+                  yLabelLine.attr({
+                    x1: 20,
+                    y1: (yRange(data[age].total) - yRange(age) -5 ),
+                    x2: 20,
+                    y2: (yRange(data[age].total) +5 )
+                  })
+
+                  yLabel.attr({
+                    transform: 'translate(' + [62,  (yRange(data[age].total) - 30)] + ')'
+                  })
+
                   line
                   .x(function (d) {
                     return xRange(d.age);
@@ -236,12 +247,12 @@
                   .datum(data)
                   .transition()
                   .attr('d', area(data))
-                  .attr('fill', '#98ec79');
+                  .attr('fill', '#997fff');
 
                   areaYounger
                   .transition()
                   .attr('d', area(younger))
-                  .attr('fill', '#3c3');
+                  .attr('fill', '#63f');
                   /* highlight-blue */
 
                   areaLine
@@ -262,11 +273,11 @@
                   yAxisElement
                   .transition()
                   .attr('class', 'y axis')
-                  .attr('transform', 'translate(20,' + 0 + ')')
+                  .attr('transform', 'translate(20,' + (yRange(data[age].total)) + ')')
                   .call(yAxis)
                     .selectAll('text')
                     .attr('y', '-20')
-                    .attr('x', '36');
+                    .attr('x', '25');
 
                   pointer
                   .transition()
