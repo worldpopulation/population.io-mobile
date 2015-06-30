@@ -163,10 +163,11 @@
 
                   yAxisElement = chart.append('g');
 
-                  yAxisElement.append('circle').attr({
+                  yAxisElement.append('circle')
+                  .transition()
+                  .attr({
                     r: 2
-                  })
-                  .style({
+                  }).style({
                     fill: 'black'
                   });
 
@@ -200,6 +201,7 @@
                   }
                   if ($scope.region != 'World' && d3.max(data, function (d) { return d.total; }) <= 2000) {
                     step = Math.ceil(d3.max(data, function (d) { return d.total; }) / 200) * 200
+
                   }
                   for (var i = 0; i < d3.max(data, function (d) { return d.total; }) + step; i = i + step) {
                     ticks[0] = i;
@@ -220,14 +222,16 @@
 
                   yLabelLine.attr({
                     x1: 20,
-                    y1: (yRange(data[age].total) - yRange(age) -5 ),
+                    y1: (yRange(data[age].total) - yRange(age)),
                     x2: 20,
-                    y2: (yRange(data[age].total) +5 )
+                    y2: (yRange(data[age].total))
                   })
 
                   yLabel.attr({
                     transform: 'translate(' + [62,  (yRange(data[age].total) - 30)] + ')'
                   })
+
+
 
                   line
                   .x(function (d) {
@@ -270,14 +274,27 @@
                     .attr('y', '30')
                     .attr('x', '-310');
 
+
                   yAxisElement
                   .transition()
                   .attr('class', 'y axis')
-                  .attr('transform', 'translate(20,' + (yRange(data[age].total)) + ')')
+                  .attr({
+                    transform: 'translate('+20+','+ 0 +')'
+                  })
                   .call(yAxis)
                     .selectAll('text')
-                    .attr('y', '-20')
-                    .attr('x', '25');
+                    .attr('y', (yRange(data[age].total) - 20))
+                    .attr('x', '20')
+                    .style({
+                      'text-anchor': 'middle'
+                    });
+
+                  yAxisElement.select('circle')
+                  .transition()
+                  .attr({
+                    cy: yRange(data[age].total)
+                  });
+
 
                   pointer
                   .transition()
