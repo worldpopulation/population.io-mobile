@@ -284,10 +284,7 @@
                   .call(yAxis)
                     .selectAll('text')
                     .attr('y', (yRange(data[age].total) - 20))
-                    .attr('x', '20')
-                    .style({
-                      'text-anchor': 'middle'
-                    });
+                    .attr('x', '25');
 
                   yAxisElement.select('circle')
                   .transition()

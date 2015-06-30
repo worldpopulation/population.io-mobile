@@ -873,13 +873,7 @@
 
                   var _updateTitleAlive = function (date, atomicNumber) {
                     $scope.milestoneDate = $filter('date')(date, 'd MMM, yyyy');
-
-                    $scope.milestoneCounter = $filter('translate')(atomicNumber);
-                      $scope.titleAlive = $sce.trustAsHtml([
-                          'Your next milestone is <span>' + $filter('ordinal')($filter('date')(date, 'd')) + ' ',
-                          $filter('date')(date, 'MMM, yyyy') + '</span>, then you’ll be <span>',
-                          $filter('translate')(atomicNumber) + ' billionth</span> person to be alive in the world.'
-                      ].join(''));
+                    console.log($scope.milestoneDate);
                   };
 
                   $scope.loading += 1;

@@ -42,7 +42,9 @@
 
   "API_INTRO": "All of the data you see on <i>population.io</i> is from a restful API which is nicely documented with details of methods and data sources used here:<br><br> <a href='http://api.population.io' target='_blank'>api.population.io</a><br><br> The source code behind this site and the API is also available at: <a href='https://github.com/worldpopulation/'>github.com/worldpopulation</a> and developers are welcome to build on both the application and API.",
 
+  "SUMMARY_TEASER_WORLD": "What is my relative age in the world?",
   "SUMMARY_INTRO_WORLD": "You are older than <span>{{val1}}%</span> of the world population",
+  "SUMMARY_TEASER_COUNTRY": "What is my relative age in my country?",
   "SUMMARY_INTRO_COUNTRY": "You are older than <span>{{val1}}%</span> of the population in {{val2}}",
   "SUMMARY_WORLD": "World",
   "SUMMARY_PEOPLE_YOUNGER_A_OLDER": "There are <span class='green number'>{{val1}}</span> people younger and <span class='green-light number'>{{val2}}</span> people older than you",
@@ -55,8 +57,9 @@
   "BROWSER_WARNING_TITLE":"Browser Warning",
   "BROWSER_WARNING_INTRO":"Your browser is out-of-date for this showcase. Please download one of these up-to-date, free and excellent browsers.",
 
-  "MILESTONES_INTRO": "What are the big milestones to expect in your life? Your next milestone is <span>{{val1}}</span> then you’ll be <span>{{val2}} billionth</span> person to be alive in the world.",
+  "MILESTONES_INTRO": "What are my milestones?",
   "MILESTONES_NOW": "Now",
+  "MILESTONES_NEXT": "You will expect your next milestone in <span class='green'>{{val1}} years</span>",
   "MILESTONES_TITLE_AGE_DISTRIBUTION": "Age Distribution",
   "MILESTONES_TIMELINE": "Timeline (projections)",
   "MILESTONES_MILESTONE_LIFE_EXPECTANCY" : "Your projected life expectancy in ",
