@@ -17,8 +17,7 @@
                         height = 580,
                         yearMax = 100,
                         yearMin = 0,
-                        firstRun = true
-                        ;
+                        firstRun = true;
 
                       var root = d3.select(element[0])
                         .append('svg')
