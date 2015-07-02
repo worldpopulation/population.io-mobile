@@ -26,7 +26,7 @@ header.grey
             h3(translate="MILESTONES_NEXT" translate-values="{val1: milestoneDate}")
         .timeline
            ul
-               li(ng-repeat="item in milestonesData | orderBy:dateOrder:true", data-id="item.year", class="{{item.color}}", ng-class="{'is-rank': item.rank, 'now': item.now, 'past': item.year < year, 'selected': item.selected}")
+               li(ng-repeat="item in milestonesData | orderBy:dateOrder:false", data-id="item.year", class="{{item.color}}", ng-class="{'is-rank': item.rank, 'now': item.now, 'past': item.year < year, 'selected': item.selected}")
                    span.time
                       span.year {{item.date | date: 'yyyy' }}
                       span.date {{item.date | date: 'dd MMM' }}
