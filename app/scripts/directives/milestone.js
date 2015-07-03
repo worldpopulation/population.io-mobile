@@ -26,6 +26,7 @@
               _label="",
               svgWidth='100%',
               svgHeight='100%',
+              _date="",
               _fontSize=10;
 
           var _value= 0,
@@ -111,7 +112,7 @@
                       .attr("cursor","pointer")
                       .attr("width",_width)
                       // .attr("x",(3*_fontSize/2))
-                      .text(function (d) { return Math.round((_value-_minValue)/(_maxValue-_minValue)*100) + "%" })
+                      .text(_date)
                       .style("font-size",_fontSize+"px");
 
                   path.exit().transition().duration(500).attr("x",1000).remove();
@@ -136,9 +137,6 @@
                       }
 
                       label.datum(Math.round(ratio*100));
-                      label.transition().duration(_duration)
-                          .tween("text",labelTween);
-
                   }
 
               });
@@ -227,6 +225,12 @@
               return component;
           };
 
+          component.date = function(_) {
+              if (!arguments.length) return _date;
+              _date = _;
+              return component;
+          };
+
           component._duration = function(_) {
               if (!arguments.length) return _duration;
               _duration = _;
@@ -248,7 +252,8 @@
       function _initArc() {
 
             var rp1 = radialProgress(element[0])
-                    .label($scope.date)
+                    .label($scope.title)
+                    .date($scope.date)
                     .diameter(150)
                     .value(10)
                     .render();
@@ -257,6 +262,10 @@
 
       _initArc();
 
+
+      function _updateArc(){
+        console.log('update arc');
+      }
 
       }
     }
