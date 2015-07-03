@@ -25,10 +25,6 @@ header.grey
         .rank
             h3(translate="MILESTONES_NEXT" translate-values="{val1: milestoneDate}")
         .timeline
-           ul
-               li(ng-repeat="item in milestonesData | orderBy:dateOrder:false", data-id="item.year", class="{{item.color}}", ng-class="{'is-rank': item.rank, 'now': item.now, 'past': item.year < year, 'selected': item.selected}")
-                   span.time
-                      milestones
-                      span.year {{item.date | date: 'yyyy' }}
-                      span.date {{item.date | date: 'dd MMM' }}
-                   span.title(ng-bind-html='item.title')
+          ul
+            li(ng-repeat="item in milestonesData | orderBy:dateOrder:false", data-id="item.year", class="{{item.color}}", ng-class="{'is-rank': item.rank, 'now': item.now, 'past': item.year < year, 'selected': item.selected}")
+              milestone(date="item.date", year="item.date", title="item.title")

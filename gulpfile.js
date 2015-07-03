@@ -96,7 +96,7 @@ gulp.task('serve', function (event) {
     connect.server({
         root: destinations.docs,
         port: 1983,
-        livereload: true,
+        livereload: false,
         host: '0.0.0.0'
     });
     // sets up a livereload that watches for any changes in the root
@@ -149,18 +149,18 @@ gulp.task('trans', function (event) {
       .pipe(gulp.dest(destinations.translations));
 });
 
-//// scripts watch task for development
-//gulp.task('scripts:watch', function (event) {
-//  gulp.src(sources.vendor)
-//    .pipe(plumber())
-//    .pipe(gulp.dest(destinations.vendor));
-//
-//  watch({glob: sources.scripts}, function (files) {
-//    gulp.src(sources.scripts)
-//      .pipe(plumber())
-//      .pipe(gulp.dest(destinations.scripts));
-//  });
-//});
+// scripts watch task for development
+gulp.task('scripts:watch', function (event) {
+ gulp.src(sources.vendor)
+   .pipe(plumber())
+   .pipe(gulp.dest(destinations.vendor));
+
+ watch({glob: sources.scripts}, function (files) {
+   gulp.src(sources.scripts)
+     .pipe(plumber())
+     .pipe(gulp.dest(destinations.scripts));
+ });
+});
 
 // jade tasks
 gulp.task('jade', function (event) {

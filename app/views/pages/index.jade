@@ -18,10 +18,3 @@ block content
         include ../partials/summary-area-location
     section#milestones(ng-controller='MilestonesCtrl',ng-class="{'hidden':!profile.active}", ng-if='isResults')
         include ../partials/milestones-area
-    section#birthdays(ng-controller='BirthdaysCtrl', class="hidden")
-        include ../partials/birthdays-area
-    section#expectancy(ng-controller='ExpectancyCtrl',class="hidden")
-        include ../partials/expectancy-area
-    section#death(ng-controller='DeathCtrl', class="hidden")
-        include ../partials/death-area
-    include ../partials/modals
