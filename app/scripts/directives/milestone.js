@@ -9,6 +9,7 @@
       scope: {
         date: '=',
         year: '=',
+        value: '=',
         title: '='
       },
       link: function ($scope, element, attrs) {
@@ -27,6 +28,7 @@
               svgWidth='100%',
               svgHeight='100%',
               _date="",
+              _year="",
               _fontSize=10;
 
           var _value= 0,
@@ -106,8 +108,16 @@
                   enter.append("g").attr("class", "labels");
                   var label = svg.select(".labels").selectAll(".label").data(data);
                   label.enter().append("text")
-                      .attr("class","label")
-                      .attr("y",_width/2+_fontSize/3)
+                      .attr("class","label central")
+                      .attr("y",_width/2+_fontSize/3-13)
+                      .attr("x",_width/2)
+                      .attr("cursor","pointer")
+                      .attr("width",_width)
+                      .text(_year)
+                      .style("font-size",_fontSize+"px");
+                    label.enter().append("text")
+                      .attr("class","label central")
+                      .attr("y",_width/2+_fontSize/3+10)
                       .attr("x",_width/2)
                       .attr("cursor","pointer")
                       .attr("width",_width)
@@ -173,11 +183,12 @@
           function measure() {
               _width=_diameter - _margin.right - _margin.left - _margin.top - _margin.bottom;
               _height=_width;
-              _fontSize=_width*.2;
+              _fontSize=(_width*.2 - 4);
               _arc.outerRadius(_width/2);
-              _arc.innerRadius(_width/2 * .85);
-              _arc2.outerRadius(_width/2 * .85);
-              _arc2.innerRadius(_width/2 * .85 - (_width/2 * .15));
+              _arc.innerRadius(_width/2 * .98);
+              _arc2.outerRadius(_width/2 * .97);
+              _arc2.innerRadius(_width/2 * .97 - (_width/2 * .03));
+
           }
 
 
@@ -231,13 +242,17 @@
               return component;
           };
 
+          component.year = function(_) {
+            if (!arguments.length) return _year;
+            _year = _;
+            return component;
+          }
+
           component._duration = function(_) {
               if (!arguments.length) return _duration;
               _duration = _;
               return component;
           };
-
-
 
           return component;
 
@@ -254,8 +269,9 @@
             var rp1 = radialProgress(element[0])
                     .label($scope.title)
                     .date($scope.date)
+                    .year($scope.year)
                     .diameter(150)
-                    .value(10)
+                    .value(100)
                     .render();
 
         }
@@ -266,6 +282,8 @@
       function _updateArc(){
         console.log('update arc');
       }
+
+      _updateArc();
 
       }
     }

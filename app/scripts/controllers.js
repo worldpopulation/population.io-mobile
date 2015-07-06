@@ -799,11 +799,12 @@
                     }else if($scope.milestonesData[i].titleType === 'lifeExpCountry'){
                       $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + ProfileService.country;
                     }else if($scope.milestonesData[i].titleType === 'MILESTONES_MILESTONE_NOW' ){
-                      $scope.milestonesData[i].title = $sce.trustAsHtml( $filter('translate')('MILESTONES_MILESTONE_NOW'));
+                      $scope.milestonesData[i].title =  $filter('translate')('MILESTONES_MILESTONE_NOW');
                     }else if($scope.milestonesData[i].titleType === 'MILESTONES_MILESTONE_18' ){
-                      $scope.milestonesData[i].title = $sce.trustAsHtml( $filter('translate')('MILESTONES_MILESTONE_18'));
+                      $scope.milestonesData[i].title =  $filter('translate')('MILESTONES_MILESTONE_18');
                     }else if($scope.milestonesData[i].titleType === 'MILESTONES_MILESTONE_BORN' ){
-                      $scope.milestonesData[i].title = $sce.trustAsHtml($filter('translate')('MILESTONES_MILESTONE_BORN'));
+                      $scope.milestonesData[i].title =
+                      $filter('translate')('MILESTONES_MILESTONE_BORN');
                     }else if($scope.milestonesData[i].titleType === 'ORDINAL_NUMBER_1' ){
                       $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_1_BILLION');
                     }else if($scope.milestonesData[i].titleType === 'ORDINAL_NUMBER_2' ){
@@ -849,7 +850,7 @@
                           date: $filter('date')(date, 'yyyy-MM-dd'),
                           year: $filter('date')(date, 'yyyy'),
                           titleType: (country === 'World' ? 'lifeExpWorld' : 'lifeExpCountry'),
-                          title: $sce.trustAsHtml( $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + (country === 'World' ? $filter('translate')('LOCAL_WORLD') : country))
+                          title:  $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + (country === 'World' ? $filter('translate')('LOCAL_WORLD') : country)
                       });
 
                       if (onSuccess) {
@@ -895,7 +896,7 @@
                           rank: true,
                           titleType: atomicNumber,
                           year: $filter('date')(date, 'yyyy'),
-                          title:  $sce.trustAsHtml($filter('translate')(atomicNumber))
+                          title:  $filter('translate')(atomicNumber)
                       });
 
                       $scope.loading -= 1;
