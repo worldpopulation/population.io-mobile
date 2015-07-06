@@ -10,7 +10,8 @@
         date: '=',
         year: '=',
         value: '=',
-        title: '='
+        title: '=',
+        number: '='
       },
       link: function ($scope, element, attrs) {
 
@@ -83,7 +84,7 @@
 
                   background.append("text")
                       .attr("class", "label")
-                      .attr("transform", "translate(" + _width/2 + "," + (_width + _fontSize) + ")")
+                      .attr("transform", "translate(" + _width+130 + "," + (_width - -40) + ")")
                       .text(_label);
                  var g = svg.select("g")
                       .attr("transform", "translate(" + _margin.left + "," + _margin.top + ")");
@@ -281,6 +282,8 @@
 
       function _updateArc(){
         console.log('update arc');
+        console.log($scope.number);
+        console.log($scope.title);
       }
 
       _updateArc();

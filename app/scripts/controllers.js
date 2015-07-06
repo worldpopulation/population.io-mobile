@@ -798,11 +798,11 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
         }else if($scope.milestonesData[i].titleType === 'lifeExpCountry'){
           $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + ProfileService.country;
         }else if($scope.milestonesData[i].titleType === 'MILESTONES_MILESTONE_NOW' ){
-          $scope.milestonesData[i].title = $sce.trustAsHtml( $filter('translate')('MILESTONES_MILESTONE_NOW'));
+          $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_NOW');
         }else if($scope.milestonesData[i].titleType === 'MILESTONES_MILESTONE_18' ){
-          $scope.milestonesData[i].title = $sce.trustAsHtml( $filter('translate')('MILESTONES_MILESTONE_18'));
+          $scope.milestonesData[i].title =  $filter('translate')('MILESTONES_MILESTONE_18');
         }else if($scope.milestonesData[i].titleType === 'MILESTONES_MILESTONE_BORN' ){
-          $scope.milestonesData[i].title = $sce.trustAsHtml($filter('translate')('MILESTONES_MILESTONE_BORN'));
+          $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_BORN');
         }else if($scope.milestonesData[i].titleType === 'ORDINAL_NUMBER_1' ){
           $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_1_BILLION');
         }else if($scope.milestonesData[i].titleType === 'ORDINAL_NUMBER_2' ){
@@ -848,7 +848,7 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
         date: $filter('date')(date, 'yyyy-MM-dd'),
         year: $filter('date')(date, 'yyyy'),
         titleType: (country === 'World' ? 'lifeExpWorld' : 'lifeExpCountry'),
-        title: $sce.trustAsHtml( $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + (country === 'World' ? $filter('translate')('LOCAL_WORLD') : country))
+        title:  $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + (country === 'World' ? $filter('translate')('LOCAL_WORLD') : country)
       });
 
       if (onSuccess) {
@@ -873,6 +873,10 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
       $filter('date')(new Date(), 'yyyy');
     };
 
+    // var _loadWpRankTitle = function (rank, title){
+    //   $scope.title = title;
+    // };
+
     $scope.loading += 1;
 
     PopulationIOService.loadWpRankRanked({
@@ -894,7 +898,8 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
         rank: true,
         titleType: atomicNumber,
         year: $filter('date')(date, 'yyyy'),
-        title:  $sce.trustAsHtml($filter('translate')(atomicNumber))
+        number: atomicNumber
+        // title: title
       });
 
       $scope.loading -= 1;
@@ -999,17 +1004,29 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
       $scope.rankLocal = rankLocal;
     });
 
-    _loadWpRankRanked(3000000000, 'MILESTONES_MILESTONE_3_BILLION');
-    _loadWpRankRanked(4000000000, 'MILESTONES_MILESTONE_4_BILLION');
-    _loadWpRankRanked(5000000000, 'MILESTONES_MILESTONE_5_BILLION');
+    _loadWpRankRanked(3000000000, 'NUMBER_3');
+    _loadWpRankRanked(4000000000, 'NUMBER_4');
+    _loadWpRankRanked(5000000000, 'NUMBER_5');
 
     if (ProfileService.getAge() > 30) {
-      _loadWpRankRanked(6000000000, 'MILESTONES_MILESTONE_6_BILLION');
-      _loadWpRankRanked(7000000000, 'MILESTONES_MILESTONE_7_BILLION');
+      _loadWpRankRanked(6000000000, 'NUMBER_6');
+      _loadWpRankRanked(7000000000, 'NUMBER_7');
     } else {
-      _loadWpRankRanked(1000000000, 'MILESTONES_MILESTONE_1_BILLION');
-      _loadWpRankRanked(2000000000, 'MILESTONES_MILESTONE_2_BILLION');
+      _loadWpRankRanked(1000000000, 'NUMBER_1');
+      _loadWpRankRanked(2000000000, 'NUMBER_2');
     }
+
+    _loadWpRankTitle(3000000000, 'MILESTONES_MILESTONE_3_BILLION');
+    _loadWpRankTitle(4000000000, 'MILESTONES_MILESTONE_4_BILLION');
+    _loadWpRankTitle(5000000000, 'MILESTONES_MILESTONE_5_BILLION');
+
+      if (ProfileService.getAge() > 30) {
+    _loadWpRankTitle(6000000000, 'MILESTONES_MILESTONE_6_BILLION');
+    _loadWpRankTitle(7000000000, 'MILESTONES_MILESTONE_7_BILLION');
+  } else {
+    _loadWpRankTitle(1000000000, 'MILESTONES_MILESTONE_1_BILLION');
+    _loadWpRankTitle(2000000000, 'MILESTONES_MILESTONE_2_BILLION');
+  }
 
     _loadLifeExpectancyRemaining(ProfileService.country, function (remainingLife) {
 
