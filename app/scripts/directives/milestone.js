@@ -13,10 +13,12 @@
       },
       link: function ($scope, element, attrs) {
 
+
+
         function radialProgress(parent) {
           var _data=null,
           vBoxWidth = 350,
-          vBoxHeight = 120,
+          vBoxHeight = 130,
           _duration= 1000,
           _selection,
           _margin = {top:0, right:0, bottom:30, left:0},
@@ -31,7 +33,7 @@
           i,
           _fontSize=10;
 
-          var _values= [];
+          var _values= [0,25,50,80,90,100];
 
           var  _currentArc= 0,  _currentValue=0;
 
@@ -58,7 +60,7 @@
               measure();
 
               svg
-              .attr('viewBox', '0 0 '+ vBoxWidth +' '+ vBoxHeight +' ')
+              .attr('viewBox', '-5 -10 '+ vBoxWidth +' '+ vBoxHeight +' ')
               .attr('preserveAspectRatio','xMinYMin meet')
               .attr("width", svgWidth)
               .attr("height", svgHeight);
@@ -88,6 +90,27 @@
 
 
 
+              var arcenter = enter.append("g").attr("class", "circles");
+              var arcradius = _width/2 ;
+              var circleradius = 4;
+
+
+              for (var i = 0; i < _values.length; i++) {
+
+                var cy = _values[i] + 1.5 ;
+                var cx = _width/2 - _values[i]* 0.98 ;
+
+                arcenter.append('circle')
+                .attr({
+                  r: circleradius,
+                  cy: cy,
+                  cx: cx
+                }).style({
+                  fill: 'black'
+                });
+
+              }
+
               enter.append("g").attr("class", "labels");
               var label = svg.select(".labels").selectAll(".label").data(data);
               label.enter().append("text")
@@ -108,33 +131,16 @@
               .text(_date)
               .style("font-size",_fontSize+"px");
 
-              for (var i = 0; i < _values.length -2; i++) {
-
-                console.log(_values[i]);
-
-                var arcenter = enter.append("g").attr("class", "circles");
-                arcenter.append('circle')
-                .attr({
-                  r: 4,
-                  cy: 0,
-                  cx:  _values[i+1]/2
-                }).style({
-                  fill: 'black'
-                });
-              }
-
-
-
-
               path.exit().transition().duration(500).attr("x",1000).remove();
 
               layout(svg);
 
               function layout(svg) {
+                i = 0;
                 _values.forEach(function(val){
-                  var endAngle = (val * 360,360);
+                  var endAngle = (val * 360);
                   endAngle=endAngle * Math.PI/180;
-                  path.datum(endAngle);
+                  path.datum(endAngle).append('circle').attr({r: 4});
                   path.transition().duration(_duration)
                   .attrTween("d", arcTween);
                 });
@@ -168,9 +174,6 @@
             _fontSize=(_width*.2 - 4);
             _arc.outerRadius(_width/2);
             _arc.innerRadius(_width/2 * .98);
-            _arc2.outerRadius(_width/2 * .97);
-            _arc2.innerRadius(_width/2 * .97 - (_width/2 * .03));
-
           }
 
           component.render = function() {
@@ -181,7 +184,7 @@
 
           component.values = function (_) {
             if (!arguments.length) return _values;
-            _values = [_];
+            _values = [0,25,50,80,90,100];
             _selection.datum([_values]);
             return component;
           }
@@ -246,11 +249,12 @@
         }
 
         function _initArc() {
+
           var rp1 = radialProgress(element[0])
           .date($scope.date)
           .year($scope.year)
+          .values([0,25,50,80,90,100])
           .diameter(150)
-          .values($scope.values)
           .render();
 
         }
