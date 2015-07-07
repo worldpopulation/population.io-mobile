@@ -873,10 +873,6 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
       $filter('date')(new Date(), 'yyyy');
     };
 
-    // var _loadWpRankTitle = function (rank, title){
-    //   $scope.title = title;
-    // };
-
     $scope.loading += 1;
 
     PopulationIOService.loadWpRankRanked({
@@ -898,8 +894,7 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
         rank: true,
         titleType: atomicNumber,
         year: $filter('date')(date, 'yyyy'),
-        number: atomicNumber
-        // title: title
+        title: $filter('translate')(atomicNumber)
       });
 
       $scope.loading -= 1;
@@ -907,6 +902,7 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
       $scope.loading -= 1;
     });
   };
+
 
   var _getInitialMilestonesData = function () {
     var milestoneNow = $filter('translate')('MILESTONES_MILESTONE_NOW');
@@ -1016,17 +1012,6 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
       _loadWpRankRanked(2000000000, 'NUMBER_2');
     }
 
-    _loadWpRankTitle(3000000000, 'MILESTONES_MILESTONE_3_BILLION');
-    _loadWpRankTitle(4000000000, 'MILESTONES_MILESTONE_4_BILLION');
-    _loadWpRankTitle(5000000000, 'MILESTONES_MILESTONE_5_BILLION');
-
-      if (ProfileService.getAge() > 30) {
-    _loadWpRankTitle(6000000000, 'MILESTONES_MILESTONE_6_BILLION');
-    _loadWpRankTitle(7000000000, 'MILESTONES_MILESTONE_7_BILLION');
-  } else {
-    _loadWpRankTitle(1000000000, 'MILESTONES_MILESTONE_1_BILLION');
-    _loadWpRankTitle(2000000000, 'MILESTONES_MILESTONE_2_BILLION');
-  }
 
     _loadLifeExpectancyRemaining(ProfileService.country, function (remainingLife) {
 
