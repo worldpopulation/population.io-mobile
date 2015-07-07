@@ -94,11 +94,18 @@
               var arcradius = _width/2 ;
               var circleradius = 4;
 
+              arcenter.append('circle').attr({
+                r: circleradius,
+                cy: 1.5,
+                cx: _width/2
+              }).style({
+                fill: 'black'
+              })
 
-              for (var i = 0; i < _values.length; i++) {
-
-                var cy = _values[i] + 1.5 ;
-                var cx = _width/2 - _values[i]* 0.98 ;
+              for (var i = 0; i < _values.length -2 ; i++) {
+                console.log((_values[i+1]/100)*360);
+                var cy = _values[i+1] + 1.5 ;
+                var cx =  ((_values[i+1]/100)*360) -((_width + _values[i+1]));
 
                 arcenter.append('circle')
                 .attr({
@@ -140,7 +147,7 @@
                 _values.forEach(function(val){
                   var endAngle = (val * 360);
                   endAngle=endAngle * Math.PI/180;
-                  path.datum(endAngle).append('circle').attr({r: 4});
+                  path.datum(endAngle);
                   path.transition().duration(_duration)
                   .attrTween("d", arcTween);
                 });
