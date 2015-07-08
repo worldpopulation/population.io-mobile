@@ -7,66 +7,69 @@
       font-weight normal
       padding 30px 0 20px
       line-height 1.2em
+
   .timeline
     ul
       li
+        clear both
+        float left
+        width 100%
         background-color $color5
         margin 0px -15px
-        padding 15px
-        .time
-          color $color3
-        .title
-          font-family $font2
-          sup
-            vertical-align super
-            font-size 14px
-            color $color2
-          .fontgrey
-            color $color2
+        padding 10px 15px
+        milestone
+          width 45%
+          float left
+          .time
+            fill $color3
+          .title
+            font-family $font2
+            sup
+              vertical-align super
+              font-size 14px
+              color $color2
+            .fontgrey
+              color $color2
+          circle
+            fill $color1
+            stroke $color5
+          circle:last-child
+            fill #63f
+            r 4
+        p
+          width 45%
+          float left
+          margin-top 13%
+
       li:nth-child(2n)
+        clear both
+        float left
+        width 100%
         background-color $color4
         margin 0 -15px
-        padding 15px
-        .time
-          color $color3
-        .title
-          font-family $font2
-          sup
-            vertical-align super
-            font-size 14px
-            color $color2
-          .fontgrey
-            color $color2
-.background
-    fill transparent
-    fill-opacity 0.01
-
-.component
-  fill transparent
-  .label
-    font-family $font1
-    text-anchor middle
-    fill $color2
-
-
-.arc
-    stroke-weight 0.1
+        padding 10px 15px
+        milestone
+          width 45%
+          float left
+          .time
+            fill $color3
+          .title
+            font-family $font2
+            sup
+              vertical-align super
+              font-size 14px
+              color $color2
+            .fontgrey
+              color $color2
+          circle
+            fill $color1
+            stroke $color4
+          circle:last-child
+            fill #63f
+            r 4
+        p
+          width 45%
+          float left
+          margin-top 13%
+  .arc
     fill $color1
-
-
-
-.arc2
-    stroke-weight:0.1
-    fill trasparent
-
-
-
-.label
-  font-family $font1
-  text-anchor middle
-
-.central
-  fill $color3
-
-.radial-svg
-  display block
