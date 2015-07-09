@@ -28,4 +28,4 @@ header.grey
           ul
             li(ng-repeat="item in milestonesData | orderBy:dateOrder:false", data-id="item.year", class="{{item.color}}", ng-class="{'is-rank': item.rank, 'now': item.now, 'past': item.year < year, 'selected': item.selected}")
               milestone(date="item.date | date: 'dd MMM'", year="item.date | date: 'yyyy'", values="item.value")
-              p(ng-bind="item.title")
+              p(ng-bind-html="item.title")

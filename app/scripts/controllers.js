@@ -94,7 +94,7 @@
         });
 
         $timeout(function () {
-          $scope.showSection($rootScope.target);
+          // $scope.showSection($rootScope.target);
         }, 700);
       }
     });
@@ -135,13 +135,13 @@
       }
 
       if (path && ProfileService.active) {
-        $scope.showSection(path);
+        // $scope.showSection(path);
       }
     });
 
     $rootScope.$on('ready', function () {
-      $scope.showSection('home');
-      $scope.loading = 1;
+      // $scope.showSection('home');
+      // $scope.loading = 1;
     });
     $rootScope.$on('loadingOn', function () {
       $scope.loading = 1
@@ -191,16 +191,16 @@
       cal.download();
     };
 
-    $scope.showSection = function (id) {
-      var section = document.getElementById(id) || document.getElementById('home');
-      var sectionElement = angular.element(section);
-      $document.scrollToElement(sectionElement, 80, 1000);
-
-    };
-
-    $scope.showHomepage = function () {
-      $scope.showSection('/');
-    };
+    // $scope.showSection = function (id) {
+    //   var section = document.getElementById(id) || document.getElementById('home');
+    //   var sectionElement = angular.element(section);
+    //   $document.scrollToElement(sectionElement, 80, 1000);
+    //
+    // };
+    //
+    // $scope.showHomepage = function () {
+    //   $scope.showSection('/');
+    // };
 
     $scope.registerMail = function () {
       $scope.sending = true;
@@ -657,8 +657,7 @@ function ($scope, $document, $timeout, $filter, $location, $rootScope, ProfileSe
       month,
       day,
       ProfileService.gender,
-      ProfileService.country,
-      'summary'
+      ProfileService.country
     ].join('/'));
 
     $rootScope.$broadcast('go');
@@ -796,15 +795,15 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
     if($scope.milestonesData){
       for (var i = 0; i < $scope.milestonesData.length; i += 1) {
         if($scope.milestonesData[i].titleType === 'lifeExpWorld'){
-          $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + $filter('translate')('LOCAL_WORLD') ;
+          $scope.milestonesData[i].title = $sce.trustAsHtml( $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + $filter('translate')('LOCAL_WORLD')) ;
         }else if($scope.milestonesData[i].titleType === 'lifeExpCountry'){
-          $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + ProfileService.country;
+          $scope.milestonesData[i].title = $sce.trustAsHtml( $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + ProfileService.country);
         }else if($scope.milestonesData[i].titleType === 'MILESTONES_MILESTONE_NOW' ){
-          $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_NOW');
+          $scope.milestonesData[i].title = $sce.trustAsHtml( $filter('translate')('MILESTONES_MILESTONE_NOW'));
         }else if($scope.milestonesData[i].titleType === 'MILESTONES_MILESTONE_18' ){
-          $scope.milestonesData[i].title =  $filter('translate')('MILESTONES_MILESTONE_18');
+          $scope.milestonesData[i].title =  $sce.trustAsHtml($filter('translate')('MILESTONES_MILESTONE_18'));
         }else if($scope.milestonesData[i].titleType === 'MILESTONES_MILESTONE_BORN' ){
-          $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_BORN');
+          $scope.milestonesData[i].title = $sce.trustAsHtml($filter('translate')('MILESTONES_MILESTONE_BORN'));
         }else if($scope.milestonesData[i].titleType === 'ORDINAL_NUMBER_1' ){
           $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_1_BILLION');
         }else if($scope.milestonesData[i].titleType === 'ORDINAL_NUMBER_2' ){
@@ -857,7 +856,7 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
         date: $filter('date')(date, 'yyyy-MM-dd'),
         year: $filter('date')(date, 'yyyy'),
         titleType: (country === 'World' ? 'lifeExpWorld' : 'lifeExpCountry'),
-        title:  $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + (country === 'World' ? $filter('translate')('LOCAL_WORLD') : country),
+        title:  $sce.trustAsHtml($filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + (country === 'World' ? $filter('translate')('LOCAL_WORLD') : country)),
         value: $filter('orderBy')(valueArray)
       });
 
@@ -910,7 +909,7 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
         rank: true,
         titleType: atomicNumber,
         year: $filter('date')(date, 'yyyy'),
-        title: $filter('translate')(atomicNumber),
+        title: $sce.trustAsHtml($filter('translate')(atomicNumber)),
         value : $filter('orderBy')(valueArray)
       });
 
@@ -919,6 +918,12 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
       $scope.loading -= 1;
     });
   };
+
+  var pushToArray = function(y){
+
+    valueArray.push(y);
+
+  }
 
 
   var _getInitialMilestonesData = function () {
@@ -930,15 +935,18 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
     var valueBorn = ProfileService.birthday.year - ProfileService.birthday.year;
     var value18 = $filter('date')(_getDateWithOffset( new           Date(ProfileService.birthday.formatted),18), 'yyyy') - ProfileService.birthday.year;
 
-    valueArray.push(valueBorn);
-    valueArray.push(valueNow);
-    valueArray.push(value18);
+
+    pushToArray(value18);
+    pushToArray(valueBorn);
+    pushToArray(valueNow);
+
+
 
     return [
       {
         date: $filter('date')(Date.now(), 'yyyy-MM-dd'),
         year: $filter('date')(Date.now(), 'yyyy'),
-        title: ('MILESTONES_MILESTONE_NOW'),
+        title: $sce.trustAsHtml($filter('translate')('MILESTONES_MILESTONE_NOW')),
         titleType:'MILESTONES_MILESTONE_NOW',
         selected: true,
         now: true,
@@ -947,7 +955,7 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
       {
         date: ProfileService.birthday.formatted,
         year: ProfileService.birthday.year,
-        title: ('MILESTONES_MILESTONE_BORN'),
+        title: $sce.trustAsHtml($filter('translate')('MILESTONES_MILESTONE_BORN')),
         titleType:'MILESTONES_MILESTONE_BORN',
         born: true,
         value: $filter('orderBy')(valueArray)
@@ -958,7 +966,7 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
           new Date(ProfileService.birthday.formatted),
           18
         ), 'yyyy'),
-        title:('MILESTONES_MILESTONE_18'),
+        title: $sce.trustAsHtml($filter('translate')('MILESTONES_MILESTONE_18')),
         titleType:'MILESTONES_MILESTONE_18',
         value: $filter('orderBy')(valueArray)
       }

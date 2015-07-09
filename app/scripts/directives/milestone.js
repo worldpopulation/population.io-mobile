@@ -52,6 +52,7 @@
           .append('svg')
           .attr('width', width)
           .attr('height', height)
+          .attr('viewBox', '0 0 110 110')
           .append('g')
           .attr("transform", "translate(" + width/2  + "," + height/2  + ")");
 
