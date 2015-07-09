@@ -1221,16 +1221,25 @@ function ($scope, $state, $sce, $filter, $rootScope, PopulationIOService, Profil
     $scope.selectedContinental = 'Asia';
     $scope.birthdayShare = null;
     $scope.$apply();
+    $scope.country = ProfileService.country;
 
     $scope.$broadcast('continentsDataLoaded');
     $scope.$broadcast('worldDataLoaded');
 
     PopulationIOService.loadPopulationByAge({
       year: $filter('date')(Date.now(), 'yyyy'),
+      country: ProfileService.country,
+      age: ProfileService.getAge()
+    }, function (data) {
+      $scope.sharedDayCountry = $filter('number')(parseInt(data[0].total / 365, 0),0);
+    });
+
+
+    PopulationIOService.loadPopulationByAge({
+      year: $filter('date')(Date.now(), 'yyyy'),
       country: 'World',
       age: ProfileService.getAge()
     }, function (data) {
-
       $scope.sharedDay = $filter('number')(parseInt(data[0].total / 365, 0), 0);
       $scope.sharedHour = $filter('number')(parseInt(data[0].total / 365 / 24, 0), 0);
       /*$scope.birthdayShare = $sce.trustAsHtml([

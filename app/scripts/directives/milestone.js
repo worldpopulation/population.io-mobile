@@ -26,8 +26,6 @@
             values: $scope.values,
             maxValue: function() {
 
-              console.log($scope.values);
-
               this.values.forEach(function(value) {
                 if(value > maxVal){
                 maxVal = value;

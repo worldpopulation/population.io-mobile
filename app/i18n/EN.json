@@ -81,7 +81,8 @@
   "MILESTONES_CHART_AXIS_X": "Age",
   "MILESTONES_CHART_POINTER": "your age",
 
-  "BIRTHDAYS_INTRO": "Did you know that you share a birthday with about <span>{{sharedDay}}</span> people around the world and that approximately <span>{{sharedHour}}</span> people were born in the same hour?",
+  "BIRTHDAYS_HEADER": "How many birthday buddies do I have?",
+  "BIRTHDAYS_TEASER": "the amount of people sharing your day of birth are <ul><li class='green'>{{sharedDay}}</li><li class='green f-lighter'>{{world}}</li></ul> <span>or</span> <ul> <li class='blue'>{{sharedDayCountry}}</li><li class='blue f-lighter'>{{country}}</li>",
   "BIRTHDAYS_TITLE_CONTINENTAL": "Continental<br>statistics",
   "BIRTHDAYS_TITLE_WORLD": "Top birthday<br>countries",
   "BIRTHDAYS_SWITCH_LABEL": "Birthdays in:",
