@@ -191,6 +191,35 @@
       cal.download();
     };
 
+    $scope.downloadICalMilestone = function(itemDate, itemTitle){
+      if (!ProfileService.active) {
+        alert([
+          'Please fill out the form and press ',
+          '"Go" for getting your Date of Death!'
+        ].join(''));
+        return;
+      }
+
+      var cal = ics(),
+      dstart = $filter('date')(itemDate, 'yyyy-MM-dd'),
+      dend = $filter('date')(itemDate, 'yyyy-MM-dd'),
+      dob = ProfileService.birthday.formatted,
+      dod = $filter('date')(ProfileService.dod, 'yyyy-MM-dd'),
+      dsum = $filter('htmlToPlaintext')(itemTitle),
+      url = 'http://population.io',
+      ddesc = [
+        'According to your birthday ' + dob,
+        ' and the life expectancy in ' + ProfileService.country,
+        ' you will die on ' + dod,
+        ' . http://population.io'
+      ].join('');
+
+      cal.addEvent(dsum, ddesc, '', dstart, dend, url);
+      cal.download();
+
+    }
+
+
     // $scope.showSection = function (id) {
     //   var section = document.getElementById(id) || document.getElementById('home');
     //   var sectionElement = angular.element(section);
@@ -850,17 +879,13 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
         valueArray.push(valueDeathWorld);
       }
 
-
-
       $scope.milestonesData.push({
         date: $filter('date')(date, 'yyyy-MM-dd'),
         year: $filter('date')(date, 'yyyy'),
         titleType: (country === 'World' ? 'lifeExpWorld' : 'lifeExpCountry'),
-        title:  $sce.trustAsHtml($filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + (country === 'World' ? $filter('translate')('LOCAL_WORLD') : country)),
+        title:  $sce.trustAsHtml(('<span class="black">')+$filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + (country === 'World' ? $filter('translate')('LOCAL_WORLD') : country)+'</span>'),
         value: $filter('orderBy')(valueArray)
       });
-
-      console.log($scope.milestonesData);
 
       if (onSuccess) {
         onSuccess(remainingLife);
@@ -920,9 +945,7 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
   };
 
   var pushToArray = function(y){
-
     valueArray.push(y);
-
   }
 
 
@@ -935,12 +958,9 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
     var valueBorn = ProfileService.birthday.year - ProfileService.birthday.year;
     var value18 = $filter('date')(_getDateWithOffset( new           Date(ProfileService.birthday.formatted),18), 'yyyy') - ProfileService.birthday.year;
 
-
     pushToArray(value18);
     pushToArray(valueBorn);
     pushToArray(valueNow);
-
-
 
     return [
       {
@@ -1057,6 +1077,8 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
       ProfileService.dod = date;
 
       var valueDeathCountry = $filter('date')(date, 'yyyy') - ProfileService.birthday.year;
+      // TODO
+      // $scope.milestonesData.value = pushToArray(valueDeathCountry);
 
       $scope.titleDie = $sce.trustAsHtml([
         'You are expected to die on <span>',

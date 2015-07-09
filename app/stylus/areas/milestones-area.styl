@@ -1,5 +1,8 @@
 .milestones-area
   .rank
+    padding 0 15px
+    border-bottom 10px solid $color4
+    margin 0 -15px
     h3
       color $color2
       font-size 23px;
@@ -18,7 +21,7 @@
         margin 0px -15px
         padding 10px 15px
         milestone
-          width 45%
+          width 43%
           float left
           .time
             fill $color3
@@ -37,9 +40,19 @@
             fill #63f
             r 4
         p
-          width 45%
+          font-family $font2
+          width 48%
           float left
-          margin-top 13%
+          margin-top 12%
+          color $color2
+          font-size 15px
+          .black
+            font-size 19px
+            color $color1
+            font-weight bold
+          sup
+            vertical-align super
+            font-size 14px
 
       li:nth-child(2n)
         clear both
@@ -49,27 +62,25 @@
         margin 0 -15px
         padding 10px 15px
         milestone
-          width 45%
-          float left
           .time
             fill $color3
           .title
             font-family $font2
-            sup
-              vertical-align super
-              font-size 14px
-              color $color2
-            .fontgrey
-              color $color2
+
           circle
             fill $color1
             stroke $color4
           circle:last-child
             fill #63f
             r 4
-        p
-          width 45%
-          float left
-          margin-top 13%
+
+  .icalDownloadImg
+    display inline-block
+    width 7%
+    height auto
+    float left
+    margin-top 13%
+    margin-left 2%
+
   .arc
     fill $color1

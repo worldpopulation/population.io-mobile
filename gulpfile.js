@@ -69,7 +69,8 @@ var gulp = require('gulp'),
           'assets/user-male.png',
           'assets/favicon.png',
           'assets/wip.svg',
-          'assets/browsers-sprite.png'
+          'assets/browsers-sprite.png',
+          'assets/arrow-icaldownload.png'
       ],
       maps: [
           'bower_components/angular-sanitize/angular-sanitize.min.js.map'
@@ -96,7 +97,7 @@ gulp.task('serve', function (event) {
     connect.server({
         root: destinations.docs,
         port: 1983,
-        livereload: false,
+        livereload: true,
         host: '0.0.0.0'
     });
     // sets up a livereload that watches for any changes in the root
