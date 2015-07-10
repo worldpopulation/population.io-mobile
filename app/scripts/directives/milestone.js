@@ -2,14 +2,15 @@
   'use strict';
 
   angular.module('populationioApp')
-  .directive('milestone', ['$rootScope',
-  function ($rootScope) {
+  .directive('milestone', ['$rootScope','$filter',
+  function ($rootScope,$filter) {
     return {
       restrict: 'E',
       scope: {
         date: '=',
         year: '=',
-        values: '='
+        values: '=',
+        numberofpercentagestoshow: '='
       },
       link: function ($scope, element, attrs) {
 
@@ -20,12 +21,15 @@
               return this * Math.PI / 180;
             }
           }
-           var maxVal = "";
+
+          $scope.values = $filter('orderBy')($scope.values);
+          $scope.values = $scope.values.slice(0, $scope.numberofpercentagestoshow);
+
+          var maxVal = "";
 
           var dataSet = [{
             values: $scope.values,
             maxValue: function() {
-
               this.values.forEach(function(value) {
                 if(value > maxVal){
                 maxVal = value;

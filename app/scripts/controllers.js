@@ -814,7 +814,7 @@ $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
 .controller('MilestonesCtrl', ['$scope', '$rootScope', '$state', '$filter', '$sce', 'ProfileService', 'PopulationIOService',
 function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationIOService) {
 
-  var valueArray = [];
+  $scope.percentages = [];
 
   $rootScope.$on('ready', function () {
     _update();
@@ -876,15 +876,14 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
 
       if (country === 'World') {
         var valueDeathWorld =  $filter('date')(date, 'yyyy') -     ProfileService.birthday.year;
-        valueArray.push(valueDeathWorld);
+        pushToArray(valueDeathWorld);
       }
 
       $scope.milestonesData.push({
         date: $filter('date')(date, 'yyyy-MM-dd'),
         year: $filter('date')(date, 'yyyy'),
         titleType: (country === 'World' ? 'lifeExpWorld' : 'lifeExpCountry'),
-        title:  $sce.trustAsHtml(('<span class="black">')+$filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + (country === 'World' ? $filter('translate')('LOCAL_WORLD') : country)+'</span>'),
-        value: $filter('orderBy')(valueArray)
+        title:  $sce.trustAsHtml(('<span class="black">')+$filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + (country === 'World' ? $filter('translate')('LOCAL_WORLD') : country)+'</span>')
       });
 
       if (onSuccess) {
@@ -927,15 +926,14 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
 
       var valueMilestone = $filter('date')(date, 'yyyy') - ProfileService.birthday.year;
 
-      valueArray.push(valueMilestone);
+      pushToArray(valueMilestone);
 
       $scope.milestonesData.push({
         date: date,
         rank: true,
         titleType: atomicNumber,
         year: $filter('date')(date, 'yyyy'),
-        title: $sce.trustAsHtml($filter('translate')(atomicNumber)),
-        value : $filter('orderBy')(valueArray)
+        title: $sce.trustAsHtml($filter('translate')(atomicNumber))
       });
 
       $scope.loading -= 1;
@@ -945,9 +943,8 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
   };
 
   var pushToArray = function(y){
-    valueArray.push(y);
+    $scope.percentages.push(y);
   }
-
 
   var _getInitialMilestonesData = function () {
     var milestoneNow = $filter('translate')('MILESTONES_MILESTONE_NOW');
@@ -958,8 +955,8 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
     var valueBorn = ProfileService.birthday.year - ProfileService.birthday.year;
     var value18 = $filter('date')(_getDateWithOffset( new           Date(ProfileService.birthday.formatted),18), 'yyyy') - ProfileService.birthday.year;
 
-    pushToArray(value18);
     pushToArray(valueBorn);
+    pushToArray(value18);
     pushToArray(valueNow);
 
     return [
@@ -969,8 +966,7 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
         title: $sce.trustAsHtml($filter('translate')('MILESTONES_MILESTONE_NOW')),
         titleType:'MILESTONES_MILESTONE_NOW',
         selected: true,
-        now: true,
-        value: $filter('orderBy')(valueArray)
+        now: true
       },
       {
         date: ProfileService.birthday.formatted,
@@ -978,7 +974,6 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
         title: $sce.trustAsHtml($filter('translate')('MILESTONES_MILESTONE_BORN')),
         titleType:'MILESTONES_MILESTONE_BORN',
         born: true,
-        value: $filter('orderBy')(valueArray)
       },
       {
         date: _getDateWithOffset(new Date(ProfileService.birthday.formatted), 18),
@@ -987,40 +982,11 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
           18
         ), 'yyyy'),
         title: $sce.trustAsHtml($filter('translate')('MILESTONES_MILESTONE_18')),
-        titleType:'MILESTONES_MILESTONE_18',
-        value: $filter('orderBy')(valueArray)
+        titleType:'MILESTONES_MILESTONE_18'
       }
     ];
   };
 
-  $scope.highlightMilestone = function (item) {
-    if ($scope.milestonesData) {
-      _($scope.milestonesData).each(function (milestone) {
-        milestone.selected = false;
-      });
-
-    }
-    item.selected = true;
-    $scope.selectedYear = item.year;
-
-    $scope.loading += 2;
-    $scope.age = $scope.selectedYear - ProfileService.birthday.year;
-    PopulationIOService.loadPopulation({
-      year: $scope.selectedYear,
-      country: ProfileService.country
-    }, function (data) {
-      $scope.loading -= 1;
-      $scope.localRankData = data;
-    });
-
-    PopulationIOService.loadPopulation({
-      year: $scope.selectedYear,
-      country: 'World'
-    }, function (data) {
-      $scope.loading -= 1;
-      $scope.globalRankData = data;
-    });
-  };
   $scope.dateOrder = function (item) {
     return (new Date(item.date)).getTime();
   };
@@ -1034,6 +1000,18 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
   }, function (loading) {
     if (loading === 0) {
       ProfileService.active = true;
+      var i = 0;
+      $scope.milestones = _.map($scope.milestonesData, function(md){
+        return {
+          date: md.date,
+          percentages: $scope.percentages,
+          title: md.title,
+          year: md.year
+        }
+      });
+
+      console.log($scope.milestones);
+
     }
   });
 
@@ -1077,8 +1055,8 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
       ProfileService.dod = date;
 
       var valueDeathCountry = $filter('date')(date, 'yyyy') - ProfileService.birthday.year;
-      // TODO
-      // $scope.milestonesData.value = pushToArray(valueDeathCountry);
+
+      pushToArray(valueDeathCountry);
 
       $scope.titleDie = $sce.trustAsHtml([
         'You are expected to die on <span>',
@@ -1092,10 +1070,13 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
     $scope.country = ProfileService.country;
   };
 }])
+
 .controller('BirthdaysCtrl', ['$scope', '$state', '$sce', '$filter', '$rootScope', 'PopulationIOService', 'ProfileService',
 function ($scope, $state, $sce, $filter, $rootScope, PopulationIOService, ProfileService) {
 
   var countries = [];
+  $scope.continentalArray = ['Asia','Europe','Africa','North America','South America', 'Oceania'];
+
 
   $rootScope.$on('ready', function () {
     d3.csv('data/countries.csv', function (data) {
@@ -1124,6 +1105,9 @@ function ($scope, $state, $sce, $filter, $rootScope, PopulationIOService, Profil
     }
     return res;
   };
+
+
+
 
   $scope.$watch('selectedContinental', function (newValue, oldValue) {
     if (ProfileService.active && oldValue !== newValue) {
