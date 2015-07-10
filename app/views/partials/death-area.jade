@@ -1,23 +1,26 @@
-.container
-    .death-area
-        header
-            h1(translate="DEATH_INTRO" translate-values="{dodWorld: dodWorld, country: country, dodCountry:dodCountry }")
-        .type-switcher
-            span(ng-class='{active:type=="distribution"}', ng-click='type="distribution"') {{ 'DEATH_MORTALITY_DISTRIBUTION' | translate }}
-            span(ng-class='{active:type=="chances"}', ng-click='type="chances"') {{ 'DEATH_CHANCES_OF_DYING' | translate }}
+header.grey
+  .container
+    .logo
+      a
+        h3(translate="DEATH_HEADER") 
+      .hr-ul-c
+        ul.hr-inline
+          li
+            span.dcircle
+          li
+            span.dcircle
+          li
+            span.dcircle
+          li
+            span.dcircle
+          li
+            span.dcircle
+          li
+            span.dcircle.active
+          li
+            span.dcircle
 
-        death-chart
-        h2 {{ 'DEATH_EXPECTANCY_TITLE' | translate }}
-        .death-stats
-            .column
-                .content
-                    .title.world {{dodWorld}}
-                    .copy(translate="DEATH_EXPECTANCY_TXT_WORLD" translate-values="{remainingLifeWorldInYears: remainingLifeWorldInYears}")
-            .column
-                .content
-                    .title {{differenceInDays}}
-                    .copy(translate="DEATH_EXPECTANCY_TXT_DIFFERENCE" translate-values="{soMuchToDo: soMuchToDo, differenceInUnits:differenceInUnits}")
-            .column
-                .content
-                    .title.country {{dodCountry}}
-                    .copy(translate="DEATH_EXPECTANCY_TXT_COUNTRY" translate-values="{remainingLifeCountryInYears: remainingLifeCountryInYears, country:country}")
+.container
+  .death-area
+    h3(translate="DEATH_INTRO" translate-values="{deathDay: deathDay, deathDayCountry: deathDayCountry, world : 'the World', country: country }")
+  death-chart

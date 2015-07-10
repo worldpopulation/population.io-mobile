@@ -1009,9 +1009,6 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
           year: md.year
         }
       });
-
-      console.log($scope.milestones);
-
     }
   });
 
