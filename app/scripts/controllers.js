@@ -495,6 +495,9 @@
 ['$scope', '$interpolate', '$timeout', '$http', '$interval', '$modal', '$state', '$location', '$document', '$rootScope', '$filter', 'ProfileService', 'PopulationIOService', 'BrowserService',
 function ($scope, $interpolate, $timeout, $http, $interval, $modal, $state, $location, $document, $rootScope, $filter, ProfileService, PopulationIOService, BrowserService) {
   $scope.type = 'distribution';
+
+  $scope.ageNow = new Date().getFullYear() - ProfileService.birthday.year;
+
   $scope.$watch(function () {return ProfileService.active}, function (newVal, oldVal) {
     if (newVal && newVal !== oldVal) {
       $scope.country  = ProfileService.country;
@@ -507,9 +510,8 @@ function ($scope, $interpolate, $timeout, $http, $interval, $modal, $state, $loc
 
         $scope.loading -= 1;
         $scope.mortalityDistributionData = data;
-        if (data) {
           $scope.$broadcast('mortalityDistributionDataChanged', data)
-        }
+
       });
 
       PopulationIOService.loadLifeExpectancyRemaining({
@@ -569,6 +571,7 @@ function ($scope, $interpolate, $timeout, $http, $interval, $modal, $state, $loc
       function (newVals, oldVals) {
         if ((newVals[0] && newVals[1]) && (newVals[0] !== oldVals[0] && newVals[1] !== oldVals[0])) {
           updateValues();
+
         }
       })
     }
