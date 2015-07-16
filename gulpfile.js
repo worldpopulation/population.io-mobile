@@ -70,7 +70,12 @@ var gulp = require('gulp'),
           'assets/favicon.png',
           'assets/wip.svg',
           'assets/browsers-sprite.png',
-          'assets/arrow-icaldownload.png'
+          'assets/arrow-icaldownload.png',
+          'assets/beta_opt.png',
+          'assets/share-twitter.png',
+          'assets/share-facebook.png',
+          'assets/share-li.png',
+          'assets/share-cal.png'
       ],
       maps: [
           'bower_components/angular-sanitize/angular-sanitize.min.js.map'

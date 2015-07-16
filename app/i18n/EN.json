@@ -109,6 +109,18 @@
   "DEATH_EXPECTANCY_TXT_SHORTER": "shorter",
   "DEATH_EXPECTANCY_TXT_LONGER": "longer",
 
+  "SHARING_HEADER": "Fancy sharing<br> your statistics?",
+  "SHARING_TWITTER": "Share on Twitter",
+  "SHARING_FACEBOOK": "Share on Facebook",
+  "SHARING_LINKEDIN": "Share on Linkedin",
+  "SHARING_CALENDAR": "Save to Calendar",
+  "SHARING_TO_A_FRIEND_P1": "I will send an invitation to",
+  "SHARING_EMAIL": "freind@email.com",
+  "SHARING_TO_A_FRIEND_P2": "and say hi from my",
+  "SHARING_SEND": "SEND",
+  "SHARING_UPDATE":"I would like to recieve an update at my birthday",
+  "SHARING_UPDATE_MAIL": "my@email.com",
+
   "FOOTER_SIGNUP_TITLE": "Keep me posted",
   "FOOTER_SIGNUP_TXT": "Send me every year on my<br> birthday an update!",
   "FOOTER_ADD_TO_CALENDAR_TITLE": "Add your Date of Death<br> to your calendar",

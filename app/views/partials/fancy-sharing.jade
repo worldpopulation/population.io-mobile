@@ -1,0 +1,44 @@
+header.grey
+  .container
+    .logo
+      a
+        h3(translate="SHARING_HEADER")
+      .hr-ul-c
+        ul.hr-inline
+          li
+            span.dcircle
+          li
+            span.dcircle
+          li
+            span.dcircle
+          li
+            span.dcircle
+          li
+            span.dcircle
+          li
+            span.dcircle
+          li
+            span.dcircle.active
+
+.container
+  .fancy-sharing
+    .share-btns
+      #share-twitter(ng-click="sharetwitter")
+        .icon-twitter
+        span(translate="SHARING_TWITTER")
+      #share-facebook    
+        .icon-facebook
+        span(translate="SHARING_FACEBOOK")
+      #share-linkedin
+        .icon-linkedin
+        span(translate="SHARING_LINKEDIN")
+      #share-cal
+        .icon-calendar
+        span(translate="SHARING_CALENDAR")
+    .tell-your-friend
+      form(name="tellYourFriend", novalidate, ng-class='{highlight:highlightErrors, "highlight-extra":highlightExtra}', autocomplete='off')
+        p(translate="SHARING_TO_A_FRIEND_P1")
+        input.form-control(type="text", name="friendEmail" id="inputEmail" ng-value="SHARING_EMAIL")
+        p(translate="SHARING_TO_A_FRIEND_P2")
+        input.form-control(type="text", name="friendEmail" id="inputEmail" ng-value="SHARING_EMAIL")
+        button(SEND)

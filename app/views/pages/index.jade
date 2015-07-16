@@ -18,7 +18,9 @@ block content
         include ../partials/summary-area-location
     section#milestones(ng-controller='MilestonesCtrl',ng-class="{'hidden':!profile.active}", ng-if='isResults')
         include ../partials/milestones-area
-    //- section#birthdays(ng-controller='BirthdaysCtrl',ng-class="{'hidden':!profile.active}", ng-if='isResults')
-    //-     include ../partials/birthdays-area
+    //-  section#birthdays(ng-controller='BirthdaysCtrl',ng-class="{'hidden':!profile.active}", ng-if='isResults')
+    //-      include ../partials/birthdays-area
     section#death-area(ng-controller='DeathCtrl', ng-class="{'hidden': !profile.active}", ng-if='isResults')
         include ../partials/death-area
+    section#fancy-sharing(ng-controller='SharingCtrl', ng-class="{'hidden': !profile.active}", ng-if='isResults')
+        include ../partials/fancy-sharing
