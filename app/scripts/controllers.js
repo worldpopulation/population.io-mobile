@@ -231,26 +231,6 @@
     //   $scope.showSection('/');
     // };
 
-    $scope.registerMail = function () {
-      $scope.sending = true;
-      $http({
-        url: 'http://api.47nord.de/population.io/v1/mail.php?auth=jLFscl7E7oz85D8P',
-        method: 'POST',
-        data: {
-          email: $scope.email
-        }
-      })
-      .success(function () {
-        alert($scope.email + ' has been registered successfully!');
-        $scope.email = '';
-        $scope.sending = false;
-      })
-      .error(function () {
-        $scope.sending = false;
-        alert('Whoops, An error occurred!');
-      });
-    };
-
     $scope.showAbout = function () {
       $modal.open({
         templateUrl: 'about.html'
@@ -1380,30 +1360,49 @@
     });
   }])
 
-  .controller('SharingCtrl', ['$scope', '$rootScope', '$filter','$location',
-  function ($scope, $rootScope, $filter, $location) {
+  .controller('SharingCtrl', ['$scope', '$rootScope', '$filter','$location', '$http',
+  function ($scope, $rootScope, $filter, $location, $http) {
 
-    $scope.sharetwitter = function(url){
-      alert('yay');
-      alert(url);
-      console.log('yay');
-      console.log(url);
+    $scope.registerMail = function () {
+      $scope.sending = true;
+      $http({
+        url: 'http://api.47nord.de/population.io/v1/mail.php?auth=jLFscl7E7oz85D8P',
+        method: 'POST',
+        data: {
+          email: $scope.email
+        }
+      })
+      .success(function () {
+        console.log($scope.email);
+        alert($scope.email + ' has been registered successfully!');
+        $scope.email = '';
+        $scope.sending = false;
+      })
+      .error(function () {
+        $scope.sending = false;
+        alert('Whoops, An error occurred!');
+      });
+    };
 
-      //  $scope.$watch(function () {
-      //    return $location.absUrl();
-      //  }, function (url) {
-      //    _update(encodeURIComponent(url));
-      //  });
-      //
-      //    link = 'http://twitter.com/intent/tweet?text=' + attrs.shareTitle + '%20' + url;
-      //  case 'facebook':
-      //    link = 'http://facebook.com/sharer.php?u=' + url;
-      //    break;
-      //  case 'linkedin':
-      //    link = 'http://www.linkedin.com/shareArticle?mini=true&url=' + url + '&title=' + attrs.shareTitle;
-      //    break;
-    }
 
+    $scope.inviteMail = function(){
+      $http({
+        url: 'https://posttestserver.com/post.php',
+        method: 'POST',
+        data: {
+          email: $scope.friendemail,
+          name: $scope.name
+        }
+      })
+      .success(function () {
+        alert('Email was successfully send');
+      })
+      .error(function () {
+        alert('Whoops, An error occurred!');
+      });
+
+
+    };
 
 
 
