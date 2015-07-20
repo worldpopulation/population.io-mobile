@@ -1,15 +1,43 @@
+header.grey
+  .container
+    .logo
+      a
+        h3(translate="EXPECTANCY_HEADER") 
+      .hr-ul-c
+        ul.hr-inline
+          li
+            span.dcircle
+          li
+            span.dcircle
+          li
+            span.dcircle
+          li
+            span.dcircle
+          li
+            span.dcircle.active
+          li
+            span.dcircle
+          li
+            span.dcircle
 .container
   .expectancy-area
-    header
-      h1 {{ 'EXPECTANCY_INTRO' | translate }}
-    .toolbar
+      h3(translate="EXPECTANCY_INTRO", translate-values="{country: profile.country}")
+      .toolbar
         .country-selection
           .typeahead.ref
             input(id="countryRef",  type="text", ng-model="selectedCountryRef", typeahead="country.POPIO_NAME for country in countriesList($viewValue)", typeahead-wait-ms="100", typeahead-editable="false" )
-          .icon.icon-vs
           .typeahead.rel
-            input(id="countryRel", type="text", ng-model="selectedCountryRel", typeahead="country.POPIO_NAME for country in countriesList($viewValue)", typeahead-wait-ms="100", typeahead-editable="false" )
-        .time-slider
-          time-slider
-
-    expectancy-map(country-ref="activeCountryRef", country-rel="activeCountryRel")
+              input(id="countryRel", type="text", ng-model="selectedCountryRel", typeahead="country.POPIO_NAME for country in countriesList($viewValue)", typeahead-wait-ms="100", typeahead-editable="false")
+      .age-area
+        .country-ref
+          span {{activeCountryRef.lifeExpectancy | number:1}}
+          span(class="crgrey" translate="EXPECTANCY_YEARS_OLD")
+        .country-rel
+          span {{activeCountryRel.lifeExpectancy | number:1}}
+          span(class="crgrey" translate="EXPECTANCY_YEARS_OLD" ng-class="{'hidden': activeCountryRel.lifeExpectancy==null}")
+      .agedifftilife(ng-class="{'hidden': activeCountryRel.lifeExpectancy==null}")
+        .circle
+          span(ng-bind="(activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) > 0 ? ((activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy)| number:1):  (((activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy)* -1)| number:1)")
+          span(class="smaller",translate="EXPECTANCY_YEARS_LONGER", ng-class="{'hidden': (activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) > 0 }")
+          span(class="smaller",translate="EXPECTANCY_YEARS_SHORTER", ng-class="{'hidden': (activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) < 0 }")
+      expectancy-map(country-ref="activeCountryRef", country-rel="activeCountryRel")

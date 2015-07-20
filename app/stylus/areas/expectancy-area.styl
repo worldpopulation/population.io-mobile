@@ -1,0 +1,115 @@
+.container
+  display block
+  .expectancy-area
+    width 100$
+    h3
+      color $color2
+      font-size 21px
+      font-family: $font1
+      font-weight normal
+      padding 30px 0 20px
+      line-height 1.2em
+    .toolbar
+      padding 0px 0px 20px
+      .country-selection
+        .typeahead.ref
+          margin-right 5px
+          display inline
+          input
+            outline 0
+            border 1px solid $active-blue
+            background-color #fff
+            padding 10px 12px
+            -webkit-border-radius 8px
+            border-radius 8px
+            font-size 14px
+            width 39%
+          .dropdown-menu
+            overflow hidden
+            border 1px solid #dedede
+            cursor pointer
+            z-index 9999
+            position absolute
+            -webkit-border-radius 8px
+            border-radius 8px
+            left 0px
+            right 8px
+            -webkit-box-shadow 0 1px 1px rgba(0,0,0,0.2)
+            box-shadow 0 1px 1px rgba(0,0,0,0.2)
+            background-color #fff;
+            width 100%
+          li.active, li:hover
+            background-color highlight-blue
+        .typeahead.rel
+          display inline
+          input
+            outline 0
+            background #98ec79
+            border 1px solid #98ec79
+            padding 10px 12px
+            width 39%
+            display inline-block
+            -webkit-border-radius 8px
+            border-radius 8px
+            font-size 14px
+          .dropdown-menu
+            overflow hidden
+            border 1px solid #dedede
+            cursor pointer
+            z-index 9999
+            position absolute
+            -webkit-border-radius 8px
+            border-radius 8px;
+            left 0px
+            right 8px
+            -webkit-box-shadow 0 1px 1px rgba(0,0,0,0.2)
+            box-shadow 0 1px 1px rgba(0,0,0,0.2)
+            background-color #fff
+            width 100%
+          li.active, li:hover
+            background-color $color3
+    .age-area
+      font-family $font2
+      padding 10px 0px 20px 0px
+      clear both
+      display block
+      width 100%
+      float left
+      .country-ref
+        float left
+        margin-right 2%
+        width 49%
+      .country-rel
+        float left
+        width 49%
+      span
+        font-size 26px
+        display block
+      .crgrey
+        color $color2
+        font-size 24px
+    .agedifftilife
+      float left
+      display block
+      width 100%
+      padding 20px 0px 35px
+      .circle
+        margin auto
+        float none
+        width 180px
+        height 180px
+        border-radius 60%
+        display block
+        background-color $color4
+        span
+          font-family font2
+          display block
+          float none
+          margin auto
+          text-align center
+          width 100%
+          font-size 35px
+          padding 30% 0% 2%
+        .smaller
+          font-size 22px
+          padding 0px

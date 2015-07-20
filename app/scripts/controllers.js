@@ -698,102 +698,6 @@
     $scope.countries = Countries;
   }])
 
-  /*
-  .controller('PeopleCtrl', ['$scope', '$rootScope', '$interval', '$anchorScroll', '$state', '$filter', 'PopulationIOService', 'ProfileService',
-  function ($scope, $rootScope, $interval, $anchorScroll, $state, $filter, PopulationIOService, ProfileService) {
-
-  $scope.isUpdated = false;
-
-  $rootScope.$on('ready', function () {
-  _update();
-  });
-
-  var _getNextDay = function () {
-  var tomorrow = new Date();
-  tomorrow.setDate((new Date()).getDate() + 1);
-  return tomorrow;
-  };
-
-  $scope.$watch(function () {
-  return ProfileService.active;
-  }, function (active) {
-  if (active) {
-  $scope.loading = 1;
-  setTimeout(function () {
-  $scope.loading = 0;
-  $scope.isUpdated = true;
-  }, 5000);
-  } else {
-  $scope.isUpdated = false;
-  }
-  });
-
-  var _update = function () {
-
-  PopulationIOService.loadWpRankToday({
-  dob: '1920-01-01',
-  sex: 'unisex',
-  country: ProfileService.country
-  }, function (rank) {
-  $scope.rankLocalTotal = rank;
-  });
-
-  PopulationIOService.loadWpRankToday({
-  dob: '1920-01-01',
-  sex: 'unisex',
-  country: 'World'
-  }, function (rank) {
-  $scope.rankGlobal = rank;
-  $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
-  });
-
-  PopulationIOService.loadWpRankToday({
-  dob: ProfileService.birthday.formatted,
-  sex: 'unisex',
-  country: ProfileService.country
-  }, function (rank) {
-  $scope.rankLocal = rank;
-  $rootScope.$emit('rankLocalChanged', $scope.rankLocal);
-  });
-
-  PopulationIOService.loadWpRankToday({
-  dob: ProfileService.birthday.formatted,
-  sex: 'unisex',
-  country: 'World'
-  }, function (rank) {
-  $scope.rankGlobal = rank;
-  $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
-  });
-
-  PopulationIOService.loadWpRankOnDate({
-  dob: ProfileService.birthday.formatted,
-  sex: 'unisex',
-  country: ProfileService.country,
-  date: $filter('date')(_getNextDay(), 'yyyy-MM-dd')
-  }, function (rank) {
-  $scope.rankLocalTomorrow = rank;
-  });
-
-  };
-
-  $scope.$watch(function () {
-  return PopulationIOService.getWorldPopulation();
-  }, function (newValue, oldValue) {
-  $scope.rankGlobal += (newValue - oldValue);
-  $rootScope.$emit('rankGlobalChanged', $scope.rankGlobal);
-  });
-
-  //        $interval(function () {
-  //          var diff = ($scope.rankLocalTomorrow - $scope.rankLocal) / 24 / 60 / 60;
-  //          if (diff) {
-  //            $scope.rankLocal += diff;
-  //            console.log($scope.rankLocal)
-  //            $rootScope.$emit('rankLocalChanged', $scope.rankLocal);
-  //          }
-  //        }, 1000);
-
-  }])
-  */
   .controller('MilestonesCtrl', ['$scope', '$rootScope', '$state', '$filter', '$sce', 'ProfileService', 'PopulationIOService',
   function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationIOService) {
 
@@ -1238,13 +1142,13 @@
     $scope.loading = 0;
 
     $scope.$on('languageChange', function () {
-      $("#countryRel").attr("placeholder", $filter('translate')('LOCAL_COUNTRY'));
-      $("#countryRef").attr("placeholder", $filter('translate')('LOCAL_COUNTRY'));
+      $("#countryRel").attr("placeholder", $filter('translate')('EXPECTANCY_INPUT'));
+      $("#countryRef").attr("placeholder", $filter('translate')('EXPECTANCY_INPUT'));
     });
 
     var _update = function () {
-      $("#countryRel").attr("placeholder", $filter('translate')('LOCAL_COUNTRY'));
-      $("#countryRef").attr("placeholder", $filter('translate')('LOCAL_COUNTRY'));
+      $("#countryRel").attr("placeholder", $filter('translate')('EXPECTANCY_INPUT'));
+      $("#countryRef").attr("placeholder", $filter('translate')('EXPECTANCY_INPUT'));
       $scope.selectedCountryRef = _getCountryObjectByFullName(ProfileService.country);
       _updateCountryRef(date);
     };
@@ -1322,16 +1226,6 @@
     var _getCountryObjectByFullName = function (country) {
       return _.find($scope.countries, function (item) {return item.POPIO_NAME == country});
     };
-
-    $scope.$on('timesliderChanged', function (e, year) {
-      date = $filter('date')(new Date(year, 1, 1), 'yyyy-MM-dd');
-      if ($scope.selectedCountryRef) {
-        _updateCountryRef(date);
-      }
-      if ($scope.selectedCountryRel) {
-        _updateCountryRel(date);
-      }
-    });
 
     $scope.$watch('selectedCountryRef', function (newVal, oldVal) {
       if (ProfileService.active && newVal && _getCountryObjectByFullName(newVal)) {
