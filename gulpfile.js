@@ -72,6 +72,9 @@ var gulp = require('gulp'),
           'assets/browsers-sprite.png',
           'assets/arrow-icaldownload.png',
           'assets/beta_opt.png',
+          'assets/humans-green.png',
+          'assets/humans-blueman.png',
+          'assets/humans-bluewoman.png',
           'assets/share-twitter.png',
           'assets/share-facebook.png',
           'assets/share-li.png',
@@ -145,8 +148,8 @@ gulp.task('scripts', function (event) {
     gulp.src(sources.scripts)
       .pipe(sourcemaps.init())
       .pipe(concat('main.js'))
-      .pipe(uglify({mangle: false, drop_console: true}))
-      .pipe(sourcemaps.write('../maps'))
+      //.pipe(uglify({mangle: false, drop_console: true}))
+      //.pipe(sourcemaps.write('../maps'))
       .pipe(gulp.dest(destinations.scripts));
 });
 

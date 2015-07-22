@@ -13,13 +13,13 @@
 
                   $scope.$watch('countryRef', function (data) {
                       if (data) {
-                        console.log(data);
+                        // console.log(data);
                       }
                   });
 
                   $scope.$watch('countryRel', function (data) {
                       if (data) {
-                      console.log(data);
+                      // console.log(data);
                       }
                   });
 

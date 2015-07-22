@@ -560,7 +560,6 @@
 
   .controller('HomeCtrl', ['$scope', '$document', '$timeout', '$filter', '$location', '$rootScope', 'ProfileService', 'PopulationIOService', "Countries",
   function ($scope, $document, $timeout, $filter, $location, $rootScope, ProfileService, PopulationIOService, Countries) {
-    debugger
     var getMonths = function(){
       var month1 = $filter('translate')('MONTH1');
       var month2 = $filter('translate')('MONTH2');
@@ -990,7 +989,18 @@
       return res;
     };
 
+    var _getAllCountries = function () {
+      return countries;
+    };
 
+    var _getCurrentContinent = function() {
+      for (var i = 0; i < _getAllCountries().length; i++) {
+        var currentContinent = _getAllCountries()[i];
+        if (currentContinent.POPIO_NAME === ProfileService.country) {
+          return currentContinent.CONTINENT;
+        }
+      }
+    }
 
 
     $scope.$watch('selectedContinental', function (newValue, oldValue) {
@@ -1001,60 +1011,24 @@
 
     var _updateContinentalCountries = function () {
       $rootScope.$broadcast('loadingOn');
-      $scope.continentsData = [];
+      $scope.continentsData = {};
 
-      var continentalCountries = _getCountriesByContinent($scope.selectedContinental),
+      var allCountries = _getAllCountries(),
       responseCounter = 0;
 
-      $scope.loading += continentalCountries.length;
+      $scope.loading += allCountries.length;
 
-      _loadAllCountryBirthdays(continentalCountries, function (country, birthdays) {
+      _loadAllCountryBirthdays(allCountries, function (country, birthdays) {
         if (country && birthdays && parseInt(birthdays, 0) > 0) {
-          $scope.continentsData.push({
-            countryAbbr: _getCountry(country).GMI_CNTRY,
-            countryTitle: country,
-            value: birthdays
-          });
+          $scope.continentsData[country.CONTINENT] = $scope.continentsData[country.CONTINENT] ? $scope.continentsData[country.CONTINENT] + birthdays : birthdays;
         }
 
         responseCounter += 1;
         $scope.loading -= 1;
 
-        if (continentalCountries.length === responseCounter) {
+        if (allCountries.length === responseCounter) {
           $scope.$broadcast('continentsDataLoaded');
           $rootScope.$broadcast('loadingOff')
-        }
-      });
-    };
-
-    var _updateCountriesAroundTheWorld = function () {
-
-      $scope.worldData = [];
-
-      var countriesAroundTheWorld = [
-        'China', 'India', 'United States', 'Indonesia', 'Brazil',
-        'Pakistan', 'Russian Federation', 'Japan', 'Nigeria',
-        'Bangladesh', 'Mexico'
-      ],
-      responseCounter = 0;
-
-      $scope.loading += countriesAroundTheWorld.length;
-
-      _loadAllCountryBirthdays(countriesAroundTheWorld, function (country, birthdays) {
-
-        if (country && birthdays) {
-          $scope.worldData.push({
-            countryAbbr: _getCountry(country).GMI_CNTRY,
-            countryTitle: country,
-            value: birthdays
-          });
-        }
-
-        responseCounter += 1;
-        $scope.loading -= 1;
-
-        if (countriesAroundTheWorld.length === responseCounter) {
-          $scope.$broadcast('worldDataLoaded');
         }
       });
     };
@@ -1064,10 +1038,10 @@
       var _loadCountryBirthdays = function (country) {
         PopulationIOService.loadPopulationByAge({
           year: $filter('date')(Date.now(), 'yyyy'),
-          country: country,
+          country: country.POPIO_NAME,
           age: ProfileService.getAge()
         }, function (data) {
-          if (_getCountry(country).GMI_CNTRY) {
+          if (_getCountry(country.POPIO_NAME).GMI_CNTRY) {
             callback(country, data[0].total / 365);
           }
         }, function () {
@@ -1077,7 +1051,7 @@
       };
 
       for (var j = 0; j < countries.length; j += 1) {
-        _loadCountryBirthdays(countries[j].POPIO_NAME || countries[j]);
+        _loadCountryBirthdays(countries[j] || countries[j]);
       }
     };
 
@@ -1090,6 +1064,8 @@
       $scope.birthdayShare = null;
       $scope.$apply();
       $scope.country = ProfileService.country;
+
+      $scope.currentContinent = _getCurrentContinent();
 
       $scope.$broadcast('continentsDataLoaded');
       $scope.$broadcast('worldDataLoaded');
@@ -1122,7 +1098,6 @@
         $scope.loading -= 1;
       });
 
-      _updateCountriesAroundTheWorld();
       _updateContinentalCountries();
     };
   }])
@@ -1267,7 +1242,6 @@
         }
       })
       .success(function () {
-        console.log($scope.email);
         alert($scope.email + ' has been registered successfully!');
         $scope.email = '';
         $scope.sending = false;

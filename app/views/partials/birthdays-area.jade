@@ -22,7 +22,5 @@ header.grey
 
 .container
   .birthdays-area
-      h3(translate="BIRTHDAYS_TEASER" translate-values="{sharedDay: sharedDay, sharedDayCountry: sharedDayCountry, world : 'the World', country: country }")
-    ul
-      li(ng-repeat="cont in continentalArray") {{cont}}
-    birthdays-chart(continents-data="continentsData", world-data="worldData")
+    h3(translate="BIRTHDAYS_TEASER" translate-values="{sharedDay: sharedDay, sharedDayCountry: sharedDayCountry, world : 'the World', country: country }")
+    birthdays-area(continents-data="continentsData", current-continent="currentContinent")
