@@ -12,17 +12,17 @@ block content
             include ../../../assets/milestones.svg
     section#home(ng-controller='HomeCtrl' ng-if='!isResults')
         include ../partials/home-area
-    section#summary(ng-controller='SummaryCtrl', ng-class="{'hidden': !profile.active}", ng-if='isResults')
+    section#summary(ng-controller='SummaryCtrl',class='item-animate', ng-show="currentIndex == 0", ng-swipe-left="next()", ng-swipe-right="prev()")
         include ../partials/summary-area
-    section#summarylocation(ng-controller='SummaryCtrl', ng-class="{'hidden':!profile.active}", ng-if='isResults')
+    section#summarylocation(ng-controller='SummaryCtrl' ,ng-show="currentIndex == 1", ng-swipe-left="next()", ng-swipe-right="prev()")
         include ../partials/summary-area-location
-    section#milestones(ng-controller='MilestonesCtrl',ng-class="{'hidden':!profile.active}", ng-if='isResults')
+    section#milestones(ng-controller='MilestonesCtrl', class='item-animate', ng-show="currentIndex == 2", ng-swipe-left="next()", ng-swipe-right="prev()")
         include ../partials/milestones-area
-     section#birthdays(ng-controller='BirthdaysCtrl',ng-class="{'hidden':!profile.active}", ng-if='isResults')
+     section#birthdays(ng-controller='BirthdaysCtrl', class='item-animate', ng-show="currentIndex == 3", ng-swipe-left="next()", ng-swipe-right="prev()")
          include ../partials/birthdays-area
-    section#expectancy(ng-controller='ExpectancyCtrl',ng-class="{'hidden': !profile.active}", ng-if='isResults')
+    section#expectancy(ng-controller='ExpectancyCtrl', class='item-animate', ng-show="currentIndex == 4", ng-swipe-left="next()", ng-swipe-right="prev()")
          include ../partials/expectancy-area
-    section#death-area(ng-controller='DeathCtrl', ng-class="{'hidden': !profile.active}", ng-if='isResults')
+    section#death-area(ng-controller='DeathCtrl', class='item-animate', ng-show="currentIndex == 5", ng-swipe-left="next()", ng-swipe-right="prev()")
         include ../partials/death-area
-    section#fancy-sharing(ng-controller='SharingCtrl', ng-class="{'hidden': !profile.active}", ng-if='isResults')
+    section#fancy-sharing(ng-controller='SharingCtrl', class='item-animate', ng-show="currentIndex == 6", ng-swipe-left="next()", ng-swipe-right="prev()")
         include ../partials/fancy-sharing

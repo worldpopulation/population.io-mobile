@@ -256,7 +256,28 @@
 
     $rootScope.$on('go', function(){
       $scope.isResults = true;
+      $scope.currentIndex = 0;
     });
+
+
+    $scope.items = [{id:0},{id:1},{id:2},{id:3},{id:4},{id:5},{id:6}];
+
+    $scope.next = function(){
+
+      $scope.currentIndex++;
+      if ($scope.currentIndex > 6) {
+        $scope.currentIndex = 0;
+      }
+    }
+
+    $scope.prev = function(){
+      $scope.currentIndex--;
+      if ($scope.currentIndex < 0){
+        $scope.currentIndex = 6;
+      }
+    }
+
+
 
   }])
   .controller('SummaryCtrl', ['$scope', '$rootScope', '$interval', '$filter', 'PopulationIOService', 'ProfileService', '$timeout',

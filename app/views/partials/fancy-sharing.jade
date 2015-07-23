@@ -5,20 +5,8 @@ header.grey
         h3(translate="SHARING_HEADER")
       .hr-ul-c
         ul.hr-inline
-          li
+          li(ng-repeat="item in items", ng-class="{selected: $index==currentIndex}")
             span.dcircle
-          li
-            span.dcircle
-          li
-            span.dcircle
-          li
-            span.dcircle
-          li
-            span.dcircle
-          li
-            span.dcircle
-          li
-            span.dcircle.active
 
 .container
   .fancy-sharing

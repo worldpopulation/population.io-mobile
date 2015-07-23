@@ -5,19 +5,7 @@ header.grey
         h3(translate="EXPECTANCY_HEADER") 
       .hr-ul-c
         ul.hr-inline
-          li
-            span.dcircle
-          li
-            span.dcircle
-          li
-            span.dcircle
-          li
-            span.dcircle
-          li
-            span.dcircle.active
-          li
-            span.dcircle
-          li
+          li(ng-repeat="item in items", ng-class="{selected: $index==currentIndex}")
             span.dcircle
 .container
   .expectancy-area

@@ -5,19 +5,7 @@ header.grey(ng-init="region='profile.country'")
         h3(translate="SUMMARY_TEASER_COUNTRY")
       .hr-ul-c
         ul.hr-inline
-          li
-            span.dcircle
-          li
-            span.dcircle.active
-          li
-            span.dcircle
-          li
-            span.dcircle
-          li
-            span.dcircle
-          li
-            span.dcircle
-          li
+          li(ng-repeat="item in items", ng-class="{selected: $index==currentIndex}")
             span.dcircle
 
 .container
