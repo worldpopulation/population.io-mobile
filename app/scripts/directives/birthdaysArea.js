@@ -11,7 +11,7 @@
         currentContinent: '='
       },
       link: function ($scope, element) {
-
+        
         var continentsPercentages, maxVal = "";
 
         $scope.$on('continentsDataLoaded', function () {

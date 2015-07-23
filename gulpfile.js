@@ -40,7 +40,6 @@ var gulp = require('gulp'),
           'bower_components/angular-sanitize/angular-sanitize.js',
           'bower_components/angular-translate/angular-translate.js',
           'bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
-          //'bower_components/ng-loading/dist/ngLoading.js',
 
           'app/scripts/app.js',
           'app/scripts/controllers.js',

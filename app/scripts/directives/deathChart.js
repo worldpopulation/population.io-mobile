@@ -29,7 +29,7 @@
       var theta = function (r) {
         return 4 * Math.PI * r;
       };
-    
+
       var pieces = d3.range(startWorld, endWorld + 0.001, (endWorld - startWorld) / 1000);
 
       var radius = d3.scale.linear()

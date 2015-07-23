@@ -141,7 +141,7 @@
 
     $rootScope.$on('ready', function () {
       // $scope.showSection('home');
-      // $scope.loading = 1;
+      $scope.loading = 1;
     });
     $rootScope.$on('loadingOn', function () {
       $scope.loading = 1
@@ -149,20 +149,7 @@
     $rootScope.$on('loadingOff', function () {
       $scope.loading = 0
     });
-    $rootScope.$on('duScrollspy:becameActive', function ($event, $element) {
-      var section = $element.prop('id');
-      if (section) {
-        var path = $location.$$path.replace(/[^/]*$/g, ''),
-        pathItems = $location.$$path.split('/');
 
-        if (pathItems.length > 4) {
-          $location.preventReload = true;
-          $location.path(path + section).replace();
-          $rootScope.currentPage = $element.attr('data-index');
-          $rootScope.$apply();
-        }
-      }
-    });
 
     $scope.downloadICal = function () {
       if (!ProfileService.active) {
@@ -980,8 +967,7 @@
 
     var countries = [];
     $scope.continentalArray = ['Asia','Europe','Africa','North America','South America', 'Oceania'];
-
-
+    
     $rootScope.$on('ready', function () {
       d3.csv('data/countries.csv', function (data) {
         countries = data;
@@ -1022,13 +1008,6 @@
         }
       }
     }
-
-
-    $scope.$watch('selectedContinental', function (newValue, oldValue) {
-      if (ProfileService.active && oldValue !== newValue) {
-        _updateContinentalCountries();
-      }
-    });
 
     var _updateContinentalCountries = function () {
       $rootScope.$broadcast('loadingOn');
@@ -1078,10 +1057,8 @@
 
     var _update = function () {
 
-      $scope.loading = 1;
-      $scope.continentsData = [];
+      $scope.loading = 0;
       $scope.worldData = [];
-      $scope.selectedContinental = 'Asia';
       $scope.birthdayShare = null;
       $scope.$apply();
       $scope.country = ProfileService.country;
