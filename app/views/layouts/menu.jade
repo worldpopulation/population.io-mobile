@@ -1,0 +1,13 @@
+.menu(ng-show="isVisible")
+  form.change-language
+    label
+      select(ng-model="activeLangKey" ng-init="activeLangKey = 'EN'" ng-change="changeLanguage(activeLangKey)")
+        option(value="EN") English
+        option(value="ES") Español
+  ul
+    li
+      a(ng-click="showAbout()") {{ 'HEADER_MENU_ABOUT' | translate }}
+    li
+      a(ng-click="showMethodology()") {{ 'HEADER_MENU_METHODOLOGY' | translate }}
+    li  
+      a(ng-click="showDevelopers()") {{ 'HEADER_MENU_API' | translate }}

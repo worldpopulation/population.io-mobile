@@ -5,13 +5,7 @@ header
         span.title Population.io
         span.subtitle {{ 'HEADER_TITLE' | translate }}
         span.icon-alpha
-
-    form.change-language.remove
-      label
-        select(ng-model="activeLangKey" ng-init="activeLangKey = 'EN'" ng-change="changeLanguage(activeLangKey)")
-          option(value="EN") English
-          option(value="ES") Español
-
+        
 world-clock
     h3<i class="icon icon-world"> </i>
 .container

@@ -235,6 +235,14 @@
       });
     };
 
+
+    $scope.isVisible = false;
+
+    $scope.showMenu = function(){
+    $scope.isVisible =   $scope.isVisible ? false : true;
+    }
+
+
   }])
   .controller('GoCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
     if ($scope.isResults == false){
@@ -967,7 +975,7 @@
 
     var countries = [];
     $scope.continentalArray = ['Asia','Europe','Africa','North America','South America', 'Oceania'];
-    
+
     $rootScope.$on('ready', function () {
       d3.csv('data/countries.csv', function (data) {
         countries = data;

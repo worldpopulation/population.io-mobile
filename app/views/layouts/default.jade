@@ -27,8 +27,10 @@ html(ng-app="populationioApp")
         script(src='scripts/main.js')
 
     body(ng-controller='MainCtrl')
-      div(class="inner", ng-controller='GoCtrl')
-        include header
+      include menu
+      div(class="inner slide", ng-controller='GoCtrl' ng-class="{'slide-active': isVisible}") 
+        include header 
         .content-block
             block content
-        include footer
+            include footer
+      
