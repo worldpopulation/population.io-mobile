@@ -73,7 +73,7 @@ a
   .grey
     background-color $color4
     margin -15px
-    padding 15px
+    padding 15px 15px 0px
     z-index 0
     .container
       border-bottom 0px
@@ -83,6 +83,7 @@ a
           font-family $font2
           font-size 27px
           letter-spacing 1.1px
+          width 90%
         .hr-ul-c
           text-align center
           ul.hr-inline
@@ -90,13 +91,13 @@ a
             display inline-block
             li
               display inline-block
-              span.dcircle
+              .dcircle
                 border 1px solid $color1
                 border-radius 60%
                 margin 1px 5px
-                font-size 2px
-                padding 2px 4px
+                width 6px
+                height 6px
             .selected
-              span.dcircle
-                  background-color $active-blue
-                  border-color $active-blue
+              .dcircle
+                background-color $active-blue
+                border-color $active-blue

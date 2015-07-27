@@ -112,9 +112,9 @@
               xLabelLine = chart.append('line')
               .attr({
                 class: 'label-line',
-                x1: 290,
+                x1: parentWidth,
                 y1: 80,
-                x2: 290,
+                x2: parentWidth,
                 y2: 40
               })
               .style({

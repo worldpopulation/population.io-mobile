@@ -112,9 +112,9 @@
               xLabelLine = chart.append('line')
               .attr({
                 class: 'label-line',
-                x1: 290,
+                x1: parentWidth,
                 y1: 80,
-                x2: 290,
+                x2: parentWidth,
                 y2: 40
               })
               .style({
@@ -257,7 +257,7 @@
                   .call(xAxis)
                     .selectAll('text')
                     .attr('y', '30')
-                    .attr('x', '-310');
+                    .attr('x', ((parentWidth * -1) -20));
 
                   yAxisElement
                   .transition()
