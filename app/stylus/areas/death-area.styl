@@ -6,13 +6,21 @@
       font-weight normal
       padding 30px 0 20px
       line-height 1.2em
+
+      @media only screen and (max-width: 769px) and (orientation: landscape)
+        font-size 20px
+
       ul
         padding 10px 0px 0px
-        display inline-block
+        display inline-table
         li
         .green
-          font-size: 21px;
-          margin-bottom: -5px;
+          font-size 21px
+          margin-bottom -5px
+
+          @media only screen and (max-width: 769px) and (orientation: landscape)
+            font-size 20px
+
         .f-lighter
           font-size 13px
       span
@@ -29,7 +37,7 @@ death-chart
 
   path.spiral2
     fill none
-    stroke $active-blue 
+    stroke $active-blue
     stroke-width 3px
 
   path.spiralNow
