@@ -272,7 +272,7 @@
                   .call(xAxis)
                     .selectAll('text')
                     .attr('y', '30')
-                    .attr('x', '-310');
+                    .attr('x', ((parentWidth* -1) -20) );
 
 
                   yAxisElement
@@ -291,7 +291,6 @@
                   .attr({
                     cy: yRange(data[age].total)
                   });
-
 
                   pointer
                   .transition()

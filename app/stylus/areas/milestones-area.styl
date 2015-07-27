@@ -22,9 +22,14 @@
           background-color $color5
           margin 0px -15px
           padding 10px 15px
+          display block
           milestone
             width 43%
             float left
+
+            @media only screen and (min-width: 414px) and (max-width: 736px) and (orientation: landscape)
+              width 30%
+
             .time
               fill $color3
             .title
@@ -48,6 +53,11 @@
             margin-top 12%
             color $color2
             font-size 15px
+
+            @media only screen and (min-width: 414px) and (max-width: 736px) and (orientation: landscape)
+              margin-top 40px
+              width 65%
+
             .black
               font-size 19px
               color $color1
@@ -63,6 +73,7 @@
           background-color $color4
           margin 0 -15px
           padding 10px 15px
+          display block
           milestone
             .time
               fill $color3
@@ -81,8 +92,12 @@
       width 7%
       height auto
       float left
-      margin-top 13%
+      margin-top 12%
       margin-left 2%
+      @media only screen and (min-width: 414px) and (max-width: 736px) and (orientation: landscape)
+        width 5%
+        margin-top 35px
+        margin-left 0px
 
     .arc
       fill $color1
