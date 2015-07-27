@@ -73,7 +73,6 @@
     display block
     width 70px
     font-size 12px
-
   .tell-your-friend
     float left
     padding 20px 0px
@@ -96,6 +95,8 @@
         -webkit-border-radius 12px
         border-radius 12px
         line-height inherit
+        @media only screen and (max-width: 769px) and (orientation: landscape)
+          width 40%
       #inputName
         width 40%
         margin-right 10px
@@ -118,6 +119,9 @@
         border-radius: 60px;
         text-align: center;
         line-height: 55px;
+        @media only screen and (max-width: 769px) and (orientation: landscape)
+          margin 5px 0px
+
   .birthdayreminder
     padding 20px 0px
     float left
@@ -143,7 +147,8 @@
         display inline-block
         -webkit-border-radius 12px
         border-radius 12px
-
+        @media only screen and (max-width: 769px) and (orientation: landscape)
+          width 70%
 
       .btn
         font-size: 16px;
