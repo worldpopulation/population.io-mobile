@@ -976,13 +976,6 @@
     var countries = [];
     $scope.continentalArray = ['Asia','Europe','Africa','North America','South America', 'Oceania'];
 
-    $rootScope.$on('ready', function () {
-      d3.csv('data/countries.csv', function (data) {
-        countries = data;
-        _update();
-      });
-    });
-
     var _getCountry = function (name) {
       for (var i = 0; i < countries.length; i += 1) {
         var country = countries[i];
@@ -1065,16 +1058,10 @@
 
     var _update = function () {
 
-      $scope.loading = 0;
-      $scope.worldData = [];
       $scope.birthdayShare = null;
       $scope.$apply();
       $scope.country = ProfileService.country;
-
       $scope.currentContinent = _getCurrentContinent();
-
-      $scope.$broadcast('continentsDataLoaded');
-      $scope.$broadcast('worldDataLoaded');
 
       PopulationIOService.loadPopulationByAge({
         year: $filter('date')(Date.now(), 'yyyy'),
@@ -1106,6 +1093,15 @@
 
       _updateContinentalCountries();
     };
+
+    $rootScope.$on('ready', function () {
+      d3.csv('data/countries.csv', function (data) {
+        countries = data;
+          _update();
+      });
+    });
+
+
   }])
 
   .controller('ExpectancyCtrl', ['$scope', '$rootScope', '$filter', 'ProfileService', 'PopulationIOService', 'Countries',

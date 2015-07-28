@@ -274,7 +274,6 @@
                     .attr('y', '30')
                     .attr('x', ((parentWidth* -1) -20) );
 
-
                   yAxisElement
                   .transition()
                   .attr('class', 'y axis')
