@@ -9,7 +9,6 @@
       link: function ($scope, element) {
         var chart,
         xAxis, yAxis,
-        actionBox,
         parentWidth = element[0].clientWidth,
         currentData, pointer,
         parentHeight = 40,
@@ -58,13 +57,13 @@
         });
         $scope.$on('countryPopulationDataChanged', function (e, population) {
           age = $scope.profile.getAge();
-          _updateChart(population)
+          _updateChart(population);
         });
 
 
 
         function _initChart() {
-            var vB = parentWidth + 20;
+          var vB = parentWidth + 20;
 
           chart = d3.select(element[0])
           .append('svg')
@@ -222,16 +221,14 @@
 
                   yLabelLine.attr({
                     x1: 20,
-                    y1: (yRange(data[age].total) - yRange(age)),
+                    y1: yValAtPoint(areaTotal),
                     x2: 20,
-                    y2: (yRange(data[age].total))
+                    y2: yValAtPoint(areaTotal) - 40
                   })
 
                   yLabel.attr({
-                    transform: 'translate(' + [62,  (yRange(data[age].total) - 30)] + ')'
+                    transform: 'translate(' + [62,  (yValAtPoint(areaTotal) - 30)] + ')'
                   })
-
-
 
                   line
                   .x(function (d) {
@@ -282,13 +279,14 @@
                   })
                   .call(yAxis)
                     .selectAll('text')
-                    .attr('y', (yRange(data[age].total) - 20))
-                    .attr('x', '25');
+                    .attr('y', ((yRange(data[age].total)- yValAtPoint(areaTotal) ) + 10))
+                    .attr('class', 'yte')
+                    .attr('x', '7');
 
                   yAxisElement.select('circle')
                   .transition()
                   .attr({
-                    cy: yRange(data[age].total)
+                    cy: yValAtPoint(areaTotal)
                   });
 
                   pointer
@@ -314,6 +312,12 @@
                   })
                   .attr('x', '20')
                   .attr('y', '90');
+
+                  function yValAtPoint(path){
+                    var l = path.node().getTotalLength();
+                    var p = path.node().getPointAtLength(l);
+                    return p.y;
+                  }
 
                 }
 
