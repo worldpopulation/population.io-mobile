@@ -1260,7 +1260,7 @@
         url: 'https://posttestserver.com/post.php',
         method: 'POST',
         data: {
-          email: $scope.friendemail,
+          friendemail: $scope.friendemail,
           name: $scope.name
         }
       })

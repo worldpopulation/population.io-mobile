@@ -22,10 +22,11 @@ header.grey
           span(class="crgrey" translate="EXPECTANCY_YEARS_OLD")
         .country-rel
           span {{activeCountryRel.lifeExpectancy | number:1}}
-          span(class="crgrey" translate="EXPECTANCY_YEARS_OLD" ng-class="{'hidden': activeCountryRel.lifeExpectancy==null}")
-      .agedifftilife(ng-class="{'hidden': activeCountryRel.lifeExpectancy==null}")
+          span(class="crgrey", translate="EXPECTANCY_YEARS_OLD", ng-show="activeCountryRel.lifeExpectancy!=null")
+      .agedifftilife(ng-show="activeCountryRel.lifeExpectancy!=null")
         .circle
           span(ng-bind="(activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) > 0 ? ((activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy)| number:1):  (((activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy)* -1)| number:1)")
           span(class="smaller",translate="EXPECTANCY_YEARS_LONGER", ng-class="{'hidden': (activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) > 0 }")
           span(class="smaller",translate="EXPECTANCY_YEARS_SHORTER", ng-class="{'hidden': (activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) < 0 }")
-      expectancy-map(country-ref="activeCountryRef", country-rel="activeCountryRel")
+          
+          

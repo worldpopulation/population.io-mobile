@@ -26,7 +26,7 @@ header.grey
     .tell-your-friend
       form(name="tellYourFriend", novalidate)
         p(translate="SHARING_TO_A_FRIEND_P1")
-        input.form-control(type="text", name="friendEmail", id="inputEmail", placeholder="friend@email.com", ng-model="emailfriend", required)
+        input.form-control(type="text", name="friendemail", id="inputEmail", placeholder="friend@email.com", ng-model="friendemail", required)
         p(translate="SHARING_TO_A_FRIEND_P2")
         input.form-control(type="text", name="name" id="inputName",placeholder="my name", ng-model="name",required)
         button.btn(type="button",ng-click="inviteMail()",ng-disabled="tellYourFriend.$invalid",translate="SHARING_SEND")
