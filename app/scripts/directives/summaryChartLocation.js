@@ -279,7 +279,7 @@
                   })
                   .call(yAxis)
                     .selectAll('text')
-                    .attr('y', ((yRange(data[age].total)- yValAtPoint(areaTotal) ) + 10))
+                    .attr('y', (yValAtPoint(areaTotal) - 20))
                     .attr('class', 'yte')
                     .attr('x', '7');
 
