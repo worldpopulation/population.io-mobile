@@ -79,7 +79,8 @@ var gulp = require('gulp'),
           'assets/share-twitter.png',
           'assets/share-facebook.png',
           'assets/share-li.png',
-          'assets/share-cal.png'
+          'assets/share-cal.png',
+          'assets/ballon-paths-w-b.svg'
       ],
       maps: [
           'bower_components/angular-sanitize/angular-sanitize.min.js.map'

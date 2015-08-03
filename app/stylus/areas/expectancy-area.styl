@@ -1,7 +1,9 @@
 .container
   display block
+  position relative
   .expectancy-area
-    width 100$
+    min-height calc(100vh - 136px)
+    width 100%
     h3
       color $color2
       font-size 23px
@@ -116,3 +118,14 @@
         .smaller
           font-size 22px
           padding 0px
+    .svg-overlay
+      position absolute
+      top 0
+      left 0
+      width calc(100% + 30px)
+      height calc(100% + 15px)
+      z-index 200
+      background-color transparent
+      margin -15px
+      margin-top 15px
+      pointer-events none
