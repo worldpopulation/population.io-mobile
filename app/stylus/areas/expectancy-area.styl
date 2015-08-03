@@ -18,6 +18,7 @@
           margin-right 5px
           display inline
           input
+            z-index 201
             outline 0
             border 1px solid $active-blue
             background-color #fff
@@ -45,6 +46,7 @@
         .typeahead.rel
           display inline
           input
+            z-index 201
             outline 0
             background #98ec79
             border 1px solid #98ec79
@@ -124,8 +126,32 @@
       left 0
       width calc(100% + 30px)
       height calc(100% + 15px)
-      z-index 200
       background-color transparent
       margin -15px
       margin-top 15px
       pointer-events none
+      .st9
+        opacity 0.7
+        fill #89E35F
+        -webkit-animation-name baloonshake
+        -webkit-animation-duration 10s
+        -webkit-animation-iteration-count infinite
+        -webkit-animation-timing-function linear
+
+        @keyframes baloonshake {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+            25% {
+                -webkit-transform: rotate(-5deg);
+            }
+            50% {
+                -webkit-transform: rotate(-10deg);
+            }
+            75% {
+                -webkit-transform: rotate(-5deg);
+            }
+            100% {
+                -webkit-transform: rotate(0deg);
+            }
+        }
