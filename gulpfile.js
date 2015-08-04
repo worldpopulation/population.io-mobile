@@ -66,8 +66,8 @@ var gulp = require('gulp'),
       ],
       images: [
           'assets/sprite-icons.svg',
-          'assets/user-female.png',
-          'assets/user-male.png',
+          'assets/user-female.svg',
+          'assets/user-male.svg',
           'assets/favicon.png',
           'assets/wip.svg',
           'assets/browsers-sprite.png',
@@ -82,7 +82,9 @@ var gulp = require('gulp'),
           'assets/share-ical.svg',
           'assets/ballon-paths-w-b.svg',
           'assets/right-share.svg',
-          'assets/country-icon.svg'
+          'assets/country-icon.svg',
+          'assets/day-form.svg',
+          'assets/beta_opt.svg'
       ],
       maps: [
           'bower_components/angular-sanitize/angular-sanitize.min.js.map'

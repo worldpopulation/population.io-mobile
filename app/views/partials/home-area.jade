@@ -18,7 +18,8 @@ world-clock
             form.form-inline(name="goForm", novalidate, ng-class='{highlight:highlightErrors, "highlight-extra":highlightExtra}', autocomplete='off')
                 input.fake-disable-autocomplete(type="password", style="display: none")
                 .typeahead
-                    input.day-field.form-control(id="inputBirthDay", type="text", name="birthdayDay", ng-value="profile.birthday.day", ng-model = "profile.birthday.day", typeahead="birthdayDay for birthdayDay in birthdays($viewValue,'d')", typeahead-wait-ms="100", typeahead-editable="true", required, validate-day, typeahead-on-select='setDay($item, $model, $label)', formnovalidate)
+                    .di
+                      input.day-field.form-control(id="inputBirthDay", type="text", name="birthdayDay", ng-value="profile.birthday.day", ng-model = "profile.birthday.day", typeahead="birthdayDay for birthdayDay in birthdays($viewValue,'d')", typeahead-wait-ms="100", typeahead-editable="true", required, validate-day, typeahead-on-select='setDay($item, $model, $label)', formnovalidate)
 
                     input.month-field.form-control(id="inputBirthMonth", type="text", name="birthdayMonth", ng-value="profile.birthday.month", ng-model = "profile.birthday.month", typeahead="birthdayMonth for birthdayMonth in birthdays($viewValue,'m')", typeahead-wait-ms="100", typeahead-editable="true", required, validate-month, typeahead-on-select='setMonth($item, $model, $label)', formnovalidate)
 

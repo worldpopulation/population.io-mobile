@@ -42,8 +42,8 @@
             &.ng-dirty.ng-invalid
                 box-shadow 0 0 8px rgba(red, 1)
             &.day-field
-                padding 0 18px
-                width 25%
+                padding 0 0 0 35px
+                width 100%
                 margin-right 5px
             &.month-field
                 width 40%
@@ -70,6 +70,7 @@
                     top 15px
                     left: 12px;
                     background-image url('../images/country-icon.svg')
+                    background-repeat no-repeat
 
         .toggle
             margin-top 20px
@@ -94,6 +95,30 @@
             &.icon-birthday:after
                 background-position -35px -230px
             &.icon-male:before
-                background-position -130px -330px
+                background-image url('../images/user-male.svg')
+                background-repeat no-repeat
+                height 30px
+                width 30px
+                left 2px
+                top 8px
             &.icon-female:before
-                background-position -30px -330px
+                background-image url('../images/user-female.svg')
+                background-repeat no-repeat
+                height 30px
+                width 30px
+                left 2px
+                top 8px
+
+.di
+  width 25%
+  display inline-block
+  &:before
+    position absolute
+    left 10px
+    top 14px
+    content ''
+    height 20px
+    width 20px
+    z-index 9
+    background-image url('../images/day-form.svg')
+    background-repeat no-repeat
