@@ -36,9 +36,9 @@
             border 1px solid highlight-yellow
             width 71%
             height 50px
-            padding 0 25px
+            padding 0 40px
             margin 0
-            border-radius 12px
+            border-radius 10px
             &.ng-dirty.ng-invalid
                 box-shadow 0 0 8px rgba(red, 1)
             &.day-field
@@ -56,21 +56,20 @@
 
 
         ::-webkit-input-placeholder
-            color #666
+            color $color1
         .typeahead
             margin 0 0 20px 0
             &.icon-country
                 margin 0 10px 0 0
                 &:before
                     content ''
-                    height 40px
-                    width 40px
+                    height 20px
+                    width 20px
                     position absolute
                     z-index 9
-                    top 6px
-                    left: -8px;
-                    background-icon()
-                    background-position -30px -830px
+                    top 15px
+                    left: 12px;
+                    background-image url('../images/country-icon.svg')
 
         .toggle
             margin-top 20px
