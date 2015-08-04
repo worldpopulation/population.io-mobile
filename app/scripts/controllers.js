@@ -244,9 +244,13 @@
 
 
   }])
-  .controller('GoCtrl', ['$scope', '$rootScope', function($scope, $rootScope){
-    if ($scope.isResults == false){
-      $location.path.join('');
+  .controller('GoCtrl', ['$scope', '$rootScope','$location', 'ProfileService',  function($scope, $rootScope, $location, ProfileService){
+
+
+    $scope.home = function(){
+      $location.path;
+      $scope.isResults = false;
+
     }
 
     $rootScope.$on('go', function(){
@@ -254,11 +258,9 @@
       $scope.currentIndex = 0;
     });
 
-
     $scope.items = [{id:0},{id:1},{id:2},{id:3},{id:4},{id:5},{id:6}];
 
     $scope.next = function(){
-
       $scope.currentIndex++;
       if ($scope.currentIndex > 6) {
         $scope.currentIndex = 0;
@@ -272,6 +274,10 @@
       }
     }
 
+    $scope.gotoshare = function(){
+      $scope.currentIndex = 5;
+      $scope.next();
+    }
 
 
   }])

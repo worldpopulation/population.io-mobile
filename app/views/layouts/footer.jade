@@ -1,4 +1,6 @@
-footer(ng-class="{'linetop': isResults}")
+footer
     .container
-        .block
+        .block(ng-if="!isResults")
           span visit <a href="http://population.io">www.population.io</a>
+      .right-share(ng-show="isResults && currentIndex != 6", ng-click="gotoshare()")
+      
