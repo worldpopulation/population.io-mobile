@@ -9,7 +9,19 @@
   "LOCAL_SOUTH_AMERICA": "South America",
   "LOCAL_OCEANIA": "Oceania",
 
-  "LANGUAGE": "Language",
+  "POP_IO": "Population.io",
+
+  "MOBILE_LANGUAGE": "Language",
+  "MOBILE_LANGUAGE_EN": "English",
+  "MOBILE_LANGUAGE_ES": "Español",
+
+  "MOBILE_MENU_POP_STATISTIC": "Your Population.io Statistics",
+  "MOBILE_MENU_REL_AGE_WORLD": "Relative Age World",
+  "MOBILE_MENU_REL_AGE_COUNTRY": "Relative Age Country",
+  "MOBILE_MENU_MILESTONES": "Milestones",
+  "MOBILE_MENU_B_B": "Birthday Buddies",
+  "MOBILE_MENU_LIFE_EXP": "Life Expectancy",
+  "MOBILE_MENU_D_O_D": "Date of Death",
 
   "LOCAL_DAY": "Day",
   "LOCAL_MONTH": "Month",

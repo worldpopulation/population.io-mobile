@@ -4,14 +4,32 @@
       .close-button(ng-click="showMenu()")
     
     .language-section
-      p(translate="LANGUAGE")
+      p(translate="MOBILE_LANGUAGE")
       form.change-language(ng-model="activeLangKey" ng-init="activeLangKey = 'EN'" ng-change="changeLanguage(activeLangKey)")
-        label(ng-click="changeLanguage('EN')", ng-class="{'active': activeLang == 'EN'}") English
-        label(ng-click="changeLanguage('ES')", ng-class="{'active': activeLang == 'ES'}") Español
-    ul
-      li
-        a(ng-click="showAbout()") {{ 'HEADER_MENU_ABOUT' | translate }}
-      li
-        a(ng-click="showMethodology()") {{ 'HEADER_MENU_METHODOLOGY' | translate }}
-      li  
-        a(ng-click="showDevelopers()") {{ 'HEADER_MENU_API' | translate }}
+        label(ng-click="changeLanguage('EN')", ng-class="{'active': activeLang == 'EN'}") {{'MOBILE_LANGUAGE_EN' | translate}}
+        label(ng-click="changeLanguage('ES')", ng-class="{'active': activeLang == 'ES'}") {{'MOBILE_LANGUAGE_ES' | translate}}
+    .content-menu-section
+      h3(translate="MOBILE_MENU_POP_STATISTIC")
+      ul
+        li
+          a(translate="MOBILE_MENU_REL_AGE_WORLD")
+        li
+          a(translate="MOBILE_MENU_REL_AGE_COUNTRY")
+        li
+          a(translate="MOBILE_MENU_MILESTONES")
+        li
+          a(translate="MOBILE_MENU_B_B")
+        li
+          a(translate="MOBILE_MENU_LIFE_EXP")
+        li
+          a(translate="MOBILE_MENU_D_O_D")
+      
+    .normal-menu-section
+      h3(translate="POP_IO") 
+      ul
+        li
+          a(ng-click="showAbout()", translate="HEADER_MENU_ABOUT")
+        li
+          a(ng-click="showMethodology()", translate="HEADER_MENU_METHODOLOGY")
+        li 
+          a(ng-click="showDevelopers()", translate="HEADER_MENU_API")

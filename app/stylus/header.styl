@@ -48,10 +48,10 @@ a
     right 0
     width 100%
     height 100%
-    background $color4
-    background-size contain
     .menu-wrapper
       padding 15px
+      background $color4
+      background-color
       .close-wrapper
         border-bottom 1px solid $color2
         clearfix()
@@ -65,7 +65,7 @@ a
           background-image url('../images/close-icon.svg')
 
       .language-section
-        padding 15px 0
+        padding 20px 0 30px
         border-bottom 1px solid $color2
         p
           font-size 22px
@@ -84,7 +84,7 @@ a
             line-height 48px
             height 48px
             cursor pointer
-            width 37.8%
+            width calc(50vw - 60px)
           :first-child
             border-top-left-radius 10px
             border-bottom-left-radius 10px
@@ -94,14 +94,33 @@ a
           .active
             background $color3
 
+      .content-menu-section
+        padding 15px 0px
+        border-bottom 1px solid $color2
+        h3
+          color $color3
+          font-family $font1
+          font-size 20px
+          margin-bottom 10px
+        ul
+          li
+            a
+              font-size 22px
+              padding 10px 0px
+
+      .normal-menu-section
+        padding 15px 0px 0px
+      h3
+        color $active-blue
+        font-family $font1
+        font-size 20px
+        margin-bottom 10px
       ul
         li
           a
-          font-size 20px
-          padding 5px 15px
-          display block
-          cursor pointer
-          line-height 40px
+            font-size 22px
+            padding 10px 0px
+
 
   .grey
     background-color $color4
