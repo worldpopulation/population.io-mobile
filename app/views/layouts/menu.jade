@@ -1,28 +1,27 @@
 .menu(ng-show="isVisible")
   .menu-wrapper
     .close-wrapper
-      .close-button(ng-click="showMenu()")
-    
+      .close-button(ng-click="showMenu()")    
     .language-section
-      p(translate="MOBILE_LANGUAGE")
+      h3(translate="MOBILE_LANGUAGE")
       form.change-language(ng-model="activeLangKey" ng-init="activeLangKey = 'EN'" ng-change="changeLanguage(activeLangKey)")
         label(ng-click="changeLanguage('EN')", ng-class="{'active': activeLang == 'EN'}") {{'MOBILE_LANGUAGE_EN' | translate}}
         label(ng-click="changeLanguage('ES')", ng-class="{'active': activeLang == 'ES'}") {{'MOBILE_LANGUAGE_ES' | translate}}
-    .content-menu-section
+    .content-menu-section(ng-show="isResults")
       h3(translate="MOBILE_MENU_POP_STATISTIC")
       ul
         li
-          a(translate="MOBILE_MENU_REL_AGE_WORLD")
+          a(translate="MOBILE_MENU_REL_AGE_WORLD", ng-click="gotoworldage()")
         li
-          a(translate="MOBILE_MENU_REL_AGE_COUNTRY")
+          a(translate="MOBILE_MENU_REL_AGE_COUNTRY", ng-click="gotocountryage()")
         li
-          a(translate="MOBILE_MENU_MILESTONES")
+          a(translate="MOBILE_MENU_MILESTONES", ng-click="gotomilestones()")
         li
-          a(translate="MOBILE_MENU_B_B")
+          a(translate="MOBILE_MENU_B_B", ng-click="gotobb()")
         li
-          a(translate="MOBILE_MENU_LIFE_EXP")
+          a(translate="MOBILE_MENU_LIFE_EXP", ng-click="gotoexpectany()")
         li
-          a(translate="MOBILE_MENU_D_O_D")
+          a(translate="MOBILE_MENU_D_O_D", ng-click="gotodod()")
       
     .normal-menu-section
       h3(translate="POP_IO") 
