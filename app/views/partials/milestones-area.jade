@@ -2,7 +2,7 @@ header.grey
   .container
     .logo
       a
-        h3(translate="MILESTONES_INTRO")
+        h3(translate="MOBILE_MILESTONES_INTRO")
       .hr-ul-c
         ul.hr-inline
           li(ng-repeat="item in items", ng-class="{selected: $index==currentIndex}")
@@ -11,7 +11,7 @@ header.grey
 .container
     .milestones-area
         .rank
-            h3(translate="MILESTONES_NEXT" translate-values="{val1: milestoneDate}")
+            h3(translate="MOBILE_MILESTONES_NEXT" translate-values="{val1: milestoneDate}")
         .timeline
           ul
             li(ng-repeat="item in milestones | orderBy:dateOrder:false", data-id="item.year", class="{{item.color}}", ng-class="{'is-rank': item.rank, 'now': item.now, 'past': item.year < year, 'selected': item.selected}")

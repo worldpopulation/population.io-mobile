@@ -97,7 +97,7 @@
           chart.select('.y-label').remove();
           chart.select('.label-line').remove();
 
-          xLabelText = $filter('translate')('SUMMARY_CHART_AXIS_X');
+          xLabelText = $filter('translate')('MOBILE_SUMMARY_CHART_AXIS_X');
           xLabel = chart.append('text')
           .text(xLabelText)
           .attr(
@@ -123,7 +123,7 @@
               });
 
 
-              yLabelText = $filter('translate')('SUMMARY_CHART_AXIS_Y');
+              yLabelText = $filter('translate')('MOBILE_SUMMARY_CHART_AXIS_Y');
 
               yLabel = chart.append('text')
               .text(yLabelText)
@@ -212,10 +212,10 @@
                   yRange.range([parentHeight, 0]).domain([0, ticks[ticks.length - 1]]);
 
 
-                  yLabelText = $filter('translate')('SUMMARY_CHART_AXIS_Y');
+                  yLabelText = $filter('translate')('MOBILE_SUMMARY_CHART_AXIS_Y');
                   yLabel.text(yLabelText);
 
-                  xLabelText = $filter('translate')('SUMMARY_CHART_AXIS_X');
+                  xLabelText = $filter('translate')('MOBILE_SUMMARY_CHART_AXIS_X');
                   xLabel.text(xLabelText);
 
                   line

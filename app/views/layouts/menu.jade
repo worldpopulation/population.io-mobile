@@ -5,8 +5,8 @@
     .language-section
       h3(translate="MOBILE_LANGUAGE")
       form.change-language(ng-model="activeLangKey" ng-init="activeLangKey = 'EN'" ng-change="changeLanguage(activeLangKey)")
-        label(ng-click="changeLanguage('EN')", ng-class="{'active': activeLang == 'EN'}") {{'MOBILE_LANGUAGE_EN' | translate}}
-        label(ng-click="changeLanguage('ES')", ng-class="{'active': activeLang == 'ES'}") {{'MOBILE_LANGUAGE_ES' | translate}}
+        label(ng-click="changeLanguage('EN')", ng-class="{'active': activeLang == 'EN'}", translate="MOBILE_LANGUAGE_EN")
+        label(ng-click="changeLanguage('ES')", ng-class="{'active': activeLang == 'ES'}", translate="MOBILE_LANGUAGE_ES")
     .content-menu-section(ng-show="isResults")
       h3(translate="MOBILE_MENU_POP_STATISTIC")
       ul

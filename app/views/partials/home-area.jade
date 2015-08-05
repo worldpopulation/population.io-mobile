@@ -2,8 +2,8 @@ header
   .container
     .logo
       a
-        span.title Population.io
-        span.subtitle {{ 'HEADER_TITLE' | translate }}
+        span.title(translate="POP_IO")
+        span.subtitle(translate="MOBILE_HEADER_TITLE")
         span.icon-alpha
         
 world-clock
@@ -12,9 +12,9 @@ world-clock
     .home-area
         .question
           div.prespace
-            h1 {{ 'HOME_TEXT_BIG' | translate }}
+            h1(translate="MOBILE_HOME_TEXT_BIG")
           div.prespace
-            p(compile-unsafe="'HOME_TEXT_SMALL' | translate")
+            p(compile-unsafe="'MOBILE_HOME_TEXT_SMALL' | translate")
             form.form-inline(name="goForm", novalidate, ng-class='{highlight:highlightErrors, "highlight-extra":highlightExtra}', autocomplete='off')
                 input.fake-disable-autocomplete(type="password", style="display: none")
                 .typeahead
@@ -27,6 +27,6 @@ world-clock
                   .typeahead.icon-country
                     input.form-control(id="inputBirthCountry", type="text",name='country', ng-model="profile.country", ng-value="profile.country", typeahead="country.POPIO_NAME for country in countriesList($viewValue)", typeahead-wait-ms="100", typeahead-editable="true", required, stoptab, validate-country, typeahead-on-select='setCountry($item, $model, $label)', formnovalidate)
                 .toggle
-                  label.icon.icon-female(ng-model="profile.gender" btn-radio="'female'", required) {{ 'LOCAL_FEMALE' | translate }}
-                  label.icon.icon-male(ng-model="profile.gender" btn-radio="'male'", required) {{ 'LOCAL_MALE' | translate }}
-                a.btn.gobtn(ng-click="goGoGadget()", ng-disabled="loading", ng-class='{inactive:goForm.$invalid, loading:loading}') go
+                  label.icon.icon-female(ng-model="profile.gender" btn-radio="'female'", required, translate="LOCAL_FEMALE")
+                  label.icon.icon-male(ng-model="profile.gender" btn-radio="'male'", required, translate="LOCAL_MALE")
+                a.btn.gobtn(ng-click="goGoGadget()", ng-disabled="loading", ng-class='{inactive:goForm.$invalid, loading:loading}', translate="MOBILE_HOME_FORM_SUBMIT")

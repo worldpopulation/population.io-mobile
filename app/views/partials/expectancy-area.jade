@@ -2,14 +2,14 @@ header.grey
   .container
     .logo
       a
-        h3(translate="EXPECTANCY_HEADER") 
+        h3(translate="MOBILE_EXPECTANCY_HEADER") 
       .hr-ul-c
         ul.hr-inline
           li(ng-repeat="item in items", ng-class="{selected: $index==currentIndex}")
             .dcircle            
 .container
   .expectancy-area
-      h3(translate="EXPECTANCY_INTRO", translate-values="{country: profile.country}")
+      h3(translate="MOBILE_EXPECTANCY_INTRO", translate-values="{country: profile.country}")
       .toolbar
         .country-selection
           .typeahead.ref
@@ -19,15 +19,15 @@ header.grey
       .age-area
         .country-ref
           span {{activeCountryRef.lifeExpectancy | number:1}}
-          span(class="crgrey" translate="EXPECTANCY_YEARS_OLD")
+          span(class="crgrey" translate="MOBILE_EXPECTANCY_YEARS_OLD")
         .country-rel
           span {{activeCountryRel.lifeExpectancy | number:1}}
-          span(class="crgrey", translate="EXPECTANCY_YEARS_OLD", ng-show="activeCountryRel.lifeExpectancy!=null")
+          span(class="crgrey", translate="MOBILE_EXPECTANCY_YEARS_OLD", ng-show="activeCountryRel.lifeExpectancy!=null")
       .agedifftilife(ng-show="activeCountryRel.lifeExpectancy!=null")
         .circle
           span(ng-bind="(activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) > 0 ? ((activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy)| number:1):  (((activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy)* -1)| number:1)")
-          span(class="smaller",translate="EXPECTANCY_YEARS_LONGER", ng-class="{'hidden': (activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) > 0 }")
-          span(class="smaller",translate="EXPECTANCY_YEARS_SHORTER", ng-class="{'hidden': (activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) < 0 }")    
+          span(class="smaller",translate="MOBILE_EXPECTANCY_YEARS_LONGER", ng-class="{'hidden': (activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) > 0 }")
+          span(class="smaller",translate="MOBILE_EXPECTANCY_YEARS_SHORTER", ng-class="{'hidden': (activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) < 0 }")    
       doctype xml
       svg(version="1.1", id="Ebene_1", xmlns="http://www.w3.org/2000/svg", xmlns:xlink="http://www.w3.org/1999/xlink", x="0px", y="0px", viewBox="0 0 640 447", xml:space="preserve", class="svg-overlay", ng-show="activeCountryRel.lifeExpectancy!=null")
         defs

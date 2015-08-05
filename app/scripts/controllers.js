@@ -88,14 +88,12 @@
           $scope.rankGlobal = rank;
           $rootScope.$broadcast('rankGlobalChanged', $scope.rankGlobal);
         });
-        //console.log(ProfileService.country)
         PopulationIOService.getLocalPopulation(ProfileService.country, function (data) {
           $scope.localPopulationToday = data.total_population[0].population;
           $scope.localPopulationTomorrow = data.total_population[1].population;
         });
 
         $timeout(function () {
-          // $scope.showSection($rootScope.target);
         }, 700);
       }
     });
@@ -107,7 +105,6 @@
         return;
       }
 
-      // TODO: check the url path for date and section
       if (path && !ProfileService.active) {
         $rootScope.expanded = true;
         var pathItems = $location.$$path.split('/'),
@@ -122,11 +119,6 @@
           ProfileService.gender = gender;
           ProfileService.country = country;
 
-          //if ((new Date()).getFullYear() - parseInt(year) < 5) {
-          //    alert('You are too young!');
-          //    return;
-          //}
-
           ProfileService.birthday = {year: year, month: month, day: day, formatted: [year, month, day].join('-')};
 
           $rootScope.target = path;
@@ -135,13 +127,9 @@
         }
       }
 
-      if (path && ProfileService.active) {
-        // $scope.showSection(path);
-      }
     });
 
     $rootScope.$on('ready', function () {
-      // $scope.showSection('home');
       $scope.loading = 1;
     });
     $rootScope.$on('loadingOn', function () {
@@ -207,18 +195,6 @@
 
     }
 
-
-    // $scope.showSection = function (id) {
-    //   var section = document.getElementById(id) || document.getElementById('home');
-    //   var sectionElement = angular.element(section);
-    //   $document.scrollToElement(sectionElement, 80, 1000);
-    //
-    // };
-    //
-    // $scope.showHomepage = function () {
-    //   $scope.showSection('/');
-    // };
-
     $scope.showAbout = function () {
       $modal.open({
         templateUrl: 'about.html'
@@ -236,13 +212,11 @@
       });
     };
 
-
     $scope.isVisible = false;
 
     $scope.showMenu = function(){
       $scope.isVisible =   $scope.isVisible ? false : true;
     }
-
 
     $rootScope.gotoworldage = function(){
       $rootScope.currentIndex = 1;
@@ -283,11 +257,9 @@
   }])
   .controller('GoCtrl', ['$scope', '$rootScope','$location', 'ProfileService',  function($scope, $rootScope, $location, ProfileService){
 
-
     $rootScope.home = function(){
       $location.path;
       $rootScope.isResults = false;
-
     }
 
     $rootScope.$on('go', function(){
@@ -344,9 +316,6 @@
     var tickerOlderLocal = d3.scale.linear()
     .domain([today.getTime(), _getNextDay().getTime()]);
 
-    //console.log(today.getTime() + ' - ' + _getNextDay().getTime())
-
-
     $scope.$watch(function () {
       return ProfileService.active;
     }, function (active) {
@@ -365,37 +334,17 @@
       if (!$scope.rankGlobal || !$scope.worldPopulation) {return 0}
       return $filter('number')(Math.max(0, $scope.worldPopulation - $scope.rankGlobal), 0);
     };
-    $scope.calcWorldOlderPercentage = function () {
-      var value = $filter('number')(Math.max(0, 100 - $scope.rankGlobal / ($scope.worldPopulation / 100)), 0);
-      return $filter('translate')('SUMMARY_PEOPLE_OLDER')+ value + '%)';
-    };
 
     $scope.calcCountryOlderNumber = function () {
       return $filter('number')(Math.max(0, $scope.countryPopulation - $scope.rankLocal), 0);
     };
-    $scope.calcCountryOlderPercentage = function () {
 
-      var value = $filter('number')(Math.max(0, 100 - $scope.rankLocal / ($scope.countryPopulation / 100)), 0);
-      return $filter('translate')('SUMMARY_PEOPLE_OLDER') + value + '%)';
-    };
-
-    $scope.calcCountryYoungerPercentage = function () {
-      var value = $filter('number')(Math.min(100, $scope.rankLocal / ($scope.countryPopulation / 100)), 0);
-      return $filter('translate')('SUMMARY_PEOPLE_YOUNGER') + value + '%)';
-    };
-
-    $scope.calcWorldYoungerPercentage = function () {
-      var value = $filter('number')(Math.min(100, $scope.rankGlobal / ($scope.worldPopulation / 100)), 0);
-      return $filter('translate')('SUMMARY_PEOPLE_YOUNGER') + value + '%)';
-    };
     $scope.calcCountryYoungerPercentageSimple = function () {
       return $filter('number')(Math.min(100, $scope.rankLocal / ($scope.countryPopulation / 100)), 0);
     };
     $scope.calcWorldYoungerPercentageSimple = function() {
       return $filter('number')(Math.min(100, $scope.rankGlobal / ($scope.worldPopulation / 100)), 0);
     }
-
-
 
     var _update = function () {
 
@@ -406,7 +355,6 @@
         country: ProfileService.country
       }, function (rank) {
         $scope.rankLocal = rank;
-        //console.log('$scope.rankLocal', $scope.rankLocal)
         $rootScope.$broadcast('rankLocalChanged', $scope.rankLocal);
       });
 
@@ -417,7 +365,6 @@
         country: 'World'
       }, function (rank) {
         $scope.rankGlobal = rank;
-        //console.log('$scope.rankGlobal', $scope.rankGlobal)
         $rootScope.$broadcast('rankGlobalChanged', $scope.rankGlobal);
       });
 
@@ -439,7 +386,6 @@
         date: $filter('date')(_getNextDay(), 'yyyy-MM-dd')
       }, function (rank) {
         $scope.rankGlobalTomorrow = rank;
-        //console.log('$scope.rankGlobalTomorrow', $scope.rankGlobalTomorrow)
       });
 
       PopulationIOService.loadPopulation({
@@ -469,17 +415,10 @@
       });
     };
     $scope.$watchGroup(['rankLocal', 'rankGlobal', 'rankLocalTomorrow', 'rankGlobalTomorrow', 'countryPopulation', 'worldPopulation'], function (newVals, oldVals) {
-      //console.log($scope.worldPopulationToday);
-      //console.log($scope.worldPopulationTomorrow);
-      //console.log(newVals)
-      //console.log('#########################')
       $scope.countryYoungerPercentageSimple = $filter('number')(Math.min(100, $scope.rankLocal / ($scope.countryPopulation / 100)), 0);
       $scope.worldYoungerPercentageSimple = $filter('number')($scope.rankGlobal/($scope.worldPopulation/100),0);
 
       if (!_(newVals).contains(undefined) && !rangeLoaded) {
-        //console.log('$$$$$$$$$$$$$$$$$$$$$$$$')
-        //console.log(newVals)
-        //console.log('$$$$$$$$$$$$$$$$$$$$$$$$')
 
         tickerYoungerGlobal
         .range([$scope.rankGlobal, $scope.rankGlobalTomorrow]);
@@ -491,7 +430,6 @@
 
         tickerOlderLocal
         .range([$scope.rankLocal, $scope.rankLocalTomorrow]);
-
 
         $scope.scaledRankYoungerLocal = tickerYoungerLocal(new Date().getTime());
         $scope.scaledRankYoungerGlobal = tickerYoungerGlobal(new Date().getTime());
@@ -507,26 +445,10 @@
 
         $scope.scaledRankOlderLocalSimple = $filter('number')($scope.countryPopulation - tickerOlderLocal(new Date().getTime()), 0);
 
-        //console.log('!!!!!! tickerYoungerGlobal ' + tickerYoungerGlobal(new Date().getTime()))
-        //console.log('!!!!!! tickerYoungerLocal ' + tickerYoungerLocal(new Date().getTime()))
-        //
-        //console.log('!!!!!! tickerOlderGlobal ' + tickerOlderGlobal(new Date().getTime()))
-        //console.log('!!!!!! tickerOlderLocal ' + $scope.scaledRankOlderLocal)
-
       }
 
 
     });
-    /*
-    $interval(function () {
-
-    //var diff = ($scope.rankLocalTomorrow - $scope.rankLocal) / 24 / 60 / 60;
-    //if (diff) {
-    //    $scope.rankLocal += diff;
-    //    $rootScope.$broadcast('rankLocalChanged', $scope.rankLocal);
-    //}
-  }, 1000);
-  */
 
 }])
 .controller('DeathCtrl',
@@ -583,22 +505,6 @@ function ($scope, $interpolate, $timeout, $http, $interval, $modal, $state, $loc
         var diffDays = c.diff(w, 'days');
         var diffYears = c.diff(w, 'years');
 
-        // console.log(c, w);
-
-        $scope.differenceInDays = diffDays < 0 ? '- ' + (-1 * diffDays) + ' days' : '+ ' + diffDays + ' days';
-        $scope.soMuchToDo = diffDays < 1 ? $filter('translate')('DEATH_EXPECTANCY_TXT_SHORTER') : $filter('translate')('DEATH_EXPECTANCY_TXT_LONGER');
-
-
-        if (diffYears < 1 && diffYears > -1) {
-          $scope.differenceInUnits = diffDays.toString().replace('-', '') + ' ' + $filter('translate')('UNIT_DAYS');
-        }
-        else {
-          if (Math.abs(diffYears) <= 1) {
-            $scope.differenceInUnits = diffYears.toString().replace('-', '') + ' ' + $filter('translate')('UNIT_YEAR');
-          } else {
-            $scope.differenceInUnits = diffYears.toString().replace('-', '') + ' ' + $filter('translate')('UNIT_YEARS');
-          }
-        }
       };
 
       $scope.$on('languageChange', function () {
@@ -768,29 +674,29 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
     if($scope.milestonesData){
       for (var i = 0; i < $scope.milestonesData.length; i += 1) {
         if($scope.milestonesData[i].titleType === 'lifeExpWorld'){
-          $scope.milestonesData[i].title = $sce.trustAsHtml( $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + $filter('translate')('LOCAL_WORLD')) ;
+          $scope.milestonesData[i].title = $sce.trustAsHtml( $filter('translate')('MOBILE_MILESTONES_MILESTONE_LIFE_EXPECTANCY') + $filter('translate')('LOCAL_WORLD')) ;
         }else if($scope.milestonesData[i].titleType === 'lifeExpCountry'){
-          $scope.milestonesData[i].title = $sce.trustAsHtml( $filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + ProfileService.country);
-        }else if($scope.milestonesData[i].titleType === 'MILESTONES_MILESTONE_NOW' ){
-          $scope.milestonesData[i].title = $sce.trustAsHtml( $filter('translate')('MILESTONES_MILESTONE_NOW'));
+          $scope.milestonesData[i].title = $sce.trustAsHtml( $filter('translate')('MOBILE_MILESTONES_MILESTONE_LIFE_EXPECTANCY') + ProfileService.country);
+        }else if($scope.milestonesData[i].titleType === 'MOBILE_MILESTONES_MILESTONE_NOW' ){
+          $scope.milestonesData[i].title = $sce.trustAsHtml( $filter('translate')('MOBILE_MILESTONES_MILESTONE_NOW'));
         }else if($scope.milestonesData[i].titleType === 'MILESTONES_MILESTONE_18' ){
-          $scope.milestonesData[i].title =  $sce.trustAsHtml($filter('translate')('MILESTONES_MILESTONE_18'));
-        }else if($scope.milestonesData[i].titleType === 'MILESTONES_MILESTONE_BORN' ){
-          $scope.milestonesData[i].title = $sce.trustAsHtml($filter('translate')('MILESTONES_MILESTONE_BORN'));
-        }else if($scope.milestonesData[i].titleType === 'ORDINAL_NUMBER_1' ){
-          $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_1_BILLION');
-        }else if($scope.milestonesData[i].titleType === 'ORDINAL_NUMBER_2' ){
-          $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_2_BILLION');
-        }else if($scope.milestonesData[i].titleType === 'ORDINAL_NUMBER_3' ){
-          $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_3_BILLION');
-        }else if($scope.milestonesData[i].titleType === 'ORDINAL_NUMBER_4' ){
-          $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_4_BILLION');
-        }else if($scope.milestonesData[i].titleType === 'ORDINAL_NUMBER_5' ){
-          $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_5_BILLION');
-        }else if($scope.milestonesData[i].titleType === 'ORDINAL_NUMBER_6' ){
-          $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_6_BILLION');
-        }else if($scope.milestonesData[i].titleType === 'ORDINAL_NUMBER_7' ){
-          $scope.milestonesData[i].title = $filter('translate')('MILESTONES_MILESTONE_7_BILLION');
+          $scope.milestonesData[i].title =  $sce.trustAsHtml($filter('translate')('MOBILE_MILESTONES_MILESTONE_18'));
+        }else if($scope.milestonesData[i].titleType === 'MOBILE_MILESTONES_MILESTONE_BORN' ){
+          $scope.milestonesData[i].title = $sce.trustAsHtml($filter('translate')('MOBILE_MILESTONES_MILESTONE_BORN'));
+        }else if($scope.milestonesData[i].titleType === 'MOBILE_ORDINAL_NUMBER_1' ){
+          $scope.milestonesData[i].title = $filter('translate')('MOBILE_MILESTONES_MILESTONE_1_BILLION');
+        }else if($scope.milestonesData[i].titleType === 'MOBILE_ORDINAL_NUMBER_2' ){
+          $scope.milestonesData[i].title = $filter('translate')('MOBILE_MILESTONES_MILESTONE_2_BILLION');
+        }else if($scope.milestonesData[i].titleType === 'MOBILE_ORDINAL_NUMBER_3' ){
+          $scope.milestonesData[i].title = $filter('translate')('MOBILE_MILESTONES_MILESTONE_3_BILLION');
+        }else if($scope.milestonesData[i].titleType === 'MOBILE_ORDINAL_NUMBER_4' ){
+          $scope.milestonesData[i].title = $filter('translate')('MOBILE_MILESTONES_MILESTONE_4_BILLION');
+        }else if($scope.milestonesData[i].titleType === 'MOBILE_ORDINAL_NUMBER_5' ){
+          $scope.milestonesData[i].title = $filter('translate')('MOBILE_MILESTONES_MILESTONE_5_BILLION');
+        }else if($scope.milestonesData[i].titleType === 'MOBILE_ORDINAL_NUMBER_6' ){
+          $scope.milestonesData[i].title = $filter('translate')('MOBILE_MILESTONES_MILESTONE_6_BILLION');
+        }else if($scope.milestonesData[i].titleType === 'MOBILE_ORDINAL_NUMBER_7' ){
+          $scope.milestonesData[i].title = $filter('translate')('MOBILE_MILESTONES_MILESTONE_7_BILLION');
         }
 
       }
@@ -827,7 +733,7 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
         date: $filter('date')(date, 'yyyy-MM-dd'),
         year: $filter('date')(date, 'yyyy'),
         titleType: (country === 'World' ? 'lifeExpWorld' : 'lifeExpCountry'),
-        title:  $sce.trustAsHtml(('<span class="black">')+$filter('translate')('MILESTONES_MILESTONE_LIFE_EXPECTANCY') + (country === 'World' ? $filter('translate')('LOCAL_WORLD') : country)+'</span>')
+        title:  $sce.trustAsHtml(('<span class="black">')+$filter('translate')('MOBILE_MILESTONES_MILESTONE_LIFE_EXPECTANCY') + (country === 'World' ? $filter('translate')('LOCAL_WORLD') : country)+'</span>')
       });
 
       if (onSuccess) {
@@ -891,9 +797,9 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
   }
 
   var _getInitialMilestonesData = function () {
-    var milestoneNow = $filter('translate')('MILESTONES_MILESTONE_NOW');
-    var milestoneBorn = $filter('translate')('MILESTONES_MILESTONE_BORN');
-    var milestone18 = $filter('translate')('MILESTONES_MILESTONE_18');
+    var milestoneNow = $filter('translate')('MOBILE_MILESTONES_MILESTONE_NOW');
+    var milestoneBorn = $filter('translate')('MOBILE_MILESTONES_MILESTONE_BORN');
+    var milestone18 = $filter('translate')('MOBILE_MILESTONES_MILESTONE_18');
 
     var valueNow = $filter('date')(Date.now(), 'yyyy') - ProfileService.birthday.year;
     var valueBorn = ProfileService.birthday.year - ProfileService.birthday.year;
@@ -907,16 +813,16 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
       {
         date: $filter('date')(Date.now(), 'yyyy-MM-dd'),
         year: $filter('date')(Date.now(), 'yyyy'),
-        title: $sce.trustAsHtml($filter('translate')('MILESTONES_MILESTONE_NOW')),
-        titleType:'MILESTONES_MILESTONE_NOW',
+        title: $sce.trustAsHtml($filter('translate')('MOBILE_MILESTONES_MILESTONE_NOW')),
+        titleType:'MOBILE_MILESTONES_MILESTONE_NOW',
         selected: true,
         now: true
       },
       {
         date: ProfileService.birthday.formatted,
         year: ProfileService.birthday.year,
-        title: $sce.trustAsHtml($filter('translate')('MILESTONES_MILESTONE_BORN')),
-        titleType:'MILESTONES_MILESTONE_BORN',
+        title: $sce.trustAsHtml($filter('translate')('MOBILE_MILESTONES_MILESTONE_BORN')),
+        titleType:'MOBILE_MILESTONES_MILESTONE_BORN',
         born: true,
       },
       {
@@ -925,8 +831,8 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
           new Date(ProfileService.birthday.formatted),
           18
         ), 'yyyy'),
-        title: $sce.trustAsHtml($filter('translate')('MILESTONES_MILESTONE_18')),
-        titleType:'MILESTONES_MILESTONE_18'
+        title: $sce.trustAsHtml($filter('translate')('MOBILE_MILESTONES_MILESTONE_18')),
+        titleType:'MOBILE_MILESTONES_MILESTONE_18'
       }
     ];
   };
@@ -935,9 +841,6 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
     return (new Date(item.date)).getTime();
   };
 
-  $rootScope.$on('selectedYearChanged', function ($event, item) {
-    $scope.highlightMilestone(item);
-  });
 
   $scope.$watch(function () {
     return $scope.loading;
@@ -976,16 +879,16 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
       $scope.rankLocal = rankLocal;
     });
 
-    _loadWpRankRanked(3000000000, 'MILESTONES_MILESTONE_3_BILLION');
-    _loadWpRankRanked(4000000000, 'MILESTONES_MILESTONE_4_BILLION');
-    _loadWpRankRanked(5000000000, 'MILESTONES_MILESTONE_5_BILLION');
+    _loadWpRankRanked(3000000000, 'MOBILE_MILESTONES_MILESTONE_3_BILLION');
+    _loadWpRankRanked(4000000000, 'MOBILE_MILESTONES_MILESTONE_4_BILLION');
+    _loadWpRankRanked(5000000000, 'MOBILE_MILESTONES_MILESTONE_5_BILLION');
 
     if (ProfileService.getAge() > 30) {
-      _loadWpRankRanked(6000000000, 'MILESTONES_MILESTONE_6_BILLION');
-      _loadWpRankRanked(7000000000, 'MILESTONES_MILESTONE_7_BILLION');
+      _loadWpRankRanked(6000000000, 'MOBILE_MILESTONES_MILESTONE_6_BILLION');
+      _loadWpRankRanked(7000000000, 'MOBILE_MILESTONES_MILESTONE_7_BILLION');
     } else {
-      _loadWpRankRanked(1000000000, 'MILESTONES_MILESTONE_1_BILLION');
-      _loadWpRankRanked(2000000000, 'MILESTONES_MILESTONE_2_BILLION');
+      _loadWpRankRanked(1000000000, 'MOBILE_MILESTONES_MILESTONE_1_BILLION');
+      _loadWpRankRanked(2000000000, 'MOBILE_MILESTONES_MILESTONE_2_BILLION');
     }
 
     _loadLifeExpectancyRemaining(ProfileService.country, function (remainingLife) {
@@ -1016,7 +919,6 @@ function ($scope, $rootScope, $state, $filter, $sce, ProfileService, PopulationI
 function ($scope, $state, $sce, $filter, $rootScope, PopulationIOService, ProfileService) {
 
   var countries = [];
-  $scope.continentalArray = ['Asia','Europe','Africa','North America','South America', 'Oceania'];
 
   var _getCountry = function (name) {
     for (var i = 0; i < countries.length; i += 1) {
@@ -1121,12 +1023,6 @@ function ($scope, $state, $sce, $filter, $rootScope, PopulationIOService, Profil
     }, function (data) {
       $scope.sharedDay = $filter('number')(parseInt(data[0].total / 365, 0), 0);
       $scope.sharedHour = $filter('number')(parseInt(data[0].total / 365 / 24, 0), 0);
-      /*$scope.birthdayShare = $sce.trustAsHtml([
-      '<span>' + $filter('number')(parseInt(data[0].total / 365, 0), 0),
-      '</span> people around the world and that approximately ',
-      '<span>' + $filter('number')(parseInt(data[0].total / 365 / 24, 0), 0),
-      '</span> people were born in the same hour?'
-    ].join(''));*/
 
     $scope.loading -= 1;
   }, function () {
@@ -1161,13 +1057,13 @@ function ($scope, $rootScope, $filter, ProfileService, PopulationIOService, Coun
   $scope.loading = 0;
 
   $scope.$on('languageChange', function () {
-    $("#countryRel").attr("placeholder", $filter('translate')('EXPECTANCY_INPUT'));
-    $("#countryRef").attr("placeholder", $filter('translate')('EXPECTANCY_INPUT'));
+    $("#countryRel").attr("placeholder", $filter('translate')('MOBILE_EXPECTANCY_INPUT'));
+    $("#countryRef").attr("placeholder", $filter('translate')('MOBILE_EXPECTANCY_INPUT'));
   });
 
   var _update = function () {
-    $("#countryRel").attr("placeholder", $filter('translate')('EXPECTANCY_INPUT'));
-    $("#countryRef").attr("placeholder", $filter('translate')('EXPECTANCY_INPUT'));
+    $("#countryRel").attr("placeholder", $filter('translate')('MOBILE_EXPECTANCY_INPUT'));
+    $("#countryRef").attr("placeholder", $filter('translate')('MOBILE_EXPECTANCY_INPUT'));
     $scope.selectedCountryRef = _getCountryObjectByFullName(ProfileService.country);
     _updateCountryRef(date);
   };

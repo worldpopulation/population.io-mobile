@@ -2,7 +2,7 @@ header.grey(ng-init="region='profile.country'")
   .container
     .logo
       a
-        h3(translate="SUMMARY_TEASER_COUNTRY")
+        h3(translate="MOBILE_SUMMARY_TEASER_COUNTRY")
       .hr-ul-c
         ul.hr-inline
           li(ng-repeat="item in items", ng-class="{selected: $index==currentIndex}")
@@ -10,6 +10,6 @@ header.grey(ng-init="region='profile.country'")
 
 .container
   .summary-area-location
-      h3(translate="SUMMARY_INTRO_COUNTRY", translate-values="{val1: countryYoungerPercentageSimple, val2: profile.country}")
+      h3(translate="MOBILE_SUMMARY_INTRO_COUNTRY", translate-values="{val1: countryYoungerPercentageSimple, val2: profile.country}")
       summary-chart-location
-      h3(translate="SUMMARY_PEOPLE_YOUNGER_A_OLDER_COUNTRY", translate-values="{val1: scaledRankYoungerLocalSimple, val2: scaledRankOlderLocalSimple}")
+      h3(translate="MOBILE_SUMMARY_PEOPLE_YOUNGER_A_OLDER_COUNTRY", translate-values="{val1: scaledRankYoungerLocalSimple, val2: scaledRankOlderLocalSimple}")

@@ -2,7 +2,7 @@ header.grey
   .container
     .logo
       a
-        h3(translate="SUMMARY_TEASER_WORLD") 
+        h3(translate="MOBILE_SUMMARY_TEASER_WORLD") 
       .hr-ul-c
         ul.hr-inline
           li(ng-repeat="item in items", ng-class="{selected: $index==currentIndex}")
@@ -10,6 +10,6 @@ header.grey
 
 .container
   .summary-area
-      h3(translate="SUMMARY_INTRO_WORLD", translate-values="{val1: worldYoungerPercentageSimple}")
+      h3(translate="MOBILE_SUMMARY_INTRO_WORLD", translate-values="{val1: worldYoungerPercentageSimple}")
       summary-chart
-      h3(translate="SUMMARY_PEOPLE_YOUNGER_A_OLDER", translate-values="{val1: scaledRankYoungerGlobalSimple, val2: scaledRankOlderGlobalSimple}")
+      h3(translate="MOBILE_SUMMARY_PEOPLE_YOUNGER_A_OLDER", translate-values="{val1: scaledRankYoungerGlobalSimple, val2: scaledRankOlderGlobalSimple}")
