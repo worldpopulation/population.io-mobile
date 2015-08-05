@@ -84,7 +84,8 @@ var gulp = require('gulp'),
           'assets/right-share.svg',
           'assets/country-icon.svg',
           'assets/day-form.svg',
-          'assets/beta_opt.svg'
+          'assets/beta_opt.svg',
+          'assets/close-icon.svg'
       ],
       maps: [
           'bower_components/angular-sanitize/angular-sanitize.min.js.map'

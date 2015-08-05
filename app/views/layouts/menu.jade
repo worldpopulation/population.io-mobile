@@ -1,13 +1,17 @@
 .menu(ng-show="isVisible")
-  form.change-language
-    label
-      select(ng-model="activeLangKey" ng-init="activeLangKey = 'EN'" ng-change="changeLanguage(activeLangKey)")
-        option(value="EN") English
-        option(value="ES") Español
-  ul
-    li
-      a(ng-click="showAbout()") {{ 'HEADER_MENU_ABOUT' | translate }}
-    li
-      a(ng-click="showMethodology()") {{ 'HEADER_MENU_METHODOLOGY' | translate }}
-    li  
-      a(ng-click="showDevelopers()") {{ 'HEADER_MENU_API' | translate }}
+  .menu-wrapper
+    .close-wrapper
+      .close-button(ng-click="showMenu()")
+    
+    .language-section
+      p(translate="LANGUAGE")
+      form.change-language(ng-model="activeLangKey" ng-init="activeLangKey = 'EN'" ng-change="changeLanguage(activeLangKey)")
+        label(ng-click="changeLanguage('EN')", ng-class="{'active': activeLang == 'EN'}") English
+        label(ng-click="changeLanguage('ES')", ng-class="{'active': activeLang == 'ES'}") Español
+    ul
+      li
+        a(ng-click="showAbout()") {{ 'HEADER_MENU_ABOUT' | translate }}
+      li
+        a(ng-click="showMethodology()") {{ 'HEADER_MENU_METHODOLOGY' | translate }}
+      li  
+        a(ng-click="showDevelopers()") {{ 'HEADER_MENU_API' | translate }}

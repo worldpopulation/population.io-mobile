@@ -11,6 +11,7 @@
       $translate.use(langKey).then(function (langKey) {
         $scope.$broadcast('languageChange');
         $scope.updatePlaceholders();
+        $scope.activeLang = langKey;
       }, function (langKey) {
         console.log("Something wrong with this language:", langKey);
       });
