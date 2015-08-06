@@ -7,7 +7,6 @@
   function ($translate, $scope, $timeout, $http, $interval, $modal, $state, $location, $document, $rootScope, $filter, ProfileService, PopulationIOService, BrowserService, Countries) {
 
     $scope.changeLanguage = function (langKey) {
-      // console.log('changeLanguage', langKey);
       $translate.use(langKey).then(function (langKey) {
         $scope.$broadcast('languageChange');
         $scope.updatePlaceholders();
@@ -1195,7 +1194,7 @@ function ($scope, $rootScope, $filter, $location, $http) {
 
   $scope.inviteMail = function(){
     $http({
-      url: 'https://posttestserver.com/post.php',
+      url: '../php/send-friend.php?auth=rgJLjFscl8Hgzz85D8P',
       method: 'POST',
       data: {
         friendemail: $scope.friendemail,
@@ -1204,8 +1203,12 @@ function ($scope, $rootScope, $filter, $location, $http) {
     })
     .success(function () {
       alert('Email was successfully send');
+      $scope.friendemail = "";
+      $scope.name = ""
+      $scope.sending = false;
     })
     .error(function () {
+      $scope.sending = false;
       alert('Whoops, An error occurred!');
     });
 
