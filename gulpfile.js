@@ -155,8 +155,8 @@ gulp.task('scripts', function (event) {
     gulp.src(sources.scripts)
       .pipe(sourcemaps.init())
       .pipe(concat('main.js'))
-      //.pipe(uglify({mangle: false, drop_console: true}))
-      //.pipe(sourcemaps.write('../maps'))
+      .pipe(uglify({mangle: false, drop_console: true}))
+      .pipe(sourcemaps.write('../maps'))
       .pipe(gulp.dest(destinations.scripts));
 });
 
@@ -281,7 +281,7 @@ gulp.task('upload', function () {
       .pipe(sftp({
           host: '104.130.5.217',
           auth: 'keyMain',
-          remotePath: '/var/www/population.io'
+          remotePath: '/var/www/population.io-mobil/'
       }));
 });
 
