@@ -9,8 +9,6 @@ $country = $_GET['country'];
 
 $description = 'According to your birthday '.$dob.' and the life expectancy in '.$country.' you will die on ' .$dod.'. http://population.io';
 
-// iCal date format: yyyymmddThhiissZ
-// PHP equiv format: Ymd\This
 function dateToCal($timestamp) {
   return date('Ymd', strtotime($timestamp));
 }
