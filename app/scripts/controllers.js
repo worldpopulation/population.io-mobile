@@ -138,6 +138,22 @@
       $scope.loading = 0
     });
 
+    $scope.createical = function() {
+
+        var data ="?dstart=" + $filter('date')(ProfileService.dod,'yyyy-MM-dd')
+          +"&dend="+ $filter('date')(ProfileService.dod, 'yyyy-MM-dd')
+          +"&dob="+ ProfileService.birthday.formatted
+          +"&dod="+ $filter('date')(ProfileService.dod, 'yyyy-MM-dd')
+          +"&dsum=Your Date of Death"
+          +"&url=" + window.encodeURIComponent('http://population.io')
+          +"&country="+ ProfileService.country;
+
+          var link = '../php/create-ics.php' + data;
+
+          window.open(link);
+
+    }
+
 
     $scope.downloadICal = function () {
       if (!ProfileService.active) {

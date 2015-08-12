@@ -20,8 +20,9 @@ header.grey
       a#share-linkedin(target="_blank", share="linkedin", share-title="population.io")
         .icon-linkedin
         span(translate="SHARING_LINKEDIN")
-      #share-cal(ng-click="downloadICal()")
-        .icon-calendar
+      #share-cal
+        form(name="createicaldownload", novalidate)
+          .icon-calendar(ng-click="createical()", type="button",ng-disabled="createicaldownload.$invalid")
         span(translate="SHARING_CALENDAR")
     .tell-your-friend
       form(name="tellYourFriend", novalidate)
