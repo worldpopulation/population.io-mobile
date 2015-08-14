@@ -85,7 +85,8 @@ var gulp = require('gulp'),
           'assets/country-icon.svg',
           'assets/day-form.svg',
           'assets/beta_opt.svg',
-          'assets/close-icon.svg'
+          'assets/close-icon.svg',
+          'assets/menu-bar.svg'
       ],
       maps: [
           'bower_components/angular-sanitize/angular-sanitize.min.js.map'
@@ -155,8 +156,8 @@ gulp.task('scripts', function (event) {
     gulp.src(sources.scripts)
       .pipe(sourcemaps.init())
       .pipe(concat('main.js'))
-      .pipe(uglify({mangle: false, drop_console: true}))
-      .pipe(sourcemaps.write('../maps'))
+      // .pipe(uglify({mangle: false, drop_console: true}))
+      // .pipe(sourcemaps.write('../maps'))
       .pipe(gulp.dest(destinations.scripts));
 });
 

@@ -26,8 +26,8 @@ header.grey
       .agedifftilife(ng-show="activeCountryRel.lifeExpectancy!=null")
         .circle
           span(ng-bind="(activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) > 0 ? ((activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy)| number:1):  (((activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy)* -1)| number:1)")
-          span(class="smaller",translate="MOBILE_EXPECTANCY_YEARS_LONGER", ng-class="{'hidden': (activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) > 0 }")
-          span(class="smaller",translate="MOBILE_EXPECTANCY_YEARS_SHORTER", ng-class="{'hidden': (activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) < 0 }")    
+          span(class="smaller",translate="MOBILE_EXPECTANCY_YEARS_SHORTER", ng-class="{'hidden': (activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) > 0 }")
+          span(class="smaller",translate="MOBILE_EXPECTANCY_YEARS_LONGER", ng-class="{'hidden': (activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) < 0 }")    
       doctype xml
       svg(version="1.1", id="Ebene_1", xmlns="http://www.w3.org/2000/svg", xmlns:xlink="http://www.w3.org/1999/xlink", x="0px", y="0px", viewBox="0 0 640 447", xml:space="preserve", class="svg-overlay", ng-show="activeCountryRel.lifeExpectancy!=null")
         defs
