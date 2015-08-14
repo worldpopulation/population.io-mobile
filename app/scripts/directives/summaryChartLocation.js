@@ -63,7 +63,7 @@
 
 
         function _initChart() {
-          var vB = parentWidth + 20;
+          var vB = parentWidth + 40;
 
           chart = d3.select(element[0])
           .append('svg')
@@ -176,7 +176,7 @@
                   .style({
                     fill: '#333',
                     'font-size':'45px',
-                    'text-anchor': 'start'
+                    'text-anchor': 'middle'
                   });
                   pointer.append('polygon').attr({
                      points: '-20,45 0,10 20,45'
@@ -310,7 +310,7 @@
                       return $filter('number')(Math.min(100, $scope.rankGlobal / ($scope.worldPopulation / 100)), '0') + '%'
                     }
                   })
-                  .attr('x', '20')
+                  .attr('x', '10')
                   .attr('y', '90');
 
                   function yValAtPoint(path){
