@@ -243,16 +243,17 @@
     $rootScope.next = function(){
       $rootScope.currentIndex++;
       if ($rootScope.currentIndex > 6) {
-        $rootScope.currentIndex = 0;
+        $rootScope.currentIndex = 6;
       }
     }
 
     $rootScope.prev = function(){
       $rootScope.currentIndex--;
       if ($rootScope.currentIndex < 0){
-        $rootScope.currentIndex = 6;
+        $rootScope.currentIndex = 0;
       }
     }
+
 
     $rootScope.gotoshare = function(){
       $rootScope.currentIndex = 5;
@@ -534,10 +535,6 @@
     $scope.$on('languageChange', function () {
       months = getMonths();
     });
-
-
-
-
 
     $scope.$watch('goForm.$invalid', function (invalid) {
       if (invalid) {
