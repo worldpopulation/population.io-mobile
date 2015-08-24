@@ -9,31 +9,30 @@
       link: function ($scope, element) {
         var digits, countElement, clockElement, digit, placeholder,
         digitText, placeholderText, chart,
-        digitCellWidth = 15,
+        digitCellWidth = 30,
         animationDuration = 400,
-        parentWidth = 770,
-        parentHeight = 50,
+        parentWidth =  element[0].clientWidth,
+        pH = element[0].clientHeight,
+        parentHeight = 57,
+        pW = element[0].clientWidth,
         currentValue = 0;
+
         var root = d3.select(element[0])
         .append('svg')
         .attr({
-          height: parentHeight
+          height: parentHeight,
+          'viewBox': '0 0 '+ (pW+10) +' '+ ((parentHeight * 2)- 20) +' '
         });
 
         chart = root.append('g')
         .attr({
-          'class': 'chart-wrapper',
-          height: parentHeight,
-          width: '100%'
+          'class': 'chart-wrapper'
         });
 
         function updateWindow() {
-          var d = document,
-          e = d.documentElement,
-          x = e.clientWidth;
           root.attr('width', '100%');
           chart.attr({
-            transform: 'translate(' + [(x / 2 - parentWidth / 2) + 75, -120] + ')'
+            transform: 'translate(' + [(parentWidth / 2), -112] + ')'
           });
         }
 
@@ -55,14 +54,15 @@
           .attr('x', '0')
           .attr('y', '0')
           .attr('width', digits.length * digitCellWidth)
-          .attr('height', 40);
+          .attr('height', 57);
 
           clockElement = chart.append('g')
           .attr('class', 'counter')
           .attr({
             'clip-path': 'url(#clip)',
-            transform: 'translate(210, 112)'
+            transform: 'translate('+ [- (parentWidth / 2), 120] + ')'
           });
+
 
           countElement = clockElement
           .selectAll('.count-element')
@@ -81,14 +81,14 @@
           .attr({
             'class': 'placeholder',
             'data-id': function (d, i) {return i;},
-            transform: 'translate(0,40)'
+            transform: 'translate(0,47)'
           });
 
           placeholder.append('rect')
           .attr({
             fill: 'transparent',
             width: digitCellWidth,
-            height: 40
+            height: 47
           });
 
           placeholderText = placeholder.append('text')
@@ -96,7 +96,7 @@
             return d;
           })
           .attr({
-            transform: 'translate(' + digitCellWidth / 2 + ',35)'
+            transform: 'translate(' + digitCellWidth / 3 + ',47)'
           });
 
           digit = countElement
@@ -112,7 +112,7 @@
           .attr({
             fill: 'transparent',
             width: digitCellWidth,
-            height: 40
+            height: 57
           });
 
           digitText = digit.append('text')
@@ -120,7 +120,7 @@
             return d;
           })
           .attr({
-            transform: 'translate(' + digitCellWidth / 2 + ',35)'
+            transform: 'translate(' + digitCellWidth / 3 + ',47)'
           });
         }
 
@@ -148,7 +148,7 @@
               .duration(animationDuration)
               .delay(animationDuration)
               .attr({
-                transform: 'translate(0,-40)'
+                transform: 'translate(0,-57)'
               });
 
               _placeholder
@@ -162,7 +162,7 @@
 
               setTimeout(function () {
                 _digit.attr('transform', 'translate(0,0)');
-                _placeholder.attr('transform', 'translate(0,40)');
+                _placeholder.attr('transform', 'translate(0,57)');
                 digitText.text(function (d, i) { return digits[i]; });
               }, animationDuration * 2 + 100);
             }

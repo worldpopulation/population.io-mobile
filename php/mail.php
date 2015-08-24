@@ -10,12 +10,7 @@ if ($_GET["auth"] != "jLFscl7E7oz85D8P") {
 require 'libs/PHPMailer/PHPMailerAutoload.php';
 require 'libs/Template.php';
 
-$config = array(
-  'host' => 'smtp.gmail.com',
-  'username' => 'no-reply@47nord.de',
-  'password' => '8x6HgzTf',
-  'subject' => 'population.io'
-);
+
 
 $request_body = file_get_contents('php://input');
 $data = json_decode($request_body);
