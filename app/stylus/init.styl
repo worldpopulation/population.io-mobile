@@ -115,13 +115,6 @@ text
     .icon.opera
         background-position -250px top
 
-// modals
-div.modal
-    position fixed
-    left 0
-    right 0
-    height 100%
-
 // content block
 .content-block
     min-height 100%
@@ -197,25 +190,43 @@ div.modal
 
 // modal
 .modal
-    background rgba(0, 0, 0, 0.5)
     position absolute
     left 0
     top 0
-    height 100%
-    width 100%
+    height calc(100vh)
+    width calc(100vw)
 
-.modal-title
-    font-size 42px
-    font-family 'PlantinMTStd-Light', sans-serif
+.modal-header
+  .modal-title
+    font-size 24px
+    color $active-blue
+    font-family $font3
+    padding-bottom 15px
+    border-bottom 1px solid $color2
+
+  .modal-header-close
+    height 10px
+    width 10px
+    padding 10px
+    background-image url("../images/close-icon.svg")
+    position absolute
+    top 15px
+    right 15px
+    background-repeat no-repeat
+
+
 
 .modal-body
     margin 20px 0 40px 0
     h4
-        font-family 'PlantinMTStd-Light', sans-serif
+        font-family $font3
         margin 0 0 10px 0
-        font-size 24px
+        font-size 17px
+        color $color3
     p
         margin 0 0 20px 0
+        line-height 20px
+        font-family $font3
     a
         text-decoration underline
         display inline-block
@@ -226,26 +237,11 @@ div.modal
     ul
         padding-bottom: 7px
 
-.modal-footer
-    button
-        background #333
-        color #fff
-        cursor pointer
-        border none
-        border-radius 4px
-        padding 10px 50px
-
 .modal-dialog
-    background #fff
-    box-shadow 0 0 10px rgba(0, 0, 0, 0.5)
-    border-radius 4px
-    box-sizing border-box
-    padding 40px
-    width 100%
+    background $color4
+    padding 15px
+    width calc(100vw - 30px)
     position absolute
-    top 50px
-    max-height 80%
-    overflow-y auto
 
 // navigation
 .navigation
@@ -516,4 +512,16 @@ i.menu-bar-icon
   opacity 1
 
 #home.ng-leave.ng-leave-active
+  opacity 0
+
+.item-animate-ng-show
+   opacity 1
+
+.item-animate.ng-hide-add
+  transition all ease-in-out 0.5s
+
+.item-animate.ng-hide-remove
+  transition all ease-in-out 0.5s
+
+.item-animate.ng-hide
   opacity 0

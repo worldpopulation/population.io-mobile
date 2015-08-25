@@ -1,6 +1,7 @@
 script(type="text/ng-template", id="about.html")
   .modal-header
     h3.modal-title {{ 'HEADER_MENU_ABOUT' | translate }}
+    .modal-header-close(ng-click="$close()")
   .modal-body
     p(compile-unsafe="'ABOUT_INTRO' | translate")
     h4 Credits
@@ -9,28 +10,28 @@ script(type="text/ng-template", id="about.html")
     p(compile-unsafe="'ABOUT_CREDITS_CONTRIBUTERS' | translate")
     h4(compile-unsafe="'ABOUT_DISCLAIMER_TITLE' | translate")
     p(compile-unsafe="'ABOUT_DISCLAIMER' | translate")
-  .modal-footer
-    button(ng-click="$close()") OK!
+
 
 script(type="text/ng-template", id="methodology.html")
   .modal-header
     h3.modal-title(compile-unsafe="'METHODOLOGY_TITLE' | translate")
+    .modal-header-close(ng-click="$close()")
   .modal-body
     p(compile-unsafe="'METHODOLOGY_INTRO' | translate")
-  .modal-footer
-    button(ng-click="$close()") OK!
+
 
 script(type="text/ng-template", id="developers.html")
   .modal-header
     h3.modal-title(compile-unsafe="'HEADER_MENU_API' | translate")
+    .modal-header-close(ng-click="$close()")
   .modal-body
     p(compile-unsafe="'API_INTRO' | translate")
-  .modal-footer
-    button(ng-click="$close()") OK!
+
 
 script(type="text/ng-template", id="browser-warning.html")
   .modal-header
     h3.modal-title {{ 'BROWSER_WARNING_TITLE' | translate }}
+    .modal-header-close(ng-click="$close()")
   .modal-body
     p {{ 'BROWSER_WARNING_INTRO' | translate }}
     .browser-list
@@ -46,5 +47,3 @@ script(type="text/ng-template", id="browser-warning.html")
         .icon.firefox
         span.title Firefox
         span.publisher Mozilla Foundation
-  .modal-footer
-    button(ng-click="$close()") OK!
