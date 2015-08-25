@@ -18,14 +18,14 @@ header.grey
               input(id="countryRel", type="text", ng-model="selectedCountryRel", typeahead="country.POPIO_NAME for country in countriesList($viewValue)", typeahead-wait-ms="100", typeahead-editable="false")
       .age-area
         .country-ref
-          span {{activeCountryRef.lifeExpectancy | number:1}}
+          span(class="fob") {{activeCountryRef.lifeExpectancy | number:1}}
           span(class="crgrey" translate="MOBILE_EXPECTANCY_YEARS_OLD")
         .country-rel
-          span {{activeCountryRel.lifeExpectancy | number:1}}
+          span(class="fob") {{activeCountryRel.lifeExpectancy | number:1}}
           span(class="crgrey", translate="MOBILE_EXPECTANCY_YEARS_OLD", ng-show="activeCountryRel.lifeExpectancy!=null")
       .agedifftilife(ng-show="activeCountryRel.lifeExpectancy!=null")
         .circle
-          span(ng-bind="(activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) > 0 ? ((activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy)| number:1):  (((activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy)* -1)| number:1)")
+          span(ng-bind="(activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) > 0 ? ((activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy)| number:1):  (((activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy)* -1)| number:1)" class="fob")
           span(class="smaller",translate="MOBILE_EXPECTANCY_YEARS_SHORTER", ng-class="{'hidden': (activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) > 0 }")
           span(class="smaller",translate="MOBILE_EXPECTANCY_YEARS_LONGER", ng-class="{'hidden': (activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) < 0 }")    
       doctype xml
