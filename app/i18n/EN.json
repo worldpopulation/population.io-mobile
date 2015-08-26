@@ -25,6 +25,7 @@
   "LOCAL_DAY": "Day",
   "LOCAL_MONTH": "Month",
   "LOCAL_YEAR": "Year",
+  "LOCAL_YEARS": "Years",
 
   "LOCAL_FEMALE": "Female",
   "LOCAL_MALE": "Male",
@@ -64,7 +65,7 @@
   "BROWSER_WARNING_INTRO":"Your browser is out-of-date for this showcase. Please download one of these up-to-date, free and excellent browsers.",
 
   "MOBILE_MILESTONES_INTRO": "What are my milestones?",
-  "MOBILE_MILESTONES_NEXT": "You will expect your next milestone in <span class='green'>{{val1}} years</span>",
+  "MOBILE_MILESTONES_NEXT": "You will expect your next milestone in <span class='green'>{{val1}} {{val2}}</span>",
   "MOBILE_MILESTONES_MILESTONE_LIFE_EXPECTANCY" : "Your projected life expectancy in ",
   "MOBILE_MILESTONES_MILESTONE_1_BILLION": "<span class='black'>1.000.000.000</span> <sup>st</sup></br> person to be alive",
   "MOBILE_MILESTONES_MILESTONE_2_BILLION": "<span class='black'>2.000.000.000</span> <sup>nd</sup></br> person to be alive",
@@ -80,6 +81,8 @@
   "MOBILE_MILESTONES_MILESTONE_NOW": "<span class='black'>Now</span>",
   "MOBILE_MILESTONES_MILESTONE_18": "<span class='black'>You turn 18!</span>",
   "MOBILE_MILESTONES_MILESTONE_BORN": "<span class='black'>Born</span>",
+  "MOBILE_MILESTONES_LOCAL_YEAR": "year",
+  "MOBILE_MILESTONES_LOCAL_YEARS": "years",
 
   "MOBILE_BIRTHDAYS_HEADER": "How many birthday buddies do I have?",
   "MOBILE_BIRTHDAYS_TEASER": "the amount of people sharing your day of birth are <ul><li class='green'>{{sharedDay}}</li><li class='green f-lighter'>{{world}}</li></ul> <span>or</span> <ul> <li class='blue'>{{sharedDayCountry}}</li><li class='blue f-lighter'>{{country}}</li>",

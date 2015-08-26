@@ -724,6 +724,13 @@
         $scope.milestoneDate = $filter('date')(date, 'yyyy');
         $scope.milestoneDate = $scope.milestoneDate -
         $filter('date')(new Date(), 'yyyy');
+
+        if($scope.milestoneDate > 1){
+          $scope.milestoneYears = $filter('translate')('MOBILE_MILESTONES_LOCAL_YEARS');
+        } else {
+            $scope.milestoneYears = $filter('translate')('MOBILE_MILESTONES_LOCAL_YEAR');
+        }
+
       };
 
       $scope.loading += 1;
