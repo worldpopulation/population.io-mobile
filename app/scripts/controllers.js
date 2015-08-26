@@ -731,7 +731,6 @@
         } else {
             $scope.milestoneYears = $filter('translate')('MOBILE_MILESTONES_LOCAL_YEAR');
         }
-
       };
 
       $scope.loading += 1;

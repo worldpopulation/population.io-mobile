@@ -20,12 +20,14 @@ world-clock
                 .typeahead
                     .di
                       input.day-field.form-control(id="inputBirthDay", type="number", name="birthdayDay", ng-value="profile.birthday.day", ng-model = "profile.birthday.day", typeahead="birthdayDay for birthdayDay in birthdays($viewValue,'d')", typeahead-wait-ms="100", typeahead-editable="true", required, validate-day, typeahead-on-select='setDay($item, $model, $label)', formnovalidate)
-
-                    input.month-field.form-control(id="inputBirthMonth", type="text", name="birthdayMonth", ng-value="profile.birthday.month", ng-model = "profile.birthday.month", typeahead="birthdayMonth for birthdayMonth in birthdays($viewValue,'m')", typeahead-wait-ms="100", typeahead-editable="true", required, validate-month, typeahead-on-select='setMonth($item, $model, $label)', formnovalidate)
-
-                    input.year-field.form-control(id="inputBirthYear", type="number", name="birthdayYear", ng-value="profile.birthday.year", ng-model = "profile.birthday.year", typeahead="birthdayYear for birthdayYear in birthdays($viewValue,'y')", typeahead-wait-ms="100", typeahead-editable="true", required, validate-year, typeahead-on-select='setYear($item, $model, $label)', formnovalidate)
-                  .typeahead.icon-country
-                    input.form-control(id="inputBirthCountry", type="text",name='country', ng-model="profile.country", ng-value="profile.country", typeahead="country.POPIO_NAME for country in countriesList($viewValue)", typeahead-wait-ms="100", typeahead-editable="true", required, stoptab, validate-country, typeahead-on-select='setCountry($item, $model, $label)', formnovalidate)
+                    
+                    .dm
+                      input.month-field.form-control(id="inputBirthMonth", type="text", name="birthdayMonth", ng-value="profile.birthday.month", ng-model = "profile.birthday.month", typeahead="birthdayMonth for birthdayMonth in birthdays($viewValue,'m')", typeahead-wait-ms="100", typeahead-editable="true", required, validate-month, typeahead-on-select='setMonth($item, $model, $label)', formnovalidate)
+                    .dy
+                      input.year-field.form-control(id="inputBirthYear", type="number", name="birthdayYear", ng-value="profile.birthday.year", ng-model = "profile.birthday.year", typeahead="birthdayYear for birthdayYear in birthdays($viewValue,'y')", typeahead-wait-ms="100", typeahead-editable="true", required, validate-year, typeahead-on-select='setYear($item, $model, $label)', formnovalidate)    
+                  .typeahead
+                    .icon-country
+                      input.form-control(id="inputBirthCountry", type="text",name='country', ng-model="profile.country", ng-value="profile.country", typeahead="country.POPIO_NAME for country in countriesList($viewValue)", typeahead-wait-ms="100", typeahead-editable="true", required, stoptab, validate-country, typeahead-on-select='setCountry($item, $model, $label)', formnovalidate)
                 .toggle
                   label.icon.icon-female(ng-model="profile.gender" btn-radio="'female'", required, translate="LOCAL_FEMALE")
                   label.icon.icon-male(ng-model="profile.gender" btn-radio="'male'", required, translate="LOCAL_MALE")
