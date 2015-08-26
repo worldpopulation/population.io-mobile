@@ -308,6 +308,7 @@
     };
 
     $scope.calcCountryOlderNumber = function () {
+      if (!$scope.rankLocal || !$scope.countryPopulation) {return 0}
       return $filter('number')(Math.max(0, $scope.countryPopulation - $scope.rankLocal), 0);
     };
 
