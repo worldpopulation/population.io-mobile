@@ -23,11 +23,11 @@
           padding 10px 15px
           display block
           milestone
-            width 40%
+            width 32%
             float left
 
             @media only screen and (max-width: 769px) and (orientation: landscape)
-              width 30%
+              width 20%
 
             .time
               fill $color3
@@ -49,21 +49,28 @@
             font-family $font2
             width 50%
             float left
-            margin-top 10%
+            margin-top 5%
             color $color2
-            font-size 15px
+            font-size 20px
+            line-height 22px
 
             @media only screen and (max-width: 769px) and (orientation: landscape)
-              margin-top 40px
+              margin-top 2%
               width 65%
 
             .black
-              font-size 18px
+              font-size 22px
               color $color1
               font-weight bold
+            .oneline
+              line-height 40px
+
+              @media only screen and (max-width: 769px) and (orientation: landscape)
+                line-height 55px
+
             sup
               vertical-align super
-              font-size 14px
+              font-size 18px
 
         li:nth-child(2n)
           clear both

@@ -78,9 +78,9 @@
   "MOBILE_MILESTONES_MILESTONE_9_BILLION": "<span class='black'>9.000.000.000</span> <sup>th</sup></br> person to be alive",
   "MOBILE_MILESTONES_MILESTONE_10_BILLION": "<span class='black'>10.000.000.000</span> <sup>th</sup></br> person to be alive",
   "MOBILE_MILESTONES_MILESTONE_11_BILLION": "<span class='black'>11.000.000.000</span> <sup>th</sup></br> person to be alive",
-  "MOBILE_MILESTONES_MILESTONE_NOW": "<span class='black'>Now</span>",
-  "MOBILE_MILESTONES_MILESTONE_18": "<span class='black'>You turn 18!</span>",
-  "MOBILE_MILESTONES_MILESTONE_BORN": "<span class='black'>Born</span>",
+  "MOBILE_MILESTONES_MILESTONE_NOW": "<span class='black oneline'>Now</span>",
+  "MOBILE_MILESTONES_MILESTONE_18": "<span class='black oneline'>You turn 18!</span>",
+  "MOBILE_MILESTONES_MILESTONE_BORN": "<span class='black oneline'>Born</span>",
   "MOBILE_MILESTONES_LOCAL_YEAR": "year",
   "MOBILE_MILESTONES_LOCAL_YEARS": "years",
 

@@ -39,10 +39,10 @@
             }
           }]
 
-          var width = 110,
-              height = 110,
-              innerRadius = 98,
-              outerRadius = 100;
+          var width = 90,
+              height = 90,
+              innerRadius = 78,
+              outerRadius = 80;
 
           var drawArc = d3.svg.arc()
           .innerRadius(innerRadius/2)
@@ -54,7 +54,7 @@
           .append('svg')
           .attr('width', width)
           .attr('height', height)
-          .attr('viewBox', '0 0 110 110')
+          .attr('viewBox', '0 0 90 90')
           .append('g')
           .attr("transform", "translate(" + width/2  + "," + height/2  + ")");
 
