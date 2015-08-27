@@ -50,9 +50,9 @@
                 var html = document.getElementsByTagName('html');
                 var width = (html[0].clientWidth - 30);
 
-                var pxVal = Math.floor((width * continentsPercentages) / 12);
+                var pxVal = Math.floor((width * continentsPercentages) / 15);
 
-                var relativeWidth = pxVal * 12;
+                var relativeWidth = pxVal * 15;
 
                 if (relativeWidth <= 24) {
                   relativeWidth = 29;

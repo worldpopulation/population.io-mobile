@@ -190,73 +190,83 @@
     }
 
     $rootScope.gotoworldage = function(){
-      $rootScope.currentIndex = 1;
+      $rootScope.currentIndex = 2;
       $rootScope.prev();
       $scope.showMenu();
     }
 
     $rootScope.gotocountryage = function(){
-      $rootScope.currentIndex = 0;
-      $rootScope.next();
-      $scope.showMenu();
-    }
-
-    $rootScope.gotomilestones = function(){
       $rootScope.currentIndex = 1;
       $rootScope.next();
       $scope.showMenu();
     }
 
-    $rootScope.gotobb = function(){
+    $rootScope.gotomilestones = function(){
       $rootScope.currentIndex = 2;
       $rootScope.next();
       $scope.showMenu();
     }
 
-    $rootScope.gotoexpectany = function(){
+    $rootScope.gotobb = function(){
       $rootScope.currentIndex = 3;
       $rootScope.next();
       $scope.showMenu();
     }
 
-    $rootScope.gotodod = function(){
+    $rootScope.gotoexpectany = function(){
       $rootScope.currentIndex = 4;
       $rootScope.next();
       $scope.showMenu();
     }
 
+    $rootScope.gotodod = function(){
+      $rootScope.currentIndex = 5;
+      $rootScope.next();
+      $scope.showMenu();
+    }
+
+    $rootScope.home = function(){
+      $rootScope.isResults = false;
+      $location.path();
+      $scope.showMenu();
+    }
+
+    $rootScope.gotohome = function(){
+      if($rootScope.currentIndex === 0){
+        $rootScope.isResults = false;
+        $location.path();
+      }
+    }
+
+
+
   }])
   .controller('GoCtrl', ['$scope', '$rootScope','$location', 'ProfileService',  function($scope, $rootScope, $location, ProfileService){
 
-    $rootScope.home = function(){
-      $location.path;
-      $rootScope.isResults = false;
-    }
-
     $rootScope.$on('go', function(){
       $rootScope.isResults = true;
-      $rootScope.currentIndex = 0;
+      $rootScope.currentIndex = 1;
     });
 
-    $scope.items = [{id:0},{id:1},{id:2},{id:3},{id:4},{id:5},{id:6}];
+    $scope.items = [{id:0},{id:1},{id:2},{id:3},{id:4},{id:5},{id:6},{id:7}];
 
     $rootScope.next = function(){
       $rootScope.currentIndex++;
-      if ($rootScope.currentIndex > 6) {
-        $rootScope.currentIndex = 6;
+      if ($rootScope.currentIndex > 7) {
+        $rootScope.currentIndex = 7;
       }
     }
 
     $rootScope.prev = function(){
       $rootScope.currentIndex--;
-      if ($rootScope.currentIndex < 0){
-        $rootScope.currentIndex = 0;
+      if ($rootScope.currentIndex == 0){
+        $rootScope.gotohome();
       }
     }
 
 
     $rootScope.gotoshare = function(){
-      $rootScope.currentIndex = 5;
+      $rootScope.currentIndex = 6;
       $rootScope.next();
     }
 
