@@ -516,9 +516,9 @@
     }
 
     var months = getMonths();
-    var days = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'];
+    var days = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
     var years = [];
-    for (var i = 1920; i < new Date().getFullYear(); i++) { years.push(i.toString()) }
+    for (var i = 1920; i < new Date().getFullYear(); i++) { years.push(i) }
 
     $scope.setDay = function ($item, $model, $label) {
       $scope.goForm.birthdayDay.$setValidity('validateDay', true);
@@ -546,7 +546,9 @@
       switch (type) {
         case 'd':
         return _.filter(days, function (v) {
-          return v.indexOf(parseInt(newVal)) > -1
+          v = v.toString();
+          var  reVal =  v.indexOf(newVal.toString()) > -1;
+          return reVal;
         });
         break;
         case 'm':
@@ -564,7 +566,9 @@
         break;
         case 'y':
         return _.filter(years, function (v) {
-          return v.indexOf(parseInt(newVal)) > -1
+          v = v.toString();
+          var reVal = v.indexOf(newVal.toString()) > -1;
+          return reVal;
         });
 
         break;

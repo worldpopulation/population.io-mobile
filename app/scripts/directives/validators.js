@@ -57,13 +57,13 @@ angular.module('populationioApp')
           require: 'ngModel',
           link: function (scope, elm, attrs, ctrl) {
               ctrl.$parsers.unshift(function (viewValue) {
-                  if (parseInt(viewValue, 0) && parseInt(viewValue, 0) > 0 && parseInt(viewValue, 0) < 32) {
+                  if ((viewValue) && (viewValue) > 0 && viewValue < 32) {
                       // it is valid
                       ctrl.$setValidity('validateDay', true);
-                      ctrl.$modelValue = ctrl.$viewValue = parseInt(viewValue, 0).toString();
+                      ctrl.$modelValue = ctrl.$viewValue = viewValue.toString();
                       ctrl.$render();
 
-                      return parseInt(viewValue);
+                      return viewValue;
                   } else {
                       // it is invalid, return undefined (no model update)
                       ctrl.$setValidity('validateDay', false);
@@ -79,13 +79,13 @@ angular.module('populationioApp')
           require: 'ngModel',
           link: function (scope, elm, attrs, ctrl) {
               ctrl.$parsers.unshift(function (viewValue) {
-                  if (parseInt(viewValue, 0) && parseInt(viewValue, 0) > 1919 && parseInt(viewValue, 0) <= new Date().getFullYear() - 1) {
+                  if (viewValue && viewValue > 1919 && viewValue <= new Date().getFullYear() - 1) {
                       // it is valid
                       ctrl.$setValidity('validateYear', true);
-                      ctrl.$modelValue = ctrl.$viewValue = parseInt(viewValue, 0).toString();
+                      ctrl.$modelValue = ctrl.$viewValue = viewValue.toString();
                       ctrl.$render();
 
-                      return parseInt(viewValue, 0);
+                      return viewValue;
                   } else {
                       // it is invalid, return undefined (no model update)
                       ctrl.$setValidity('validateYear', false);
