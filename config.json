@@ -1,0 +1,22 @@
+{
+  "local": {
+    "EnvironmentConfig": {
+      "mailauth":"jLFscl7E7oz85D8P",
+      "friendmail":"rgJLjFscl8Hgzz85D8P",
+      "host":"smtp.gmail.com",
+      "username" : "no-reply@47nord.de",
+      "password" : "8x6HgzTf",
+      "subject" : "population.io"
+    }
+  },
+  "production": {
+    "EnvironmentConfig": {
+      "mailauth":"jLFscl7E7oz85D8P",
+      "friendmail":"rgJLjFscl8Hgzz85D8P",
+      "host":"smtp.gmail.com",
+      "username" : "no-reply@47nord.de",
+      "password" : "8x6HgzTf",
+      "subject" : "population.io"
+    }
+  }
+}

@@ -1,5 +1,5 @@
 angular
-.module('populationioApp', [ 'ngRoute', 'duScroll', 'ngResource', 'ui.router', 'ngAnimate', 'ui.bootstrap','ngTouch', 'pascalprecht.translate'])
+.module('populationioApp', [ 'ngRoute', 'duScroll', 'ngResource', 'ui.router', 'ngAnimate', 'ui.bootstrap','ngTouch', 'pascalprecht.translate','popioconfig'])
 .config(function ($locationProvider, $urlRouterProvider, $httpProvider, $translateProvider) {
 
   // $locationProvider.html5Mode(true);
