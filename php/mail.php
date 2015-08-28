@@ -2,7 +2,13 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
-if ($_GET["auth"] != "jLFscl7E7oz85D8P") {
+$config_values = file_get_contents('config.json');
+$data  = json_decode($config_values);
+$config_data = get_object_vars($data);
+$config_env_data = get_object_vars($config_data['production']);
+$cdata = get_object_vars($config_env_data['EnvironmentConfig']);
+
+if ($_GET["auth"] != $cdata['mailauth']) {
   header('X-PHP-Response-Code: 404', true, 404);
   exit();
 }
@@ -10,7 +16,12 @@ if ($_GET["auth"] != "jLFscl7E7oz85D8P") {
 require 'libs/PHPMailer/PHPMailerAutoload.php';
 require 'libs/Template.php';
 
-
+$config = array(
+  'host' => $cdata['host'],
+  'username' => $cdata['username'],
+  'password' => $cdata['password'],
+  'subject' => $cdata['subject']
+);
 
 $request_body = file_get_contents('php://input');
 $data = json_decode($request_body);
