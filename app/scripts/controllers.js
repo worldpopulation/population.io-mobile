@@ -113,7 +113,6 @@
         gender = pathItems[4],
         country = pathItems[5];
 
-
         if (['female', 'male'].indexOf(gender) > -1 &&
         country && year && month && day) {
           ProfileService.gender = gender;
@@ -125,8 +124,6 @@
           $rootScope.$broadcast('ready');
           $scope.$broadcast('languageChange');
         }
-
-
       }
 
     });
@@ -746,7 +743,7 @@
         if($scope.milestoneDate > 1){
           $scope.milestoneYears = $filter('translate')('MOBILE_MILESTONES_LOCAL_YEARS');
         } else {
-          $scope.milestoneYears = $filter('translate')('MOBILE_MILESTONES_LOCAL_YEAR');
+            $scope.milestoneYears = $filter('translate')('MOBILE_MILESTONES_LOCAL_YEAR');
         }
       };
 
@@ -1161,13 +1158,13 @@
     });
   }])
 
-  .controller('SharingCtrl', ['$scope', '$rootScope', '$filter','$location', '$http', 'EnvironmentConfig',
-  function ($scope, $rootScope, $filter, $location, $http, EnvironmentConfig) {
+  .controller('SharingCtrl', ['$scope', '$rootScope', '$filter','$location', '$http',
+  function ($scope, $rootScope, $filter, $location, $http) {
 
     $scope.registerMail = function () {
       $scope.sending = true;
       $http({
-        url: 'http://api.47nord.de/population.io/v1/mail.php?auth='+EnvironmentConfig.mailauth,
+        url: 'http://api.47nord.de/population.io/v1/mail.php?auth=jLFscl7E7oz85D8P',
         method: 'POST',
         data: {
           email: $scope.email
@@ -1182,13 +1179,12 @@
         $scope.sending = false;
         alert('Whoops, An error occurred!');
       });
-
     };
 
 
     $scope.inviteMail = function(){
       $http({
-        url: '../php/send-friend.php?auth='+EnvironmentConfig.friendmail,
+        url: '../php/send-friend.php?auth=rgJLjFscl8Hgzz85D8P',
         method: 'POST',
         data: {
           friendemail: $scope.friendemail,

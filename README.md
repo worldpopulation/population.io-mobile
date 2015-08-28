@@ -42,30 +42,3 @@
         }
 
 * Run `gulp deploy`
-
-## Config File
-
-* Add `config.json` file to your *PROJECT_ROOT* and enter missing credentials
-
-      {
-        "local": {
-          "EnvironmentConfig": {
-            "mailauth":"AUTH",
-            "friendmail":"AUTH",
-            "host":"SMTP",
-            "username" : "USER",
-            "password" : "PASS",
-            "subject" : "SUBJECT"
-          }
-        },
-        "production": {
-          "EnvironmentConfig": {
-            "mailauth":"AUTH",
-            "friendmail":"AUTH",
-            "host":"SMTP",
-            "username" : "USER",
-            "password" : "PASS",
-            "subject" : "SUBJECT"
-          }
-        }
-      }
