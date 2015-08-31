@@ -169,18 +169,18 @@
       window.open(link);
     }
 
-    $scope.showAbout = function () {
+    $rootScope.showAbout = function () {
       $modal.open({
         templateUrl: 'about.html'
       });
     };
-    $scope.showMethodology = function () {
+    $rootScope.showMethodology = function () {
       $modal.open({
         templateUrl: 'methodology.html'
       });
     };
 
-    $scope.showDevelopers = function () {
+    $rootScope.showDevelopers = function () {
       $modal.open({
         templateUrl: 'developers.html'
       });

@@ -10,8 +10,10 @@ body
   width auto
   font-family $font1
   .inner
-    padding 15px
     position relative
+    width 700%
+    clearfix()
+
 ul
   li
     list-style-type none
@@ -28,6 +30,7 @@ svg
 h1, h2, h3, h4, h5, h6, p
     margin 0
     padding 0
+    white-space normal
 
 i
     font-style normal
@@ -117,7 +120,21 @@ text
 
 // content block
 .content-block
-    min-height 100%
+  float left
+  padding 0px
+  width calc(100% / 7);
+  white-space nowrap
+  min-height 100%
+  clearfix()
+  display inline-block
+  position relative
+
+.wrapperline
+  width calc(100% - 30px)
+  overflow hidden
+  position relative
+  min-height calc(100vh)
+  padding 15px 15px 0px
 
 // cloak
 [ng\:cloak],
@@ -489,7 +506,6 @@ form
         background highlight-yellow
 
 i.menu-bar-icon
-  float right
   z-index 1
   height 15px
   width 15px
@@ -497,7 +513,9 @@ i.menu-bar-icon
   margin-bottom -25px
   background-repeat no-repeat
   background-image url('../images/menu-bar.svg')
-  position: relative;
+  position absolute
+  top 0px
+  right 0px
 
 .ir
   top 2px

@@ -1,85 +1,87 @@
 #home
   position relative
-.home-area
-  width 100%
-  position relative
-  .question
-    .prespace
-      padding 35px 0px
-      border-bottom 1px solid $color2
-      h1
-        font-weight bold
-        font-size 30px
-      p
-        color $color2
-        font-size 23px
-        letter-spacing 1px
-        line-height 36px
-        margin-bottom: 10px
-      form
-        clearfix()
-        &.highlight
+  .container
+    display block
+    .home-area
+      width 100%
+      position relative
+      .question
+        .prespace
+          padding 35px 0px
+          border-bottom 1px solid $color2
+          h1
+            font-weight bold
+            font-size 30px
+          p
+            color $color2
+            font-size 23px
+            letter-spacing 1px
+            line-height 36px
+            margin-bottom: 10px
+          form
+            clearfix()
+            &.highlight
+              input
+                  &.ng-invalid
+                      box-shadow 0 0 8px rgba(red, 1)
+            &.highlight-extra
+              input
+                  &.ng-dirty.ng-invalid
+                  &.ng-invalid
+                      box-shadow 0 0 8px rgba(red, 1)
+            button
+              position relative
             input
-                &.ng-invalid
-                    box-shadow 0 0 8px rgba(red, 1)
-        &.highlight-extra
-            input
-                &.ng-dirty.ng-invalid
-                &.ng-invalid
-                    box-shadow 0 0 8px rgba(red, 1)
-        button
-            position relative
-        input
-            float: none
-            transition all 0.2s
-            background highlight-yellow
-            border 1px solid highlight-yellow
-            width 100%
-            height 50px
-            padding 0 40px
-            margin 0
-            border-radius 10px
-            &.ng-dirty.ng-invalid
-                box-shadow 0 0 8px rgba(red, 1)
-            &.day-field
-                padding 0 0 0 35px
-                width 100%
-            &.month-field
-                width 100%
-                padding 0 18px
-            &.year-field
-                width 100%
-                padding 0 18px
+              float: none
+              transition all 0.2s
+              background highlight-yellow
+              border 1px solid highlight-yellow
+              width 100%
+              height 50px
+              padding 0 40px
+              margin 0
+              border-radius 10px
+              &.ng-dirty.ng-invalid
+                  box-shadow 0 0 8px rgba(red, 1)
+              &.day-field
+                  padding 0 0 0 35px
+                  width 100%
+              &.month-field
+                  width 100%
+                  padding 0 18px
+              &.year-field
+                  width 100%
+                  padding 0 18px
 
 
-        ::-webkit-input-placeholder
-            color $color1
-        .typeahead
-            margin 0 0 20px 0
-            .icon-country
-                width 70%
-                display inline-block
-                .dropdown-menu
-                  width inherit
+            ::-webkit-input-placeholder
+              color $color1
+            .typeahead
+              margin 0 0 20px 0
+              .icon-country
+                  width 70%
+                  display inline-block
+                  .dropdown-menu
+                    width inherit
 
-                &:before
-                    content ''
-                    height 20px
-                    width 20px
-                    position absolute
-                    z-index 9
-                    top 15px
-                    left: 12px;
-                    background-image url('../images/country-icon.svg')
-                    background-repeat no-repeat
+                  &:before
+                      content ''
+                      height 20px
+                      width 20px
+                      position absolute
+                      z-index 9
+                      top 15px
+                      left: 12px;
+                      background-image url('../images/country-icon.svg')
+                      background-repeat no-repeat
 
-        .toggle
+          .toggle 
             margin-right 0px
             float left
             label
                 padding 0 30px
                 width 19%
-        .icon
+          .icon
             position relative
             margin 0
             input

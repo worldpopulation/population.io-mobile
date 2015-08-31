@@ -1,28 +1,42 @@
 extends ../layouts/default
 block content
-    svg.defs-area
-        defs
-            include ../../../assets/shapes-01.svg
-            include ../../../assets/shapes-02.svg
-            include ../../../assets/shapes-03.svg
-            include ../../../assets/shapes-04.svg
-            include ../../../assets/shapes-05.svg
-            include ../../../assets/shapes-05-large.svg
-            include ../../../assets/female-large.svg
-            include ../../../assets/milestones.svg
-    section#home(ng-controller='HomeCtrl', ng-if='!isResults')
-        include ../partials/home-area
-    section#summary(ng-controller='SummaryCtrl',class='item-animate', ng-show="currentIndex == 1", ng-swipe-left="next()", ng-swipe-right="prev()",  ng-if='isResults')
-        include ../partials/summary-area
-    section#summarylocation(ng-controller='SummaryCtrl' ,ng-show="currentIndex == 2", ng-swipe-left="next()", ng-swipe-right="prev()", ng-if='isResults', class='item-animate')
-        include ../partials/summary-area-location
-    section#milestones(ng-controller='MilestonesCtrl', class='item-animate', ng-show="currentIndex == 3", ng-swipe-left="next()", ng-swipe-right="prev()", ng-if='isResults')
-        include ../partials/milestones-area
-     section#birthdays(ng-controller='BirthdaysCtrl', class='item-animate', ng-show="currentIndex == 4", ng-swipe-left="next()", ng-swipe-right="prev()", ng-if='isResults')
-         include ../partials/birthdays-area
-    section#expectancy(ng-controller='ExpectancyCtrl', class='item-animate', ng-show="currentIndex == 5", ng-swipe-left="next()", ng-swipe-right="prev()", ng-if='isResults')
-         include ../partials/expectancy-area
-    section#death-area(ng-controller='DeathCtrl', class='item-animate', ng-show="currentIndex == 6", ng-swipe-left="next()", ng-swipe-right="prev()", ng-if='isResults')
-        include ../partials/death-area
-    section#fancy-sharing(ng-controller='SharingCtrl', class='item-animate', ng-show="currentIndex == 7", ng-swipe-left="next()", ng-swipe-right="prev()", ng-if='isResults')
-        include ../partials/fancy-sharing
+    .content-block        
+      section#home(ng-controller='HomeCtrl', ng-if='!isResults')
+          include ../layouts/header
+          include ../partials/home-area
+          include ../layouts/footer
+    .content-block
+      section#summary(ng-controller='SummaryCtrl',class='item-animate', ng-swipe-left="next()", ng-swipe-right="prev()", ng-show="currentIndex == 1", ng-if='isResults')
+          include ../layouts/header
+          include ../partials/summary-area
+          include ../layouts/footer
+    .content-block      
+      section#summarylocation(ng-controller='SummaryCtrl', ng-swipe-left="next()", ng-swipe-right="prev()",ng-show="currentIndex == 2", ng-if='isResults', class='item-animate')
+          include ../layouts/header
+          include ../partials/summary-area-location
+          include ../layouts/footer
+    .content-block
+      section#milestones(ng-controller='MilestonesCtrl', class='item-animate', ng-swipe-left="next()", ng-swipe-right="prev()",ng-show="currentIndex == 3", ng-if='isResults')
+          include ../layouts/header
+          include ../partials/milestones-area
+          include ../layouts/footer
+    .content-block
+      section#birthdays(ng-controller='BirthdaysCtrl', class='item-animate', ng-swipe-left="next()", ng-swipe-right="prev()",ng-show="currentIndex == 4", ng-if='isResults')
+          include ../layouts/header
+          include ../partials/birthdays-area
+          include ../layouts/footer
+    .content-block
+      section#expectancy(ng-controller='ExpectancyCtrl', class='item-animate', ng-swipe-left="next()", ng-swipe-right="prev()",ng-show="currentIndex == 5", ng-if='isResults')
+          include ../layouts/header
+          include ../partials/expectancy-area
+          include ../layouts/footer
+    .content-block
+      section#death-area(ng-controller='DeathCtrl', class='item-animate', ng-swipe-left="next()", ng-swipe-right="prev()",ng-show="currentIndex == 6", ng-if='isResults')
+          include ../layouts/header.jade
+          include ../partials/death-area
+          include ../layouts/footer
+    .content-block
+      section#fancy-sharing(ng-controller='SharingCtrl', class='item-animate', ng-swipe-left="next()", ng-swipe-right="prev()",ng-show="currentIndex == 7", ng-if='isResults')
+          include ../layouts/header
+          include ../partials/fancy-sharing
+        include ../layouts/footer
