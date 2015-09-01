@@ -109,7 +109,7 @@
         $rootScope.expanded = true;
         var pathItems = $location.$$path.split('/'),
         year = parseInt(pathItems[1]),
-        month = parseInt(pathItems[2]),
+        month = pathItems[2],
         day = parseInt(pathItems[3]),
         gender = pathItems[4],
         country = pathItems[5];
@@ -445,25 +445,6 @@
   ['$scope', '$interpolate', '$timeout', '$http', '$interval', '$modal', '$state', '$location', '$document', '$rootScope', '$filter', 'ProfileService', 'PopulationIOService', 'BrowserService',
   function ($scope, $interpolate, $timeout, $http, $interval, $modal, $state, $location, $document, $rootScope, $filter, ProfileService, PopulationIOService, BrowserService) {
     $scope.type = 'distribution';
-
-
-    var path = $location.$$path.replace(/.+[/](.*)$/g, '$1');
-    if ($location.preventReload) {
-      $location.preventReload = false;
-      return;
-    }
-
-    if (path && !ProfileService.active) {
-      var pathItems = $location.$$path.split('/'),
-      year = parseInt(pathItems[1]),
-      month = parseInt(pathItems[2]),
-      day = parseInt(pathItems[3]);
-
-      ProfileService.birthday.day = day;
-      ProfileService.birthday.month = month;
-      ProfileService.birthday.year = year;
-
-    }
 
     $scope.$watch(function () {return ProfileService.active}, function (newVal, oldVal) {
       if (newVal && newVal !== oldVal) {

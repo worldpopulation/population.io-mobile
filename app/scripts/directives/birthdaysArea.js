@@ -13,7 +13,7 @@
       },
       link: function ($scope, element) {
 
-        var continentsPercentages, maxVal = "";
+        var continentsPercentages, maxVal = "", humansDrawen = false;
 
         $scope.$on('continentsDataLoaded', function () {
           if($scope.continentsData){
@@ -38,14 +38,25 @@
 
         var drawPeople = function(continentsData, currentContinent, max){
 
+          if (humansDrawen) {
+            var oldSpans = document.getElementsByClassName('birthdaybuddies');
+            for (var i = oldSpans.length -1; 0 <= i; i--) {
+              oldSpans[i].remove();
+            }
+          }
+
           for (var property in continentsData) {
+
             if (continentsData.hasOwnProperty(property)) {
 
               if (property != 'Antarctica') {
+                if (!humansDrawen) {
+                  angular.element(element[0]).append('<div class="'+property+' ">'+ property +'</div>');
+                }
 
                 continentsPercentages = (continentsData[property] / max);
 
-                angular.element(element[0]).append('<div class="'+property+' ">'+ property +'</div>');
+
                 var div = document.getElementsByClassName(property);
                 var html = document.getElementsByTagName('html');
                 var width = (html[0].clientWidth - 30);
@@ -60,6 +71,8 @@
 
                 if(property == currentContinent){
                   var isCurrent = 'isC';
+                }else {
+                  var isCurrent = 'nisC';
                 }
                 var innerSpan = angular.element(div).append('<span class="birthdaybuddies '+isCurrent+'" style="width:'+relativeWidth+'px"></span>');
 
@@ -78,6 +91,8 @@
             }
 
           }
+
+          humansDrawen = true;
 
         }
       }

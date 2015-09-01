@@ -17,7 +17,8 @@
                   var ageDate = new Date(Date.now() - (new Date(this.birthday.formatted)).getTime());
                   var year = Math.abs(ageDate.getUTCFullYear() - 1970),
                     months = ageDate.getMonth();
-                  return year + 'y' + months + 'm';
+                  // return year + 'y' + months + 'm';
+                  return 20+'y'+1+'m';
               }
           };
       })

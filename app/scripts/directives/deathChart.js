@@ -38,10 +38,6 @@
       endWorld = endWorld + now;
       endCountry = endCountry + now;
 
-      console.log(endWorld);
-      console.log(endCountry);
-
-
       var theta = function (r) {
         return 4 * Math.PI * r;
       };
