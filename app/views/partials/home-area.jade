@@ -31,4 +31,4 @@ world-clock
                 .toggle
                   label.icon.icon-female(ng-model="profile.gender" btn-radio="'female'", required, translate="LOCAL_FEMALE")
                   label.icon.icon-male(ng-model="profile.gender" btn-radio="'male'", required, translate="LOCAL_MALE")
-                a.btn.gobtn(ng-click="goGoGadget()", ng-disabled="loading", ng-class='{inactive:goForm.$invalid, loading:loading}', translate="MOBILE_HOME_FORM_SUBMIT")
+                a.btn.gobtn(ng-click="goGoGadget()", ng-disabled="inactive", ng-class='{inactive:goForm.$invalid}', translate="MOBILE_HOME_FORM_SUBMIT")

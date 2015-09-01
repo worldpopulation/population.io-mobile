@@ -1,6 +1,6 @@
 footer
     .container
-        .block(ng-if="!isResults")
+        .block(ng-hide="currentIndex > 0")
           span visit <a href="http://population.io">www.population.io</a>
-    .right-share(ng-show="isResults && currentIndex != 7 && currentIndex != 0", ng-click="gotoshare()")
+    .right-share(ng-hide='currentIndex == 7 || currentIndex == 0 || currentPage == 0', ng-click="gotoshare()")
 include ../partials/modals

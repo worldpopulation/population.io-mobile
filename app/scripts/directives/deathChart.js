@@ -6,10 +6,14 @@
   function ($filter, PopulationIOService, HelloWords, $timeout, ProfileService) {
     var worldYearReceived = false;
     var countryYearReceived = false;
+    var agenowReceived = false;
+    var graphDrawed = false;
+    var oldage, oldworld, oldcountry;
 
     var tryDrawGraph = function(scope, element) {
-      if(worldYearReceived && countryYearReceived)
+      if(worldYearReceived && countryYearReceived && agenowReceived){
         drawGraph(scope, element);
+      }
     }
 
     var drawGraph = function(scope, element) {
@@ -18,13 +22,25 @@
       svgWidth = 250,
       svgHeight = 200,
       startWorld = 1 / 100,
-      now = scope.nowyear / 100,
+      now = scope.agenow / 100,
       endWorld =  scope.worldyearofdeath / 100,
       startCountry = 1 / 100,
       endCountry =  scope.countryyearofdeath / 100;
 
+      if(scope.agenow == oldage && scope.worldyearofdeath == oldworld && scope.countryyearofdeath == oldcountry){
+        return;
+      }
+
+      if(graphDrawed){
+        document.getElementById('death-svg').remove();
+      }
+
       endWorld = endWorld + now;
       endCountry = endCountry + now;
+
+      console.log(endWorld);
+      console.log(endCountry);
+
 
       var theta = function (r) {
         return 4 * Math.PI * r;
@@ -40,6 +56,7 @@
       .attr("width", width)
       .attr("height", height)
       .attr("viewBox", "0 -20 270 230")
+      .attr("id", "death-svg")
       .append("g")
       .attr("transform", "translate(" + (svgWidth / 2) + "," + (svgHeight / 2 + 8) + ")");
 
@@ -187,6 +204,12 @@
         var p = path.node().getPointAtLength(l);
         return p.y;
       }
+
+      graphDrawed = true;
+      oldage = scope.agenow;
+      oldworld = scope.worldyearofdeath;
+      oldcountry = scope.countryyearofdeath;
+
     }
 
     return {
@@ -194,7 +217,7 @@
       scope: {
         worldyearofdeath: '=',
         countryyearofdeath: '=',
-        nowyear: '='
+        agenow: '='
       },
       link: function ($scope, element) {
         $scope.$watch('worldyearofdeath', function(newVal){
@@ -206,6 +229,12 @@
         $scope.$watch('countryyearofdeath', function(newVal){
           if(newVal)
             countryYearReceived = true;
+            tryDrawGraph($scope, element);
+        });
+
+        $scope.$watch('agenow', function(newVal){
+          if(newVal)
+            agenowReceived = true;
             tryDrawGraph($scope, element);
         });
       }

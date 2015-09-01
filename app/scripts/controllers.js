@@ -98,6 +98,7 @@
     });
 
     $rootScope.$on('$locationChangeSuccess', function () {
+
       var path = $location.$$path.replace(/.+[/](.*)$/g, '$1');
       if ($location.preventReload) {
         $location.preventReload = false;
@@ -107,9 +108,9 @@
       if (path && !ProfileService.active) {
         $rootScope.expanded = true;
         var pathItems = $location.$$path.split('/'),
-        year = pathItems[1],
-        month = pathItems[2],
-        day = pathItems[3],
+        year = parseInt(pathItems[1]),
+        month = parseInt(pathItems[2]),
+        day = parseInt(pathItems[3]),
         gender = pathItems[4],
         country = pathItems[5];
 
@@ -123,9 +124,13 @@
 
           $rootScope.target = path;
           $rootScope.$broadcast('ready');
-          $scope.$broadcast('languageChange');
-        }
 
+          $scope.$broadcast('languageChange');
+
+          $rootScope.expanded = false;
+
+          $rootScope.$broadcast('go');
+        }
 
       }
 
@@ -229,14 +234,13 @@
     }
 
     $rootScope.home = function(){
-      $rootScope.isResults = false;
-      $location.path();
-      $scope.showMenu();
+      $rootScope.currentIndex =1;
+      $rootScope.prev();
+      $scope.showMenu()
     }
 
     $rootScope.gotohome = function(){
       if($rootScope.currentIndex === 0){
-        $rootScope.isResults = false;
         $location.path();
       }
     }
@@ -247,8 +251,8 @@
   .controller('GoCtrl', ['$scope', '$rootScope','$location', 'ProfileService',  function($scope, $rootScope, $location, ProfileService){
 
     $rootScope.$on('go', function(){
-      $rootScope.isResults = true;
       $rootScope.currentIndex = 1;
+      $rootScope.currentPage = 1;
     });
 
     $scope.items = [{id:0},{id:1},{id:2},{id:3},{id:4},{id:5},{id:6},{id:7}];
@@ -442,11 +446,29 @@
   function ($scope, $interpolate, $timeout, $http, $interval, $modal, $state, $location, $document, $rootScope, $filter, ProfileService, PopulationIOService, BrowserService) {
     $scope.type = 'distribution';
 
-    $scope.ageNow = new Date().getFullYear() - ProfileService.birthday.year;
+
+    var path = $location.$$path.replace(/.+[/](.*)$/g, '$1');
+    if ($location.preventReload) {
+      $location.preventReload = false;
+      return;
+    }
+
+    if (path && !ProfileService.active) {
+      var pathItems = $location.$$path.split('/'),
+      year = parseInt(pathItems[1]),
+      month = parseInt(pathItems[2]),
+      day = parseInt(pathItems[3]);
+
+      ProfileService.birthday.day = day;
+      ProfileService.birthday.month = month;
+      ProfileService.birthday.year = year;
+
+    }
 
     $scope.$watch(function () {return ProfileService.active}, function (newVal, oldVal) {
       if (newVal && newVal !== oldVal) {
         $scope.country  = ProfileService.country;
+        $scope.ageNow = new Date().getFullYear() - ProfileService.birthday.year;
 
         PopulationIOService.loadMortalityDistribution({
           country: ProfileService.country,
@@ -490,6 +512,7 @@
           var w = moment($scope.dodWorld);
           var diffDays = c.diff(w, 'days');
           var diffYears = c.diff(w, 'years');
+
 
         };
 
