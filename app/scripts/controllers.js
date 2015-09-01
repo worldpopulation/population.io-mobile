@@ -669,7 +669,7 @@
             $scope.milestonesData[i].title = $sce.trustAsHtml( $filter('translate')('MOBILE_MILESTONES_MILESTONE_LIFE_EXPECTANCY') + ProfileService.country);
           }else if($scope.milestonesData[i].titleType === 'MOBILE_MILESTONES_MILESTONE_NOW' ){
             $scope.milestonesData[i].title = $sce.trustAsHtml( $filter('translate')('MOBILE_MILESTONES_MILESTONE_NOW'));
-          }else if($scope.milestonesData[i].titleType === 'MILESTONES_MILESTONE_18' ){
+          }else if($scope.milestonesData[i].titleType === 'MOBILE_MILESTONES_MILESTONE_18' ){
             $scope.milestonesData[i].title =  $sce.trustAsHtml($filter('translate')('MOBILE_MILESTONES_MILESTONE_18'));
           }else if($scope.milestonesData[i].titleType === 'MOBILE_MILESTONES_MILESTONE_BORN' ){
             $scope.milestonesData[i].title = $sce.trustAsHtml($filter('translate')('MOBILE_MILESTONES_MILESTONE_BORN'));
