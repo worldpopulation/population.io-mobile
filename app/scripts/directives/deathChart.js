@@ -90,7 +90,7 @@
 
       var radius2 = d3.scale.linear()
       .domain([startCountry, endCountry])
-      .range([20, 105]);
+      .range([20, 95]);
 
       var spiral2 = d3.svg.line.radial()
       .interpolate("linear")
@@ -126,7 +126,7 @@
 
       var radiusNow = d3.scale.linear()
       .domain([startWorld, endWorld])
-      .range([27, 105]);
+      .range([27, 102]);
 
       var spiralNow = d3.svg.line.radial()
       .interpolate("linear")
@@ -160,7 +160,7 @@
 
       var radiusLabel = d3.scale.linear()
       .domain([startWorld, endWorld])
-      .range([50, 130]);
+      .range([45, 120]);
 
       var spiralLabel = d3.svg.line.radial()
       .interpolate("linear")
