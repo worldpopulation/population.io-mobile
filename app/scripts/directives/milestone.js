@@ -23,7 +23,6 @@
           }
 
           $scope.values = $filter('orderBy')($scope.values);
-          $scope.values = $scope.values.slice(0, $scope.numberofpercentagestoshow);
 
           var maxVal = "";
 
@@ -38,6 +37,8 @@
               return maxVal;
             }
           }]
+
+          dataSet[0].values =  $scope.values.slice(0, $scope.numberofpercentagestoshow);
 
           var width = 90,
               height = 90,
