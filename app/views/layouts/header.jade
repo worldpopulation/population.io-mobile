@@ -1,1 +1,16 @@
 i.menu-bar-icon(ng-click="showMenu()")
+header.grey(ng-hide="carouselIndex == 0")
+  .container
+    .logo
+      a(ng-switch on="carouselIndex")
+        h3(translate="MOBILE_SUMMARY_TEASER_WORLD", ng-switch-when="1")
+        h3(translate="MOBILE_SUMMARY_TEASER_COUNTRY", ng-switch-when="2")
+        h3(translate="MOBILE_MILESTONES_INTRO", ng-switch-when="3")
+        h3(translate="MOBILE_BIRTHDAYS_HEADER", ng-switch-when="4")
+        h3(translate="MOBILE_EXPECTANCY_HEADER", ng-switch-when="5")
+        h3(translate="MOBILE_DEATH_HEADER", ng-switch-when="6")
+        h3(translate="SHARING_HEADER", ng-switch-when="7")
+      .hr-ul-c
+        ul.hr-inline
+          li(ng-repeat="item in items", ng-class="{selected: $index == carouselIndex}")
+            .dcircle   

@@ -66,7 +66,7 @@
   "BROWSER_WARNING_TITLE":"Browser Warning",
   "BROWSER_WARNING_INTRO":"Your browser is out-of-date for this showcase. Please download one of these up-to-date, free and excellent browsers.",
 
-  "MOBILE_MILESTONES_INTRO": "What are my milestones?",
+  "MOBILE_MILESTONES_INTRO": "What are my</br>milestones?",
   "MOBILE_MILESTONES_NEXT": "You will expect your next milestone in <span class='green'>{{val1}} {{val2}}</span>",
   "MOBILE_MILESTONES_MILESTONE_LIFE_EXPECTANCY" : "Your projected life expectancy in ",
   "MOBILE_MILESTONES_MILESTONE_1_BILLION": "<span class='black'>1.000.000.000</span> <sup>st</sup></br> person to be alive",

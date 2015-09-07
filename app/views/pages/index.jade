@@ -1,42 +1,33 @@
 extends ../layouts/default
 block content
-    .content-block        
-      section#home(ng-controller='HomeCtrl', ng-hide="currentIndex > 0")
-          include ../layouts/header
+    li
+      section#home(ng-controller='HomeCtrl')
           include ../partials/home-area
-          include ../layouts/footer
-    .content-block
-      section#summary(ng-controller='SummaryCtrl',class='item-animate', ng-swipe-left="next()", ng-swipe-right="prev()", ng-show="currentIndex == 1")
-          include ../layouts/header
+
+    li
+      section#summary(ng-controller='SummaryCtrl',class='item-animate')
           include ../partials/summary-area
-          include ../layouts/footer
-    .content-block      
-      section#summarylocation(ng-controller='SummaryCtrl', ng-swipe-left="next()", ng-swipe-right="prev()", class='item-animate',  ng-show="currentIndex == 2")
-          include ../layouts/header
+
+    li
+      section#summarylocation(ng-controller='SummaryCtrl', class='item-animate')
           include ../partials/summary-area-location
-          include ../layouts/footer
-    .content-block
-      section#milestones(ng-controller='MilestonesCtrl', class='item-animate', ng-swipe-left="next()", ng-swipe-right="prev()",  ng-show="currentIndex == 3")
-          include ../layouts/header
+
+    li
+      section#milestones(ng-controller='MilestonesCtrl', class='item-animate')
           include ../partials/milestones-area
-          include ../layouts/footer
-    .content-block
-      section#birthdays(ng-controller='BirthdaysCtrl', class='item-animate', ng-swipe-left="next()", ng-swipe-right="prev()",  ng-show="currentIndex == 4")
-          include ../layouts/header
+
+    li
+      section#birthdays(ng-controller='BirthdaysCtrl', class='item-animate')
           include ../partials/birthdays-area
-          include ../layouts/footer
-    .content-block
-      section#expectancy(ng-controller='ExpectancyCtrl', class='item-animate', ng-swipe-left="next()", ng-swipe-right="prev()", ng-show="currentIndex == 5")
-          include ../layouts/header
+
+    li
+      section#expectancy(ng-controller='ExpectancyCtrl', class='item-animate')
           include ../partials/expectancy-area
-          include ../layouts/footer
-    .content-block
-      section#death-area(ng-controller='DeathCtrl', class='item-animate', ng-swipe-left="next()", ng-swipe-right="prev()", ng-show="currentIndex == 6")
-          include ../layouts/header.jade
+
+    li
+      section#death-area(ng-controller='DeathCtrl', class='item-animate')
           include ../partials/death-area
-          include ../layouts/footer
-    .content-block
-      section#fancy-sharing(ng-controller='SharingCtrl', class='item-animate', ng-swipe-left="next()", ng-swipe-right="prev()",  ng-show="currentIndex == 7")
-          include ../layouts/header
+
+    li
+      section#fancy-sharing(ng-controller='SharingCtrl', class='item-animate')
           include ../partials/fancy-sharing
-        include ../layouts/footer

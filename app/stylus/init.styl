@@ -1,7 +1,7 @@
 html,
 body
-    width 100%
-    position relative
+  width 100%
+  height 100%
 
 input::-ms-clear
     display none
@@ -10,9 +10,11 @@ body
   width auto
   font-family $font1
   .inner
-    position relative
-    width 700%
+    width 100%
     clearfix()
+  ul[rn-carousel]
+    width 100%
+    height 100%
 
 ul
   li
@@ -130,10 +132,10 @@ text
   position relative
 
 .wrapperline
-  width calc(100% - 30px)
+  width calc(100%)
   overflow hidden
   position relative
-  padding 15px 15px 0px
+
 
 // cloak
 [ng\:cloak],
@@ -391,9 +393,12 @@ section
         padding 10px 12px
         color p-color
         font-size 14px
+
     li.active,
     li:hover
         background-color highlight-yellow
+        padding 10px 12px
+        width 100%
     &.rel li.active,
     &.rel li:hover
         background-color highlight-blue
@@ -513,15 +518,17 @@ i.menu-bar-icon
   background-repeat no-repeat
   background-image url('../images/menu-bar.svg')
   position absolute
-  top 0px
-  right 0px
+  top 15px
+  right 15px
 
-.ir
-  top 2px
 
 .slide
   -webkit-transitionall .1s linear
   -webkit-transform translate3d(0,0,0)
 .slide-active
   -webkit-transform translate3d(-100%,0,0)
-    
+
+ul[rn-carousel]
+  li
+    padding 15px 15px
+    width: calc(100vw - 30px)

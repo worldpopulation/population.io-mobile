@@ -42,6 +42,7 @@ sources = {
     'bower_components/angular-sanitize/angular-sanitize.js',
     'bower_components/angular-translate/angular-translate.js',
     'bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
+    'bower_components/angular-carousel/dist/angular-carousel.js',
 
     'app/scripts/app.js',
     'app/scripts/controllers.js',
@@ -58,6 +59,7 @@ sources = {
   stylus: ['app/stylus/**/*.styl'],
   style: [
     'bower_components/fontawesome/css/font-awesome.css',
+    'bower_components/angular-carousel/dist/angular-carousel.css',
     'app/stylus/main.styl'
   ],
   fonts: 'fonts/**',

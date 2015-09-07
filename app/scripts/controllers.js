@@ -133,7 +133,6 @@
         }
 
       }
-
     });
 
     $rootScope.$on('ready', function () {
@@ -198,84 +197,54 @@
     }
 
     $rootScope.gotoworldage = function(){
-      $rootScope.currentIndex = 2;
-      $rootScope.prev();
+      $scope.carouselIndex = 1;
       $scope.showMenu();
     }
 
     $rootScope.gotocountryage = function(){
-      $rootScope.currentIndex = 1;
-      $rootScope.next();
+      $scope.carouselIndex = 2;
       $scope.showMenu();
     }
 
     $rootScope.gotomilestones = function(){
-      $rootScope.currentIndex = 2;
-      $rootScope.next();
+      $scope.carouselIndex = 3;
       $scope.showMenu();
     }
 
     $rootScope.gotobb = function(){
-      $rootScope.currentIndex = 3;
-      $rootScope.next();
+      $scope.carouselIndex = 4;
       $scope.showMenu();
     }
 
     $rootScope.gotoexpectany = function(){
-      $rootScope.currentIndex = 4;
-      $rootScope.next();
+      $scope.carouselIndex = 5;
       $scope.showMenu();
     }
 
     $rootScope.gotodod = function(){
-      $rootScope.currentIndex = 5;
-      $rootScope.next();
+      $scope.carouselIndex = 6;
       $scope.showMenu();
     }
 
     $rootScope.home = function(){
-      $rootScope.currentIndex =1;
-      $rootScope.prev();
-      $scope.showMenu()
+      $scope.carouselIndex = 0;
+      $scope.showMenu();
     }
 
-    $rootScope.gotohome = function(){
-      if($rootScope.currentIndex === 0){
-        $location.path();
-      }
+    $rootScope.gotoshare = function(){
+      $scope.carouselIndex = 7;
     }
 
-
+    $scope.items = [{id:0},{id:1},{id:2},{id:3},{id:4},{id:5},{id:6},{id:7}];
+    $rootScope.currenlyVisited = false;
 
   }])
   .controller('GoCtrl', ['$scope', '$rootScope','$location', 'ProfileService',  function($scope, $rootScope, $location, ProfileService){
 
     $rootScope.$on('go', function(){
-      $rootScope.currentIndex = 1;
-      $rootScope.currentPage = 1;
+      $scope.carouselIndex = 1;
+      $rootScope.currenlyVisited = true;
     });
-
-    $scope.items = [{id:0},{id:1},{id:2},{id:3},{id:4},{id:5},{id:6},{id:7}];
-
-    $rootScope.next = function(){
-      $rootScope.currentIndex++;
-      if ($rootScope.currentIndex > 7) {
-        $rootScope.currentIndex = 7;
-      }
-    }
-
-    $rootScope.prev = function(){
-      $rootScope.currentIndex--;
-      if ($rootScope.currentIndex == 0){
-        $rootScope.gotohome();
-      }
-    }
-
-
-    $rootScope.gotoshare = function(){
-      $rootScope.currentIndex = 6;
-      $rootScope.next();
-    }
 
   }])
   .controller('SummaryCtrl', ['$scope', '$rootScope', '$interval', '$filter', 'PopulationIOService', 'ProfileService', '$timeout',
