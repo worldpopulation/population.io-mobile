@@ -1,5 +1,5 @@
-i.menu-bar-icon(ng-click="showMenu()")
-header.grey(ng-hide="carouselIndex == 0")
+i.menu-bar-icon(ng-click="showMenu()" ng-hide="isVisible")
+header.grey(ng-hide="carouselIndex == 0 || isVisible")
   .container
     .logo
       a(ng-switch on="carouselIndex")
