@@ -26,9 +26,9 @@ html(ng-app="populationioApp")
 
         script(src='scripts/main.js')
 
-    body(ng-controller='MainCtrl')
+    body(ng-controller='MainCtrl', ng-class="{'is-first-slide': carouselIndex < 1}")
       include menu
-      div 
+      .slide-head
         include header
       ul(class="inner slide", ng-controller='GoCtrl', rn-carousel, rn-carousel-index="carouselIndex")  
           block content

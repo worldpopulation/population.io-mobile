@@ -1,10 +1,12 @@
 html,
 body
-  width 100%
-  height 100%
 
 input::-ms-clear
     display none
+
+body.is-first-slide
+  ul[rn-carousel]
+    padding-top: 0;
 
 body
   width auto
@@ -15,9 +17,17 @@ body
   ul[rn-carousel]
     overflow inherit
     overflow-x hidden
-    overfloy-y visible
-    width 100%
-    height 100%
+    overflow-y visible
+    width: 100%;
+    height: 100vh;
+    padding-top: 110px;
+    box-sizing: border-box;
+
+.slide-head
+  position: fixed;
+  z-index: 99999;
+  width: 100%;
+  top: 0;
 
 ul
   li
@@ -513,7 +523,7 @@ form
         background highlight-yellow
 
 i.menu-bar-icon
-  z-index 1
+  z-index 9999
   height 15px
   width 15px
   padding 15px
@@ -533,5 +543,5 @@ i.menu-bar-icon
 
 ul[rn-carousel]
   li
-    padding 15px 15px
-    width: calc(100vw - 30px)
+    padding: 15px 15px;
+    width: calc(100vw - 30px);
