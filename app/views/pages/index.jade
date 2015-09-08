@@ -3,31 +3,31 @@ block content
     li
       section#home(ng-controller='HomeCtrl')
           include ../partials/home-area
-
-    li
+    
+    li(ng-hide="isLocked")
       section#summary(ng-controller='SummaryCtrl',class='item-animate')
           include ../partials/summary-area
 
-    li
+    li(ng-hide="isLocked")
       section#summarylocation(ng-controller='SummaryCtrl', class='item-animate')
           include ../partials/summary-area-location
 
-    li
+    li(ng-hide="isLocked")
       section#milestones(ng-controller='MilestonesCtrl', class='item-animate')
           include ../partials/milestones-area
 
-    li
+    li(ng-hide="isLocked")
       section#birthdays(ng-controller='BirthdaysCtrl', class='item-animate')
           include ../partials/birthdays-area
 
-    li
+    li(ng-hide="isLocked")
       section#expectancy(ng-controller='ExpectancyCtrl', class='item-animate')
           include ../partials/expectancy-area
 
-    li
+    li(ng-hide="isLocked")
       section#death-area(ng-controller='DeathCtrl', class='item-animate')
           include ../partials/death-area
 
-    li
+    li(ng-hide="isLocked")
       section#fancy-sharing(ng-controller='SharingCtrl', class='item-animate')
           include ../partials/fancy-sharing

@@ -30,7 +30,7 @@ html(ng-app="populationioApp")
       include menu
       .slide-head
         include header
-      ul(class="inner slide", ng-controller='GoCtrl', rn-carousel, rn-carousel-index="carouselIndex")  
+      ul(class="inner slide", ng-controller='GoCtrl', rn-carousel, rn-carousel-index="carouselIndex", rn-carousel-locked="isLocked")  
           block content
       include footer
       

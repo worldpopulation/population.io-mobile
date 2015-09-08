@@ -1,4 +1,4 @@
-header.grey(ng-hide="carouselIndex == 0 || isVisible")
+header.grey(ng-hide="carouselIndex == 0 || isVisible || !profile.active")
   .container
     .logo
       a(ng-switch on="carouselIndex")

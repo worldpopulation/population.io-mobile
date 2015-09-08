@@ -126,9 +126,7 @@
           $rootScope.$broadcast('ready');
 
           $scope.$broadcast('languageChange');
-
           $rootScope.expanded = false;
-
           $rootScope.$broadcast('go');
         }
 
@@ -238,10 +236,12 @@
     $scope.items = [{id:0},{id:1},{id:2},{id:3},{id:4},{id:5},{id:6},{id:7}];
     $rootScope.currenlyVisited = false;
 
+
   }])
   .controller('GoCtrl', ['$scope', '$rootScope','$location', 'ProfileService',  function($scope, $rootScope, $location, ProfileService){
 
     $rootScope.$on('go', function(){
+      $rootScope.isLocked = false;
       $scope.carouselIndex = 1;
       $rootScope.currenlyVisited = true;
     });
@@ -483,6 +483,9 @@
 
   .controller('HomeCtrl', ['$scope', '$document', '$timeout', '$filter', '$location', '$rootScope', 'ProfileService', 'PopulationIOService', "Countries",
   function ($scope, $document, $timeout, $filter, $location, $rootScope, ProfileService, PopulationIOService, Countries) {
+
+    $rootScope.isLocked = true;
+
     var getMonths = function(){
       var month1 = $filter('translate')('MONTH1');
       var month2 = $filter('translate')('MONTH2');
