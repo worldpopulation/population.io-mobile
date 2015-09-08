@@ -1,6 +1,3 @@
-footer
-    .container
-        .block(ng-show="carouselIndex == 0 || carouselIndex == 7")
-          span visit <a href="http://population.io">www.population.io</a>
+footer(ng-hide="carouselIndex == 0")
     .right-share(ng-hide='carouselIndex == 7 || carouselIndex == 0 || carouselIndex == 0', ng-click="gotoshare()")
 include ../partials/modals

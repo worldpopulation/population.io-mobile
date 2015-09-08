@@ -26,3 +26,8 @@
         form.form-inline(name="emailForm", novalidate)
           input.form-control(type="email", ng-model="email" , placeholder="my@email.com", required)
           button.btn(type="button",ng-click="registerMail()",ng-disabled="emailForm.$invalid || sending" translate="SHARING_SEND")
+footer
+  .container
+    .block(ng-show="carouselIndex == 0 || carouselIndex == 7")
+      span visit <a href="http://population.io">www.population.io</a>
+include ../partials/modals
