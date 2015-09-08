@@ -1,4 +1,3 @@
-i.menu-bar-icon(ng-click="showMenu()" ng-hide="isVisible")
 header.grey(ng-hide="carouselIndex == 0 || isVisible")
   .container
     .logo
@@ -13,4 +12,5 @@ header.grey(ng-hide="carouselIndex == 0 || isVisible")
       .hr-ul-c
         ul.hr-inline
           li(ng-repeat="item in items", ng-class="{selected: $index == carouselIndex}")
-            .dcircle   
+            .dcircle
+  i.menu-bar-icon(ng-click="showMenu()" ng-hide="isVisible")
