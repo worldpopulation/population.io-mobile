@@ -7,6 +7,8 @@ input::-ms-clear
 body.is-first-slide
   ul[rn-carousel]
     padding-top: 0;
+    > li
+      max-height calc(100vh)
   #home
     i.menu-bar-icon
       top 0px
@@ -23,13 +25,14 @@ body.is-first-slide
 body
   width auto
   font-family $font1
+  overflow-y hidden
   .inner
     width 100%
     clearfix()
   ul[rn-carousel]
     overflow inherit
     overflow-x hidden
-    overflow-y visible
+    overflow-y hidden
     width: 100%;
     height: 100vh;
     padding-top: 110px;
@@ -554,6 +557,8 @@ i.menu-bar-icon
   -webkit-transform translate3d(-100%,0,0)
 
 ul[rn-carousel]
-  li
-    padding: 15px 15px;
-    width: calc(100vw - 30px);
+  > li
+    padding: 15px 15px
+    width: calc(100vw - 30px)
+    overflow-y  auto
+    max-height calc(100vh - 110px)
