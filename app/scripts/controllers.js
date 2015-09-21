@@ -238,12 +238,12 @@
 
 
   }])
-  .controller('GoCtrl', ['$scope', '$rootScope','$location', 'ProfileService',  function($scope, $rootScope, $location, ProfileService){
+  .controller('GoCtrl', ['$scope', '$rootScope','$location', 'ProfileService', '$window',  function($scope, $rootScope, $location, ProfileService, $window){
 
     $rootScope.$on('go', function(){
       $rootScope.isLocked = false;
       $scope.carouselIndex = 1;
-      window.scrollTo(0);
+      $window.scrollTo(0);
       $rootScope.currenlyVisited = true;
     });
 
@@ -382,6 +382,7 @@
 
         tickerYoungerGlobal
         .range([$scope.rankGlobal, $scope.rankGlobalTomorrow]);
+
         tickerYoungerLocal
         .range([$scope.rankLocal, $scope.rankLocalTomorrow])
 
@@ -389,12 +390,13 @@
         .range([$scope.rankGlobalTomorrow, $scope.worldPopulation]);
 
         tickerOlderLocal
-        .range([$scope.rankLocal, $scope.rankLocalTomorrow]);
+        .range([$scope.rankLocalTomorrow, $scope.rankLocal]);
 
         $scope.scaledRankYoungerLocal = tickerYoungerLocal(new Date().getTime());
         $scope.scaledRankYoungerGlobal = tickerYoungerGlobal(new Date().getTime());
 
         $scope.scaledRankOlderLocal = $scope.localPopulationToday - tickerYoungerLocal(new Date().getTime());
+
         $scope.scaledRankOlderGlobal = $scope.worldPopulation - tickerYoungerGlobal(new Date().getTime());
 
         $scope.scaledRankOlderGlobalSimple = $filter('number')($scope.worldPopulation - tickerYoungerGlobal(new Date().getTime()), 0);
@@ -403,10 +405,9 @@
 
         $scope.scaledRankYoungerLocalSimple = $filter('number')(tickerYoungerLocal(new Date().getTime()), 0);
 
-        $scope.scaledRankOlderLocalSimple = $filter('number')($scope.countryPopulation - tickerOlderLocal(new Date().getTime()), 0);
+        $scope.scaledRankOlderLocal = $filter('number')($scope.localPopulationToday - tickerYoungerLocal(new Date().getTime()), 0);
 
       }
-
 
     });
 
