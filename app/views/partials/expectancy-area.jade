@@ -10,10 +10,12 @@
       .age-area
         .country-ref
           span(class="fob") {{activeCountryRef.lifeExpectancy | number:1}}
-          span(class="crgrey" translate="MOBILE_EXPECTANCY_YEARS_OLD")
+          span(class="crgrey" translate="MOBILE_EXPECTANCY_AGE")
+          span(class="fob-down") {{activeCountryRef.lifeExpectancy - calcYearsLeft | number:1}}  
+          span(class="crgrey" translate="MOBILE_EXPECTANCY_YEARS_LEFT")
         .country-rel
           span(class="fob") {{activeCountryRel.lifeExpectancy | number:1}}
-          span(class="crgrey", translate="MOBILE_EXPECTANCY_YEARS_OLD", ng-show="activeCountryRel.lifeExpectancy!=null")
+          span(class="crgrey", translate="MOBILE_EXPECTANCY_AGE", ng-show="activeCountryRel.lifeExpectancy!=null")
       .agedifftilife(ng-show="activeCountryRel.lifeExpectancy!=null")
         .circle
           span(ng-bind="(activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy) > 0 ? ((activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy)| number:1):  (((activeCountryRef.lifeExpectancy - activeCountryRel.lifeExpectancy)* -1)| number:1)" class="fob")

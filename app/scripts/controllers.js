@@ -1069,7 +1069,12 @@
       }, function () {
         $scope.loading -= 1;
       });
+
+      $scope.calcYearsLeft = ($filter('date')(new Date(), 'yyyy') - ProfileService.birthday.year);
+      
     };
+
+
 
     var _updateCountryRel = function (date) {
       $scope.loading += 1;
