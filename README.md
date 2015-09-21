@@ -51,14 +51,20 @@
         "local": {
           "EnvironmentConfig": {
             "mailauth":"AUTH",
-            "friendmail":"AUTH",
-            "host":"SMTP",
-            "username" : "USER",
-            "password" : "PASS",
-            "subject" : "SUBJECT"
+            "friendmail":"AUTH"
           }
         },
         "production": {
+          "EnvironmentConfig": {
+            "mailauth":"AUTH",
+            "friendmail":"AUTH"
+          }
+        }
+      }
+* Add seperate `config.json` into your *PHPMAIL_DIRECTORY* and enter missing credentials
+
+      {
+        "phpmail": {
           "EnvironmentConfig": {
             "mailauth":"AUTH",
             "friendmail":"AUTH",

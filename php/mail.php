@@ -5,7 +5,7 @@ header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 $config_values = file_get_contents('config.json');
 $data  = json_decode($config_values);
 $config_data = get_object_vars($data);
-$config_env_data = get_object_vars($config_data['production']);
+$config_env_data = get_object_vars($config_data['phpmail']);
 $cdata = get_object_vars($config_env_data['EnvironmentConfig']);
 
 if ($_GET["auth"] != $cdata['mailauth']) {
