@@ -64,7 +64,7 @@
 
 
         function _initChart() {
-            var vB = parentWidth + 40;
+            var vB = parentWidth + 50;
 
           chart = d3.select(element[0])
           .append('svg')
@@ -175,7 +175,7 @@
                   pointer.append('text')
                   .style({
                     fill: '#333',
-                    'font-size':'45px',
+                    'font-size':'40px',
                     'text-anchor': 'middle'
                   });
                   pointer.append('polygon').attr({

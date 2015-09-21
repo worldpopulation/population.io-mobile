@@ -243,7 +243,7 @@
     $rootScope.$on('go', function(){
       $rootScope.isLocked = false;
       $scope.carouselIndex = 1;
-      $window.scrollTo(0);
+      $window.scrollTo(0,0);
       $rootScope.currenlyVisited = true;
     });
 
