@@ -300,10 +300,11 @@
     };
 
     $scope.calcCountryYoungerPercentageSimple = function () {
-      return $filter('number')(Math.min(100, $scope.rankLocal / ($scope.countryPopulation / 100)), 0);
+      return $filter('number')(Math.min(100, $scope.rankLocal / ($scope.countryPopulation / 100)), 1);
     };
+
     $scope.calcWorldYoungerPercentageSimple = function() {
-      return $filter('number')(Math.min(100, $scope.rankGlobal / ($scope.worldPopulation / 100)), 0);
+      return $filter('number')(Math.min(100,$scope.rankGlobal / ($scope.worldPopulation / 100)),1);
     }
 
     var _update = function () {
@@ -375,8 +376,8 @@
       });
     };
     $scope.$watchGroup(['rankLocal', 'rankGlobal', 'rankLocalTomorrow', 'rankGlobalTomorrow', 'countryPopulation', 'worldPopulation'], function (newVals, oldVals) {
-      $scope.countryYoungerPercentageSimple = $filter('number')(Math.min(100, $scope.rankLocal / ($scope.countryPopulation / 100)), 0);
-      $scope.worldYoungerPercentageSimple = $filter('number')($scope.rankGlobal/($scope.worldPopulation/100),0);
+      $scope.countryYoungerPercentageSimple = $filter('number')(Math.min(100, $scope.rankLocal / ($scope.countryPopulation / 100)), 1);
+      $scope.worldYoungerPercentageSimple = $filter('number')($scope.rankGlobal/($scope.worldPopulation/100),1);
 
       if (!_(newVals).contains(undefined) && !rangeLoaded) {
 
@@ -1071,7 +1072,6 @@
       });
 
       $scope.calcYearsLeft = ($filter('date')(new Date(), 'yyyy') - ProfileService.birthday.year);
-      
     };
 
 

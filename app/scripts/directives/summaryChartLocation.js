@@ -175,7 +175,7 @@
                   pointer.append('text')
                   .style({
                     fill: '#333',
-                    'font-size':'40px',
+                    'font-size':'35px',
                     'text-anchor': 'middle'
                   });
                   pointer.append('polygon').attr({
@@ -304,10 +304,10 @@
                   .text(function () {
                     if ($scope.region != 'World') {
 
-                      return $filter('number')(Math.min(100, $scope.rankLocal / ($scope.countryPopulation / 100)), '0') + '%'
+                      return $filter('number')(Math.min(100, $scope.rankLocal / ($scope.countryPopulation / 100)), '1') + '%'
                     }
                     else {
-                      return $filter('number')(Math.min(100, $scope.rankGlobal / ($scope.worldPopulation / 100)), '0') + '%'
+                      return $filter('number')(Math.min(100, $scope.rankGlobal / ($scope.worldPopulation / 100)), '1') + '%'
                     }
                   })
                   .attr('x', '10')
