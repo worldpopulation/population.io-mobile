@@ -56,26 +56,30 @@
 
                 continentsPercentages = (continentsData[property] / max);
 
+                var bPeople = $filter('number')(continentsData[property], 0);
 
                 var div = document.getElementsByClassName(property);
                 var html = document.getElementsByTagName('html');
-                var width = (html[0].clientWidth - 30);
-                var numP = Math.floor(20 * continentsPercentages);
+                var width = (html[0].clientWidth - 80);
+                var numP = Math.floor(18 * continentsPercentages);
                 if (numP <= 1) {
                   numP = 2;
                 }
 
-                var widthP = Math.floor(width / 20);
+                var widthP = Math.floor(width / 18);
                 var heightP = 2 * widthP;
 
                 var relativeWidth = widthP * numP;
+                var rLeft = 5 + relativeWidth;
+                debugger
 
                 if(property == currentContinent){
                   var isCurrent = 'isC';
                 }else {
                   var isCurrent = 'nisC';
                 }
-                var innerSpan = angular.element(div).append('<span class="birthdaybuddies '+isCurrent+'" style="width:'+relativeWidth+'px; height:'+heightP+'px;"></span>');
+                var innerSpan = angular.element(div).append('<span class="birthdaybuddies '+isCurrent+'" style="width:'+relativeWidth+'px; height:'+heightP+'px;"><span style="left:'+ rLeft +'px; line-height: '+heightP+'px;" class="bnumber">'+bPeople+'</span></span>');
+
 
                 if(property == currentContinent){
                   var spanInner = document.getElementsByClassName(isCurrent);
