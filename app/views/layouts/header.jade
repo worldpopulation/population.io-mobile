@@ -12,5 +12,5 @@ header.grey(ng-hide="carouselIndex == 0 || isVisible || !profile.active")
       .hr-ul-c
         ul.hr-inline
           li(ng-repeat="item in items", ng-class="{selected: $index == carouselIndex}")
-            .dcircle
+            .dcircle(ng-click="goToAnyPoint(item.id)")
   i.menu-bar-icon(ng-click="showMenu()" ng-hide="isVisible")

@@ -71,7 +71,6 @@
 
                 var relativeWidth = widthP * numP;
                 var rLeft = 5 + relativeWidth;
-                debugger
 
                 if(property == currentContinent){
                   var isCurrent = 'isC';
