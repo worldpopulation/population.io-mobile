@@ -110,7 +110,7 @@
         var pathItems = $location.$$path.split('/'),
         year = parseInt(pathItems[1]),
         month = pathItems[2],
-        day = parseInt(pathItems[3]),
+        day = pathItems[3],
         gender = pathItems[4],
         country = pathItems[5];
 

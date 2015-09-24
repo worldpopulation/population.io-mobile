@@ -169,7 +169,7 @@ gulp.task('scripts', function (event) {
 
   return streamqueue({objectMode: true }, src, config)
   .pipe(concat('main.js'))
-  // .pipe(uglify({mangle: false, drop_console: true}))
+  .pipe(uglify({mangle: false, drop_console: true}))
   // .pipe(sourcemaps.write('../maps'))
   .pipe(gulp.dest(destinations.scripts));
 
@@ -307,7 +307,7 @@ gulp.task('upload', function () {
 gulp.task('default', [
   'serve',
   'fonts',
-  //'maps',
+  // 'maps',
   'data',
   'images:watch',
   'jade:watch',
