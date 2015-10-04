@@ -107,8 +107,8 @@
   "MOBILE_EXPECTANCY_INTRO": "Compara tu expectativa de vida en <span class='blue'>{{country}}</span>",
   "MOBILE_EXPECTANCY_INPUT": "Seleccionar otro",
   "MOBILE_EXPECTANCY_YEARS_OLD": "años",
-  "MOBILE_EXPECTANCY_YEARS_LEFT": "years left",
-  "MOBILE_EXPECTANCY_AGE": "expected age",
+  "MOBILE_EXPECTANCY_YEARS_LEFT": "años restantes",
+  "MOBILE_EXPECTANCY_AGE": "edad esperada",
   "MOBILE_EXPECTANCY_YEARS_LONGER": "años adicionales",
   "MOBILE_EXPECTANCY_YEARS_SHORTER": "años menos",
 
