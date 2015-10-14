@@ -30,6 +30,9 @@
     "angular-touch": "~1.4.3",
     "angular-carousel": "~0.3.13"
   },
+  "resolutions":{
+    "angular": "1.3.0"
+  },
   "description": "The World Population Project",
   "license": "",
   "ignore": [
