@@ -47,31 +47,31 @@
 
 * Add `config.json` file to your *PROJECT_ROOT* and enter missing credentials
 
-      {
-        "local": {
-          "EnvironmentConfig": {
-            "mailauth":"AUTH",
-            "friendmail":"AUTH"
-          }
-        },
-        "production": {
-          "EnvironmentConfig": {
-            "mailauth":"AUTH",
-            "friendmail":"AUTH"
+        {
+          "local": {
+            "EnvironmentConfig": {
+              "mailauth":"AUTH",
+              "friendmail":"AUTH"
+            }
+          },
+          "production": {
+            "EnvironmentConfig": {
+              "mailauth":"AUTH",
+              "friendmail":"AUTH"
+            }
           }
         }
-      }
 * Add seperate `config.json` into your *PHPMAIL_DIRECTORY* and enter missing credentials
 
-      {
-        "phpmail": {
-          "EnvironmentConfig": {
-            "mailauth":"AUTH",
-            "friendmail":"AUTH",
-            "host":"SMTP",
-            "username" : "USER",
-            "password" : "PASS",
-            "subject" : "SUBJECT"
+        {
+          "phpmail": {
+            "EnvironmentConfig": {
+              "mailauth":"AUTH",
+              "friendmail":"AUTH",
+              "host":"SMTP",
+              "username" : "USER",
+              "password" : "PASS",
+              "subject" : "SUBJECT"
+            }
           }
         }
-      }
