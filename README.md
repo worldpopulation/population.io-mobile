@@ -1,4 +1,4 @@
-# Population.io
+# Population.io-Mobile
 
 ## Setup
 
@@ -17,10 +17,6 @@
         $ npm install
         $ bower install
 
-## Prepare
-
-1. Create a `dist` folder
-2. Copy the `assets` folder into dist the folder `dist/assets`
 
 ## Run
 
@@ -29,6 +25,7 @@
         $ gulp
 
 * Open http://localhost:1983
+* If you want to run the mobile app in your local desktop browser, then make sure to emulate a mobile device (otherwise you might be forwarded to Population.io, the desktop version)
 
 ## Deploy
 
@@ -43,7 +40,7 @@
 
 * Run `gulp deploy`
 
-## Config File
+## Config Files
 
 * Add `config.json` file to your *PROJECT_ROOT* and enter missing credentials
 
@@ -61,6 +58,7 @@
             }
           }
         }
+        
 * Add seperate `config.json` into your *PHPMAIL_DIRECTORY* and enter missing credentials
 
         {
