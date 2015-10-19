@@ -296,7 +296,7 @@ gulp.task('upload', function () {
   .pipe(sftp({
     host: '104.130.5.217',
     auth: 'keyMain',
-    remotePath: '/var/www/population.io-mobil/'
+    remotePath: '/var/www/population.io-mobile/'
   }));
 });
 
