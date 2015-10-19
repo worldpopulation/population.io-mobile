@@ -290,7 +290,7 @@ gulp.task('clean', function () {
 // upload to server task
 gulp.task('upload', function () {
   gulp.src([
-    '!dist/celebrities/**',
+    '!dist/assets/celebrities/**',
     'dist/**'
   ])
   .pipe(sftp({
