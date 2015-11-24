@@ -12,7 +12,9 @@ uglify = require('gulp-uglify'),
 nib = require('gulp-stylus/node_modules/nib'),
 sftp = require('gulp-sftp'),
 gulpNgConfig = require('gulp-ng-config'),
-streamqueue = require('streamqueue');
+streamqueue = require('streamqueue'),
+runSequence = require('run-sequence')
+;
 
 sources = {
   scripts: [
@@ -176,7 +178,7 @@ gulp.task('scripts', function (event) {
 });
 
 gulp.task('trans', function (event) {
-  gulp.src(sources.translations)
+  return gulp.src(sources.translations)
   .pipe(gulp.dest(destinations.translations));
 });
 
@@ -248,8 +250,11 @@ gulp.task('images:watch', function () {
     gulp.src(sources.images)
     .pipe(gulp.dest(destinations.images));
   });
+});
 
-
+gulp.task('images', function () {
+  return gulp.src(sources.images)
+  .pipe(gulp.dest(destinations.images));
 });
 
 gulp.task('celebs', function () {
@@ -260,7 +265,7 @@ gulp.task('celebs', function () {
 gulp.task('fonts', function () {
   gulp.src(['bower_components/fontawesome/fonts/fontawesome-webfont.*'])
   .pipe(gulp.dest('dist/fonts/'));
-  gulp.src(sources.fonts)
+  return gulp.src(sources.fonts)
   .pipe(gulp.dest('dist/fonts/'));
 });
 
@@ -289,19 +294,16 @@ gulp.task('clean', function () {
 
 // upload to server task
 gulp.task('upload', function () {
-  gulp.src([
+  return gulp.src([
     '!dist/assets/celebrities/**',
     'dist/**'
   ])
   .pipe(sftp({
-    host: '104.130.5.217',
+    host: '162.209.106.29',
     auth: 'keyMain',
-    remotePath: '/var/www/population.io-mobile/'
+    remotePath: '/html/'
   }));
 });
-
-
-
 
 // default tasks
 gulp.task('default', [
@@ -317,6 +319,20 @@ gulp.task('default', [
   'stylus:watch'
 ]);
 
-gulp.task('deploy', [
-  'upload'
-]);
+gulp.task('deploy', function(callback) {
+  runSequence(
+    [
+      'fonts',
+      'data',
+      'images',
+      'jade',
+      'scripts',
+      'trans',
+      'stylus'
+    ],
+    'upload',
+    callback
+  );
+});
+
+// gulp.task('deploy', ['upload']);
