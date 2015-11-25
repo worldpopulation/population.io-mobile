@@ -141,7 +141,7 @@ gulp.task('data', function (event) {
 gulp.task('stylus', function (event) {
   return gulp.src(sources.style)
   .pipe(plumber())
-  //.pipe(stylus({use: nib()}))
+  .pipe(stylus({use: nib()}))
   .pipe(concat('main.css'))
   .pipe(gulp.dest(destinations.css));
 });
