@@ -1,10 +1,9 @@
 {
   "name": "populationio",
   "version": "0.0.2",
-  "homepage": "http://population.io",
+  "homepage": "http://m.population.io",
   "authors": [
-    "Andi Weiss <info@47nord.de>",
-    "Sergey Basharov <sergey@basharov.net>"
+    "Andi Weiss <info@47nord.de>"
   ],
   "dependencies": {
     "jquery": "2.1.1",
@@ -25,7 +24,7 @@
     "bowser": "0.7.1",
     "jquery-ui": "1.11.0",
     "angular-scroll": "~0.6.2",
-    "ics.js": "git@github.com:nwcell/ics.js.git",
+    "ics.js": "0.1.3",
     "momentjs": "2.8.3",
     "angular-touch": "~1.4.3",
     "angular-carousel": "~0.3.13"
