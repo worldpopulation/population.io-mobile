@@ -13,16 +13,21 @@ nib = require('gulp-stylus/node_modules/nib'),
 sftp = require('gulp-sftp'),
 gulpNgConfig = require('gulp-ng-config'),
 streamqueue = require('streamqueue'),
-runSequence = require('run-sequence')
+runSequence = require('run-sequence'),
+expectFile = require('gulp-expect-file');
 ;
 
 sources = {
+  config: 'config.json',
+  data: [
+    'data/populationio_countries/countries.csv',
+    'data/populationio_countries/countries_topo.json',
+  ],
   scripts: [
     'bower_components/momentjs/moment.js',
     'bower_components/jquery/dist/jquery.js',
     'bower_components/jquery-ui/jquery-ui.js',
     'bower_components/d3/d3.js',
-    'bower_components/d3.slider/d3.slider.js',
     'bower_components/topojson/topojson.js',
     'vendor/d3.geo.projection.v0.min.js',
     'bower_components/lodash/dist/lodash.js',
@@ -36,7 +41,6 @@ sources = {
     'bower_components/angular-route/angular-route.js',
     'bower_components/angular-scroll/angular-scroll.js',
     'bower_components/angular-animate/angular-animate.js',
-    'bower_components/angular-easy-social-share/easy-social-share.js',
     'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
     'bower_components/angular-cookies/angular-cookies.js',
     'bower_components/angular-resource/angular-resource.js',
@@ -64,7 +68,14 @@ sources = {
     'bower_components/angular-carousel/dist/angular-carousel.css',
     'app/stylus/main.styl'
   ],
-  fonts: 'fonts/**',
+  fonts: [
+    'fonts/plantin/MyFontsWebfontsKit.css',
+    'fonts/plantin/webfonts/*.eot',
+    'fonts/plantin/webfonts/*.ttf',
+    'fonts/plantin/webfonts/*.woff',
+    'fonts/plantin/webfonts/*.svg',
+    'bower_components/fontawesome/fonts/fontawesome-webfont.*'
+  ],
   overwatch: [
     'dist/**/*.*',
     '!dist/celebrities/**',
@@ -78,7 +89,6 @@ sources = {
     'assets/wip.svg',
     'assets/browsers-sprite.png',
     'assets/arrow-icaldownload.svg',
-    'assets/beta_opt.png',
     'assets/humans-blueman.svg',
     'assets/humans-bluewoman.svg',
     'assets/share-twitter.svg',
@@ -97,12 +107,7 @@ sources = {
   maps: [
     'bower_components/angular-sanitize/angular-sanitize.min.js.map'
   ],
-  celebs: 'assets/celebrities/**',
-  translations: [
-    'app/i18n/DE.json',
-    'app/i18n/EN.json',
-    'app/i18n/ES.json'
-  ]
+  translations: 'app/i18n/*.json'
 },
 destinations = {
   scripts: 'dist/scripts/',
@@ -129,10 +134,8 @@ gulp.task('serve', function (event) {
 
 // data files task
 gulp.task('data', function (event) {
-  return gulp.src([
-    'data/populationio_countries/countries.csv',
-    'data/populationio_countries/countries_topo.json',
-  ])
+  return gulp.src(sources.data)
+  .pipe(expectFile(sources.data))
   .pipe(plumber())
   .pipe(gulp.dest('dist/data'));
 });
@@ -140,6 +143,7 @@ gulp.task('data', function (event) {
 // stylus task
 gulp.task('stylus', function (event) {
   return gulp.src(sources.style)
+  .pipe(expectFile(sources.style))
   .pipe(plumber())
   .pipe(stylus({use: nib()}))
   .pipe(concat('main.css'))
@@ -159,13 +163,14 @@ gulp.task('stylus:watch', function (event) {
 
 // scripts tasks
 gulp.task('scripts', function (event) {
-
-  var config = gulp.src('config.json')
+  var config = gulp.src(sources.config)
+  .pipe(expectFile(sources.config))
   .pipe(gulpNgConfig('popioconfig', {
     environment: 'production'
   }));
 
   var src = gulp.src(sources.scripts)
+  .pipe(expectFile(sources.scripts))
   .pipe(sourcemaps.init())
   .pipe(concat('main.js'));
 
@@ -177,6 +182,7 @@ gulp.task('scripts', function (event) {
 
 gulp.task('trans', function (event) {
   return gulp.src(sources.translations)
+  .pipe(expectFile(sources.translations))
   .pipe(gulp.dest(destinations.translations));
 });
 
@@ -196,6 +202,7 @@ gulp.task('scripts:watch', function (event) {
 // jade tasks
 gulp.task('jade', function (event) {
   gulp.src(sources.partials)
+  .pipe(expectFile(sources.partials))
   .pipe(plumber())
   .pipe(jade({
     pretty: true
@@ -204,6 +211,7 @@ gulp.task('jade', function (event) {
   .pipe(gulp.dest(destinations.partials));
 
   return gulp.src(sources.docs)
+  .pipe(expectFile(sources.docs))
   .pipe(plumber())
   .pipe(jade({
     pretty: true
@@ -252,18 +260,13 @@ gulp.task('images:watch', function () {
 
 gulp.task('images', function () {
   return gulp.src(sources.images)
+  .pipe(expectFile(sources.images))
   .pipe(gulp.dest(destinations.images));
 });
 
-gulp.task('celebs', function () {
-  return gulp.src(sources.celebs)
-  .pipe(gulp.dest(destinations.celebs));
-});
-
 gulp.task('fonts', function () {
-  gulp.src(['bower_components/fontawesome/fonts/fontawesome-webfont.*'])
-  .pipe(gulp.dest('dist/fonts/'));
   return gulp.src(sources.fonts)
+  .pipe(expectFile(sources.fonts))
   .pipe(gulp.dest('dist/fonts/'));
 });
 
