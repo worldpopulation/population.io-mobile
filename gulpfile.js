@@ -1,23 +1,22 @@
-var gulp = require('gulp'),
-jade = require('gulp-jade'),
-jshint = require('gulp-jshint'),
-clean = require('gulp-clean'),
-connect = require('gulp-connect'),
-plumber = require('gulp-plumber'),
-watch = require('gulp-watch'),
-stylus = require('gulp-stylus'),
-concat = require('gulp-concat'),
-sourcemaps = require('gulp-sourcemaps'),
-uglify = require('gulp-uglify'),
-nib = require('gulp-stylus/node_modules/nib'),
-sftp = require('gulp-sftp'),
-gulpNgConfig = require('gulp-ng-config'),
-streamqueue = require('streamqueue'),
-runSequence = require('run-sequence'),
-expectFile = require('gulp-expect-file');
-;
+var gulp = require('gulp');
+var jade = require('gulp-jade');
+var jshint = require('gulp-jshint');
+var connect = require('gulp-connect');
+var plumber = require('gulp-plumber');
+var watch = require('gulp-watch');
+var stylus = require('gulp-stylus');
+var concat = require('gulp-concat');
+var sourcemaps = require('gulp-sourcemaps');
+var uglify = require('gulp-uglify');
+var nib = require('gulp-stylus/node_modules/nib');
+var sftp = require('gulp-sftp');
+var gulpNgConfig = require('gulp-ng-config');
+var streamqueue = require('streamqueue');
+var runSequence = require('run-sequence');
+var expectFile = require('gulp-expect-file');
 
-sources = {
+
+var sources = {
   config: 'config.json',
   data: [
     'data/populationio_countries/countries.csv',
@@ -108,8 +107,9 @@ sources = {
     'bower_components/angular-sanitize/angular-sanitize.min.js.map'
   ],
   translations: 'app/i18n/*.json'
-},
-destinations = {
+};
+
+var destinations = {
   scripts: 'dist/scripts/',
   docs: 'dist/',
   partials: 'dist/partials',
@@ -180,12 +180,6 @@ gulp.task('scripts', function (event) {
   .pipe(gulp.dest(destinations.scripts));
 });
 
-gulp.task('trans', function (event) {
-  return gulp.src(sources.translations)
-  .pipe(expectFile(sources.translations))
-  .pipe(gulp.dest(destinations.translations));
-});
-
 // scripts watch task for development
 gulp.task('scripts:watch', function (event) {
   gulp.src(sources.vendor)
@@ -199,24 +193,24 @@ gulp.task('scripts:watch', function (event) {
   });
 });
 
+gulp.task('trans', function (event) {
+  return gulp.src(sources.translations)
+  .pipe(expectFile(sources.translations))
+  .pipe(gulp.dest(destinations.translations));
+});
+
 // jade tasks
 gulp.task('jade', function (event) {
   gulp.src(sources.partials)
   .pipe(expectFile(sources.partials))
   .pipe(plumber())
-  .pipe(jade({
-    pretty: true
-  }))
-
+  .pipe(jade({ pretty:true} ))
   .pipe(gulp.dest(destinations.partials));
 
   return gulp.src(sources.docs)
   .pipe(expectFile(sources.docs))
   .pipe(plumber())
-  .pipe(jade({
-    pretty: true
-  }))
-
+  .pipe(jade( {pretty: true} ))
   .pipe(gulp.dest(destinations.docs));
 });
 
@@ -225,16 +219,12 @@ gulp.task('jade:watch', function (event) {
   var _compileAll = function () {
     gulp.src(sources.partials)
     .pipe(plumber())
-    .pipe(jade({
-      pretty: true
-    }))
+    .pipe(jade( {pretty: true} ))
     .pipe(gulp.dest(destinations.partials));
 
     gulp.src(sources.docs)
     .pipe(plumber())
-    .pipe(jade({
-      pretty: true
-    }))
+    .pipe(jade( {pretty: true} ))
     .pipe(gulp.dest(destinations.docs));
   };
 
@@ -287,18 +277,9 @@ gulp.task('lint:watch', function () {
   gulp.watch('app/scripts/**/*.js', ['lint']);
 });
 
-// clean tasks
-gulp.task('clean', function () {
-  return gulp.src('dist', {read: false})
-  .pipe(clean());
-});
-
 // upload to server task
 gulp.task('upload', function () {
-  return gulp.src([
-    '!dist/assets/celebrities/**',
-    'dist/**'
-  ])
+  return gulp.src('dist/**')
   .pipe(sftp({
     host: '162.209.106.29',
     auth: 'keyMain',
@@ -319,6 +300,7 @@ gulp.task('default', [
   'stylus:watch'
 ]);
 
+// deployment and necessary pre-deploy tasks
 gulp.task('deploy', function(callback) {
   runSequence(
     [

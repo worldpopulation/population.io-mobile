@@ -4,7 +4,6 @@
   "description": "The World Population Project",
   "devDependencies": {
     "gulp": "~3.8.9",
-    "gulp-clean": "0.3.0",
     "gulp-concat": "2.4.1",
     "gulp-connect": "~2.0.5",
     "gulp-expect-file": "0.0.7",
@@ -17,9 +16,7 @@
     "gulp-stylus": "1.0.2",
     "gulp-uglify": "^1.0.1",
     "gulp-watch": "0.6.6",
-    "streamqueue": "^1.1.1"
-  },
-  "dependencies": {
+    "streamqueue": "^1.1.1",
     "gulp-ng-config": "^1.2.1",
     "run-sequence": "^1.1.5"
   }
