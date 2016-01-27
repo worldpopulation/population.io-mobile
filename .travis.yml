@@ -1,0 +1,12 @@
+language: node_js
+node_js:
+- 0.10.40
+before_script:
+- npm install -g gulp
+- npm install -g bower
+- bower install
+script: gulp deploy
+before_install:
+- openssl aes-256-cbc -K $encrypted_80fa14a42896_key -iv $encrypted_80fa14a42896_iv
+  -in secrets.tar.gz.enc -out secrets.tar.gz -d
+- tar zxvf secrets.tar.gz
