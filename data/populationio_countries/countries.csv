@@ -1,195 +1,204 @@
-GMI_CNTRY,POPIO_NAME,POINT_X,POINT_Y,CONTINENT
-AFG,Afghanistan,66.02647078160,33.83880563220,Asia
-ALB,Albania,20.06838416820,41.14228606650,Europe
-DZA,Algeria,2.63238848323,28.16323953590,Africa
-AGO,Angola,17.57269427250,-12.33527602480,Africa
-ATG,Antigua and Barbuda,-61.78530823230,17.07146759370,North America
-EGY,Arab Rep of Egypt,29.87195800070,26.49425412720,Africa
-ARG,Argentina,-65.14430529880,-35.17768202880,South America
-ARM,Armenia,44.94682641330,40.28661994550,Asia
-ABW,Aruba,-69.97564014280,12.51562572300,North America
-AUS,Australia,134.35354772800,-25.57432340690,Australia
-AUT,Austria,14.14019116250,47.59290286120,Europe
-AZE,Azerbaijan,50.01349322040,40.39075639860,Asia
-BHR,Bahrain,50.54321196790,26.04034442120,Asia
-BGD,Bangladesh,89.20024058060,23.93403296970,Asia
-BRB,Barbados,-59.56195470060,13.17871448300,North America
-BLR,Belarus,28.04678764690,53.53999772680,Europe
-BEL,Belgium,4.66398728384,50.64285190080,Europe
-BLZ,Belize,-88.69589801620,17.20999700250,North America
-BEN,Benin,2.34313461826,9.64731894700,Africa
-BTN,Bhutan,90.42943322850,27.41541449280,Asia
-BOL,Bolivia,-64.67093196810,-16.71461014380,South America
-BIH,Bosnia and Herzegovina,17.78653087560,44.16811541280,Europe
-BWA,Botswana,23.81502777870,-22.18200337550,Africa
-BRA,Brazil,-53.11221187900,-10.83493505820,South America
-BRN,Brunei Darussalam,114.59934131300,4.41717162603,Asia
-BGR,Bulgaria,25.23150640510,42.76137676270,Europe
-BFA,Burkina Faso,-1.74014091747,12.27792937900,Africa
-BDI,Burundi,29.88714596890,-3.35617434585,Africa
-CPV,Cabo Verde,-23.63482158500,15.07160079640,Africa
-KHM,Cambodia,104.92398195200,12.71643178490,Asia
-CMR,Cameroon,12.74359411690,5.68595228558,Africa
-CAN,Canada,-101.65578565900,57.71473755360,North America
-CAF,Central African Republic,20.93930470130,7.00177498811,Africa
-TCD,Chad,18.66447909360,15.36116632060,Africa
-CHL,Chile,-71.25498512970,-35.50880794160,South America
-CHN,China,104.19425421800,32.31950786540,Asia
-COL,Colombia,-73.07179261240,3.90105256742,South America
-COM,Comoros,43.34126156680,-11.66579428950,Africa
-COG,Congo,15.22429399960,-0.84023182658,Africa
-CRI,Costa Rica,-84.18794117580,9.97020286268,North America
-CIV,Cote-d-Ivoire,-5.55572929335,7.63164772815,Africa
-HRV,Croatia,16.46489574350,43.78072479830,Europe
-CUB,Cuba,-79.54209094720,22.09890726560,North America
-CYP,Cyprus,33.22176047500,35.04588005780,Europe
-CZE,Czech Republic,15.33841230370,49.74285914650,Europe
-PRK,Dem Peoples Rep of Korea,127.18195665100,40.14306304120,Asia
-ZAR,Dem Rep of Congo,23.65500570540,-2.87623474498,Africa
-DNK,Denmark,9.31712817961,56.03646065490,Europe
-DJI,Djibouti,42.17499291300,11.57333953090,Africa
-DOM,Dominican Republic,-70.48960674710,18.89650357150,North America
-ECU,Ecuador,-78.38611425680,-1.44863859090,South America
-SLV,El Salvador,-88.86651153570,13.73689680310,North America
-GNQ,Equatorial Guinea,10.47603886780,1.56803418420,Africa
-ERI,Eritrea,38.11280721180,16.10854160310,Africa
-EST,Estonia,25.83249949950,58.68896637180,Europe
-ETH,Ethiopia,39.61603213710,8.62621923146,Africa
-FSM,Federated States of Micronesia,158.22918994400,6.87894481293,Oceania
-FJI,Fiji,177.97362791400,-17.82524844660,Oceania
-FIN,Finland,26.29107153250,64.51903468530,Europe
-FRA,France,2.45601382838,46.63119131540,Europe
-GUF,French Guiana,-53.24122363140,3.92468841889,South America
-PYF,French Polynesia,-149.41767913400,-17.66649192030,Oceania
-MKD,FYR Macedonia,21.69747631520,41.59968292060,Europe
-GAB,Gabon,11.79880558490,-0.59089201831,Africa
-GEO,Georgia,43.35689080110,42.05325101110,Asia
-DEU,Germany,10.38083867890,51.09069941670,Europe
-GHA,Ghana,-1.20730122288,7.95984793046,Africa
-GRC,Greece,22.58872065360,39.47755320580,Europe
-GRD,Grenada,-61.67937937200,12.11292665630,North America
-GLP,Guadeloupe,-61.64847034100,16.14147579870,North America
-GUM,Guam,144.71394295500,13.35581225990,Oceania
-GTM,Guatemala,-91.23877040050,15.00771409900,North America
-GIN,Guinea,-11.36710486350,11.04459481130,Africa
-GNB,Guinea-Bissau,-14.41236131400,12.12419406740,Africa
-GUY,Guyana,-58.97478114970,4.79201682323,South America
-HTI,Haiti,-72.33883421230,18.40213854260,North America
-HND,Honduras,-86.61934828200,14.81704825850,North America
-HUN,Hungary,19.41344923360,47.16650236030,Europe
-ISL,Iceland,-19.01892291990,64.79170238490,Europe
-IND,India,79.58692059900,22.90894255780,Asia
-IDN,Indonesia,113.92725475000,-0.98581275442,Asia
-IRQ,Iraq,43.77213471730,33.04802520530,Asia
-IRL,Ireland,-8.14524829112,53.17416920070,Europe
-IRN,Islamic Republic of Iran,54.19630291840,32.74482033630,Asia
-ISR,Israel,34.62096396480,31.06846816670,Asia
-ITA,Italy,12.56920414420,42.79328423790,Europe
-JAM,Jamaica,-77.31901254930,18.15141972780,North America
-JPN,Japan,139.27219334300,36.65071135980,Asia
-JOR,Jordan,37.13076365180,30.65801786020,Asia
-KAZ,Kazakhstan,66.65782333260,48.01598512160,Asia
-KEN,Kenya,37.85674398810,0.53080002090,Africa
-KIR,Kiribati,-157.37712248300,1.83325333978,Oceania
-KWT,Kuwait,47.48176819290,29.52089083450,Asia
-KGZ,Kyrgyz Republic,74.55559656080,41.46505432230,Asia
-LAO,Lao PDR,101.99234274900,20.28436019190,Asia
-LVA,Latvia,26.41912479180,56.63381941290,Europe
-LBN,Lebanon,35.88802652700,33.92026581940,Asia
-LSO,Lesotho,28.24301119450,-29.58099930380,Africa
-LBR,Liberia,-9.30791352218,6.44809164375,Africa
-LBY,Libya,18.02328651050,27.04395435460,Africa
-LTU,Lithuania,23.90365565920,55.33542117310,Europe
-LUX,Luxembourg,6.08781375310,49.77062851540,Europe
-MDG,Madagascar,46.70400139900,-19.37767962250,Africa
-MWI,Malawi,33.49164579740,-13.39225913370,Africa
-MYS,Malaysia,114.41157721000,2.87790628593,Asia
-MDV,Maldives,73.10231369530,-0.61532519998,Asia
-MLI,Mali,-3.52442241387,17.35027936580,Africa
-MLT,Malta,14.44192244250,35.89052265090,Europe
-MTQ,Martinique,-61.02128782110,14.65254732780,North America
-MRT,Mauritania,-10.33115448280,20.25995077220,Africa
-MUS,Mauritius,57.56415671070,-20.28142317480,Africa
-MYT,Mayotte,45.13516074310,-12.81979536430,Africa
-MEX,Mexico,-102.51329054900,23.94410963810,North America
-MDA,Moldova,28.47393051630,47.19387081170,Europe
-MNG,Mongolia,103.08321776300,46.83529080100,Asia
-MON,Montenegro,19.25323880680,42.79132426710,Europe
-MAR,Morocco,-6.31784603365,31.88362474860,Africa
-MOZ,Mozambique,38.18783643530,-14.28248034020,Africa
-MMR,Myanmar,96.51383277590,21.19793086280,Asia
-NAM,Namibia,17.21827741450,-22.13324812180,Africa
-NPL,Nepal,83.93854772190,28.25300758220,Asia
-NCL,New Caledonia,165.50539524200,-21.40520491420,Oceania
-NZL,New Zealand,170.51294705800,-43.98818810140,Oceania
-NIC,Nicaragua,-85.03478315990,12.83990623270,North America
-NER,Niger,9.39764792894,17.42614907210,Africa
-NGA,Nigeria,8.10548868245,9.59503857373,Africa
-NOR,Norway,11.46671586220,61.44021773090,Europe
-NOR,Norway,3.41252138141,-54.42190673510,Antarctica
-OMN,Oman,57.88513452520,22.00869809190,Asia
-PAK,Pakistan,69.38596582830,29.96702229840,Asia
-PAN,Panama,-81.57230218920,8.29945998087,North America
-PNG,Papua New Guinea,144.26738337200,-6.61972050383,Asia
-PRY,Paraguay,-60.54380460820,-21.69988659960,South America
-PER,Peru,-71.84421810460,-13.59168340160,South America
-PHL,Philippines,120.86367229700,14.16147660690,Asia
-POL,Poland,19.40088407220,52.12461005690,Europe
-PRT,Portugal,-7.96218741478,39.69190949940,Europe
-PRI,Puerto Rico,-66.48099344500,18.22310720030,North America
-QAT,Qatar,51.19120124170,25.31507883340,Asia
-VEN,RB-de-Venezuela,-66.17982673190,7.11490316551,South America
-KOR,Rep of Korea,127.86892899300,36.44917650120,Asia
-YEM,Rep of Yemen,45.28860244300,15.21531360780,Asia
-REU,Reunion,55.53818064970,-21.12166153250,Africa
-ROM,Romania,24.96925833060,45.84361469620,Europe
-RUS,Russian Federation,98.89177315250,61.59425125760,Asia
-RWA,Rwanda,29.91765222350,-1.99789101327,Africa
-WSM,Samoa,-172.43543600500,-13.63491507240,Oceania
-STP,Sao Tome and Principe,6.60615879686,0.22744704295,Africa
-SAU,Saudi Arabia,44.54710662630,24.12545346900,Asia
-SEN,Senegal,-14.46765275740,14.36696541750,Africa
-SRB,Serbia,20.80545745590,44.03204580780,Europe
-SYC,Seychelles,55.47250789600,-4.66000231882,Africa
-SLE,Sierra Leone,-11.78414071460,8.56913989413,Africa
-SGP,Singapore,103.80805122100,1.35161643253,Asia
-SVK,Slovak Republic,19.49165233630,48.70753052720,Europe
-SVN,Slovenia,14.99567325460,46.06800803560,Europe
-SLB,Solomon Islands,160.16991756100,-9.62389114729,Oceania
-SOM,Somalia,46.19996363460,4.43361016766,Africa
-ZAF,South Africa,24.68687717470,-30.00174940540,Africa
-ESP,Spain,-3.55667484024,40.39196488440,Europe
-LKA,Sri Lanka,80.70655717890,7.60512533533,Asia
-LCA,St-Lucia,-60.96871303260,13.89786596750,North America
-VCT,St-Vincent and the Grenadines,-61.19376635440,13.25480812300,North America
-SDN,Sudan,30.04995150100,13.83153455900,Africa
-SUR,Suriname,-55.91182656540,4.12639414942,South America
-SWZ,Swaziland,31.49752964800,-26.56264163160,Africa
-SWE,Sweden,14.37675431870,60.60690823220,Europe
-CHE,Switzerland,8.22760912478,46.97425033380,Europe
-SYR,Syrian Arab Rep,38.50513103530,35.01313352180,Asia
-TJK,Tajikistan,69.32039578690,38.32287343620,Asia
-TZA,Tanzania,34.80818183120,-6.27107287242,Africa
-THA,Thailand,101.02060347400,15.14407695800,Asia
-BHS,The Bahamas,-78.04060060910,24.70145001180,North America
-GMB,The Gambia,-16.06590013600,13.28506558350,Africa
-NLD,The Netherlands,5.32760464460,51.76996125000,Europe
-TGO,Togo,0.97572105421,8.53496086092,Africa
-TON,Tonga,-175.20299547700,-21.19689035110,Oceania
-TTO,Trinidad and Tobago,-61.29212105580,10.41707960040,North America
-TUN,Tunisia,9.53694069141,33.76460578120,Africa
-TUR,Turkey,35.43744118090,38.98866929030,Asia
-TKM,Turkmenistan,58.96053224460,40.09933083560,Asia
-UGA,Uganda,32.38621794140,1.27996384993,Africa
-UKR,Ukraine,31.38711478910,49.01708827780,Europe
-ARE,United Arab Emirates,53.98249529200,23.43353149860,Asia
-GBR,United Kingdom,-0.24654563597,52.24972155270,Europe
-USA,United States,-99.12886935440,39.53167210410,North America
-URY,Uruguay,-56.01239641680,-32.79964546370,South America
-VIR,US Virgin Islands,-64.76258519050,17.73553803880,North America
-UZB,Uzbekistan,63.16937232140,41.75043662660,Asia
-VUT,Vanuatu,166.87969075000,-15.38191250510,Oceania
-VNM,Vietnam,107.63382024800,11.98331272460,Asia
-ESH,Western Sahara,-13.13653943650,24.66167134090,Africa
-ZMB,Zambia,27.84933672980,-14.60303417140,Africa
-ZWE,Zimbabwe,29.87183776590,-19.00009782760,Africa
+"GMI_CNTRY","POPIO_NAME","POINT_X","POINT_Y","CONTINENT","POPIO_NAME_ES"
+"AFG","Afghanistan",66.008447,33.836267,"Asia","Afganist‡n"
+"ALB","Albania",20.053989,41.142582,"Europe","Albania"
+"DZA","Algeria",2.617789,28.158463,"Africa","Algeria"
+"AGO","Angola",17.536458,-12.29118,"Africa","Angola"
+"ATG","Antigua and Barbuda",-61.790997,17.284294,"North America","Antigua y Barbuda"
+"EGY","Arab Rep of Egypt",29.861284,26.492376,"Africa","Egipto"
+"ARG","Argentina",-65.178218,-35.382696,"South America","Argentina"
+"ARM","Armenia",44.932301,40.288134,"Asia","Armenia"
+"ABW","Aruba",-69.9756401428,12.515625723,"North America","Aruba"
+"AUS","Australia",134.492572,-25.732365,"Oceania","Australia"
+"AUT","Austria",14.130673,47.585657,"Europe","Austria"
+"AZE","Azerbaijan",47.542394,40.289044,"Asia","Azerbaiy‡n"
+"BHR","Bahrain",50.544356,26.048945,"Asia","Bahrain"
+"BGD","Bangladesh",90.24339,23.842846,"Asia","Bangladesh"
+"BRB","Barbados",-59.560479,13.180864,"North America","Barbados"
+"BLR","Belarus",28.033566,53.53188,"Europe","Bielorrusia"
+"BEL","Belgium",4.640121,50.637406,"Europe","BŽlgica"
+"BLZ","Belize",-88.704835,17.200815,"North America","Belice"
+"BEN","Benin",2.328738,9.641208,"Africa","Ben’n"
+"BTN","Bhutan",90.403948,27.410593,"Asia","But‡n"
+"BOL","Bolivia",-64.684754,-16.706877,"South America","Bolivia"
+"BIH","Bosnia and Herzegovina",17.773405,44.171739,"Europe","Bosnia-Herzegovina"
+"BWA","Botswana",23.798987,-22.185772,"Africa","Botswana"
+"BRA","Brazil",-53.093972,-10.782781,"South America","Brasil"
+"BRN","Brunei Darussalam",114.727354,4.516338,"Asia","Brunei Darussalam"
+"BGR","Bulgaria",25.217739,42.76854,"Asia","Bulgaria"
+"BFA","Burkina Faso",-1.755591,12.26956,"Africa","Burkina Faso"
+"BDI","Burundi",29.875083,-3.357425,"Africa","Burundi"
+"CPV","Cabo Verde",-23.966613,15.935902,"Africa","Cabo Verde"
+"KHM","Cambodia",104.90282,12.715572,"Asia","Camboya"
+"CMR","Cameroon",12.737083,5.693128,"Africa","Camerœn"
+"CAN","Canada",-98.316063,61.373126,"North America","Canad‡"
+"CAF","Central African Republic",20.464809,6.566321,"Africa","Repœblica Centroafricana"
+"TCD","Chad",18.646251,15.333078,"Africa","Chad"
+"CHI","Channel Islands",NA,NA,"Europe","Channel Islands"
+"CHL","Chile",-71.355119,-37.696072,"South America","Chile"
+"CHN","China",103.82491,36.561277,"Asia","China"
+"COL","Colombia",-73.080187,3.910956,"North America","Colombia"
+"COM","Comoros",43.680788,-11.884401,"Africa","Comores"
+"COG","Congo",15.2242939996,-0.84023182658,"Africa","Congo"
+"CRI","Costa Rica",-84.193238,9.973605,"North America","Costa Rica"
+"CIV","Cote-d-Ivoire",-5.569011,7.627839,"Africa","Costa de Marfil"
+"HRV","Croatia",16.398662,45.06776,"Europe","Croacia"
+"CUB","Cuba",-79.033303,21.624692,"North America","Cuba"
+"CUW","Curacao",NA,NA,"North America","Curacao"
+"CYP","Cyprus",32.990228,34.914998,"Asia","Chipre"
+"CZE","Czech Republic",15.314103,49.732448,"Europe","Repœblica Checa"
+"PRK","Dem Peoples Rep of Korea",127.18767,40.170376,"Asia","Corea del Norte"
+"ZAR","Dem Rep of Congo",23.6550057054,-2.87623474498,"Africa","Rep Dem del Congo"
+"DNK","Denmark",10.05067,55.964717,"Europe","Dinamarca"
+"DJI","Djibouti",42.56667,11.750209,"Africa","Djibouti"
+"DOM","Dominican Republic",-70.496272,18.896204,"North America","Repœblica Dominicana"
+"ECU","Ecuador",-78.77323,-1.424747,"South America","Ecuador"
+"SLV","El Salvador",-88.869261,13.736704,"North America","El Salvador"
+"GNQ","Equatorial Guinea",10.333171,1.706945,"Africa","Guinea Ecuatorial"
+"ERI","Eritrea",38.853178,15.357538,"Africa","Eritrea"
+"EST","Estonia",25.535957,58.670837,"Europe","Estonia"
+"ETH","Ethiopia",39.600551,8.622952,"Africa","Etiop’a"
+"FSM","Federated States of Micronesia",155.247759,7.115377,"Oceania","Micronesia"
+"FJI","Fiji",163.698141,-17.446659,"Oceania","Fiji"
+"FIN","Finland",20.037148,60.207334,"Europe","Finlandia"
+"FRA","France",68.991182,-49.062703,"Europe","Francia"
+"GUF","French Guiana",-53.2412236314,3.92468841889,"South America","Guayana Francesa"
+"PYF","French Polynesia",-149.417679134,-17.6664919203,"Oceania","Polinesia Francesa"
+"MKD","FYR Macedonia",21.6974763152,41.5996829206,"Europe","Macedonia"
+"GAB","Gabon",11.792239,-0.587011,"Africa","Gab—n"
+"GEO","Georgia",43.507651,42.168816,"Asia","Georgia"
+"DEU","Germany",10.381548,51.106213,"Europe","Alemania"
+"GHA","Ghana",-1.216466,7.953797,"Africa","Ghana"
+"GRC","Greece",22.97514,39.05122,"Asia","Grecia"
+"GRD","Grenada",-61.655942,12.1129266563,"North America","Grenada"
+"GLP","Guadeloupe",-61.648470341,16.1414757987,"North America","Guadalupe"
+"GUM","Guam",144.713942955,13.3558122599,"Oceania","Guam"
+"GTM","Guatemala",-90.365058,15.693396,"North America","Guatemala"
+"GIN","Guinea",-10.942917,10.434669,"Africa","Guinea"
+"GNB","Guinea-Bissau",-14.412361314,12.1241940674,"Africa","Guinea-Bissau"
+"GUY","Guyana",-58.979905,4.795142,"South America","Guyana"
+"HTI","Haiti",-72.690703,18.93814,"North America","Hait’"
+"HND","Honduras",-86.618416,14.824166,"North America","Honduras"
+"HKG","Hong Kong SAR-China",NA,NA,"Asia","Hong Kong SAR-China"
+"HUN","Hungary",19.396759,47.163244,"Europe","Hungr’a"
+"ISL","Iceland",-18.595807,64.998012,"Europe","Islandia"
+"IND","India",79.612214,22.887366,"Asia","India"
+"IDN","Indonesia",117.272105,-2.220831,"Asia","Indonesia"
+"IRQ","Iraq",43.744986,33.039797,"Asia","Iraq"
+"IRL","Ireland",-8.144426,53.177874,"Europe","Irelanda"
+"IRN","Islamic Republic of Iran",54.276286,32.572027,"Asia","Ir‡n"
+"ISR","Israel",34.9961,31.443548,"Africa","Israel"
+"ITA","Italy",12.072137,42.786249,"Europe","Italia"
+"JAM","Jamaica",-77.318535,18.154594,"North America","Jamaica"
+"JPN","Japan",137.992535,37.555901,"Asia","Jap—n"
+"JOR","Jordan",36.770946,31.245598,"Asia","Jordania"
+"KAZ","Kazakhstan",63.384062,45.978305,"Asia","Kazajst‡n"
+"KEN","Kenya",37.796226,0.598081,"Africa","Kenia"
+"KIR","Kiribati",-55.32007,0.79981,"Oceania","Kiribati"
+"KWT","Kuwait",47.59058,29.338788,"Asia","Kuwait"
+"KGZ","Kyrgyz Republic",74.541669,41.461919,"Asia","Kyrgyz Republic"
+"LAO","Lao PDR",103.737873,18.502298,"Asia","Laos"
+"LVA","Latvia",24.909128,56.851761,"Europe","Latvia"
+"LBN","Lebanon",35.880272,33.920398,"Asia","L’bano"
+"LSO","Lesotho",28.228623,-29.57973,"Africa","Lesotho"
+"LBR","Liberia",-9.319781,6.452318,"Africa","Liberia"
+"LBY","Libya",18.009583,27.030206,"Africa","Libia"
+"LTU","Lithuania",23.888369,55.327008,"Europe","Lituania"
+"LUX","Luxembourg",6.071764,49.766824,"Europe","Luxamburgo"
+"MAC","Macao SAR China",NA,NA,"Asia","Macao SAR China"
+"MDG","Madagascar",46.706458,-19.373254,"Africa","Madagascar"
+"MWI","Malawi",34.289908,-13.217226,"Africa","Malawi"
+"MYS","Malaysia",109.697702,3.792397,"Asia","Malasia"
+"MDV","Maldives",73.331084,3.67978,"Asia","Maldivas"
+"MLI","Mali",-3.539079,17.344163,"Africa","Mal’"
+"MLT","Malta",14.404245,35.920801,"Europe","Malta"
+"MTQ","Martinique",-61.0212878211,14.6525473278,"North America","Martinica"
+"MRT","Mauritania",-10.342917,20.256307,"Africa","Mauritania"
+"MUS","Mauritius",57.854617,-20.221512,"Africa","Mauricio"
+"MYT","Mayotte",45.1351607431,-12.8197953643,"Africa","Mayotte"
+"MEX","Mexico",-102.52704,23.947546,"North America","MŽxico"
+"MDA","Moldova",28.461397,47.195101,"Europe","Moldavia"
+"MNG","Mongolia",103.056287,46.825806,"Asia","Mongolia"
+"MNE","Montenegro",19.238501,42.785856,"Europe","Montenegro"
+"MAR","Morocco",-8.455533,29.834245,"Africa","Marruecos"
+"MOZ","Mozambique",35.537526,-17.270376,"Africa","Mozambique"
+"MMR","Myanmar",96.489186,21.169415,"Asia","Myanmar"
+"NAM","Namibia",17.210796,-22.128669,"Africa","Namibia"
+"NPL","Nepal",83.916253,28.247922,"Asia","Nepal"
+"NCL","New Caledonia",165.505395242,-21.4052049142,"Oceania","Nueva Caledonia"
+"NZL","New Zealand",-158.781437,-19.818704,"Oceania","Nueva Zelanda"
+"NIC","Nicaragua",-85.032836,12.845628,"North America","Nicaragua"
+"NER","Niger",9.386034,17.418464,"Africa","Niger"
+"NGA","Nigeria",8.091504,9.596968,"Africa","Nigeria"
+"NOR","Norway",15.41245,68.7964,"Antarctica","Noruega"
+"NOR","Norway",15.41245,68.7964,"Antarctica","Noruega"
+"NOR","Norway",15.41245,68.7964,"Antarctica","Noruega"
+"NOR","Norway",15.41245,68.7964,"Antarctica","Noruega"
+"OMN","Oman",56.092799,20.600908,"Asia","Om‡n"
+"PAK","Pakistan",69.341852,29.94883,"Asia","Pakist‡n"
+"PAN","Panama",-80.123917,8.51045,"North America","Panam‡"
+"PNG","Papua New Guinea",145.22793,-6.470358,"Asia","Papœa Nueva Guinea"
+"PRY","Paraguay",-58.398423,-23.227519,"South America","Paraguay"
+"PER","Peru",-74.381307,-9.15354,"South America","Perœ"
+"PHL","Philippines",122.874714,11.763383,"Asia","Filipinas"
+"POL","Poland",19.394451,52.124672,"Europe","Polonia"
+"PRT","Portugal",-8.59209,39.58568,"Africa","Portugal"
+"PRI","Puerto Rico",-66.480993445,18.2231072003,"North America","Puerto Rico"
+"QAT","Qatar",51.187565,25.312777,"Asia","Qatar"
+"VEN","RB-de-Venezuela",-66.176722,7.125003,"South America","Venezuela"
+"KOR","Rep of Korea",127.832194,36.350473,"Asia","Corea del Sur"
+"YEM","Rep of Yemen",47.590931,15.905155,"Asia","Yemen"
+"REU","Reunion",55.5381806497,-21.1216615325,"Africa","Reuni—n"
+"ROM","Romania",24.973099,45.853413,"Europe","Ruman’a"
+"RUS","Russian Federation",96.688981,61.983471,"Asia","Rusia"
+"RWA","Rwanda",29.919061,-1.99275,"Africa","Ruanda"
+"WSM","Samoa",-172.160278,-13.754676,"Oceania","Samoa"
+"STP","Sao Tome and Principe",6.726958,0.444039,"Africa","Sao Tome y Principe"
+"SAU","Saudi Arabia",44.537759,24.122444,"Asia","Arabia Saudita"
+"SEN","Senegal",-14.47103,14.367794,"Africa","Senegal"
+"SRB","Serbia",20.8054574559,44.0320458078,"Europe","Serbia"
+"SYC","Seychelles",51.882275,-6.590675,"Africa","Seychelles"
+"SLE","Sierra Leone",-11.79483,8.563161,"Africa","Sierra Leone"
+"SGP","Singapore",103.813797,1.358791,"Asia","Singapur"
+"SVK","Slovak Republic",19.480383,48.704935,"Europe","Eslovaquia"
+"SVN","Slovenia",14.808139,46.116136,"Europe","Eslovenia"
+"SLB","Solomon Islands",159.616703,-8.901954,"Oceania","Islas Salom—n"
+"SOM","Somalia",45.705311,4.747511,"Africa","Somalia"
+"ZAF","South Africa",25.087733,-29.001052,"Africa","Sud‡frica"
+"SSD","South Sudan",30.251066,7.305706,"Africa","South Sudan"
+"ESP","Spain",-3.656802,40.236901,"Africa","Espa–a"
+"LKA","Sri Lanka",80.70355,7.615738,"Asia","Sri Lanka"
+"LCA","St-Lucia",-60.969577,13.902485,"North America","St-Lucia"
+"VCT","St-Vincent and the Grenadines",-61.202642,13.216083,"North America","St-Vincent and the Grenadines"
+"SDN","Sudan",29.939383,15.986757,"Africa","Sud‡n"
+"SUR","Suriname",-55.912136,4.128481,"South America","Surinam"
+"SWZ","Swaziland",31.480024,-26.561914,"Africa","Swazilandia"
+"SWE","Sweden",16.752894,62.789174,"Europe","Suecia"
+"CHE","Switzerland",8.215383,46.799023,"Europe","Suiza"
+"SYR","Syrian Arab Rep",38.504649,35.022993,"Asia","Siria"
+"TJK","Tajikistan",71.015822,38.52989,"Asia","Tadjikist‡n"
+"TZA","Tanzania",34.8081818312,-6.27107287242,"Africa","Tanzania"
+"THA","Thailand",101.003318,15.114082,"Asia","Tailandia"
+"BHS","The Bahamas",-78.0406006091,24.7014500118,"North America","Bahamas"
+"GMB","The Gambia",-15.397103,13.44978,"Africa"," Gambia"
+"NLD","The Netherlands",-69.973447,12.516778,"North America","Holanda"
+"TMP","Timor-Leste",NA,NA,"Asia","Timor-Leste"
+"TGO","Togo",0.962284,8.526721,"Africa","Togo"
+"TON","Tonga",-174.840713,-19.968806,"Oceania","Tonga"
+"TTO","Trinidad and Tobago",-61.257718,10.46866,"North America","Trinidad y Tobago"
+"TUN","Tunisia",9.551856,34.115909,"Africa","Tœnez"
+"TUR","Turkey",35.167313,39.060958,"Asia","Turqu’a"
+"TKM","Turkmenistan",59.376143,39.115934,"Asia","Turkmenistan"
+"UGA","Uganda",32.36704,1.275691,"Africa","Uganda"
+"UKR","Ukraine",31.385855,48.99725,"Europe","Ucrania"
+"ARE","United Arab Emirates",53.982495292,23.4335314986,"Asia","Emiratos çrabes Unidos"
+"GBR","United Kingdom",-0.24654563597,52.2497215527,"Europe","Reino Unido"
+"USA","United States",-99.1288693544,39.5316721041,"North America","Estados  Unidos"
+"URY","Uruguay",-56.01756,-32.800173,"South America","Uruguay"
+"VIR","US Virgin Islands",-64.7625851905,17.7355380388,"North America","Islas V’rgenes"
+"UZB","Uzbekistan",63.139909,41.756036,"Asia","Uzbekist‡n"
+"VUT","Vanuatu",167.701058,-16.201437,"Oceania","Vanuatu"
+"VNM","Vietnam",106.301296,16.641606,"Asia","Vietnam"
+"WBG","West Bank and Gaza",34.351906,31.389951,"Africa","West Bank and Gaza"
+"ESH","Western Sahara",-12.214726,24.232712,"Africa","Sahara Occidental"
+"ZMB","Zambia",27.774212,-13.46011,"Africa","Zambia"
+"ZWE","Zimbabwe",29.851885,-19.002537,"Africa","Zimbabwe"
