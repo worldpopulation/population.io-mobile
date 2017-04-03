@@ -9,12 +9,12 @@ stylus = require('gulp-stylus'),
 concat = require('gulp-concat'),
 sourcemaps = require('gulp-sourcemaps'),
 uglify = require('gulp-uglify'),
-nib = require('gulp-stylus/node_modules/nib'),
+//nib = require('gulp-stylus/node_modules/nib'),
+nib = require('nib'),
 sftp = require('gulp-sftp'),
 gulpNgConfig = require('gulp-ng-config'),
 streamqueue = require('streamqueue'),
-runSequence = require('run-sequence')
-;
+runSequence = require('run-sequence');
 
 sources = {
   scripts: [
@@ -335,6 +335,22 @@ gulp.task('deploy', function(callback) {
       'stylus'
     ],
     'upload',
+    callback
+  );
+});
+
+gulp.task('rebuild', function(callback) {
+  runSequence(
+    'clean',
+    [
+      'fonts',
+      'data',
+      'images',
+      'jade',
+      'scripts',
+      'trans',
+      'stylus'
+    ],
     callback
   );
 });
