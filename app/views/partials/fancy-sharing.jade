@@ -23,9 +23,20 @@
         button.btn(type="button",ng-click="inviteMail()",ng-disabled="tellYourFriend.$invalid",translate="SHARING_SEND")
     .birthdayreminder
         p(translate="SHARING_UPDATE")
-        form.form-inline(name="emailForm", novalidate)
-          input.form-control(type="email", ng-model="email" , placeholder="my@email.com", required)
-          button.btn(type="button",ng-click="registerMail()",ng-disabled="emailForm.$invalid || sending" translate="SHARING_SEND")
+        form.form-inline(name="emailForm", novalidate, method="POST", target="_blank",
+        action="//population.us13.list-manage.com/subscribe/post?u=3840f1496862a7a719676d23a&id=5c4e95f695")
+            div(style="position: absolute; left: -5000px;", aria-hidden="true")
+                input(type="text", name="b_3840f1496862a7a719676d23a_5c4e95f695" tabindex="-1" value="")
+            input.form-control(
+            type="email",
+            name="EMAIL"
+            placeholder="my@email.com",
+            required
+            )
+            button.btn(
+            type="submit",
+            ng-disabled="emailForm.$invalid"
+            ) {{ 'SHARING_SEND' | translate }}
 footer
   .container
     .block(ng-show="carouselIndex == 0 || carouselIndex == 7")
