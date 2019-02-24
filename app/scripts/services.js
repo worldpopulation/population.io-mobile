@@ -25,7 +25,7 @@
   .service('PopulationIOService', ['$rootScope', '$http',
   function ($rootScope, $http) {
 
-    var baseUrl = ' http://api.population.io/1.0';
+    var baseUrl = ' //api.population.io/1.0';
 
     return {
       getWorldPopulation: function (onSuccess, onError) {
