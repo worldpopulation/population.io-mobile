@@ -21,11 +21,10 @@
       }
     };
   })
-
   .service('PopulationIOService', ['$rootScope', '$http',
   function ($rootScope, $http) {
 
-    var baseUrl = ' //api.population.io/1.0';
+    var baseUrl = ' //d6wn6bmjj722w.population.io/1.0';
 
     return {
       getWorldPopulation: function (onSuccess, onError) {
@@ -49,7 +48,7 @@
       getLocalPopulation: function (country, onSuccess, onError) {
         $http({
           method: 'get',
-          url: baseUrl + '/population/' + country + '/today-and-tomorrow/'
+          url: baseUrl + '/population/' + (country == "eSwatini" ? "Swaziland" : country) + '/today-and-tomorrow/'
         })
         .success(function (data) {
           if (data && onSuccess) {
@@ -105,7 +104,7 @@
 
             $http({
               method: 'get',
-              url: baseUrl + '/mortality-distribution/' + args.country + '/' + args.gender + '/' + args.age + 'y/today'
+              url: baseUrl + '/mortality-distribution/' + (args.country == "eSwatini" ? "Swaziland" : args.country) + '/' + args.gender + '/' + args.age + 'y/today'
             })
             .success(function (data) {
               if (data.mortality_distribution && onSuccess) {
@@ -155,7 +154,7 @@
             'wp-rank',
             args.dob,
             args.sex,
-            args.country,
+            (args.country == "eSwatini" ? "Swaziland" : args.country),
             'today'
           ].join('/') + '/'
         })
@@ -182,7 +181,7 @@
             'wp-rank',
             args.dob,
             args.sex,
-            args.country,
+            (args.country == "eSwatini" ? "Swaziland" : args.country),
             'on',
             args.date
           ].join('/') + '/'
@@ -210,7 +209,7 @@
             'wp-rank',
             args.dob,
             args.sex,
-            args.country,
+            (args.country == "eSwatini" ? "Swaziland" : args.country),
             'ranked',
             args.rank
           ].join('/') + '/'
@@ -236,7 +235,7 @@
             baseUrl,
             'life-expectancy/remaining',
             args.sex,
-            args.country,
+            (args.country == "eSwatini" ? "Swaziland" : args.country),
             args.date,
             args.age
           ].join('/') + '/'
@@ -262,7 +261,7 @@
             baseUrl,
             'life-expectancy/total',
             args.sex,
-            args.country,
+            (args.country == "eSwatini" ? "Swaziland" : args.country),
             args.dob
           ].join('/') + '/'
         })
@@ -287,7 +286,7 @@
             baseUrl,
             'population',
             args.year,
-            args.country
+            (args.country == "eSwatini" ? "Swaziland" : args.country)
           ].join('/') + '/'
         })
         .success(function (data) {
@@ -311,7 +310,7 @@
             baseUrl,
             'population',
             args.year,
-            args.country,
+            (args.country == "eSwatini" ? "Swaziland" : args.country),
             args.age
           ].join('/') + '/'
         })

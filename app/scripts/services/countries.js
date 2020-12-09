@@ -1357,11 +1357,11 @@
                   "GMI_CNTRY": "SUR"
               },
               {
-                  "POPIO_NAME": "Swaziland",
+                  "POPIO_NAME": "eSwatini",
                   "POINT_X": "31.480024",
                   "CONTINENT": "Africa",
                   "POINT_Y": "-26.561914",
-                  "POPIO_NAME_ES": "Swazilandia",
+                  "POPIO_NAME_ES": "eSwatini",
                   "GMI_CNTRY": "SWZ"
               },
               {

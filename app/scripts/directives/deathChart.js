@@ -79,7 +79,7 @@
         cy: -yValAtPoint(path),
         cx: -xValAtPoint(path)
       }).style({
-        fill: '#3c3',
+        fill: '#666',
         stroke: '#fff',
         'stroke-width': '1px'
       });
@@ -117,7 +117,7 @@
         cy: -yValAtPoint(path2),
         cx: -xValAtPoint(path2)
       }).style({
-        fill: '#63f',
+        fill: '#bdaee9',
         stroke: '#fff',
         'stroke-width': '1px'
       });

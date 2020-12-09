@@ -966,7 +966,7 @@
         },
         {
           'abbreviation': 'SZ',
-          'language': 'Swaziland',
+          'language': 'eSwatini',
           'greeting': 'Hello'
         },
         {

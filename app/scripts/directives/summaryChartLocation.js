@@ -129,7 +129,7 @@
               .attr(
                 {
                   class: 'y-label',
-                  transform: 'translate(' + [62, parentHeight - 70 ] + ')'
+                  transform: 'translate(' + [82, parentHeight - 70 ] + ')'
                 })
                 .style(
                   {
@@ -227,7 +227,7 @@
                   })
 
                   yLabel.attr({
-                    transform: 'translate(' + [62,  (yValAtPoint(areaTotal) - 30)] + ')'
+                    transform: 'translate(' + [82,  (yValAtPoint(areaTotal) - 30)] + ')'
                   })
 
                   line
@@ -248,12 +248,12 @@
                   .datum(data)
                   .transition()
                   .attr('d', area(data))
-                  .attr('fill', '#997fff');
+                  .attr('fill', '#bdaee9');
 
                   areaYounger
                   .transition()
                   .attr('d', area(younger))
-                  .attr('fill', '#63f');
+                  .attr('fill', '#613fc2');
                   /* highlight-blue */
 
                   areaLine

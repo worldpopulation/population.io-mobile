@@ -177,7 +177,7 @@ text
 // datepicker
 .ui-datepicker
     border 1px solid border-color
-    border-radius 12px
+    border-radius 0px
     box-shadow 0 1px 1px rgba(0, 0, 0, 0.2)
     background-color #ffffff
     padding 15px
@@ -312,7 +312,7 @@ text
         border-radius 5px
     li.active
         span
-            border-radius 10px
+            border-radius 0px
             top 1px
             left 5px
             width 10px
@@ -400,7 +400,7 @@ section
         border 1px solid border-color
         background-color #ffffff
         padding 10px 12px
-        border-radius 12px
+        border-radius 0px
         font-size 14px
         width 200px
     .dropdown-menu
@@ -409,7 +409,7 @@ section
         cursor pointer
         z-index 9999
         position absolute
-        border-radius 10px
+        border-radius 0px
         left 0px
         right 8px
         box-shadow 0 1px 1px rgba(0, 0, 0, 0.2)
@@ -424,7 +424,7 @@ section
 
     li.active,
     li:hover
-        background-color highlight-yellow
+        background-color #bdaee9
         padding 10px 12px
         width 100%
     &.rel li.active,
@@ -491,7 +491,7 @@ form
     color #fff
     display block
     float right
-    background #222
+    background #1b0558
     width 60px
     height @width
     margin-right 10px
@@ -499,6 +499,9 @@ form
     border-radius @width
     text-align center
     line-height 55px
+    font-family 'PlantinMTStd-Light'
+    font-style italic
+    letter-spacing 1px
 .btn.btn-big
     height 120px
     width 120px
@@ -507,7 +510,7 @@ form
     cursor pointer
 
 *.inactive
-    opacity 0.5
+    background: #8d82ab !important;
     cursor pointer
 
 *[disabled=disabled]
@@ -528,14 +531,15 @@ form
         background #fff
         cursor pointer
     label:first-child
-        border-top-left-radius 10px
-        border-bottom-left-radius 10px
+        border-top-left-radius 0px
+        border-bottom-left-radius 0px
     label:last-child
-        border-top-right-radius 10px
-        border-bottom-right-radius 10px
+        border-top-right-radius 0px
+        border-bottom-right-radius 0px
     label.active
         border 1px solid highlight-yellow
         background highlight-yellow
+        color white
 
 i.menu-bar-icon
   z-index 9999

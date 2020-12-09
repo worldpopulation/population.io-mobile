@@ -21,14 +21,32 @@
 
 
 /* @import must be at top of file, otherwise CSS will not work */
-@import url("//hello.myfonts.net/count/2b237a");
 
-
-@font-face {font-family: 'PlantinMTStd-Light';src: url('webfonts/2B237A_0_0.eot');src: url('webfonts/2B237A_0_0.eot?#iefix') format('embedded-opentype'),url('webfonts/2B237A_0_0.woff') format('woff'),url('webfonts/2B237A_0_0.ttf') format('truetype');}
+/*SERIF*/
+@font-face {
+	font-family: 'PlantinMTStd-Light';
+  src: url('/fonts/plantin/webfonts/BerlingskeSerif-XBd.eot');
+  src: url('/fonts/plantin/webfonts/BerlingskeSerif-XBd.eot?#iefix') format('embedded-opentype'), url('/fonts/plantin/webfonts/BerlingskeSerif-XBd.woff2') format('woff2'), url('/fonts/plantin/webfonts/BerlingskeSerif-XBd.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+}
 
 @font-face {
-  font-family: 'PlantinStd-Semibold';
-  src:url('webfonts/PlantinStd-Semibold.eot');
-  src: url('webfonts/PlantinStd-Semibold.eot?#iefix')format('embedded-opentype'),url('webfonts/PlantinStd-Semibold.woff')format('woff'),url('webfonts/PlantinStd-Semibold.ttf')format('truetype'); 
+	font-family: 'PlantinStd-Semibold';
+  src: url('/fonts/plantin/webfonts/BerlingskeSerif-XBd.eot');
+  src: url('/fonts/plantin/webfonts/BerlingskeSerif-XBd.eot?#iefix') format('embedded-opentype'), url('/fonts/plantin/webfonts/BerlingskeSerif-XBd.woff2') format('woff2'), url('/fonts/plantin/webfonts/BerlingskeSerif-XBd.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+}
 
+/*Sans SERIF*/
+@font-face {
+	font-family: 'Theinhardt-Light';
+	src: url('https://fonts.gstatic.com/s/worksans/v5/QGYsz_wNahGAdqQ43Rh_fKDp.woff2');
+	/*src: url('/fonts/plantin/webfonts/PlantinStd-Semibold.eot?#iefix')format('embedded-opentype'), url('/fonts/plantin/webfonts/PlantinStd-Semibold.woff')format('woff'), url('/fonts/plantin/webfonts/PlantinStd-Semibold.ttf')format('truetype');*/
+}
+@font-face {
+	font-family: 'Theinhardt-Medium';
+	src: url('https://fonts.gstatic.com/s/worksans/v5/QGYsz_wNahGAdqQ43Rh_fKDp.woff2');
+	/*src: url('/fonts/plantin/webfonts/PlantinStd-Semibold.eot?#iefix')format('embedded-opentype'), url('/fonts/plantin/webfonts/PlantinStd-Semibold.woff')format('woff'), url('/fonts/plantin/webfonts/PlantinStd-Semibold.ttf')format('truetype');*/
 }
