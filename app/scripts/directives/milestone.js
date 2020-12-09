@@ -77,7 +77,7 @@
 
           //creaeting arc path
           var arc = s.append("path")
-          .attr("fill", "#613FC2")
+          .attr("fill", "#613fc2")
           .attr('class', 'arc')
           .each(function(d) {
             d.endAngle = 360*( d['maxValue']()/100) * Math.PI/180;
